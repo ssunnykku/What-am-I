@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import sequelize from "./src/config/sequelize";
+import errorMiddleware from "./src/middlewares/error";
 
 dotenv.config();
 
@@ -16,5 +17,7 @@ sequelize.sync({ force: false });
 app.get("/", (req, res, next) => {
   res.send("Team08 Backend");
 });
+
+app.use(errorMiddleware);
 
 app.listen(process.env.DB_PORT, () => console.log(`✅ Listening to port 5001`));
