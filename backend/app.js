@@ -20,4 +20,6 @@ app.get('/', (req, res, next) => {
 
 app.use(errorMiddleware);
 
-app.listen(process.env.DB_PORT, () => console.log(`✅ Listening to port 5001`));
+app.listen(process.env.SEVER_PORT, () =>
+  console.log(`✅ Listening to port 5001`),
+);
