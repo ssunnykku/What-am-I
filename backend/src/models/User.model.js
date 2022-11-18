@@ -1,12 +1,13 @@
-import sequelize from "../config/sequelize";
-import { DataTypes } from "sequelize";
+import sequelize from '../config/sequelize';
+import { DataTypes } from 'sequelize';
 
 const User = sequelize.define(
-  "User",
+  'User',
   {
     loginId: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     email: {
       type: DataTypes.STRING,
@@ -26,16 +27,16 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue:
-        "https://as2.ftcdn.net/v2/jpg/00/64/67/63/1000_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg",
+        'https://as2.ftcdn.net/v2/jpg/00/64/67/63/1000_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg',
     },
   },
   {
     sequelize,
     timestamps: true,
-    tableName: "users",
-    charset: "utf8mb4",
-    collate: "utf8mb4_general_ci",
-  }
+    tableName: 'users',
+    charset: 'utf8mb4',
+    collate: 'utf8mb4_general_ci',
+  },
 );
 
 export default User;
