@@ -1,21 +1,22 @@
-import React from 'react';
+import { useEffect } from 'react';
+import { FallbackProps } from 'react-error-boundary';
 
-const UiErrorFallback = ({ error }: any) => {
-  console.log({ error });
+const DEV_MODE = true;
+
+const UiErrorFallback = ({ error }: FallbackProps) => {
+  useEffect(() => {
+    DEV_MODE && console.log(error);
+  }, []);
+
   return (
     <div>
-      <div style={{ fontSize: '50px' }}>
-        {error.error}
-        THIS IS UI ERROR!
-        <button
-          style={{ width: '50px', height: '50px', backgroundColor: 'yellow' }}
-          onClick={() => {
-            window.location.href = '/';
-          }}
-        >
-          Go Back
-        </button>
-      </div>
+      THIS IS UI ERROR!
+      <a
+        href="/"
+        style={{ width: '50px', height: '50px', backgroundColor: 'yellow' }}
+      >
+        Go Back
+      </a>
     </div>
   );
 };
