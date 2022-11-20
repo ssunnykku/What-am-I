@@ -2,15 +2,35 @@ import styled from 'styled-components';
 
 export const CommonMyButton = styled.button`
   width: 100%;
-  height: 45px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   cursor: pointer;
   font-weight: bold;
   border-radius: 10px;
-  padding: 0.875;
 `;
 
 export const CommonMyInput = styled.input`
-  padding: 4px 10px 4px 10px;
+  width: 94%;
+  padding: 6px 12px;
   border-radius: 10px;
   outline: none;
+`;
+
+export const AuthFormWrapper = styled.form`
+  margin: 0 auto;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+`;
+
+export const AuthFormInputContainer = styled.div`
+  width: 100%;
+  margin-top: 1rem;
+`;
+
+export const AuthFormButtonContainer = styled.div`
+  width: 100%;
+  margin-top: 1rem;
 `;
