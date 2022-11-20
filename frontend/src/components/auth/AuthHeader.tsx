@@ -9,6 +9,7 @@ const AuthHeader = () => {
 };
 
 const AuthHeaderWrapper = styled.div`
+  text-align: center;
   width: auto;
 `;
 
