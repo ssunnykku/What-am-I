@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 const ReviewBoard = lazy(() => import('./pages/ReviewBoardPage'));
 const Login = lazy(() => import('./pages/LoginPage'));
+const Register = lazy(() => import('./pages/RegisterPage'));
 
 const MyRouter = () => {
   return (
@@ -11,6 +12,7 @@ const MyRouter = () => {
         <Routes>
           <Route path="/board" element={<ReviewBoard />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </Suspense>
