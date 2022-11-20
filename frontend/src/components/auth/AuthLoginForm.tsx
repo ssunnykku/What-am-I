@@ -1,29 +1,59 @@
-import styled from 'styled-components';
-import { CommonMyInput } from '../../assets/styles/common/commonComponentStyle';
+import { UseFormRegister, FieldErrorsImpl } from 'react-hook-form';
+import CommonErrorText from '../common/CommonErrorText';
+import {
+  CommonMyInput,
+  CommonMyButton,
+  AuthFormWrapper,
+  AuthFormInputContainer,
+  AuthFormButtonContainer,
+} from '../../assets/styles/common/commonComponentStyle';
+import { AuthCommonType } from '../../types/auth/authType';
 
-const AuthLoginForm = () => {
+interface AuthLoginFormProps {
+  register: UseFormRegister<AuthCommonType>;
+  errors: Partial<FieldErrorsImpl<AuthCommonType>>;
+  onAuthLoginSubmitEvent: () => void;
+}
+
+const AuthLoginForm = ({
+  register,
+  errors,
+  onAuthLoginSubmitEvent,
+}: AuthLoginFormProps) => {
   return (
-    <AuthLoginFormWrapper>
-      <AuthLoginFormInputContainer>
-        <CommonMyInput type="email" placeholder="Please enter your email" />
-      </AuthLoginFormInputContainer>
-      <AuthLoginFormInputContainer>
+    <AuthFormWrapper onSubmit={onAuthLoginSubmitEvent}>
+      <AuthFormInputContainer>
         <CommonMyInput
+          {...register('email', {
+            required: true,
+            pattern: /^\S+@\S+$/i,
+          })}
+          placeholder="Please enter your email"
+        />
+        {errors.email && (
+          <CommonErrorText>Please check your email</CommonErrorText>
+        )}
+      </AuthFormInputContainer>
+      <AuthFormInputContainer>
+        <CommonMyInput
+          {...register('password', {
+            required: true,
+            minLength: 8,
+            maxLength: 15,
+            pattern: /^.(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,
+          })}
           type="password"
           placeholder="Please enter your password"
         />
-      </AuthLoginFormInputContainer>
-    </AuthLoginFormWrapper>
+        {errors.password && (
+          <CommonErrorText>Please check your password</CommonErrorText>
+        )}
+      </AuthFormInputContainer>
+      <AuthFormButtonContainer>
+        <CommonMyButton type="submit">LOGIN</CommonMyButton>
+      </AuthFormButtonContainer>
+    </AuthFormWrapper>
   );
 };
-
-const AuthLoginFormWrapper = styled.form`
-  width: auto;
-  padding: 1rem;
-`;
-
-const AuthLoginFormInputContainer = styled.div`
-  width: 100%;
-`;
 
 export default AuthLoginForm;
