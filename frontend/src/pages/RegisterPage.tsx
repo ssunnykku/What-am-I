@@ -1,23 +1,24 @@
-import useAuthLogin from '../hooks/auth/useAuthLogin';
+import useAuthRegister from '../hooks/auth/useAuthRegister';
 import CommonWrapper from '../components/common/CommonWrapper';
 import AuthHeader from '../components/auth/AuthHeader';
-import AuthLoginForm from '../components/auth/AuthLoginForm';
+import AuthRegisterForm from '../components/auth/AuthRegisterForm';
 
-const LoginPage = () => {
+const RegisterPage = () => {
   // TODO: error가 존재하면 Modal 활성화
   // 현재는 그냥 validate 통과 안될 경우 button 활성화 안됨
-  const { register, errors, handleSubmit, handleAuthLoginSubmit } =
-    useAuthLogin();
+  const { register, errors, handleSubmit, handleAuthRegisterSubmit } =
+    useAuthRegister();
 
   return (
     <CommonWrapper>
       <AuthHeader />
-      <AuthLoginForm
+      <AuthRegisterForm
         register={register}
         errors={errors}
-        onAuthLoginSubmitEvent={handleSubmit(handleAuthLoginSubmit)}
+        onAuthRegisterSubmitEvent={handleSubmit(handleAuthRegisterSubmit)}
       />
     </CommonWrapper>
   );
 };
-export default LoginPage;
+
+export default RegisterPage;

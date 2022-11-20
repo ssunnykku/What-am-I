@@ -1,4 +1,4 @@
-import useModal from '../hooks/useModal';
+import useModal from '../hooks/modal/useModal';
 import MyModal from '../components/modal/MyModal';
 
 const ReviewBoardPage = () => {
@@ -10,7 +10,7 @@ const ReviewBoardPage = () => {
       <MyModal isOpen={isOpen} onModalStateChangeEvent={handleStateChange}>
         안녕 디지몬
       </MyModal>
-      <button onClick={() => handleStateChange()}>Modal</button>
+      <button onClick={handleStateChange}>Modal</button>
     </>
   );
 };

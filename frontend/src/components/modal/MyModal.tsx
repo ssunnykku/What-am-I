@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CommonComponentType } from '../../types/commonComponentType';
+import { CommonComponentType } from '../../types/common/commonComponentType';
 
 interface MyModalProps extends CommonComponentType {
   isOpen: boolean;
