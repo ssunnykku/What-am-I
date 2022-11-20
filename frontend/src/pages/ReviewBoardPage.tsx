@@ -1,4 +1,4 @@
-import useModal from '../hooks/useModal';
+import useModal from '../hooks/modal/useModal';
 import MyModal from '../components/modal/MyModal';
 
 const ReviewBoardPage = () => {
