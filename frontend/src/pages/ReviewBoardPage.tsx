@@ -10,7 +10,7 @@ const ReviewBoardPage = () => {
       <MyModal isOpen={isOpen} onModalStateChangeEvent={handleStateChange}>
         안녕 디지몬
       </MyModal>
-      <button onClick={() => handleStateChange()}>Modal</button>
+      <button onClick={handleStateChange}>Modal</button>
     </>
   );
 };

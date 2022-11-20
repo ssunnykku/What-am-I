@@ -5,7 +5,7 @@ const useModal = () => {
 
   const handleStateChange = useCallback(() => {
     setIsOpen((prev) => !prev);
-  }, [isOpen, setIsOpen]);
+  }, [setIsOpen]);
 
   return {
     isOpen,

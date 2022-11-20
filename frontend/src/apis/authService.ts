@@ -5,7 +5,7 @@ export const authLoginRequest = async (
   email: string,
   password: string,
 ) => {
-  await axiosInstance.post(endpoint, {
+  await axiosInstance.post('auth/login', {
     email: email,
     password: password,
   });
