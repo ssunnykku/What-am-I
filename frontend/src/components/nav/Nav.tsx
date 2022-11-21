@@ -20,8 +20,8 @@ function Nav() {
           <li>커뮤니티</li>
         </Link>
 
-        <Link to="/login">
-          <li>프로필</li>
+        <Link to="/mypage">
+          <li>마이페이지</li>
         </Link>
       </ul>
     </Div>
@@ -33,24 +33,20 @@ const Div = styled.div`
     float: left;
     padding: 0 30px;
   }
-
   ul {
     float: right;
   }
-
   ul a {
     padding: 0 30px;
     text-decoration: none;
   }
-
   li {
     display: inline; /* a태그는 글자성격 = inline */
   }
 
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
-
   width: 100%;
   height: 50px;
   line-height: 50px;
