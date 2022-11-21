@@ -4,7 +4,8 @@ const GlobalStyle = createGlobalStyle`
     html,
     body,
     #root {
-        width: auto;
+        width: 100%;
+        margin: 0;
         ul, li {
             list-style: none;
             padding: 0;
