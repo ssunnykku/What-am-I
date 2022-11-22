@@ -1,9 +1,3 @@
-// import { db } from '../models/index';
-// import { User } from '../models/User.model';
-// import { db } from '../models/User.model';
-// const User = db.User;
-// const Op = db.Sequelize.Op;
-// const User = db.users;
 import User from '../models/User.model';
 
 class UserController {

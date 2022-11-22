@@ -16,6 +16,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: '*', credentials: true }));
 
 sequelize.sync({ force: false });
+// db.sequelize
+//   .sync()
+//   .then(() => {
+//     console.log('sql connected');
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 
 app.get('/', (req, res, next) => {
   res.send('Team08 Backend');
