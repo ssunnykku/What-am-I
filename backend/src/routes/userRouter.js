@@ -1,4 +1,3 @@
-// import is from '@sindresorhus/is';
 import { Router } from 'express';
 import { userService } from '../services/userService';
 
@@ -7,12 +6,6 @@ const userAuthRouter = Router();
 // 회원가입
 userAuthRouter.post('/user/register', async (req, res) => {
   try {
-    // if (is.emptyObject(req.body)) {
-    //   throw new Error(
-    //     'header의 Content-Type을 application/json으로 설정해주세요',
-    //   );
-    // }
-
     const nickname = req.body.nickname;
     const email = req.body.email;
     const password = req.body.password;
@@ -22,7 +15,6 @@ userAuthRouter.post('/user/register', async (req, res) => {
       email,
       password,
     });
-    console.log('라우터', newUser);
 
     if (newUser.errorMessage) {
       throw new Error(newUser, errorMessage);
