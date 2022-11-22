@@ -12,7 +12,10 @@ userAuthRouter.post('/user/register', async (req, res) => {
     //     'header의 Content-Type을 application/json으로 설정해주세요',
     //   );
     // }
-    const { nickname, email, password } = req.body;
+
+    const nickname = req.body.nickname;
+    const email = req.body.email;
+    const password = req.body.password;
 
     const newUser = await userService.addUser({
       nickname,

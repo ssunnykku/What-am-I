@@ -1,18 +1,14 @@
-// import User from './User.model';
-// import Sequelize from 'sequelize';
-// import sequelize from '../config/sequelize';
+import User from './User.model';
+import sequelize from '../config/sequelize';
+import Sequelize from 'sequelize';
 
-// const db = {};
+const db = {};
 
-// Object.keys(db).forEach((modelName) => {
-//   if (db[modelName].associate) {
-//     db[modelName].associate(db);
-//   }
-// });
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
 
-// db.sequelize = sequelize;
-// db.Sequelize = Sequelize;
+db.User = User;
 
-// db.User = User(sequelize, Sequelize);
+User.init(sequelize);
 
-// export { db };
+export { db };
