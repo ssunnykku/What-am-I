@@ -3,55 +3,72 @@ import styled from 'styled-components';
 
 function Nav() {
   return (
-    <Div>
-      <Link to="/">
-        <div id="logo">DogNA</div>
-      </Link>
-      <ul>
-        <Link to="/dna">
-          <li>DNA검사</li>
+    <NavBigBox>
+      <NavDiv>
+        <Link to="/">
+          <div id="logo">DogNA</div>
         </Link>
+        <ul>
+          <Link to="/dna">
+            <li>DNA검사</li>
+          </Link>
 
-        <Link to="/board">
-          <li>후기게시판</li>
-        </Link>
+          <Link to="/board">
+            <li>후기게시판</li>
+          </Link>
 
-        <Link to="/community">
-          <li>커뮤니티</li>
-        </Link>
+          <Link to="/community">
+            <li>커뮤니티</li>
+          </Link>
+        </ul>
 
         <Link to="/mypage">
           <li>마이페이지</li>
+        <Link to="/login">
+          <li className="my-page">프로필</li>
         </Link>
-      </ul>
-    </Div>
+      </NavDiv>
+    </NavBigBox>
   );
 }
 
-const Div = styled.div`
+const NavBigBox = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const NavDiv = styled.div`
   #logo {
     float: left;
-    padding: 0 30px;
+    text-decoration: none;
+    color: black;
+    font-size: 25px;
   }
   ul {
-    float: right;
+    display: inline-block;
   }
   ul a {
-    padding: 0 30px;
+    padding: 0 40px;
     text-decoration: none;
+    color: black;
   }
   li {
     display: inline; /* a태그는 글자성격 = inline */
   }
+  .my-page {
+    float: right;
+    text-decoration: none;
+    color: black;
+  }
 
-  position: relative;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  background-color: #aeaeae;
-  box-shadow: 0px -5px 5px 5px black;
+  text-align: center;
+  width: 85%;
+  height: 70px;
+  line-height: 70px;
+  font-family: 'ONE-Mobile-Title';
+  font-size: 20px;
+  padding-top: 60px;
+  padding-bottom: 20px;
 `;
 
 export default Nav;
