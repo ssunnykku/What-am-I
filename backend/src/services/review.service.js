@@ -31,6 +31,17 @@ class reviewService {
       return userId;
     }
   }
+  static async showReviewComments({ reviewId: UserId }) {
+    const reviewId = await Review.findAll({
+      where: { UserId },
+    });
+    if (!reviewId) {
+      const errorMessage = '작성하신 글이 없습니다';
+      return { errorMessage };
+    } else {
+      return reviewId;
+    }
+  }
 }
 
 export { reviewService };

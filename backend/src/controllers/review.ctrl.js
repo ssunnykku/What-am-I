@@ -1,4 +1,4 @@
-import { reviewService } from '../services/reviewService';
+import { reviewService } from '../services/review.service';
 // import Joi from 'joi';
 
 const reviewController = {
@@ -31,6 +31,22 @@ const reviewController = {
         throw new Error(myReviews, errorMessage);
       }
       res.status(201).json(myReviews);
+    } catch (error) {
+      return res.status(400).json({ code: 400, message: error.message });
+    }
+  },
+  reviewComments: async (req, res) => {
+    try {
+      const reviewId = req.params.reviewId;
+      const { description } = req.body;
+
+      const comments = await reviewService.showReviewComments({
+        reviewId,
+      });
+      if (comments.errorMessage) {
+        throw new Error(comments, errorMessage);
+      }
+      res.status(201).json(comments);
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }

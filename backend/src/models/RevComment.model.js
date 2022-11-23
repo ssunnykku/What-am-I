@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize';
 
-module.exports = class Review extends Sequelize.Model {
+module.exports = class RevComment extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
@@ -8,29 +8,18 @@ module.exports = class Review extends Sequelize.Model {
           type: DataTypes.STRING(500),
           allowNull: false,
         },
-        images: {
-          type: DataTypes.TEXT,
-          allowNull: true,
-        },
       },
       {
         sequelize,
-        timestamps: true,
-        tableName: 'reviews',
+        timestamps: false,
+        tableName: 'reviewComments',
         charset: 'utf8mb4',
         collate: 'utf8mb4_general_ci',
       },
     );
   }
   static associate(db) {
-    db.Review.belongsTo(db.User, {
-      foreignKey: 'userId',
-      sourceKey: 'userId',
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    });
-
-    db.Review.hasMany(db.RevComment, {
+    db.RevComment.belongsTo(db.Review, {
       foreignKey: 'reviewId',
       sourcekey: 'id',
       onDelete: 'cascade',

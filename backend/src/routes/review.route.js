@@ -6,6 +6,6 @@ const reviewAuthRouter = Router();
 // 리뷰작성
 reviewAuthRouter.post('/review', reviewController.register);
 reviewAuthRouter.get('/myReviews', reviewController.myReviews);
-reviewAuthRouter.get('/reviews/:', reviewController.myReviews);
+reviewAuthRouter.get('/reviews/:reviewId', reviewController.reviewComments);
 
 export { reviewAuthRouter };
