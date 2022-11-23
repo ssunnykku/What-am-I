@@ -24,4 +24,8 @@ export default {
 
     return selectedCommunities;
   },
+
+  async createCommunity(name, communityImage, introduction) {
+    return Community.create({ name, communityImage, introduction });
+  },
 };

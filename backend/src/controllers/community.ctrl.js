@@ -19,5 +19,17 @@ export default {
       next(err);
     }
   },
-  async addCommunity(req, res, next) {},
+  async createCommunity(req, res, next) {
+    const { name, communtyImage, introduction } = req.body;
+    try {
+      await communityService.createCommunity(name, communtyImage, introduction);
+      res.status(201).json({
+        success: true,
+        status: 201,
+        message: 'Successfully CREATE new community',
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
 };
