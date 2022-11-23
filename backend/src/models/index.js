@@ -4,6 +4,7 @@ import Sequelize from 'sequelize';
 import User from './User.model';
 import Review from './Review.model.js';
 import Like from './Like.model';
+import Community from './Community.model';
 
 const db = {};
 
@@ -21,4 +22,4 @@ Like.init(sequelize);
 User.associate(db);
 Review.associate(db);
 
-export { db };
+export { db, Community };

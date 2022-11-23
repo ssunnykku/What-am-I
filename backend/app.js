@@ -6,6 +6,7 @@ import { Sequelize } from 'sequelize';
 import sequelize from './src/config/sequelize';
 import errorMiddleware from './src/middlewares/error';
 import { userAuthRouter } from './src/routes/userRouter';
+import { communityRouter } from './src/routes';
 
 dotenv.config();
 
@@ -16,21 +17,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: '*', credentials: true }));
 
 sequelize.sync({ force: false });
-// db.sequelize
-//   .sync()
-//   .then(() => {
-//     console.log('sql connected');
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
 
-app.get('/', (req, res, next) => {
-  res.send('Team08 Backend');
-});
+app.use('/community', communityRouter);
 
 app.use(userAuthRouter);
-
 app.use(errorMiddleware);
 
 app.listen(process.env.SEVER_PORT, () =>
