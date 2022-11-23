@@ -18,7 +18,7 @@ User.init(sequelize);
 Review.init(sequelize);
 Like.init(sequelize);
 
-User.associate(db);
-Like.associate(db);
+// User.associate(db);
+// Like.associate(db);
 
 export { db };
