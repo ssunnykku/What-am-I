@@ -6,6 +6,7 @@ import { Sequelize } from 'sequelize';
 import sequelize from './src/config/sequelize';
 import errorMiddleware from './src/middlewares/error';
 import { userAuthRouter } from './src/routes/userRouter';
+import { reviewAuthRouter } from './src/routes/reviewRouter';
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.use(userAuthRouter);
+app.use(reviewAuthRouter);
 
 app.use(errorMiddleware);
 
