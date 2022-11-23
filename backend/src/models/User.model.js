@@ -7,6 +7,7 @@ module.exports = class User extends Sequelize.Model {
         userId: {
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
+          unique: true,
         },
         email: {
           type: DataTypes.STRING(40),
@@ -54,9 +55,10 @@ module.exports = class User extends Sequelize.Model {
     );
   }
   static associate(db) {
-    db.User.hasMany(db.Like, {
-      foreignKey: 'userId',
-      sourceKey: 'userId',
-    });
+    // db.User.hasMany(db.Like, {
+    //   foreignKey: 'userId',
+    //   sourceKey: 'userId',
+    // });
+    db.User.hasMany(db.Review);
   }
 };
