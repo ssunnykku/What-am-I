@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { menus } from '../commonConst/NavConst';
 
-function Nav() {
+function NavBar() {
   const [userImg, setUserImg] = useState<string>('/');
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -104,4 +104,4 @@ const NavDiv = styled.div`
   background-color: #e5ebb2;
 `;
 
-export default Nav;
+export default NavBar;

@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CustomSpinner from './components/loader/CustomSpinner';
-import Nav from './components/nav/Nav';
+import NavBar from './components/nav/NavBar';
 
 const MainPage = lazy(() => import('./pages/MainPage'));
 const Community = lazy(() => import('./pages/CommunityPage'));
@@ -14,7 +14,7 @@ const MyRouter = () => {
   return (
     <Suspense fallback={<CustomSpinner />}>
       <BrowserRouter>
-        <Nav />
+        <NavBar />
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/board" element={<ReviewBoard />} />

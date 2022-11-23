@@ -10,7 +10,7 @@ export const enum PAGEVALUE {
   MYCOMMUNITY = 'Mycommunity',
 }
 
-function Mypage() {
+function MyPage() {
   const [value, setValue] = useState<PAGEVALUE>(PAGEVALUE.PROFILE);
 
   const PageHandler = () => {
@@ -43,4 +43,4 @@ const Div = styled.div`
   margin: 0 auto;
 `;
 
-export default Mypage;
+export default MyPage;
