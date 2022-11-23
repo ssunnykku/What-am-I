@@ -53,10 +53,10 @@ module.exports = class User extends Sequelize.Model {
       },
     );
   }
-  // static associate(db) {
-  //   db.User.hasMany(db.Like, {
-  //     foreignKey: 'userId',
-  //     sourceKey: 'userId',
-  //   });
-  // }
+  static associate(db) {
+    db.User.hasMany(db.Like, {
+      foreignKey: 'userId',
+      sourceKey: 'userId',
+    });
+  }
 };

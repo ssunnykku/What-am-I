@@ -1,9 +1,19 @@
 import { userService } from '../services/userService';
+import Joi from 'joi';
 
 const userController = {
   register: async (req, res) => {
     try {
       const { nickname, email, password } = req.body;
+
+      // const schema = Joi.object({
+      //   nickname: Joi.string().required,
+      //   email: Joi.string().required,
+      //   password: Joi.string().required,
+      // });
+
+      // await schema.validateAsync({ nickname, email, password });
+
       const newUser = await userService.addUser({
         nickname,
         email,
