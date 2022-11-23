@@ -1,8 +1,11 @@
 import express from 'express';
+import db from './src/models/index';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import { Sequelize } from 'sequelize';
 import sequelize from './src/config/sequelize';
 import errorMiddleware from './src/middlewares/error';
+import { userAuthRouter } from './src/routes/userRouter';
 
 dotenv.config();
 
@@ -13,10 +16,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: '*', credentials: true }));
 
 sequelize.sync({ force: false });
+// db.sequelize
+//   .sync()
+//   .then(() => {
+//     console.log('sql connected');
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 
 app.get('/', (req, res, next) => {
   res.send('Team08 Backend');
 });
+
+app.use(userAuthRouter);
 
 app.use(errorMiddleware);
 

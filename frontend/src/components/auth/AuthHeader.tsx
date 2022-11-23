@@ -9,6 +9,7 @@ const AuthHeader = () => {
 };
 
 const AuthHeaderWrapper = styled.div`
+  font-family: 'ONE-Mobile-Title';
   text-align: center;
   width: auto;
 `;
