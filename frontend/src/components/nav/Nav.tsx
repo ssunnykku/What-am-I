@@ -74,14 +74,17 @@ const NavDiv = styled.div`
     color: black;
     font-size: 25px;
   }
+
   ul {
     /* display: inline-block; */
   }
+
   ul a {
     margin: 0 40px;
     text-decoration: none;
     color: black;
   }
+
   li {
     display: inline; /* a태그는 글자성격 = inline */
   }
