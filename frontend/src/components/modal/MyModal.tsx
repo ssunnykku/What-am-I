@@ -23,12 +23,12 @@ const MyModal = ({
 
 const MyModalBackdrop = styled.div<{ isOpen: boolean }>`
   position: fixed;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.3);
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 0;
+  z-index: 1;
   ${(props) => (props.isOpen ? 'display: block' : 'display: none')};
 `;
 
@@ -40,8 +40,8 @@ const MyModalWrapper = styled.div`
   left: 50%;
   padding: 1rem;
   text-align: center;
-  tranform: translate(-50%, -50%);
-  bakcground-color: white;
+  transform: translate(-50%, -50%);
+  background-color: white;
 `;
 
 export default MyModal;
