@@ -1,30 +1,62 @@
+import { Menu, MenuItem } from '@mui/material';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { menus } from '../commonConst/NavConst';
 
 function Nav() {
+  const [userImg, setUserImg] = useState<string>('/');
+  const [auth, setAuth] = useState(true);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <NavBigBox>
       <NavDiv>
-        <Link to="/">
-          <div id="logo">DogNA</div>
-        </Link>
         <ul>
-          <Link to="/dna">
-            <li>DNA검사</li>
-          </Link>
-
-          <Link to="/board">
-            <li>후기게시판</li>
-          </Link>
-
-          <Link to="/community">
-            <li>커뮤니티</li>
-          </Link>
+          <li id="logo">
+            <Link to="/">DogNA</Link>
+          </li>
+          {menus.map((value, index) => {
+            return (
+              <li id={value.id} key={index}>
+                <Link to={value.path} key={index}>
+                  {value.title}
+                </Link>
+              </li>
+            );
+          })}
+          <li id="profile" onClick={handleMenu}>
+            닉네임
+          </li>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>
+              <Link to="/mypage">마이페이지</Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>로그아웃</MenuItem>
+          </Menu>
         </ul>
-
-        <Link to="/login">
-          <li className="my-page">프로필</li>
-        </Link>
       </NavDiv>
     </NavBigBox>
   );
@@ -42,31 +74,34 @@ const NavDiv = styled.div`
     color: black;
     font-size: 25px;
   }
+
   ul {
-    display: inline-block;
+    /* display: inline-block; */
   }
+
   ul a {
-    padding: 0 40px;
+    margin: 0 40px;
     text-decoration: none;
     color: black;
   }
+
   li {
     display: inline; /* a태그는 글자성격 = inline */
   }
-  .my-page {
+  #profile {
     float: right;
+    margin-right: 40px;
     text-decoration: none;
     color: black;
   }
 
   text-align: center;
-  width: 85%;
+  width: 100%;
   height: 70px;
   line-height: 70px;
   font-family: 'ONE-Mobile-Title';
   font-size: 20px;
-  padding-top: 60px;
-  padding-bottom: 20px;
+  background-color: #e5ebb2;
 `;
 
 export default Nav;
