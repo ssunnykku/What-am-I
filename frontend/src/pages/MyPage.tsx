@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import Community from '../components/mypage/Community';
 import Profile from '../components/mypage/Profile';
+import Result from '../components/mypage/Result';
 import TabPanel from '../components/mypage/TabPanel';
 
 export const enum PAGEVALUE {
@@ -19,10 +21,10 @@ function MyPage() {
         return <Profile />;
 
       case PAGEVALUE.RESULT:
-        return <div>{PAGEVALUE.RESULT}</div>;
+        return <Result />;
 
       case PAGEVALUE.COMMUNITY:
-        return <div>{PAGEVALUE.COMMUNITY}</div>;
+        return <Community />;
 
       case PAGEVALUE.MYCOMMUNITY:
         return <div>{PAGEVALUE.MYCOMMUNITY}</div>;
