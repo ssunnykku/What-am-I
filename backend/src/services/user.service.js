@@ -62,7 +62,10 @@ class userService {
 
     return loginUser;
   }
-  static async users() {}
+  static async users() {
+    const users = await User.findAll();
+    return users;
+  }
 }
 
 export { userService };
