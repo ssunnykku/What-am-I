@@ -1,2 +1,2 @@
-// 커뮤니티 게시판 게시물 기본 개수
-export const COMMUNITY_PER_PAGE = 6;
+// 커뮤니티 목록 페이지네이션 개수
+export const COMMUNITY_PER_PAGE = 10;

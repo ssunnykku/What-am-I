@@ -5,6 +5,9 @@ import User from './User.model';
 import Review from './Review.model.js';
 import Like from './Like.model';
 import Community from './Community.model';
+import CommunityPost from './CommunityPost.model';
+import CommunityImage from './CommunityImage.model';
+import CommunityComment from './CommunityComment.model';
 
 const db = {};
 
@@ -21,5 +24,6 @@ Like.init(sequelize);
 
 User.associate(db);
 Review.associate(db);
+// join 진행
 
-export { db, Community };
+export { db, Community, CommunityPost, CommunityImage, CommunityComment };

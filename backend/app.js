@@ -2,7 +2,6 @@ import express from 'express';
 import db from './src/models/index';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import { Sequelize } from 'sequelize';
 import sequelize from './src/config/sequelize';
 import errorMiddleware from './src/middlewares/error';
 import { userAuthRouter } from './src/routes/userRouter';
