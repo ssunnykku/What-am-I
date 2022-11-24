@@ -26,6 +26,7 @@ class userController {
   static async login(req, res) {
     try {
       const { email, password } = req.body;
+      console.log('이메일', email);
 
       const user = await userService.getUser({ email, password });
       if (user.errorMessage) {
@@ -35,6 +36,14 @@ class userController {
     } catch (error) {
       console.log();
       return res.status(400).json({ code: 400, message: error.message });
+    }
+  }
+  static async userList(req, res) {
+    try {
+      const users = await userService.users();
+      res.status(200).send(users);
+    } catch (error) {
+      next(error);
     }
   }
 }

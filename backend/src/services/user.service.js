@@ -48,21 +48,21 @@ class userService {
     const token = jwt.sign({ user_id: user.id }, secretKey);
 
     // 반환할 loginuser 객체를 위한 변수 설정
-    const id = user.id;
-    const name = user.name;
-    const description = user.description;
-
+    const userId = user.userId;
+    const nickname = user.nickname;
+    console.log('id', userId);
+    console.log('name', nickname);
     const loginUser = {
       token,
-      id,
+      userId,
       email,
-      name,
-      description,
+      nickname,
       errorMessage: null,
     };
 
     return loginUser;
   }
+  static async users() {}
 }
 
 export { userService };

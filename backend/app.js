@@ -10,7 +10,7 @@ import passportSet from './src/config/passport';
 import session from 'express-session';
 import errorMiddleware from './src/middlewares/error';
 // router
-import { userAuthRouter } from './src/routes/user.router';
+import { userRouter } from './src/routes/user.router';
 import { reviewAuthRouter } from './src/routes/reviewRouter';
 
 dotenv.config();
@@ -48,7 +48,7 @@ app.get(
   },
 );
 
-app.use(userAuthRouter);
+app.use(userRouter);
 app.use(reviewAuthRouter);
 
 app.use(errorMiddleware);
