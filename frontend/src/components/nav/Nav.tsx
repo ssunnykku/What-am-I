@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { font } from '../../assets/styles/common/fonts';
 
 function Nav() {
   return (
@@ -40,13 +41,13 @@ const NavDiv = styled.div`
     float: left;
     text-decoration: none;
     color: black;
-    font-size: 25px;
+    font-size: 2rem;
   }
   ul {
     display: inline-block;
   }
   ul a {
-    padding: 0 40px;
+    padding: 0 2.5rem;
     text-decoration: none;
     color: black;
   }
@@ -61,12 +62,12 @@ const NavDiv = styled.div`
 
   text-align: center;
   width: 85%;
-  height: 70px;
-  line-height: 70px;
-  font-family: 'ONE-Mobile-Title';
-  font-size: 20px;
-  padding-top: 60px;
-  padding-bottom: 20px;
+  height: 4rem;
+  line-height: 5rem;
+  font-family: ${font.bold};
+  font-size: 1.3rem;
+  padding-top: 2.5rem;
+  padding-bottom: 1.6rem;
 `;
 
 export default Nav;
