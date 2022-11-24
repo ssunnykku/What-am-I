@@ -6,6 +6,10 @@ import Review from './Review.model.js';
 import RevComment from './RevComment.model.js';
 
 import Like from './Like.model';
+import Community from './Community.model';
+import CommunityPost from './CommunityPost.model';
+import CommunityImage from './CommunityImage.model';
+import CommunityComment from './CommunityComment.model';
 
 const db = {};
 
@@ -26,4 +30,4 @@ User.associate(db);
 Review.associate(db);
 RevComment.associate(db);
 
-export { db };
+export { db, Community, CommunityPost, CommunityImage, CommunityComment };

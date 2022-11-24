@@ -2,14 +2,14 @@ import express from 'express';
 import db from './src/models/index';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import { Sequelize } from 'sequelize';
 import sequelize from './src/config/sequelize';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import passportSet from './src/config/passport';
 import session from 'express-session';
 import errorMiddleware from './src/middlewares/error';
-// router
+
+import { communityRouter } from './src/routes';
 import { userAuthRouter } from './src/routes/user.router';
 import { reviewAuthRouter } from './src/routes/review.route';
 import { revCommentAuthRouter } from './src/routes/revComment.route';
@@ -37,6 +37,7 @@ app.use(cors({ origin: '*', credentials: true }));
 app.use(cookieParser());
 
 sequelize.sync({ force: false });
+
 app.get(
   '/',
   passport.authenticate('jwt', { session: false }),
@@ -48,7 +49,7 @@ app.get(
     }
   },
 );
-
+app.use('/community', communityRouter);
 app.use(userAuthRouter);
 app.use(reviewAuthRouter);
 app.use(revCommentAuthRouter);
