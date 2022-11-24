@@ -1,16 +1,8 @@
-import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const ResultCard = () => {
   return (
     <>
-      <ResultCardBox></ResultCardBox>
-      <ResultCardBox></ResultCardBox>
-      <ResultCardBox></ResultCardBox>
-      <ResultCardBox></ResultCardBox>
-      <ResultCardBox></ResultCardBox>
-      <ResultCardBox></ResultCardBox>
-      <ResultCardBox></ResultCardBox>
       <ResultCardBox></ResultCardBox>
     </>
   );
@@ -32,7 +24,7 @@ const ResultCardBox = styled.div`
   height: 13rem;
   border: solid 1px black;
   border-radius: 10px;
-  margin: 1rem 1rem;
+  margin: 0.5rem 0.5rem;
   :hover {
     background-color: rgba(0, 0, 0, 0.3);
     animation-duration: 0.25s;

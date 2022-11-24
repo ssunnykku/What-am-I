@@ -3,42 +3,37 @@ import styled, { keyframes } from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import CommuRankingCard from '../components/community/CommuRankingCard';
 import CommuListCard from '../components/community/CommuListCard';
-import CommuMakeModal from '../components/community/CommuMakeModal';
+import MyModal from '../components/modal/MyModal';
+import CommunityMaker from '../components/community/CommunityMaker';
+import { CommonComponentType } from '../types/common/commonComponentType';
 
-// 커뮤니티 목록 (리스트 형태)
-// 커뮤 정보 전부 끌어와서 페이지네이션
-// 셀렉된 커뮤는 나가기 버튼으로 바뀜
-// 커뮤니티 생성 버튼
-
-const CommunityPage = () => {
+const CommunityPage = ({ children }: CommonComponentType) => {
   const [isMakeOpen, handleMakeStateChange] = useModal();
 
   return (
     <>
-      <CommuMakeModal
+      <MyModal
         isOpen={isMakeOpen}
         onModalStateChangeEvent={handleMakeStateChange}
-      ></CommuMakeModal>
+      >
+        <CommunityMaker>{children}</CommunityMaker>
+      </MyModal>
       <CommuBox>
-        <CommuHeader>
+        <Header>
           다양한 댕댕이와 만나 보세요.
           <MakeBtn onClick={handleMakeStateChange}>커뮤니티 만들기</MakeBtn>
-        </CommuHeader>
+        </Header>
         <CommuContainer>
           <LeftBox>
             <SearchBox>검색창</SearchBox>
-            <RankingHeader>인기 커뮤니티(추후 수정)</RankingHeader>
+            <RankingHeader>인기 커뮤니티</RankingHeader>
             <RankingBox>
-              <CommuRankingCard></CommuRankingCard>
-              <CommuRankingCard></CommuRankingCard>
               <CommuRankingCard></CommuRankingCard>
             </RankingBox>
           </LeftBox>
           <RightBox>
             <CommuListHeader>커뮤니티 목록</CommuListHeader>
             <CommuListsBox>
-              <CommuListCard></CommuListCard>
-              <CommuListCard></CommuListCard>
               <CommuListCard></CommuListCard>
             </CommuListsBox>
           </RightBox>
@@ -63,7 +58,7 @@ const CommuBox = styled.div`
   font-family: ${font.normal};
 `;
 
-const CommuHeader = styled.div`
+const Header = styled.div`
   font-size: 1.15rem;
   display: flexbox;
   justify-content: center;
@@ -89,8 +84,6 @@ const MakeBtn = styled.button`
 `;
 
 const CommuContainer = styled.div`
-  /* display: grid;
-  grid-template-columns: 1fr 1fr; */
   display: flex;
   flex-direction: row;
   justify-content: center;

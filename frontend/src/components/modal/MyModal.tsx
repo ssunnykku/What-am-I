@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { CommonComponentType } from '../../types/common/commonComponentType';
+import { font } from '../../assets/styles/common/fonts';
 
 interface MyModalProps extends CommonComponentType {
   isOpen: boolean;
@@ -13,10 +14,8 @@ const MyModal = ({
 }: MyModalProps) => {
   return (
     <MyModalBackdrop isOpen={isOpen}>
-      <MyModalWrapper>
-        {children}
-        <button onClick={onModalStateChangeEvent}>Cancel</button>
-      </MyModalWrapper>
+      {children}
+      <CloseButton onClick={onModalStateChangeEvent}>X</CloseButton>
     </MyModalBackdrop>
   );
 };
@@ -32,16 +31,17 @@ const MyModalBackdrop = styled.div<{ isOpen: boolean }>`
   ${(props) => (props.isOpen ? 'display: block' : 'display: none')};
 `;
 
-const MyModalWrapper = styled.div`
-  width: auto;
-  height: auto;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  padding: 1rem;
-  text-align: center;
-  transform: translate(-50%, -50%);
-  background-color: white;
+const CloseButton = styled.button`
+  float: right;
+  border: none;
+  background: none;
+  margin: 2.5rem 3rem;
+  height: 3rem;
+  width: 3.5rem;
+  font-size: 2.5rem;
+  color: white;
+  cursor: pointer;
+  font-family: ${font.bold};
 `;
 
 export default MyModal;

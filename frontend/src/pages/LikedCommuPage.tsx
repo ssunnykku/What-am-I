@@ -1,25 +1,31 @@
-import React from 'react';
 import styled from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import useModal from '../hooks/modal/useModal';
-import CreateModal from '../components/modal/CreateModal';
+import ResultCard from '../components/reviewBoard/ResultCard';
+import MyModal from '../components/modal/MyModal';
+import WritingEditor from '../components/reviewBoard/WritingEditor';
+import { CommonComponentType } from '../types/common/commonComponentType';
 
-// 커뮤 프로필 사진, 커뮤 이름, 커뮤 소개, 채팅방 버튼
-// 유저들이 쓴 글 목록 (사진 형태)
-
-const LikedCommuPage = () => {
+const LikedCommuPage = ({ children }: CommonComponentType) => {
   const [isCreateOpen, handleCreateStateChange] = useModal();
+  // const [isContentsOpen, handelContentsStateChange] = useModal();
   return (
     <>
-      <CreateModal
+      <MyModal
         isOpen={isCreateOpen}
         onModalStateChangeEvent={handleCreateStateChange}
-      ></CreateModal>
+      >
+        <WritingEditor>{children}</WritingEditor>
+      </MyModal>
+      {/* <Mymodal
+        isOpen={isContentsOpen}
+        onModalStateChangeEvent={handelContentsStateChange}
+      ><ContentsViewer></ContentsViewer></Mymodal> */}
       <BigBox>
         <CommunityBox>
           <IntroBox>
-            <CommuImage></CommuImage>
-            <CommuNameBox>
+            <ImageBox></ImageBox>
+            <NameBox>
               <CommuName>커뮤니티 이름</CommuName>
               <CommuIntro>
                 커뮤니티 소개가 들어가는 칸입니다. 귀여운 내 새끼 나만 볼 수는
@@ -27,14 +33,23 @@ const LikedCommuPage = () => {
                 여러분 마구마구 자랑을 갈겨 주세요!
               </CommuIntro>
               <EditBtn>정보 수정</EditBtn>
-            </CommuNameBox>
+            </NameBox>
             <BtnBox>
               <ChatBtn>채팅방 입장</ChatBtn>
               <WriteBtn onClick={handleCreateStateChange}>글쓰기</WriteBtn>
             </BtnBox>
           </IntroBox>
-          <SmallBox></SmallBox>
-          <ContentsBox></ContentsBox>
+          <SmallBox>
+            <SearchBox>검색창</SearchBox>
+            <InfoBox>
+              <div>좋아요 수</div>
+              <div>게시물 수</div>
+            </InfoBox>
+          </SmallBox>
+          <ContentsBox>
+            <ResultCard></ResultCard>
+          </ContentsBox>
+          <PaginationBox>페이지네이션 자리</PaginationBox>
         </CommunityBox>
       </BigBox>
     </>
@@ -48,36 +63,39 @@ const BigBox = styled.div`
   height: 84vh;
   display: flex;
   justify-content: center;
-`;
-
-const CommunityBox = styled.div`
-  border: solid 1px yellow;
-  width: 60rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  font-family: ${font.normal};
 `;
 
 const IntroBox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
+  align-items: center;
 `;
 
-const CommuImage = styled.div`
-  border: solid 1px orange;
+const CommunityBox = styled.div`
+  background-color: #f2f2f2;
+  width: 60rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ImageBox = styled.div`
+  border: solid 1px black;
   border-radius: 50%;
-  height: 12rem;
-  width: 12rem;
-  margin: 1rem 2.5rem;
+  height: 8rem;
+  width: 8rem;
+  margin: 0rem 2.5rem;
 `;
 
-const CommuNameBox = styled.div`
+const NameBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 30rem;
-  height: 100%;
+  height: 75%;
 `;
 
 const CommuName = styled.div`
@@ -86,18 +104,18 @@ const CommuName = styled.div`
   width: 25rem;
   height: 3rem;
   font-family: ${font.bold};
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   letter-spacing: 0.1rem;
 `;
 
 const CommuIntro = styled.div`
   display: flex;
   align-items: center;
-  width: 29rem;
+  width: 30rem;
   height: 4rem;
   font-family: ${font.normal};
-  font-size: 1.02rem;
-  letter-spacing: 0.1rem;
+  font-size: 0.85rem;
+  line-height: 1.3rem;
 `;
 
 const EditBtn = styled.button`
@@ -113,37 +131,77 @@ const BtnBox = styled.div`
   flex-direction: column;
   align-items: center;
   width: 12.5rem;
+  margin-left: 1rem;
 `;
 
 const ChatBtn = styled.button`
-  width: 7rem;
-  height: 4rem;
-  margin-top: 3rem;
+  position: relative;
+  width: 8rem;
+  height: 3rem;
+  border-radius: 10px;
   border: none;
-  cursor: pointer;
+  background-color: lightgray;
+
+  :after {
+    border-top: 0px solid transparent;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid lightgray;
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 5.5rem;
+  }
 `;
 
 const WriteBtn = styled.button`
   width: 7rem;
-  height: 2.5rem;
-  margin-top: 1.5rem;
+  height: 2rem;
+  margin-top: 1.2rem;
   border: none;
   cursor: pointer;
   border-radius: 20px;
 `;
 
 const SmallBox = styled.div`
-  border: solid 1px pink;
-  height: 4rem;
-  width: 100%;
+  height: 2rem;
+  width: 55rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
 `;
 
 const SearchBox = styled.div`
   border: solid 1px black;
+  height: 1.5rem;
+  width: 25rem;
+`;
+
+const InfoBox = styled.div`
+  height: 2rem;
+  width: 14rem;
+  display: flex;
+  flex-direction: row;
+  div {
+    margin-left: 1rem;
+  }
 `;
 
 const ContentsBox = styled.div`
-  border: solid 1px blue;
   width: 60rem;
-  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+`;
+
+const PaginationBox = styled.div`
+  border: solid 1px black;
+  height: 2rem;
+  width: 35rem;
+  margin-top: 0.7rem;
+  position: absolute;
+  bottom: 3%;
 `;

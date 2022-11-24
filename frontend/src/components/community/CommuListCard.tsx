@@ -1,21 +1,17 @@
-import React from 'react';
 import styled, { keyframes } from 'styled-components';
-
-// 말 그대로 커뮤 하나
-// 이걸 클릭하면 -> 셀렉티드 커뮤로
 
 const CommuListCard = () => {
   return (
     <>
-      <CommuListCardBox>
-        <CommuListImage></CommuListImage>
-        <CommuSmallBox>
+      <ListCardBox>
+        <ListImage></ListImage>
+        <SmallBox>
           <CommuName>댕댕이를 사랑하는 서울 시민들의 모임</CommuName>
           <CommuNum>💙30</CommuNum>
-        </CommuSmallBox>
-        <CommuEntryBtn>입장하기</CommuEntryBtn>
-        <CommuCheckBtn>💙</CommuCheckBtn>
-      </CommuListCardBox>
+        </SmallBox>
+        <EntryBtn>입장하기</EntryBtn>
+        <CheckBtn>💙</CheckBtn>
+      </ListCardBox>
     </>
   );
 };
@@ -31,7 +27,7 @@ const popup = keyframes`
   }
 `;
 
-const CommuListCardBox = styled.div`
+const ListCardBox = styled.div`
   width: 42rem;
   height: 8rem;
   border: solid 1px black;
@@ -47,7 +43,7 @@ const CommuListCardBox = styled.div`
   }
 `;
 
-const CommuListImage = styled.div`
+const ListImage = styled.div`
   width: 6.7rem;
   height: 6.3rem;
   border: solid 1px gray;
@@ -55,7 +51,7 @@ const CommuListImage = styled.div`
   border-radius: 50%;
 `;
 
-const CommuSmallBox = styled.div`
+const SmallBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 1.2rem;
@@ -75,14 +71,14 @@ const CommuNum = styled.div`
   align-items: center;
 `;
 
-const CommuEntryBtn = styled.button`
+const EntryBtn = styled.button`
   width: 8rem;
   height: 2.7rem;
   margin-left: 0.5rem;
   cursor: pointer;
 `;
 
-const CommuCheckBtn = styled.div`
+const CheckBtn = styled.div`
   width: 2rem;
   height: 3rem;
   display: flex;

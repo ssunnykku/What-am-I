@@ -4,30 +4,32 @@ import { font } from '../../assets/styles/common/fonts';
 
 function Nav() {
   return (
-    <NavBigBox>
-      <NavDiv>
-        <Link to="/">
-          <div id="logo">DogNA</div>
-        </Link>
-        <ul>
-          <Link to="/dna">
-            <li>DNA검사</li>
+    <>
+      <NavBigBox>
+        <NavDiv>
+          <Link to="/">
+            <div id="logo">DogNA</div>
           </Link>
+          <ul>
+            <Link to="/dna">
+              <li>DNA검사</li>
+            </Link>
 
-          <Link to="/board">
-            <li>후기게시판</li>
+            <Link to="/board">
+              <li>후기게시판</li>
+            </Link>
+
+            <Link to="/community">
+              <li>커뮤니티</li>
+            </Link>
+          </ul>
+
+          <Link to="/login">
+            <li className="my-page">프로필</li>
           </Link>
-
-          <Link to="/community">
-            <li>커뮤니티</li>
-          </Link>
-        </ul>
-
-        <Link to="/login">
-          <li className="my-page">프로필</li>
-        </Link>
-      </NavDiv>
-    </NavBigBox>
+        </NavDiv>
+      </NavBigBox>
+    </>
   );
 }
 

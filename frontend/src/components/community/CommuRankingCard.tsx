@@ -1,4 +1,3 @@
-import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const CommuRankingCard = () => {
@@ -8,8 +7,7 @@ const CommuRankingCard = () => {
         <CommuImage></CommuImage>
         <CommuDesc>
           <CommuName>댕댕이를 사랑하는 일산인들의 모임</CommuName>
-          {/* <CommuNum>멤버수 10</CommuNum> */}
-          <CommuCheckBtn>💙10</CommuCheckBtn>
+          <CheckBtn>💙10</CheckBtn>
         </CommuDesc>
       </CommuRankingCardBox>
     </>
@@ -62,13 +60,7 @@ const CommuName = styled.div`
   letter-spacing: 1px;
 `;
 
-// const CommuNum = styled.div`
-//   width: 100%;
-//   height: 1.5rem;
-//   margin-top: 0.5rem;
-// `;
-
-const CommuCheckBtn = styled.div`
+const CheckBtn = styled.div`
   height: 2rem;
   width: 3rem;
   float: right;

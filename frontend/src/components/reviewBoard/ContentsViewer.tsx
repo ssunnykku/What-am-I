@@ -1,20 +1,11 @@
+import React from 'react';
 import styled from 'styled-components';
 import { CommonComponentType } from '../../types/common/commonComponentType';
 import { font } from '../../assets/styles/common/fonts';
-import { ModalBackdrop, CloseButton } from './CreateModal';
 
-interface ContentsModalProps extends CommonComponentType {
-  isOpen: boolean;
-  onModalStateChangeEvent: () => void;
-}
-
-const ContentsModal = ({
-  isOpen,
-  onModalStateChangeEvent,
-  children,
-}: ContentsModalProps) => {
+const ContentsViewer = ({ children }: CommonComponentType) => {
   return (
-    <ModalBackdrop isOpen={isOpen}>
+    <React.Fragment>
       <ContentsModalWrapper>
         <AddImage>{children}</AddImage>
         <AddWriting>
@@ -37,17 +28,16 @@ const ContentsModal = ({
           </BottomDiv>
         </AddWriting>
       </ContentsModalWrapper>
-      <CloseButton onClick={onModalStateChangeEvent}>X</CloseButton>
-    </ModalBackdrop>
+    </React.Fragment>
   );
 };
 
-export default ContentsModal;
+export default ContentsViewer;
 
 const ContentsModalWrapper = styled.div`
-  width: 70%;
+  width: 65%;
   height: 80%;
-  max-width: 70rem;
+  max-width: 56rem;
   min-width: 30rem;
   position: fixed;
   top: 50%;

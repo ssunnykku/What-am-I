@@ -1,26 +1,20 @@
+import React from 'react';
 import styled from 'styled-components';
 import { CommonComponentType } from '../../types/common/commonComponentType';
-import { ModalBackdrop, CloseButton } from '../modal/CreateModal';
 import { font } from '../../assets/styles/common/fonts';
 
-interface CommuMakeModalProps extends CommonComponentType {
-  isOpen: boolean;
-  onModalStateChangeEvent: () => void;
-}
-
-const CommuMakeModal = ({
-  isOpen,
-  onModalStateChangeEvent,
-  children,
-}: CommuMakeModalProps) => {
+const CommunityMaker = ({ children }: CommonComponentType) => {
   return (
-    <ModalBackdrop isOpen={isOpen}>
+    <React.Fragment>
       <CommuMakeModalWrapper>
-        <CommuMakeModalHeader>커뮤니티 만들기</CommuMakeModalHeader>
-        <CommuMakeModalMiddle>
+        <ModalHeader>커뮤니티 만들기</ModalHeader>
+        <ModalMiddle>
           <AddImage>
             커뮤니티 대표 이미지
-            <button>사진 등록</button>
+            <button>
+              {children}
+              사진 등록
+            </button>
             <div></div>
           </AddImage>
           <AddName>
@@ -30,17 +24,16 @@ const CommuMakeModal = ({
             커뮤니티 소개글
             <div></div>
           </AddIntro>
-        </CommuMakeModalMiddle>
-        <CommuMakeModalBottom>
+        </ModalMiddle>
+        <ModalBottom>
           <button>완료</button>
-        </CommuMakeModalBottom>
+        </ModalBottom>
       </CommuMakeModalWrapper>
-      <CloseButton onClick={onModalStateChangeEvent}>X</CloseButton>
-    </ModalBackdrop>
+    </React.Fragment>
   );
 };
 
-export default CommuMakeModal;
+export default CommunityMaker;
 
 const CommuMakeModalWrapper = styled.div`
   width: 50%;
@@ -59,7 +52,7 @@ const CommuMakeModalWrapper = styled.div`
   align-items: center;
 `;
 
-const CommuMakeModalHeader = styled.div`
+const ModalHeader = styled.div`
   width: 15rem;
   height: 3.5rem;
   margin-top: 3rem;
@@ -70,7 +63,7 @@ const CommuMakeModalHeader = styled.div`
   font-size: 1.12rem;
 `;
 
-const CommuMakeModalMiddle = styled.div`
+const ModalMiddle = styled.div`
   width: 28rem;
   height: 27rem;
   display: flex;
@@ -126,7 +119,7 @@ const AddIntro = styled.div`
   }
 `;
 
-const CommuMakeModalBottom = styled.div`
+const ModalBottom = styled.div`
   width: 15rem;
   height: 3rem;
   margin-top: 1rem;

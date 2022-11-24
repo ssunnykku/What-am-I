@@ -1,19 +1,11 @@
+import React from 'react';
 import styled from 'styled-components';
 import { CommonComponentType } from '../../types/common/commonComponentType';
 import { font } from '../../assets/styles/common/fonts';
 
-interface CreateModalProps extends CommonComponentType {
-  isOpen: boolean;
-  onModalStateChangeEvent: () => void;
-}
-
-const CreateModal = ({
-  isOpen,
-  onModalStateChangeEvent,
-  children,
-}: CreateModalProps) => {
+const WritingEditor = ({ children }: CommonComponentType) => {
   return (
-    <ModalBackdrop isOpen={isOpen}>
+    <React.Fragment>
       <CreateModalWrapper>
         <ModalHeader>
           새 게시물 작성하기
@@ -37,28 +29,16 @@ const CreateModal = ({
           </AddWriting>
         </ModalContents>
       </CreateModalWrapper>
-      <CloseButton onClick={onModalStateChangeEvent}>X</CloseButton>
-    </ModalBackdrop>
+    </React.Fragment>
   );
 };
 
-export default CreateModal;
-
-export const ModalBackdrop = styled.div<{ isOpen: boolean }>`
-  position: fixed;
-  background-color: rgba(0, 0, 0, 0.6);
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  ${(props) => (props.isOpen ? 'display: block' : 'display: none')};
-`;
+export default WritingEditor;
 
 const CreateModalWrapper = styled.div`
-  width: 60%;
+  width: 55%;
   height: 80%;
-  max-width: 50rem;
+  max-width: 47rem;
   min-width: 30rem;
   position: fixed;
   top: 50%;
@@ -116,17 +96,4 @@ const AddWriting = styled.div`
     padding-top: 3%;
     height: 70%;
   }
-`;
-
-export const CloseButton = styled.button`
-  float: right;
-  border: none;
-  background: none;
-  margin: 2.5rem 3rem;
-  height: 3rem;
-  width: 3.5rem;
-  font-size: 2.5rem;
-  color: white;
-  cursor: pointer;
-  font-family: ${font.bold};
 `;

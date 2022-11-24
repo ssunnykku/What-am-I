@@ -1,26 +1,30 @@
-import useModal from '../hooks/modal/useModal';
-import CreateModal from '../components/modal/CreateModal';
-import ContentsModal from '../components/modal/ContentsModal';
 import styled, { keyframes } from 'styled-components';
+import useModal from '../hooks/modal/useModal';
+import { CommonComponentType } from '../types/common/commonComponentType';
 import ResultCard from '../components/reviewBoard/ResultCard';
 import { font } from '../assets/styles/common/fonts';
+import MyModal from '../components/modal/MyModal';
+import WritingEditor from '../components/reviewBoard/WritingEditor';
+import ContentsViewer from '../components/reviewBoard/ContentsViewer';
 
-const ReviewBoardPage = () => {
+const ReviewBoardPage = ({ children }: CommonComponentType) => {
   const [isCreateOpen, handleCreateStateChange] = useModal();
   const [isContentsOpen, handleContentsModalStateChange] = useModal();
 
   return (
     <>
-      <CreateModal
+      <MyModal
         isOpen={isCreateOpen}
         onModalStateChangeEvent={handleCreateStateChange}
-      ></CreateModal>
-      <ContentsModal
+      >
+        <WritingEditor>{children}</WritingEditor>
+      </MyModal>
+      <MyModal
         isOpen={isContentsOpen}
         onModalStateChangeEvent={handleContentsModalStateChange}
       >
-        컨텐츠
-      </ContentsModal>
+        <ContentsViewer>{children}</ContentsViewer>
+      </MyModal>
       <BoardBox>
         <BoardHeader>
           사람들과 AI 분석 결과를 공유해보세요.
@@ -29,7 +33,7 @@ const ReviewBoardPage = () => {
         <BoardContent>
           <SlideLeftBtn></SlideLeftBtn>
           <CardBox>
-            {/* <button onClick={handleContentsModalStateChange}>결과 카드</button> */}
+            <button onClick={handleContentsModalStateChange}>결과 카드</button>
             <ResultCard></ResultCard>
           </CardBox>
           <SlideRightBtn></SlideRightBtn>
@@ -80,7 +84,7 @@ const CreateBtn = styled.button`
 `;
 
 const BoardContent = styled.div`
-  display: flexbox;
+  display: flex;
   justify-content: center;
   justify-content: space-evenly;
   align-items: center;

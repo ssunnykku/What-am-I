@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { font } from '../common/fonts';
 
 export const CommonMyButton = styled.button`
   width: 100%;
