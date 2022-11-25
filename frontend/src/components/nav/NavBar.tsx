@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { menus } from '../commonConst/NavConst';
+import { font } from '../../assets/styles/common/fonts';
 
 function NavBar() {
   const [userImg, setUserImg] = useState<string>('/');
@@ -65,7 +66,7 @@ const NavDiv = styled.div`
     float: left;
     text-decoration: none;
     color: black;
-    font-size: 25px;
+    font-size: 2rem;
   }
 
   ul {
@@ -73,7 +74,7 @@ const NavDiv = styled.div`
   }
 
   ul a {
-    margin: 0 40px;
+    margin: 0 2.5rem;
     text-decoration: none;
     color: black;
   }
@@ -90,11 +91,13 @@ const NavDiv = styled.div`
 
   text-align: center;
   width: 100%;
-  height: 70px;
-  line-height: 70px;
-  font-family: 'ONE-Mobile-Title';
-  font-size: 20px;
-  background-color: #e5ebb2;
+  height: 4rem;
+  min-width: 50rem;
+  line-height: 5rem;
+  font-family: ${font.bold};
+  font-size: 1.3rem;
+  padding-top: 2.5rem;
+  padding-bottom: 1.6rem;
 `;
 
 export default NavBar;
