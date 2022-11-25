@@ -20,7 +20,7 @@ export default CommuListCard;
 
 const popup = keyframes`
   from {
-    transform: translateY(0.2rem);
+    transform: translateY(0.3rem);
   }
   to {
     transform: translateY(0rem);

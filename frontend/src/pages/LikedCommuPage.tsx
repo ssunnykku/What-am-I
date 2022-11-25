@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import useModal from '../hooks/modal/useModal';
-import ResultCard from '../components/reviewBoard/ResultCard';
+import PuppyCard from '../components/reviewBoard/PuppyCard';
 import MyModal from '../components/modal/MyModal';
 import WritingEditor from '../components/reviewBoard/WritingEditor';
-import { CommonComponentType } from '../types/common/commonComponentType';
+import { SearchBox } from '../assets/styles/common/commonComponentStyle';
 
-const LikedCommuPage = ({ children }: CommonComponentType) => {
+const LikedCommuPage = () => {
   const [isCreateOpen, handleCreateStateChange] = useModal();
   // const [isContentsOpen, handelContentsStateChange] = useModal();
   return (
@@ -15,7 +15,7 @@ const LikedCommuPage = ({ children }: CommonComponentType) => {
         isOpen={isCreateOpen}
         onModalStateChangeEvent={handleCreateStateChange}
       >
-        <WritingEditor>{children}</WritingEditor>
+        <WritingEditor></WritingEditor>
       </MyModal>
       {/* <Mymodal
         isOpen={isContentsOpen}
@@ -40,14 +40,22 @@ const LikedCommuPage = ({ children }: CommonComponentType) => {
             </BtnBox>
           </IntroBox>
           <SmallBox>
-            <SearchBox>검색창</SearchBox>
+            <SearchBox style={{ height: '1.8rem' }}>
+              <input></input>
+              <button>검색</button>
+            </SearchBox>
             <InfoBox>
               <div>좋아요 수</div>
               <div>게시물 수</div>
             </InfoBox>
           </SmallBox>
           <ContentsBox>
-            <ResultCard></ResultCard>
+            <PuppyCard></PuppyCard>
+            <PuppyCard></PuppyCard>
+            <PuppyCard></PuppyCard>
+            <PuppyCard></PuppyCard>
+            <PuppyCard></PuppyCard>
+            <PuppyCard></PuppyCard>
           </ContentsBox>
           <PaginationBox>페이지네이션 자리</PaginationBox>
         </CommunityBox>
@@ -71,6 +79,7 @@ const IntroBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-top: 1rem;
 `;
 
 const CommunityBox = styled.div`
@@ -173,12 +182,6 @@ const SmallBox = styled.div`
   margin-top: 0.5rem;
 `;
 
-const SearchBox = styled.div`
-  border: solid 1px black;
-  height: 1.5rem;
-  width: 25rem;
-`;
-
 const InfoBox = styled.div`
   height: 2rem;
   width: 14rem;
@@ -203,5 +206,5 @@ const PaginationBox = styled.div`
   width: 35rem;
   margin-top: 0.7rem;
   position: absolute;
-  bottom: 3%;
+  bottom: 2%;
 `;

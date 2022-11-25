@@ -18,7 +18,7 @@ export default CommuRankingCard;
 
 const popup = keyframes`
   from {
-    transform: translateY(0.25rem);
+    transform: translateY(0.4rem);
   }
   to {
     transform: translateY(0rem);

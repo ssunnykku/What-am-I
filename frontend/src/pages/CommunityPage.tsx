@@ -5,9 +5,9 @@ import CommuRankingCard from '../components/community/CommuRankingCard';
 import CommuListCard from '../components/community/CommuListCard';
 import MyModal from '../components/modal/MyModal';
 import CommunityMaker from '../components/community/CommunityMaker';
-import { CommonComponentType } from '../types/common/commonComponentType';
+import { SearchBox } from '../assets/styles/common/commonComponentStyle';
 
-const CommunityPage = ({ children }: CommonComponentType) => {
+const CommunityPage = () => {
   const [isMakeOpen, handleMakeStateChange] = useModal();
 
   return (
@@ -16,7 +16,7 @@ const CommunityPage = ({ children }: CommonComponentType) => {
         isOpen={isMakeOpen}
         onModalStateChangeEvent={handleMakeStateChange}
       >
-        <CommunityMaker>{children}</CommunityMaker>
+        <CommunityMaker></CommunityMaker>
       </MyModal>
       <CommuBox>
         <Header>
@@ -25,15 +25,22 @@ const CommunityPage = ({ children }: CommonComponentType) => {
         </Header>
         <CommuContainer>
           <LeftBox>
-            <SearchBox>검색창</SearchBox>
+            <SearchBox style={{ marginTop: '2rem' }}>
+              <input></input>
+              <button>검색</button>
+            </SearchBox>
             <RankingHeader>인기 커뮤니티</RankingHeader>
             <RankingBox>
+              <CommuRankingCard></CommuRankingCard>
+              <CommuRankingCard></CommuRankingCard>
               <CommuRankingCard></CommuRankingCard>
             </RankingBox>
           </LeftBox>
           <RightBox>
             <CommuListHeader>커뮤니티 목록</CommuListHeader>
             <CommuListsBox>
+              <CommuListCard></CommuListCard>
+              <CommuListCard></CommuListCard>
               <CommuListCard></CommuListCard>
             </CommuListsBox>
           </RightBox>
@@ -97,13 +104,13 @@ const LeftBox = styled.div`
   align-items: center;
 `;
 
-const SearchBox = styled.div`
-  width: 23rem;
-  height: 2rem;
-  line-height: 2rem;
-  border: solid 1px black;
-  margin-top: 1.9rem;
-`;
+// const SearchBox = styled.div`
+//   width: 23rem;
+//   height: 2rem;
+//   line-height: 2rem;
+//   border: solid 1px black;
+//   margin-top: 1.9rem;
+// `;
 
 const RankingHeader = styled.div`
   width: 23rem;

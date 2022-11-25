@@ -34,7 +34,6 @@ const MainContent = styled.div`
   width: 100%;
   height: 82vh;
   font-family: ${font.bold};
-  /* border: solid 1px red; */
   display: flex;
   flex-direction: row;
 `;
@@ -59,6 +58,7 @@ const MainImage = styled.div`
 
 const MainLetterBox = styled.div`
   width: 58%;
+  min-width: 30rem;
   padding-left: 6rem;
   padding-top: 8rem;
 `;

@@ -1,25 +1,25 @@
 import styled, { keyframes } from 'styled-components';
 
-const ResultCard = () => {
+const PuppyCard = () => {
   return (
     <>
-      <ResultCardBox></ResultCardBox>
+      <PuppyCardBox></PuppyCardBox>
     </>
   );
 };
 
-export default ResultCard;
+export default PuppyCard;
 
 const popup = keyframes`
   from {
-    transform: translateY(0.25rem);
+    transform: translateY(0.3rem);
   }
   to {
     transform: translateY(0rem);
   }
 `;
 
-const ResultCardBox = styled.div`
+const PuppyCardBox = styled.div`
   width: 14rem;
   height: 13rem;
   border: solid 1px black;

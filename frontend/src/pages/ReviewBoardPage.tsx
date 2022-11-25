@@ -1,13 +1,13 @@
 import styled, { keyframes } from 'styled-components';
 import useModal from '../hooks/modal/useModal';
-import { CommonComponentType } from '../types/common/commonComponentType';
-import ResultCard from '../components/reviewBoard/ResultCard';
+import PuppyCard from '../components/reviewBoard/PuppyCard';
 import { font } from '../assets/styles/common/fonts';
+import { SearchBox } from '../assets/styles/common/commonComponentStyle';
 import MyModal from '../components/modal/MyModal';
 import WritingEditor from '../components/reviewBoard/WritingEditor';
 import ContentsViewer from '../components/reviewBoard/ContentsViewer';
 
-const ReviewBoardPage = ({ children }: CommonComponentType) => {
+const ReviewBoardPage = () => {
   const [isCreateOpen, handleCreateStateChange] = useModal();
   const [isContentsOpen, handleContentsModalStateChange] = useModal();
 
@@ -17,13 +17,13 @@ const ReviewBoardPage = ({ children }: CommonComponentType) => {
         isOpen={isCreateOpen}
         onModalStateChangeEvent={handleCreateStateChange}
       >
-        <WritingEditor>{children}</WritingEditor>
+        <WritingEditor></WritingEditor>
       </MyModal>
       <MyModal
         isOpen={isContentsOpen}
         onModalStateChangeEvent={handleContentsModalStateChange}
       >
-        <ContentsViewer>{children}</ContentsViewer>
+        <ContentsViewer></ContentsViewer>
       </MyModal>
       <BoardBox>
         <BoardHeader>
@@ -33,11 +33,21 @@ const ReviewBoardPage = ({ children }: CommonComponentType) => {
         <BoardContent>
           <SlideLeftBtn></SlideLeftBtn>
           <CardBox>
-            <button onClick={handleContentsModalStateChange}>결과 카드</button>
-            <ResultCard></ResultCard>
+            {/* <button onClick={handleContentsModalStateChange}>결과 카드</button> */}
+            <PuppyCard></PuppyCard>
+            <PuppyCard></PuppyCard>
+            <PuppyCard></PuppyCard>
+            <PuppyCard></PuppyCard>
+            <PuppyCard></PuppyCard>
+            <PuppyCard></PuppyCard>
+            <PuppyCard></PuppyCard>
+            <PuppyCard></PuppyCard>
           </CardBox>
           <SlideRightBtn></SlideRightBtn>
-          <SearchBox>검색창</SearchBox>
+          <SearchBox style={{ position: 'absolute', bottom: '5%' }}>
+            <input></input>
+            <button>검색</button>
+          </SearchBox>
         </BoardContent>
       </BoardBox>
     </>
@@ -62,7 +72,7 @@ const BoardHeader = styled.div`
   font-size: 1.15rem;
   display: flexbox;
   justify-content: center;
-  margin-top: 1.8rem;
+  margin-top: 2rem;
   letter-spacing: 1px;
 `;
 
@@ -84,10 +94,11 @@ const CreateBtn = styled.button`
 `;
 
 const BoardContent = styled.div`
-  display: flex;
+  display: flexbox;
   justify-content: center;
   justify-content: space-evenly;
   align-items: center;
+  margin-top: 4rem;
 `;
 
 const CardBox = styled.div`
@@ -96,16 +107,8 @@ const CardBox = styled.div`
   justify-content: space-evenly;
   flex-wrap: wrap;
   width: 73rem;
+  min-width: 70rem;
   height: 100%;
-  margin-top: 1.25rem;
-`;
-
-const SearchBox = styled.div`
-  width: 25rem;
-  height: 2rem;
-  position: absolute;
-  border: solid 1px black;
-  bottom: 5%;
 `;
 
 const SlideRightBtn = styled.div`
