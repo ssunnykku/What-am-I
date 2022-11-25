@@ -94,7 +94,7 @@ class userController {
       const PORT = process.env.SEVER_PORT;
       const profileImg = `http://localhost:${PORT}/${image}`;
 
-      const uploadedImage = await userService.updateImage({
+      await userService.updateImage({
         profileImg,
         userId,
       });
@@ -107,8 +107,18 @@ class userController {
       res.status(200).send({
         success: true,
         message: '이미지가 저장되었습니다.',
+        userId,
         profileImg,
       });
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async select(req, res, next) {
+    try {
+      const userId = req.params.userId;
+      const findUser = await userService.findUserId({ userId });
+      res.status(200).send(findUser);
     } catch (error) {
       next(error);
     }

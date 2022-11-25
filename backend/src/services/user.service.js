@@ -123,5 +123,9 @@ class userService {
     );
     return;
   }
+  static async findUserId({ userId }) {
+    const user = await User.findOne({ where: { userId: userId } });
+    return user;
+  }
 }
 export { userService };

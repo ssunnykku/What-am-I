@@ -20,6 +20,6 @@ userRouter.patch(
   upload.single('profileImg'),
   userController.setImage,
 );
-// userRouter.get('/users/:userId', userController.select);
+userRouter.get('/users/:userId', loginRequired, userController.select);
 
 export { userRouter };
