@@ -1,20 +1,29 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import CustomSpinner from './components/loader/CustomSpinner';
+import NavBar from './components/nav/NavBar';
 
-const Nav = lazy(() => import('./components/nav/Nav'));
+const MainPage = lazy(() => import('./pages/MainPage'));
+const Community = lazy(() => import('./pages/CommunityPage'));
 const ReviewBoard = lazy(() => import('./pages/ReviewBoardPage'));
 const Login = lazy(() => import('./pages/LoginPage'));
 const Register = lazy(() => import('./pages/RegisterPage'));
+const MyPage = lazy(() => import('./pages/MyPage'));
+const LikedCommunity = lazy(() => import('./pages/LikedCommuPage'));
 
 const MyRouter = () => {
   return (
-    <Suspense>
+    <Suspense fallback={<CustomSpinner />}>
       <BrowserRouter>
-        <Nav />
+        <NavBar />
         <Routes>
+          <Route path="/" element={<MainPage />} />
           <Route path="/board" element={<ReviewBoard />} />
+          <Route path="/community" element={<Community />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/likedcommunity" element={<LikedCommunity />} />
         </Routes>
       </BrowserRouter>
     </Suspense>
