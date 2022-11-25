@@ -1,9 +1,13 @@
 import styled, { keyframes } from 'styled-components';
 
-const PuppyCard = () => {
+interface PuppyCardProps {
+  onCardModalClickEvent: () => void;
+}
+
+const PuppyCard = ({ onCardModalClickEvent }: PuppyCardProps) => {
   return (
     <>
-      <PuppyCardBox></PuppyCardBox>
+      <PuppyCardBox onClick={onCardModalClickEvent}></PuppyCardBox>
     </>
   );
 };

@@ -16,7 +16,7 @@ const CommunityPage = () => {
         isOpen={isMakeOpen}
         onModalStateChangeEvent={handleMakeStateChange}
       >
-        <CommunityMaker></CommunityMaker>
+        <CommunityMaker />
       </MyModal>
       <CommuBox>
         <Header>
@@ -31,21 +31,16 @@ const CommunityPage = () => {
             </SearchBox>
             <RankingHeader>인기 커뮤니티</RankingHeader>
             <RankingBox>
-              <CommuRankingCard></CommuRankingCard>
-              <CommuRankingCard></CommuRankingCard>
-              <CommuRankingCard></CommuRankingCard>
+              <CommuRankingCard />
             </RankingBox>
           </LeftBox>
           <RightBox>
             <CommuListHeader>커뮤니티 목록</CommuListHeader>
             <CommuListsBox>
-              <CommuListCard></CommuListCard>
-              <CommuListCard></CommuListCard>
-              <CommuListCard></CommuListCard>
+              <CommuListCard />
             </CommuListsBox>
           </RightBox>
         </CommuContainer>
-        {/* <button onClick={handleContentsModalStateChange}>결과 카드</button> */}
       </CommuBox>
     </>
   );

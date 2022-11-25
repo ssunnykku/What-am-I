@@ -1,34 +1,36 @@
-import React from 'react';
 import styled from 'styled-components';
-import { CommonComponentType } from '../../types/common/commonComponentType';
 import { font } from '../../assets/styles/common/fonts';
 
-const ContentsViewer = ({ children }: CommonComponentType) => {
+const ContentsViewer = () => {
   return (
-    <React.Fragment>
-      <ContentsModalWrapper>
-        <AddImage>{children}</AddImage>
-        <AddWriting>
+    <ContentsModalWrapper>
+      <AddImage></AddImage>
+      <AddWriting>
+        <TopDiv>
           <div className="user-name">유저 프로필 사진 + 닉네임</div>
-          <div className="user-contents">글 보이는 창</div>
-          <BottomDiv>
-            <div className="like">🤍10</div>
-            <div className="date">12월 17일</div>
-            <form className="comment">
-              댓글 달기
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  console.log(e);
-                }}
-              >
-                게시
-              </button>
-            </form>
-          </BottomDiv>
-        </AddWriting>
-      </ContentsModalWrapper>
-    </React.Fragment>
+          <ButtonBox>
+            <button>수정</button>
+            <button>삭제</button>
+          </ButtonBox>
+        </TopDiv>
+        <div className="user-contents">글 보이는 창</div>
+        <BottomDiv>
+          <div className="like">🤍10</div>
+          <div className="date">12월 17일</div>
+          <form className="comment">
+            댓글 달기
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                console.log(e);
+              }}
+            >
+              게시
+            </button>
+          </form>
+        </BottomDiv>
+      </AddWriting>
+    </ContentsModalWrapper>
   );
 };
 
@@ -37,8 +39,8 @@ export default ContentsViewer;
 const ContentsModalWrapper = styled.div`
   width: 65%;
   height: 80%;
-  max-width: 56rem;
-  min-width: 30rem;
+  max-width: 57rem;
+  min-width: 40rem;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -70,6 +72,30 @@ const AddWriting = styled.div`
     padding-left: 3%;
     padding-top: 3%;
     height: 70%;
+  }
+`;
+
+const TopDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+
+const ButtonBox = styled.div`
+  width: 8rem;
+  height: 3rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+
+  button {
+    width: 3rem;
+    height: 1.5rem;
+    border: 0;
+    margin-top: 0.5rem;
   }
 `;
 

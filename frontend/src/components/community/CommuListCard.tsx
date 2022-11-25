@@ -1,6 +1,9 @@
 import styled, { keyframes } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const CommuListCard = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <ListCardBox>
@@ -9,7 +12,9 @@ const CommuListCard = () => {
           <CommuName>댕댕이를 사랑하는 서울 시민들의 모임</CommuName>
           <CommuNum>💙30</CommuNum>
         </SmallBox>
-        <EntryBtn>입장하기</EntryBtn>
+        <EntryBtn onClick={() => navigate('/likedcommunity')}>
+          입장하기
+        </EntryBtn>
         <CheckBtn>💙</CheckBtn>
       </ListCardBox>
     </>

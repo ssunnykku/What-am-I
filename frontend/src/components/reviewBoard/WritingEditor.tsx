@@ -1,35 +1,30 @@
-import React from 'react';
 import styled from 'styled-components';
-import { CommonComponentType } from '../../types/common/commonComponentType';
 import { font } from '../../assets/styles/common/fonts';
 
-const WritingEditor = ({ children }: CommonComponentType) => {
+const WritingEditor = () => {
   return (
-    <React.Fragment>
-      <CreateModalWrapper>
-        <ModalHeader>
-          새 게시물 작성하기
-          <ModalHeaderBtn>공유하기</ModalHeaderBtn>
-        </ModalHeader>
-        <ModalContents>
-          <AddImage>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                console.log(e);
-              }}
-            >
-              이미지 선택
-            </button>
-            {children}
-          </AddImage>
-          <AddWriting>
-            <div className="user-name">유저 프로필 사진 + 닉네임</div>
-            <form className="writing">글쓰는 인풋창 + 이모티콘 삽입</form>
-          </AddWriting>
-        </ModalContents>
-      </CreateModalWrapper>
-    </React.Fragment>
+    <CreateModalWrapper>
+      <ModalHeader>
+        새 게시물 작성하기
+        <ModalHeaderBtn>공유하기</ModalHeaderBtn>
+      </ModalHeader>
+      <ModalContents>
+        <AddImage>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              console.log(e);
+            }}
+          >
+            이미지 선택
+          </button>
+        </AddImage>
+        <AddWriting>
+          <div className="user-name">유저 프로필 사진 + 닉네임</div>
+          <form className="writing">글쓰는 인풋창 + 이모티콘 삽입</form>
+        </AddWriting>
+      </ModalContents>
+    </CreateModalWrapper>
   );
 };
 

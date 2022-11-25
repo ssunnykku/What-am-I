@@ -1,35 +1,28 @@
-import React from 'react';
 import styled from 'styled-components';
-import { CommonComponentType } from '../../types/common/commonComponentType';
 import { font } from '../../assets/styles/common/fonts';
 
-const CommunityMaker = ({ children }: CommonComponentType) => {
+const CommunityMaker = () => {
   return (
-    <React.Fragment>
-      <CommuMakeModalWrapper>
-        <ModalHeader>커뮤니티 만들기</ModalHeader>
-        <ModalMiddle>
-          <AddImage>
-            커뮤니티 대표 이미지
-            <button>
-              {children}
-              사진 등록
-            </button>
-            <div></div>
-          </AddImage>
-          <AddName>
-            커뮤니티 명<div></div>
-          </AddName>
-          <AddIntro>
-            커뮤니티 소개글
-            <div></div>
-          </AddIntro>
-        </ModalMiddle>
-        <ModalBottom>
-          <button>완료</button>
-        </ModalBottom>
-      </CommuMakeModalWrapper>
-    </React.Fragment>
+    <CommuMakeModalWrapper>
+      <ModalHeader>커뮤니티 만들기</ModalHeader>
+      <ModalMiddle>
+        <AddImage>
+          커뮤니티 대표 이미지
+          <button>사진 등록</button>
+          <div></div>
+        </AddImage>
+        <AddName>
+          커뮤니티 명<div></div>
+        </AddName>
+        <AddIntro>
+          커뮤니티 소개글
+          <div></div>
+        </AddIntro>
+      </ModalMiddle>
+      <ModalBottom>
+        <button>완료</button>
+      </ModalBottom>
+    </CommuMakeModalWrapper>
   );
 };
 

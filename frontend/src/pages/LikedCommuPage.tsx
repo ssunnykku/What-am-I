@@ -5,26 +5,30 @@ import PuppyCard from '../components/reviewBoard/PuppyCard';
 import MyModal from '../components/modal/MyModal';
 import WritingEditor from '../components/reviewBoard/WritingEditor';
 import { SearchBox } from '../assets/styles/common/commonComponentStyle';
+import ContentsViewer from '../components/reviewBoard/ContentsViewer';
 
 const LikedCommuPage = () => {
   const [isCreateOpen, handleCreateStateChange] = useModal();
-  // const [isContentsOpen, handelContentsStateChange] = useModal();
+  const [isContentsOpen, handelContentsStateChange] = useModal();
+
   return (
     <>
       <MyModal
         isOpen={isCreateOpen}
         onModalStateChangeEvent={handleCreateStateChange}
       >
-        <WritingEditor></WritingEditor>
+        <WritingEditor />
       </MyModal>
-      {/* <Mymodal
+      <MyModal
         isOpen={isContentsOpen}
         onModalStateChangeEvent={handelContentsStateChange}
-      ><ContentsViewer></ContentsViewer></Mymodal> */}
+      >
+        <ContentsViewer />
+      </MyModal>
       <BigBox>
         <CommunityBox>
           <IntroBox>
-            <ImageBox></ImageBox>
+            <ImageBox />
             <NameBox>
               <CommuName>커뮤니티 이름</CommuName>
               <CommuIntro>
@@ -50,12 +54,9 @@ const LikedCommuPage = () => {
             </InfoBox>
           </SmallBox>
           <ContentsBox>
-            <PuppyCard></PuppyCard>
-            <PuppyCard></PuppyCard>
-            <PuppyCard></PuppyCard>
-            <PuppyCard></PuppyCard>
-            <PuppyCard></PuppyCard>
-            <PuppyCard></PuppyCard>
+            <PuppyCard
+              onCardModalClickEvent={handelContentsStateChange}
+            ></PuppyCard>
           </ContentsBox>
           <PaginationBox>페이지네이션 자리</PaginationBox>
         </CommunityBox>

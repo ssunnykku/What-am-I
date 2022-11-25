@@ -17,13 +17,13 @@ const ReviewBoardPage = () => {
         isOpen={isCreateOpen}
         onModalStateChangeEvent={handleCreateStateChange}
       >
-        <WritingEditor></WritingEditor>
+        <WritingEditor />
       </MyModal>
       <MyModal
         isOpen={isContentsOpen}
         onModalStateChangeEvent={handleContentsModalStateChange}
       >
-        <ContentsViewer></ContentsViewer>
+        <ContentsViewer />
       </MyModal>
       <BoardBox>
         <BoardHeader>
@@ -31,19 +31,13 @@ const ReviewBoardPage = () => {
           <CreateBtn onClick={handleCreateStateChange}>글쓰기</CreateBtn>
         </BoardHeader>
         <BoardContent>
-          <SlideLeftBtn></SlideLeftBtn>
+          <SlideLeftBtn />
           <CardBox>
-            {/* <button onClick={handleContentsModalStateChange}>결과 카드</button> */}
-            <PuppyCard></PuppyCard>
-            <PuppyCard></PuppyCard>
-            <PuppyCard></PuppyCard>
-            <PuppyCard></PuppyCard>
-            <PuppyCard></PuppyCard>
-            <PuppyCard></PuppyCard>
-            <PuppyCard></PuppyCard>
-            <PuppyCard></PuppyCard>
+            <PuppyCard
+              onCardModalClickEvent={handleContentsModalStateChange}
+            ></PuppyCard>
           </CardBox>
-          <SlideRightBtn></SlideRightBtn>
+          <SlideRightBtn />
           <SearchBox style={{ position: 'absolute', bottom: '5%' }}>
             <input></input>
             <button>검색</button>
