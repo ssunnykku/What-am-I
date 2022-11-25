@@ -11,7 +11,7 @@ const postUserValidation = Joi.object({
 });
 
 class userController {
-  static async register(req, res) {
+  static async register(req, res, next) {
     try {
       // const { nickname, email, password } = req.body;
       const { nickname, email, password } =
@@ -28,12 +28,10 @@ class userController {
       }
       res.status(201).json(newUser);
     } catch (error) {
-      return res.status(400).send({
-        errorMessage: '요청한 데이터 형식이 올바르지 않습니다.',
-      });
+      next(error);
     }
   }
-  static async login(req, res) {
+  static async login(req, res, next) {
     try {
       const { email, password } = req.body;
 
@@ -43,11 +41,10 @@ class userController {
       }
       res.status(201).send(user);
     } catch (error) {
-      console.log();
-      return res.status(400).json({ code: 400, message: error.message });
+      next(error);
     }
   }
-  static async userList(req, res) {
+  static async userList(req, res, next) {
     try {
       const users = await userService.users();
       if (users.errorMessage) {
@@ -59,7 +56,7 @@ class userController {
     }
   }
 
-  static async current(req, res) {
+  static async current(req, res, next) {
     try {
       // jwt 이용 id로 사용자 찾기
       const userId = req.currentUserId;
@@ -71,7 +68,7 @@ class userController {
       }
       res.status(200).send(user);
     } catch (error) {
-      return res.status(400).json({ code: 400, message: error.message });
+      next(error);
     }
   }
 
