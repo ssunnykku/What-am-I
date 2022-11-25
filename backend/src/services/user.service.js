@@ -11,10 +11,10 @@ class userService {
       return { errorMessage };
     }
 
-    if (password !== checkPassword) {
-      const errorMessage = '비밀번호가 일치하지 않습니다.';
-      return errorMessage;
-    }
+    // if (password !== checkPassword) {
+    //   const errorMessage = '비밀번호가 일치하지 않습니다.';
+    //   return errorMessage;
+    // }
 
     // 비밀번호 해쉬화
     const hashedPassword = await bcrypt.hash(password, 10);

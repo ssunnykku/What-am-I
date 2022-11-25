@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import { userController } from '../controllers/user.ctrl';
 import { loginRequired } from '../middlewares/loginRequired.js';
+import { userValidator } from '../middlewares/userValidator';
 
 const userRouter = Router();
 
-userRouter.post('/users', userController.register);
+userRouter.post('/users', userValidator, userController.register);
 userRouter.post('/users/login', userController.login);
 userRouter.get('/users', userController.userList);
 userRouter.get('/users/current', loginRequired, userController.current);
