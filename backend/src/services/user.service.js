@@ -2,14 +2,18 @@ import User from '../models/User.model.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-// 닉네임만 수정되도록 바꿀 것 (비밀번호가 db의 비밀번호와 같은지만 비교하면 됨)
 class userService {
-  static async addUser({ nickname, email, password }) {
+  static async addUser({ nickname, email, password, checkPassword }) {
     const user = await User.findOne({ where: { email: email } });
 
     if (user) {
       const errorMessage = '사용중인 이메일입니다.';
       return { errorMessage };
+    }
+
+    if (password !== checkPassword) {
+      const errorMessage = '비밀번호가 일치하지 않습니다.';
+      return errorMessage;
     }
 
     // 비밀번호 해쉬화

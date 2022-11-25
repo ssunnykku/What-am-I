@@ -7,20 +7,21 @@ const postUserValidation = Joi.object({
   nickname: Joi.string().required(),
   email: Joi.string().email().required(),
   password: Joi.string().required(),
-  // confirmPassword: Joi.string().required(),
+  checkPassword: Joi.string().required(),
 });
 
 class userController {
   static async register(req, res, next) {
     try {
       // const { nickname, email, password } = req.body;
-      const { nickname, email, password } =
+      const { nickname, email, password, checkPassword } =
         await postUserValidation.validateAsync(req.body);
 
       const newUser = await userService.addUser({
         nickname,
         email,
         password,
+        checkPassword,
       });
 
       if (newUser.errorMessage) {
