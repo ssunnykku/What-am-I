@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { font } from '../common/fonts';
 
 export const CommonMyButton = styled.button`
   width: 100%;
@@ -33,4 +34,17 @@ export const AuthFormInputContainer = styled.div`
 export const AuthFormButtonContainer = styled.div`
   width: 100%;
   margin-top: 1rem;
+`;
+
+export const SearchBox = styled.div`
+  width: 23rem;
+  height: 2rem;
+  display: flex;
+  flex-direction: row;
+  input {
+    width: 18.5rem;
+  }
+  button {
+    width: 4.5rem;
+  }
 `;

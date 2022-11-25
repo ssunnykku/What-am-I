@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { font } from '../../assets/styles/common/fonts';
 
 const AuthHeader = () => {
   return (
@@ -9,7 +10,7 @@ const AuthHeader = () => {
 };
 
 const AuthHeaderWrapper = styled.div`
-  font-family: 'ONE-Mobile-Title';
+  font-family: ${font.bold};
   text-align: center;
   width: auto;
 `;

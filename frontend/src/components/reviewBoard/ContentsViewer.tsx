@@ -1,25 +1,18 @@
+import React from 'react';
 import styled from 'styled-components';
 import { CommonComponentType } from '../../types/common/commonComponentType';
+import { font } from '../../assets/styles/common/fonts';
 
-interface ContentsModalProps extends CommonComponentType {
-  isOpen: boolean;
-  onModalStateChangeEvent: () => void;
-}
-
-const ContentsModal = ({
-  isOpen,
-  onModalStateChangeEvent,
-  children,
-}: ContentsModalProps) => {
+const ContentsViewer = ({ children }: CommonComponentType) => {
   return (
-    <ContentsModalBackdrop isOpen={isOpen}>
+    <React.Fragment>
       <ContentsModalWrapper>
         <AddImage>{children}</AddImage>
         <AddWriting>
           <div className="user-name">유저 프로필 사진 + 닉네임</div>
           <div className="user-contents">글 보이는 창</div>
           <BottomDiv>
-            <div className="like">🤍</div>
+            <div className="like">🤍10</div>
             <div className="date">12월 17일</div>
             <form className="comment">
               댓글 달기
@@ -35,29 +28,17 @@ const ContentsModal = ({
           </BottomDiv>
         </AddWriting>
       </ContentsModalWrapper>
-      <CloseButton onClick={onModalStateChangeEvent}>X</CloseButton>
-    </ContentsModalBackdrop>
+    </React.Fragment>
   );
 };
 
-export default ContentsModal;
-
-const ContentsModalBackdrop = styled.div<{ isOpen: boolean }>`
-  position: fixed;
-  background-color: rgba(0, 0, 0, 0.4);
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  ${(props) => (props.isOpen ? 'display: block' : 'display: none')};
-`;
+export default ContentsViewer;
 
 const ContentsModalWrapper = styled.div`
-  width: 70%;
+  width: 65%;
   height: 80%;
-  max-width: 1100px;
-  min-width: 400px;
+  max-width: 56rem;
+  min-width: 30rem;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -66,7 +47,7 @@ const ContentsModalWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   border-radius: 2%;
-  font-family: 'ONE-Mobile-Regular';
+  font-family: ${font.normal};
 `;
 
 const AddImage = styled.div`
@@ -79,8 +60,8 @@ const AddWriting = styled.div`
   position: relative;
 
   .user-name {
-    height: 70px;
-    line-height: 75px;
+    height: 4.3rem;
+    line-height: 5rem;
     padding-left: 3%;
   }
 
@@ -96,10 +77,10 @@ const BottomDiv = styled.div`
   .like {
     float: left;
     margin: 0 1%;
-    font-size: 22px;
+    font-size: 1rem;
   }
   .date {
-    font-size: 14px;
+    font-size: 1rem;
     float: right;
     margin: 1% 2%;
   }
@@ -108,32 +89,19 @@ const BottomDiv = styled.div`
     position: absolute;
     bottom: 0;
     width: 97%;
-    height: 50px;
-    line-height: 50px;
+    height: 3rem;
+    line-height: 3rem;
     padding-left: 3%;
     button {
       float: right;
       background: none;
       border: none;
       cursor: pointer;
-      height: 50px;
-      line-height: 50px;
-      font-family: 'ONE-Mobile-Title';
-      padding: 0 25px;
+      height: 3rem;
+      line-height: 3rem;
+      font-family: ${font.bold};
+      padding: 0 2rem;
       border-left: 1px solid lightgray;
     }
   }
-`;
-
-const CloseButton = styled.button`
-  float: right;
-  border: none;
-  background: none;
-  margin: 30px 40px;
-  height: 40px;
-  width: 40px;
-  font-size: 35px;
-  color: white;
-  cursor: pointer;
-  font-family: 'ONE-Mobile-Title';
 `;
