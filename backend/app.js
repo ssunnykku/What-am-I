@@ -55,6 +55,7 @@ sequelize.sync({ force: false });
 //     }
 //   },
 // );
+app.use(express.static('uploads'));
 
 app.use(userRouter);
 app.use(reviewAuthRouter);
