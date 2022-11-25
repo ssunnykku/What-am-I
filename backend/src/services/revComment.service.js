@@ -12,15 +12,15 @@ class revCommentService {
     return createdNewComment;
   }
 
-  static async showAllRevComments({ reviewId: id }) {
-    const reviewId = await RevComment.findAll({
-      where: { id },
+  static async showAllRevComments({ _reviewId: reviewId }) {
+    const _reviewId = await RevComment.findAll({
+      where: { reviewId },
     });
-    if (!reviewId) {
+    if (!_reviewId) {
       const errorMessage = '댓글이 없습니다';
       return { errorMessage };
     } else {
-      return reviewId;
+      return _reviewId;
     }
   }
 }

@@ -21,11 +21,11 @@ const revCommentController = {
   },
   showComments: async (req, res) => {
     try {
-      const reviewId = req.params.reviewId;
-      // const { reviewId } = req.body;
+      const _reviewId = req.params.reviewId;
+      console.log(_reviewId);
 
       const revComment = await revCommentService.showAllRevComments({
-        reviewId,
+        _reviewId,
       });
       if (revComment.errorMessage) {
         throw new Error(revComment, errorMessage);
