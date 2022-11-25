@@ -110,6 +110,18 @@ class userService {
     );
     return user;
   }
-}
 
+  static async updateImage({ profileImg, userId }) {
+    const user = await User.findOne({ where: { userId: userId } });
+    await User.update(
+      { profileImg: profileImg },
+      {
+        where: {
+          userId: user.userId,
+        },
+      },
+    );
+    return;
+  }
+}
 export { userService };

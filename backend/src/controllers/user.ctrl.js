@@ -86,6 +86,33 @@ class userController {
       next(error);
     }
   }
+  static async setImage(req, res, next) {
+    try {
+      const userId = req.params.userId;
+      const image = req.file.path;
+      // console.log(req.file);
+      const PORT = process.env.SEVER_PORT;
+      const profileImg = `http://localhost:${PORT}/${image}`;
+
+      const uploadedImage = await userService.updateImage({
+        profileImg,
+        userId,
+      });
+
+      if (image === undefined) {
+        res
+          .status(400)
+          .send({ success: false, message: '이미지가 존재하지 않습니다.' });
+      }
+      res.status(200).send({
+        success: true,
+        message: '이미지가 저장되었습니다.',
+        profileImg,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export { userController };
