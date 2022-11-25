@@ -49,8 +49,10 @@ module.exports = class User extends Sequelize.Model {
         sequelize,
         timestamps: true,
         tableName: 'users',
+        underscored: false,
         charset: 'utf8mb4',
         collate: 'utf8mb4_general_ci',
+        paranoid: true,
       },
     );
   }

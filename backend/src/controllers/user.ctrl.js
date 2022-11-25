@@ -6,9 +6,6 @@ class userController {
   static async register(req, res, next) {
     try {
       const { nickname, email, password, checkPassword } = req.body;
-      // const { nickname, email, password, checkPassword } =
-      //   await registerSchema.validateAsync(req.body);
-
       const newUser = await userService.addUser({
         nickname,
         email,
