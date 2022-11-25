@@ -11,7 +11,6 @@ import session from 'express-session';
 import errorMiddleware from './src/middlewares/error';
 //** router */
 import { userRouter } from './src/routes/user.router';
-import { reviewAuthRouter } from './src/routes/reviewRouter';
 import { reviewAuthRouter } from './src/routes/review.route';
 import { revCommentAuthRouter } from './src/routes/revComment.route';
 
