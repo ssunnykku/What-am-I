@@ -43,6 +43,7 @@ const Div = styled.div`
   width: 960px;
   max-width: 80%;
   margin: 0 auto;
+  margin-top: 10px;
 `;
 
 export default MyPage;

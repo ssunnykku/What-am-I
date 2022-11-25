@@ -8,28 +8,46 @@ function Profile() {
 
   return (
     <Div>
-      <Avatar sx={{ width: 80, height: 80 }} src={userImg} />
-      <div>
+      <Avatar sx={{ width: 150, height: 150 }} src={userImg} />
+      <InputContainer>
         닉네임
         <CommonMyInput></CommonMyInput>
-      </div>
-      <div>
         비밀번호
         <CommonMyInput></CommonMyInput>
-      </div>
-      <ProfileBtn>수정</ProfileBtn>
-      <ProfileBtn>삭제</ProfileBtn>
+      </InputContainer>
+      <ButtonContainer>
+        <ProfileBtn>수정</ProfileBtn>
+        <ProfileBtn>삭제</ProfileBtn>
+      </ButtonContainer>
     </Div>
   );
 }
 
 const Div = styled.div`
   margin: 0 auto;
+  margin-top: 50px;
   width: 400px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
   text-align: center;
+  gap: 30px;
+`;
+
+const InputContainer = styled.div`
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+`;
+
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 `;
 
 const ProfileBtn = styled.button`

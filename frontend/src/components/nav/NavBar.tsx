@@ -18,54 +18,47 @@ function NavBar() {
   };
 
   return (
-    <NavBigBox>
-      <NavDiv>
-        <ul>
-          <li id="logo">
-            <Link to="/">DogNA</Link>
-          </li>
-          {menus.map((value, index) => {
-            return (
-              <li id={value.id} key={index}>
-                <Link to={value.path} key={index}>
-                  {value.title}
-                </Link>
-              </li>
-            );
-          })}
-          <li id="profile" onClick={handleMenu}>
-            닉네임
-          </li>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'left',
-            }}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>
-              <Link to="/mypage">마이페이지</Link>
-            </MenuItem>
-            <MenuItem onClick={handleClose}>로그아웃</MenuItem>
-          </Menu>
-        </ul>
-      </NavDiv>
-    </NavBigBox>
+    <NavDiv>
+      <ul>
+        <li id="logo">
+          <Link to="/">DogNA</Link>
+        </li>
+        {menus.map((value, index) => {
+          return (
+            <li id={value.id} key={index}>
+              <Link to={value.path} key={index}>
+                {value.title}
+              </Link>
+            </li>
+          );
+        })}
+        <li id="profile" onClick={handleMenu}>
+          닉네임
+        </li>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>
+            <Link to="/mypage">마이페이지</Link>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>로그아웃</MenuItem>
+        </Menu>
+      </ul>
+    </NavDiv>
   );
 }
-
-const NavBigBox = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 
 const NavDiv = styled.div`
   #logo {
