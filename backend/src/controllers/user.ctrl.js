@@ -1,9 +1,9 @@
 import { userService } from '../services/user.service.js';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 import passport from 'passport';
+import { loginRequired } from '../middlewares/loginRequired.js';
+
 // import Joi from 'joi';
-dotenv.config();
 
 class userController {
   static async register(req, res) {
@@ -26,9 +26,8 @@ class userController {
   static async login(req, res) {
     try {
       const { email, password } = req.body;
-      console.log('이메일', email);
 
-      const user = await userService.getUser({ email, password });
+      const user = await userService.findUser({ email, password });
       if (user.errorMessage) {
         throw new Error(user.errorMessage);
       }
@@ -41,9 +40,28 @@ class userController {
   static async userList(req, res) {
     try {
       const users = await userService.users();
+      if (users.errorMessage) {
+        throw new Error(users.errorMessage);
+      }
       res.status(200).send(users);
     } catch (error) {
       next(error);
+    }
+  }
+
+  static async current(req, res) {
+    try {
+      // jwt 이용 id로 사용자 찾기
+      const userId = req.currentUserId;
+
+      const user = await userService.getUser({ userId });
+
+      if (user.errorMessage) {
+        throw new Error(user.errorMessage);
+      }
+      res.status(200).send(user);
+    } catch (error) {
+      return res.status(400).json({ code: 400, message: error.message });
     }
   }
 }

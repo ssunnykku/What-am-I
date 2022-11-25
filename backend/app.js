@@ -17,36 +17,43 @@ dotenv.config();
 
 const app = express();
 
-app.use(
-  session({
-    resave: false,
-    // saveUninitialized: false,
-    secret: 'team08',
-    // cookie: {
-    //   httpOnly: true,
-    //   secure: false,
-    // },
-  }),
-);
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(
+//   session({
+//     resave: false,
+//     // saveUninitialized: false,
+//     secret: 'team08',
+//     // cookie: {
+//     //   httpOnly: true,
+//     //   secure: false,
+//     // },
+//   }),
+// );
+// app.use(passport.initialize());
+// app.use(passport.session());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: '*', credentials: true }));
-app.use(cookieParser());
+// app.use(cookieParser());
 
+app.get('/', async (req, res, next) => {
+  try {
+    res.send('Team08 Backend');
+  } catch (error) {
+    next(error);
+  }
+});
 sequelize.sync({ force: false });
-app.get(
-  '/',
-  passport.authenticate('jwt', { session: false }),
-  async (req, res, next) => {
-    try {
-      res.send('Team08 Backend');
-    } catch (error) {
-      next(error);
-    }
-  },
-);
+// app.get(
+//   '/',
+//   passport.authenticate('jwt', { session: false }),
+//   async (req, res, next) => {
+//     try {
+//       res.send('Team08 Backend');
+//     } catch (error) {
+//       next(error);
+//     }
+//   },
+// );
 
 app.use(userRouter);
 app.use(reviewAuthRouter);

@@ -25,7 +25,7 @@ class userService {
     return createdNewUser;
   }
 
-  static async getUser({ email, password }) {
+  static async findUser({ email, password }) {
     const user = await User.findOne({ where: { email: email } });
     if (!user) {
       const errorMessage = '해당 이메일은 가입 내역이 없습니다.';
@@ -44,14 +44,13 @@ class userService {
       return { errorMessage };
     }
 
-    const secretKey = process.env.JWT_SECRET_KEY || 'jwt-secret-key';
-    const token = jwt.sign({ user_id: user.id }, secretKey);
+    const secretKey = process.env.JWT_SECRET || 'secret-key';
+    const token = jwt.sign({ userId: user.userId }, secretKey, {
+      expiresIn: '7d',
+    });
 
-    // 반환할 loginuser 객체를 위한 변수 설정
     const userId = user.userId;
     const nickname = user.nickname;
-    console.log('id', userId);
-    console.log('name', nickname);
     const loginUser = {
       token,
       userId,
@@ -65,6 +64,16 @@ class userService {
   static async users() {
     const users = await User.findAll();
     return users;
+  }
+
+  static async getUser({ userId }) {
+    const user = await User.findOne({ where: { userId: userId } });
+
+    if (!user) {
+      const errorMessage = '가입내역이 없습니다.';
+      return { errorMessage };
+    }
+    return user;
   }
 }
 
