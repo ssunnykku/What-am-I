@@ -20,7 +20,7 @@ module.exports = class User extends Sequelize.Model {
           unique: true,
         },
         password: {
-          type: DataTypes.STRING(100),
+          type: DataTypes.STRING,
           allowNull: false,
           validate: {
             notNull: {

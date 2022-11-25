@@ -4,12 +4,12 @@ import jwt from 'jsonwebtoken';
 
 class userService {
   static async addUser({ nickname, email, password }) {
-    // const user = await UserController.findByUserEmail({ email });
+    const user = await User.findOne({ where: { email: email } });
 
-    // if (user) {
-    //   const errorMessage = '사용중인 이메일입니다.';
-    //   return { errorMessage };
-    // }
+    if (user) {
+      const errorMessage = '사용중인 이메일입니다.';
+      return { errorMessage };
+    }
 
     // 비밀번호 해쉬화
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -25,7 +25,7 @@ class userService {
     return createdNewUser;
   }
 
-  static async getUser({ email, password }) {
+  static async findUser({ email, password }) {
     const user = await User.findOne({ where: { email: email } });
     if (!user) {
       const errorMessage = '해당 이메일은 가입 내역이 없습니다.';
@@ -37,31 +37,63 @@ class userService {
       password,
       correctPasswordHash,
     );
-    // console.log('bcrypt.compare', isPasswordCorrect);
+    console.log(isPasswordCorrect);
     if (!isPasswordCorrect) {
       const errorMessage =
         '비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.';
       return { errorMessage };
     }
 
-    const secretKey = process.env.JWT_SECRET_KEY || 'jwt-secret-key';
-    const token = jwt.sign({ user_id: user.id }, secretKey);
+    const secretKey = process.env.JWT_SECRET || 'secret-key';
+    const token = jwt.sign({ userId: user.userId }, secretKey, {
+      expiresIn: '7d',
+    });
 
-    // 반환할 loginuser 객체를 위한 변수 설정
-    const id = user.id;
-    const name = user.name;
-    const description = user.description;
-
+    const userId = user.userId;
+    const nickname = user.nickname;
     const loginUser = {
       token,
-      id,
+      userId,
       email,
-      name,
-      description,
+      nickname,
       errorMessage: null,
     };
 
     return loginUser;
+  }
+  static async users() {
+    const users = await User.findAll();
+    return users;
+  }
+
+  static async getUser({ userId }) {
+    const user = await User.findOne({ where: { userId: userId } });
+
+    if (!user) {
+      const errorMessage = '가입내역이 없습니다.';
+      return { errorMessage };
+    }
+    return user;
+  }
+
+  static async setUser({ userId, nickname, password }) {
+    const user = await User.findOne({ where: { userId: userId } });
+
+    if (!user) {
+      const errorMessage = '가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+      return { errorMessage };
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const updateUser = await User.update(
+      { nickname, password: hashedPassword },
+      {
+        where: {
+          userId: user.userId,
+        },
+      },
+    );
+    return user;
   }
 }
 
