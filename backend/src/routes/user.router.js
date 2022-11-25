@@ -8,7 +8,8 @@ userRouter.post('/users', userController.register);
 userRouter.post('/users/login', userController.login);
 userRouter.get('/users', userController.userList);
 userRouter.get('/users/current', loginRequired, userController.current);
-// userRouter.put('/users/:userId', userController.edit);
+// 회원정보 수정
+userRouter.put('/users/:userId', loginRequired, userController.edit);
 // userRouter.patch('/users/:userId/image', userController.setImage);
 // userRouter.get('/users/:userId', userController.select);
 

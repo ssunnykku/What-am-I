@@ -1,8 +1,6 @@
 import { userService } from '../services/user.service.js';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
-import { loginRequired } from '../middlewares/loginRequired.js';
-
 // import Joi from 'joi';
 
 class userController {
@@ -62,6 +60,31 @@ class userController {
       res.status(200).send(user);
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
+    }
+  }
+
+  static async edit(req, res, next) {
+    try {
+      // const userId = req.currentUserId,
+      const userId = req.params.userId;
+      console.log(userId);
+
+      // 수정할 사용자 정보
+      const { nickname, password } = req.body ?? null;
+
+      const updatedUser = await userService.setUser({
+        userId,
+        nickname,
+        password,
+      });
+
+      if (updatedUser.errorMessage) {
+        throw new Error(updatedUser.errorMessage);
+      }
+
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      next(error);
     }
   }
 }
