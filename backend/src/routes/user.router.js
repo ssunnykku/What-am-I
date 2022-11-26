@@ -8,7 +8,7 @@ const userRouter = Router();
 const upload = addImage('uploads');
 
 userRouter.post('/users', userValidator, userController.register);
-userRouter.post('/users/login', userController.login);
+// userRouter.post('/users/login', userController.login);
 userRouter.get('/users', userController.userList);
 userRouter.get('/users/current', loginRequired, userController.current);
 userRouter.put('/users/:userId', loginRequired, userController.edit);

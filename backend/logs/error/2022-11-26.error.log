@@ -29,3 +29,6 @@
 2022-11-26 15:28:01 error: GET, /users (Error)
 2022-11-26 15:29:01 error: GET, /users (Error)
 2022-11-26 15:29:19 error: GET, /users (Error)
+2022-11-26 16:05:47 [undefined] error: PUT, /users/:userId
+2022-11-26 16:06:03 [undefined] error: PUT, /users/:userId
+2022-11-26 16:06:24 [undefined] error: POST /users
