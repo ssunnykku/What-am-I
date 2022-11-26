@@ -25,11 +25,11 @@ class userService {
       email,
       password: hashedPassword,
     });
-    createdNewUser.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
+    createdNewUser.errorMessage = null;
 
-    return createdNewUser;
+    return `Successfully create a user account`;
+    // return createdNewUser;
   }
-
   static async findUser({ email, password }) {
     const user = await User.findOne({ where: { email: email } });
     if (!user) {
@@ -64,8 +64,15 @@ class userService {
       errorMessage: null,
     };
 
-    return loginUser;
+    // return loginUser;
+    return {
+      userId: loginUser.userId,
+      email: loginUser.email,
+      nickname: loginUser.nickname,
+      errorMessage: loginUser.errorMessage,
+    };
   }
+  // 비밀번호 어떻게 감추지??
   static async users() {
     const users = await User.findAll();
     return users;
@@ -78,14 +85,25 @@ class userService {
       const errorMessage = '가입내역이 없습니다.';
       return { errorMessage };
     }
-    return user;
+    // return user;
+    return {
+      id: user.id,
+      userId: user.userId,
+      email: user.email,
+      nickname: user.nickname,
+      profileImg: user.profileImg,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      deletedAt: user.deletedAt,
+      errorMessage: user.errorMessage,
+    };
   }
 
   static async setUser({ userId, nickname, password }) {
     const user = await User.findOne({ where: { userId: userId } });
 
     if (!user) {
-      const errorMessage = '가입 내역이 없습니다. 다시 한 번 확인해 주세요.';
+      const errorMessage = `Cannot find information`;
       return { errorMessage };
     }
     const correctPasswordHash = user.password;
@@ -108,7 +126,16 @@ class userService {
         },
       },
     );
-    return user;
+
+    return {
+      id: user.id,
+      userId: user.userId,
+      email: user.email,
+      nickname: nickname,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      deletedAt: user.deletedAt,
+    };
   }
 
   static async updateImage({ profileImg, userId }) {
@@ -125,7 +152,16 @@ class userService {
   }
   static async findUserId({ userId }) {
     const user = await User.findOne({ where: { userId: userId } });
-    return user;
+    return {
+      id: user.id,
+      userId: user.userId,
+      email: user.email,
+      nickname: user.nickname,
+      profileImg: user.profileImg,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      deletedAt: user.deletedAt,
+    };
   }
 }
 export { userService };

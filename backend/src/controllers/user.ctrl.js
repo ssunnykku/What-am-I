@@ -18,7 +18,7 @@ class userController {
       if (newUser.errorMessage) {
         throw new Error(newUser, errorMessage);
       }
-      res.status(201).json(newUser);
+      return res.status(201).json(newUser);
     } catch (error) {
       logger.error('POST /users (Error)');
       next(error);
@@ -33,7 +33,7 @@ class userController {
       if (user.errorMessage) {
         throw new Error(user.errorMessage);
       }
-      res.status(201).send(user);
+      return res.status(201).send(user);
     } catch (error) {
       logger.error('POST, /users/login(Error)');
       next(error);
@@ -46,7 +46,7 @@ class userController {
       if (users.errorMessage) {
         throw new Error(users.errorMessage);
       }
-      res.status(200).send(users);
+      return res.status(200).send(users);
     } catch (error) {
       logger.error('GET, /users (Error)');
       next(error);
@@ -64,7 +64,7 @@ class userController {
       if (user.errorMessage) {
         throw new Error(user.errorMessage);
       }
-      res.status(200).send(user);
+      return res.status(200).send(user);
     } catch (error) {
       logger.error('GET, /users/current (Error)');
       next(error);
@@ -90,7 +90,7 @@ class userController {
         throw new Error(updatedUser.errorMessage);
       }
 
-      res.status(200).json(updatedUser);
+      return res.status(200).json(updatedUser);
     } catch (error) {
       logger.error('PUT, /users/:userId (Error)');
       next(error);
@@ -115,7 +115,7 @@ class userController {
           .status(400)
           .send({ success: false, message: '이미지가 존재하지 않습니다.' });
       }
-      res.status(200).send({
+      return res.status(200).send({
         success: true,
         message: '이미지가 저장되었습니다.',
         userId,
@@ -131,7 +131,7 @@ class userController {
       // logger.info('GET, /users/:userId');
       const userId = req.params.userId;
       const findUser = await userService.findUserId({ userId });
-      res.status(200).send(findUser);
+      return res.status(200).send(findUser);
     } catch (error) {
       logger.error('GET, /users/:userId (Error)');
       next(error);
