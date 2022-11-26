@@ -6,7 +6,7 @@ import { logger } from '../config/winston';
 class userController {
   static async register(req, res, next) {
     try {
-      // logger.info('POST /users');
+      logger.error('POST /users');
       const { nickname, email, password, checkPassword } = req.body;
       const newUser = await userService.addUser({
         nickname,
@@ -20,13 +20,12 @@ class userController {
       }
       return res.status(201).json(newUser);
     } catch (error) {
-      logger.error('POST /users (Error)');
       next(error);
     }
   }
   static async login(req, res, next) {
     try {
-      // logger.info('POST, /users/login');
+      logger.error('POST, /users/login');
       const { email, password } = req.body;
 
       const user = await userService.findUser({ email, password });
@@ -35,27 +34,25 @@ class userController {
       }
       return res.status(201).send(user);
     } catch (error) {
-      logger.error('POST, /users/login(Error)');
       next(error);
     }
   }
   static async userList(req, res, next) {
     try {
-      // logger.info('GET, /users');
+      logger.error('GET, /users');
       const users = await userService.users();
       if (users.errorMessage) {
         throw new Error(users.errorMessage);
       }
       return res.status(200).send(users);
     } catch (error) {
-      logger.error('GET, /users (Error)');
       next(error);
     }
   }
 
   static async current(req, res, next) {
     try {
-      // logger.info('GET, /users/current');
+      logger.error('GET, /users/current');
       // jwt 이용 id로 사용자 찾기
       const userId = req.currentUserId;
 
@@ -66,14 +63,13 @@ class userController {
       }
       return res.status(200).send(user);
     } catch (error) {
-      logger.error('GET, /users/current (Error)');
       next(error);
     }
   }
 
   static async edit(req, res, next) {
     try {
-      // logger.info('PUT, /users/:userId');
+      logger.error('PUT, /users/:userId');
       const userId = req.params.userId;
       console.log(userId);
 
@@ -92,13 +88,12 @@ class userController {
 
       return res.status(200).json(updatedUser);
     } catch (error) {
-      logger.error('PUT, /users/:userId (Error)');
       next(error);
     }
   }
   static async setImage(req, res, next) {
     try {
-      // logger.info('PATCH, /users/:userId/image');
+      logger.error('PATCH, /users/:userId/image');
       const userId = req.params.userId;
       const image = req.file.path;
       // console.log(req.file);
@@ -122,18 +117,16 @@ class userController {
         profileImg,
       });
     } catch (error) {
-      logger.error('PATCH, /users/:userId/image (Error)');
       next(error);
     }
   }
   static async select(req, res, next) {
     try {
-      // logger.info('GET, /users/:userId');
+      logger.error('GET, /users/:userId');
       const userId = req.params.userId;
       const findUser = await userService.findUserId({ userId });
       return res.status(200).send(findUser);
     } catch (error) {
-      logger.error('GET, /users/:userId (Error)');
       next(error);
     }
   }
