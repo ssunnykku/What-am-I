@@ -51,7 +51,7 @@ class userService {
 
     const secretKey = process.env.JWT_SECRET || 'secret-key';
     const token = jwt.sign({ userId: user.userId }, secretKey, {
-      expiresIn: '7d',
+      expiresIn: process.env.JWT_EXPIRES,
     });
 
     const userId = user.userId;
