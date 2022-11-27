@@ -374,3 +374,227 @@ SyntaxError: C:\Users\sun\Desktop\team08 project\team08-project\backend\src\util
     at Parser.allowInAnd (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:3085:16)
     at Parser.parseExpression (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:220:17)
     at Parser.parseStatementContent (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:540:23)
+2022-11-27 11:17:43 [undefined] error: uncaughtException: C:\Users\sun\Desktop\team08 project\team08-project\backend\src\utils\auth.js: Unexpected token ','. (12:19)
+
+[0m [90m 10 |[39m     [36mconst[39m currentStatus [33m=[39m [32m`로그아웃 상태임, login 보여줘`[39m[33m;[39m[0m
+[0m [90m 11 |[39m     [36mif[39m ([36mthis[39m[33m.[39misOwner(req[33m,[39m res)) {[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m       console[33m.[39mlog([33m,[39mreq[33m.[39muser[33m.[39memail[33m,[39m [32m'로그인 상태임, logout 보여줘'[39m)[33m;[39m[0m
+[0m [90m    |[39m                    [31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m     }[0m
+[0m [90m 14 |[39m     [36mreturn[39m console[33m.[39mlog(currentStatus)[33m;[39m[0m
+[0m [90m 15 |[39m   }[33m,[39m[0m
+SyntaxError: C:\Users\sun\Desktop\team08 project\team08-project\backend\src\utils\auth.js: Unexpected token ','. (12:19)
+
+[0m [90m 10 |[39m     [36mconst[39m currentStatus [33m=[39m [32m`로그아웃 상태임, login 보여줘`[39m[33m;[39m[0m
+[0m [90m 11 |[39m     [36mif[39m ([36mthis[39m[33m.[39misOwner(req[33m,[39m res)) {[0m
+[0m[31m[1m>[22m[39m[90m 12 |[39m       console[33m.[39mlog([33m,[39mreq[33m.[39muser[33m.[39memail[33m,[39m [32m'로그인 상태임, logout 보여줘'[39m)[33m;[39m[0m
+[0m [90m    |[39m                    [31m[1m^[22m[39m[0m
+[0m [90m 13 |[39m     }[0m
+[0m [90m 14 |[39m     [36mreturn[39m console[33m.[39mlog(currentStatus)[33m;[39m[0m
+[0m [90m 15 |[39m   }[33m,[39m[0m
+    at instantiate (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parse-error\credentials.ts:62:21)
+    at toParseError (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parse-error.ts:60:12)
+    at Parser.raise (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\tokenizer\index.ts:1474:19)
+    at Parser.parseExprListItem (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:2702:14)
+    at Parser.parseCallExpressionArguments (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:1043:14)
+    at Parser.parseCoverCallAndAsyncArrowHead (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:893:29)
+    at Parser.parseSubscript (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:782:19)
+    at Parser.parseSubscripts (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:743:19)
+    at Parser.parseExprSubscripts (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:728:17)
+    at Parser.parseUpdate (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:699:21)
+    at Parser.parseMaybeUnary (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:661:23)
+    at Parser.parseMaybeUnaryOrPrivate (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:399:14)
+    at Parser.parseExprOps (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:411:23)
+    at Parser.parseMaybeConditional (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:366:23)
+    at Parser.parseMaybeAssign (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:306:21)
+    at Parser.parseExpressionBase (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:229:23)
+    at callback (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:220:39)
+    at Parser.allowInAnd (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:3085:16)
+    at Parser.parseExpression (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:220:17)
+    at Parser.parseStatementContent (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:540:23)
+    at Parser.parseStatement (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:359:17)
+    at Parser.parseBlockOrModuleBlockBody (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:1241:25)
+    at Parser.parseBlockBody (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:1216:10)
+    at Parser.parseBlock (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:1184:10)
+    at Parser.parseStatementContent (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:459:21)
+    at Parser.parseStatement (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:359:17)
+    at Parser.parseIfStatement (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:901:28)
+    at Parser.parseStatementContent (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:412:21)
+    at Parser.parseStatement (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:359:17)
+    at Parser.parseBlockOrModuleBlockBody (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:1241:25)
+    at Parser.parseBlockBody (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:1216:10)
+    at Parser.parseBlock (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:1184:10)
+    at Parser.parseFunctionBody (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:2564:24)
+    at Parser.parseFunctionBodyAndFinish (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:2533:10)
+    at callback (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:1472:12)
+    at Parser.withSmartMixTopicForbiddingContext (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:3064:14)
+    at Parser.parseFunction (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:1470:10)
+    at Parser.parseFunctionOrFunctionSent (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:1624:17)
+    at Parser.parseExprAtom (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:1198:21)
+    at Parser.parseExprSubscripts (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:722:23)
+    at Parser.parseUpdate (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:699:21)
+    at Parser.parseMaybeUnary (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:661:23)
+    at Parser.parseMaybeUnaryOrPrivate (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:399:14)
+    at Parser.parseExprOps (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:411:23)
+    at Parser.parseMaybeConditional (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:366:23)
+    at Parser.parseMaybeAssign (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:306:21)
+    at callback (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:260:12)
+    at Parser.allowInAnd (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:3090:12)
+    at Parser.parseMaybeAssignAllowIn (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:259:17)
+    at Parser.parseObjectProperty (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:2273:16)
+2022-11-27 12:31:30 [undefined] error: uncaughtException: email is not defined
+ReferenceError: email is not defined
+    at _callee$ (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:95:36)
+    at tryCatch (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1)
+    at Generator.<anonymous> (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1)
+    at Generator.next (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1)
+    at asyncGeneratorStep (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1)
+    at _next (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+2022-11-27 12:59:01 [undefined] error: uncaughtException: _User.default.fondOne is not a function
+TypeError: _User.default.fondOne is not a function
+    at Object.isOwner (C:\Users\sun\Desktop\team08 project\team08-project\backend\src\utils\/auth.js:5:27)
+    at Object.status (C:\Users\sun\Desktop\team08 project\team08-project\backend\src\utils\/auth.js:15:14)
+    at _callee2$ (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:151:8)
+    at tryCatch (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1)
+    at Generator.<anonymous> (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1)
+    at Generator.next (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1)
+    at asyncGeneratorStep (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1)
+    at _next (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1)
+    at C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1
+    at new Promise (<anonymous>)
+    at C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1
+    at C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:158:2
+    at Layer.handle [as handle_request] (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\route.js:144:13)
+    at Route.dispatch (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\route.js:114:3)
+    at Layer.handle [as handle_request] (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\index.js:280:10)
+    at SessionStrategy.strategy.pass (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\passport\lib\middleware\authenticate.js:346:9)
+    at C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\passport\lib\strategies\session.js:69:12
+    at pass (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\passport\lib\authenticator.js:334:31)
+    at done (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\passport\lib\authenticator.js:346:7)
+    at C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:82:21
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+2022-11-27 13:04:50 [undefined] error: uncaughtException: C:\Users\sun\Desktop\team08 project\team08-project\backend\src\utils\auth.js: Unexpected token (6:4)
+
+[0m [90m 4 |[39m   isOwner[33m:[39m [36mfunction[39m (req[33m,[39m res) {[0m
+[0m [90m 5 |[39m     [36mconst[39m findUser [33m=[39m [0m
+[0m[31m[1m>[22m[39m[90m 6 |[39m     [36mif[39m (req[33m.[39muser) {[0m
+[0m [90m   |[39m     [31m[1m^[22m[39m[0m
+[0m [90m 7 |[39m       [36mreturn[39m [36mtrue[39m[33m;[39m[0m
+[0m [90m 8 |[39m     } [36melse[39m {[0m
+[0m [90m 9 |[39m       [36mreturn[39m [36mfalse[39m[33m;[39m[0m
+SyntaxError: C:\Users\sun\Desktop\team08 project\team08-project\backend\src\utils\auth.js: Unexpected token (6:4)
+
+[0m [90m 4 |[39m   isOwner[33m:[39m [36mfunction[39m (req[33m,[39m res) {[0m
+[0m [90m 5 |[39m     [36mconst[39m findUser [33m=[39m [0m
+[0m[31m[1m>[22m[39m[90m 6 |[39m     [36mif[39m (req[33m.[39muser) {[0m
+[0m [90m   |[39m     [31m[1m^[22m[39m[0m
+[0m [90m 7 |[39m       [36mreturn[39m [36mtrue[39m[33m;[39m[0m
+[0m [90m 8 |[39m     } [36melse[39m {[0m
+[0m [90m 9 |[39m       [36mreturn[39m [36mfalse[39m[33m;[39m[0m
+    at instantiate (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parse-error\credentials.ts:62:21)
+    at toParseError (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parse-error.ts:60:12)
+    at Parser.raise (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\tokenizer\index.ts:1474:19)
+    at Parser.unexpected (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\tokenizer\index.ts:1520:16)
+    at Parser.parseExprAtom (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:1349:22)
+    at Parser.parseExprSubscripts (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:722:23)
+    at Parser.parseUpdate (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:699:21)
+    at Parser.parseMaybeUnary (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:661:23)
+    at Parser.parseMaybeUnaryOrPrivate (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:399:14)
+    at Parser.parseExprOps (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:411:23)
+    at Parser.parseMaybeConditional (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:366:23)
+    at Parser.parseMaybeAssign (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:306:21)
+    at callback (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:260:12)
+    at Parser.allowInAnd (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:3085:16)
+    at Parser.parseMaybeAssignAllowIn (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:259:17)
+    at Parser.parseVar (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:1387:16)
+    at Parser.parseVarStatement (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:1049:10)
+    at Parser.parseStatementContent (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:449:21)
+    at Parser.parseStatement (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:359:17)
+    at Parser.parseBlockOrModuleBlockBody (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:1241:25)
+    at Parser.parseBlockBody (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:1216:10)
+    at Parser.parseBlock (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:1184:10)
+    at Parser.parseFunctionBody (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:2564:24)
+    at Parser.parseFunctionBodyAndFinish (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:2533:10)
+    at callback (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:1472:12)
+    at Parser.withSmartMixTopicForbiddingContext (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:3064:14)
+    at Parser.parseFunction (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\statement.ts:1470:10)
+    at Parser.parseFunctionOrFunctionSent (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:1624:17)
+    at Parser.parseExprAtom (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:1198:21)
+    at Parser.parseExprSubscripts (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:722:23)
+    at Parser.parseUpdate (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:699:21)
+    at Parser.parseMaybeUnary (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:661:23)
+    at Parser.parseMaybeUnaryOrPrivate (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:399:14)
+    at Parser.parseExprOps (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:411:23)
+    at Parser.parseMaybeConditional (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:366:23)
+    at Parser.parseMaybeAssign (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:306:21)
+    at callback (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:260:12)
+    at Parser.allowInAnd (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:3090:12)
+    at Parser.parseMaybeAssignAllowIn (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:259:17)
+    at Parser.parseObjectProperty (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:2273:16)
+    at Parser.parseObjPropValue (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:2332:12)
+    at Parser.parsePropertyDefinition (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:2176:17)
+    at Parser.parseObjectLike (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:2050:21)
+    at Parser.parseExprAtom (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:1190:21)
+    at Parser.parseExprSubscripts (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:722:23)
+    at Parser.parseUpdate (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:699:21)
+    at Parser.parseMaybeUnary (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:661:23)
+    at Parser.parseMaybeUnaryOrPrivate (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:399:14)
+    at Parser.parseExprOps (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:411:23)
+    at Parser.parseMaybeConditional (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\parser\src\parser\expression.ts:366:23)
+2022-11-27 13:21:52 [undefined] error: uncaughtException: Cannot read properties of undefined (reading 'email')
+TypeError: Cannot read properties of undefined (reading 'email')
+    at Object.isOwner (C:\Users\sun\Desktop\team08 project\team08-project\backend\src\utils\/auth.js:4:18)
+    at Object.status (C:\Users\sun\Desktop\team08 project\team08-project\backend\src\utils\/auth.js:12:14)
+    at _callee2$ (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:151:8)
+    at tryCatch (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1)
+    at Generator.<anonymous> (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1)
+    at Generator.next (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1)
+    at asyncGeneratorStep (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1)
+    at _next (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1)
+    at C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1
+    at new Promise (<anonymous>)
+    at C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:2:1
+    at C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:158:2
+    at Layer.handle [as handle_request] (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\route.js:144:13)
+    at Route.dispatch (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\route.js:114:3)
+    at Layer.handle [as handle_request] (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\index.js:280:10)
+    at SessionStrategy.strategy.pass (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\passport\lib\middleware\authenticate.js:346:9)
+    at SessionStrategy.authenticate (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\passport\lib\strategies\session.js:75:10)
+    at attempt (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\passport\lib\middleware\authenticate.js:369:16)
+    at authenticate (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\passport\lib\middleware\authenticate.js:370:7)
+    at Layer.handle [as handle_request] (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\index.js:280:10)
+    at initialize (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\passport\lib\middleware\initialize.js:98:5)
+    at Layer.handle [as handle_request] (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express\lib\router\index.js:280:10)
+    at C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express-session\index.js:506:7
+    at Query.<anonymous> (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\express-mysql-session\index.js:172:12)
+    at Query.<anonymous> (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\underscore\underscore-node-f-pre.js:1206:19)
+    at Query.<anonymous> (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\mysql\lib\Connection.js:526:10)
+    at Query._callback (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\mysql\lib\Connection.js:488:16)
+    at Query.Sequence.end (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\mysql\lib\protocol\sequences\Sequence.js:83:24)
+    at Query._handleFinalResultPacket (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\mysql\lib\protocol\sequences\Query.js:149:8)
+    at Query.EofPacket (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\mysql\lib\protocol\sequences\Query.js:133:8)
+    at Protocol._parsePacket (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\mysql\lib\protocol\Protocol.js:291:23)
+    at Parser._parsePacket (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\mysql\lib\protocol\Parser.js:433:10)
+    at Parser.write (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\mysql\lib\protocol\Parser.js:43:10)
+    at Protocol.write (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\mysql\lib\protocol\Protocol.js:38:16)
+    at Socket.<anonymous> (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\mysql\lib\Connection.js:88:28)
+    at Socket.<anonymous> (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\mysql\lib\Connection.js:526:10)
+    at Socket.emit (node:events:513:28)
+    at Socket.emit (node:domain:489:12)

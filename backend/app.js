@@ -59,9 +59,10 @@ import passport from 'passport';
 import passportLocal from 'passport-local';
 const LocalStrategy = passportLocal.Strategy;
 import User from './src/models/User.model';
+import bcrypt from 'bcrypt';
 
 const authData = {
-  email: 'a22ddl@naver.com',
+  email: '1234567@naver.com',
   password: 'aaAAxdA!@',
 };
 // passport를 설치한 것
@@ -77,7 +78,10 @@ passport.serializeUser(function (user, done) {
 
 passport.deserializeUser(function (id, done) {
   console.log('deserializeUser', id);
-  done(null, authData);
+  User.findOne({ where: { email: id } })
+    .then((user) => done(null, user))
+    .catch((err) => done(err));
+  // done(null, findUser);
 });
 
 // 로그인 성공/실패 조건
@@ -89,13 +93,16 @@ passport.use(
       passwordField: 'password',
     },
     // done에 따라 성공 실패를 보여줄 수 있다.
-    function (username, password, done) {
+    async function (username, password, done) {
       console.log('LocalStrategy', username, password);
-      if (username === authData.email) {
+      const findUser = await User.findOne({ where: { email: username } });
+      // console.log('맞니?', username);
+      if (findUser) {
         console.log(1);
-        if (password === authData.password) {
+        const result = await bcrypt.compare(password, findUser.password);
+        if (result) {
           console.log(2); //
-          return done(null, authData);
+          return done(null, findUser);
         } else {
           console.log(3); // 비번틀림
           return done(null, false, {
@@ -110,10 +117,29 @@ passport.use(
       }
     },
   ),
+  //     if (username === authData.email) {
+  //       console.log(1);
+  //       if (password === authData.password) {
+  //         console.log(2); //
+  //         return done(null, authData);
+  //       } else {
+  //         console.log(3); // 비번틀림
+  //         return done(null, false, {
+  //           message: 'Incorrect password',
+  //         });
+  //       }
+  //     } else {
+  //       console.log(4); // email 틀림
+  //       return done(null, false, {
+  //         message: 'Incorrect username',
+  //       });
+  //     }
+  //   },
+  // ),
 );
 
 app.post(
-  '/users/login',
+  '/users/login_process',
   passport.authenticate('local', {
     successRedirect: '/', // 성공시
     failureRedirect: '/users/login', // 실패 시 재진입
@@ -132,7 +158,7 @@ app.get('/', async (req, res, next) => {
 });
 sequelize.sync({ force: false });
 
-// app.use(userRouter);
+app.use(userRouter);
 app.use(reviewAuthRouter);
 app.use(revCommentAuthRouter);
 

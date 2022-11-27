@@ -1,6 +1,7 @@
 module.exports = {
   isOwner: function (req, res) {
-    if (req.user) {
+    console.log('auth에 데이터 오니', req.user);
+    if (req.user.email) {
       return true;
     } else {
       return false;
