@@ -3,22 +3,24 @@ import db from './src/models/index';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import sequelize from './src/config/sequelize';
-//**Passport */
+import flash from 'connect-flash';
 import cookieParser from 'cookie-parser';
-
-// import passportSet from './src/config/passport';
 import session from 'express-session';
 import sessionMysql from 'express-mysql-session';
+
+//**Passport */
+import passportLocal from './src/utils/passport/passport';
+import auth from './src/utils/passport/auth';
+
 //**Router */
 import { communityRouter } from './src/routes';
-import { userAuthRouter } from './src/routes/user.router';
+import { authRouter } from './src/routes/auth.router';
 import { userRouter } from './src/routes/user.router';
 import { reviewAuthRouter } from './src/routes/review.route';
 import { revCommentAuthRouter } from './src/routes/revComment.route';
 //**middleware */
 import errorMiddleware from './src/middlewares/error';
 
-import auth from './src/utils/auth';
 dotenv.config();
 
 const app = express();
@@ -28,7 +30,7 @@ app.use(express.static('uploads'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: '*', credentials: true }));
-// app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // app.use(compression());
 const MySqlStore = sessionMysql(session);
@@ -53,104 +55,27 @@ app.use(
     store: sessionStore,
   }),
 );
+app.use(flash());
 
 // session 다음에 passport가 와야 함
-import passport from 'passport';
-import passportLocal from 'passport-local';
-const LocalStrategy = passportLocal.Strategy;
-import User from './src/models/User.model';
-import bcrypt from 'bcrypt';
-
-const authData = {
-  email: '1234567@naver.com',
-  password: 'aaAAxdA!@',
-};
-// passport를 설치한 것
-app.use(passport.initialize());
-// session 미들웨어를 활용해 그 위에서 동작함
-app.use(passport.session());
-
-// 세션을 처리하는 방법에 대한 얘기
-passport.serializeUser(function (user, done) {
-  console.log('serializeUser', user);
-  done(null, user.email);
-});
-
-passport.deserializeUser(function (id, done) {
-  console.log('deserializeUser', id);
-  User.findOne({ where: { email: id } })
-    .then((user) => done(null, user))
-    .catch((err) => done(err));
-  // done(null, findUser);
-});
-
-// 로그인 성공/실패 조건
-passport.use(
-  new LocalStrategy(
-    {
-      // 프론트 form 속성의 각 name값
-      usernameField: 'email',
-      passwordField: 'password',
-    },
-    // done에 따라 성공 실패를 보여줄 수 있다.
-    async function (username, password, done) {
-      console.log('LocalStrategy', username, password);
-      const findUser = await User.findOne({ where: { email: username } });
-      // console.log('맞니?', username);
-      if (findUser) {
-        console.log(1);
-        const result = await bcrypt.compare(password, findUser.password);
-        if (result) {
-          console.log(2); //
-          return done(null, findUser);
-        } else {
-          console.log(3); // 비번틀림
-          return done(null, false, {
-            message: 'Incorrect password',
-          });
-        }
-      } else {
-        console.log(4); // email 틀림
-        return done(null, false, {
-          message: 'Incorrect username',
-        });
-      }
-    },
-  ),
-  //     if (username === authData.email) {
-  //       console.log(1);
-  //       if (password === authData.password) {
-  //         console.log(2); //
-  //         return done(null, authData);
-  //       } else {
-  //         console.log(3); // 비번틀림
-  //         return done(null, false, {
-  //           message: 'Incorrect password',
-  //         });
-  //       }
-  //     } else {
-  //       console.log(4); // email 틀림
-  //       return done(null, false, {
-  //         message: 'Incorrect username',
-  //       });
-  //     }
-  //   },
-  // ),
-);
+const passport = passportLocal(app);
 
 app.post(
-  '/users/login_process',
+  '/auth/login_process',
   passport.authenticate('local', {
     successRedirect: '/', // 성공시
-    failureRedirect: '/users/login', // 실패 시 재진입
+    failureRedirect: '/login', // 실패 시 재진입
+    failureFlash: true,
+    successFlash: true,
   }),
 );
 
 // 로그인 전송했을 때 passport가 그 로그인 데이터를 처리하기 위한 코드
 app.get('/', async (req, res, next) => {
-  auth.status(req, res);
+  console.log('/', req.user);
+  // const flashMsg = req.flash();
   try {
-    console.log('/', req.user);
+    auth.status(req, res);
     return res.send('Team08 Backend');
   } catch (error) {
     next(error);
@@ -159,6 +84,7 @@ app.get('/', async (req, res, next) => {
 sequelize.sync({ force: false });
 
 app.use(userRouter);
+app.use(authRouter);
 app.use(reviewAuthRouter);
 app.use(revCommentAuthRouter);
 

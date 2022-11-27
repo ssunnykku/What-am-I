@@ -27,9 +27,10 @@ class userService {
     });
     createdNewUser.errorMessage = null;
 
-    return `Successfully create a user account`;
     // return createdNewUser;
+    return `Successfully create a user account`;
   }
+
   static async findUser({ email, password }) {
     const user = await User.findOne({ where: { email: email } });
     if (!user) {
