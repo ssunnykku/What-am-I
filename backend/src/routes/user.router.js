@@ -2,10 +2,10 @@ import { Router } from 'express';
 import { userController } from '../controllers/user.ctrl';
 import { loginRequired } from '../middlewares/loginRequired.js';
 import { userValidator } from '../middlewares/userValidator';
-import { addImage } from '../middlewares/addImage';
+import { uploadImageS3 } from '../middlewares/uploadImageS3';
 
 const userRouter = Router();
-const upload = addImage('uploads');
+const upload = uploadImageS3();
 
 userRouter.post('/users', userValidator, userController.register);
 userRouter.post('/login', userController.login);

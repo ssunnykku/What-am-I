@@ -3,9 +3,6 @@ import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import { logger } from '../config/winston';
 
-import fs from 'fs';
-import AWS from 'aws-sdk';
-
 class userController {
   static async register(req, res, next) {
     try {
@@ -94,26 +91,23 @@ class userController {
       next(error);
     }
   }
-  static async setImage(req, res, next) {
-    try {
-      logger.error('PATCH, /users/:userId/image');
-      const userId = req.params.userId;
-      const image = req.file.filename;
-      console.log('🤗', image);
-      const PORT = process.env.SEVER_PORT;
-      const profileImg = `http://localhost:${PORT}/${image}`;
 
+  static async setImage(req, res, next) {
+    logger.error('PATCH, /users/:userId/image');
+    try {
+      const userId = req.params.userId;
+      const profileImg = req.file.location;
       await userService.updateImage({
         profileImg,
         userId,
       });
 
-      if (image === undefined) {
+      if (req.file === undefined) {
         res
           .status(400)
           .send({ success: false, message: '이미지가 존재하지 않습니다.' });
       }
-      return res.status(200).send({
+      return res.status(200).json({
         success: true,
         message: '이미지가 저장되었습니다.',
         userId,
@@ -123,6 +117,7 @@ class userController {
       next(error);
     }
   }
+
   static async select(req, res, next) {
     try {
       logger.error('GET, /users/:userId');
