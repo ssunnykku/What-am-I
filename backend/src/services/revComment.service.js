@@ -57,6 +57,19 @@ class reviewCommentService {
       return descriptionId;
     }
   }
+
+  static async deleteComment({ _id }) {
+    const id = await ReviewComment.destroy({
+      where: { id: _id },
+    });
+    if (!id) {
+      const errorMessage = '댓글이 없습니다';
+      return errorMessage;
+    } else {
+      const message = '댓글이 삭제되었습니다.';
+      return message;
+    }
+  }
 }
 
 export { reviewCommentService };

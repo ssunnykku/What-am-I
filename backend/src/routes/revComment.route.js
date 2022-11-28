@@ -18,5 +18,9 @@ reviewCommentAuthRouter.put(
   '/reviewComment/edit/:id',
   reviewCommentController.updateComment,
 );
+reviewCommentAuthRouter.delete(
+  '/reviewComment/:id',
+  reviewCommentController.deleteComment,
+);
 
 export { reviewCommentAuthRouter };

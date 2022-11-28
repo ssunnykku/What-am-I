@@ -52,6 +52,21 @@ const reviewCommentController = {
       return res.status(400).json({ code: 400, message: error.message });
     }
   },
+  deleteComment: async (req, res) => {
+    try {
+      const _id = req.params.id;
+
+      const deleteComment = await reviewCommentService.deleteComment({
+        _id,
+      });
+      if (deleteComment.errorMessage) {
+        throw new Error(deleteComment, errorMessage);
+      }
+      res.status(201).json(deleteComment);
+    } catch (error) {
+      return res.status(400).json({ code: 400, message: error.message });
+    }
+  },
 };
 
 export { reviewCommentController };
