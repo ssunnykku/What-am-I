@@ -8,7 +8,7 @@ const userRouter = Router();
 const upload = uploadImageS3();
 
 userRouter.post('/users', userValidator, userController.register);
-userRouter.post('/login', userController.login);
+// userRouter.post('/login', userController.login);
 userRouter.get('/users', userController.userList);
 userRouter.get('/users/current', loginRequired, userController.current);
 userRouter.put('/users/:userId', loginRequired, userController.edit);

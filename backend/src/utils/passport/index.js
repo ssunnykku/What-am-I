@@ -1,10 +1,18 @@
+import passport from 'passport';
+import passportJWT from 'passport-jwt';
+import dotenv from 'dotenv';
+import User from '../../models/User.model';
+
+const JWTStrategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
+dotenv.config();
+
 import bcrypt from 'bcrypt';
 import Local from 'passport-local';
 
-import User from '../../models/User.model';
 const LocalStrategy = Local.Strategy;
 
-module.exports = (passport) => {
+module.exports = () => {
   passport.use(
     new LocalStrategy(
       {
@@ -35,6 +43,24 @@ module.exports = (passport) => {
             message: 'Incorrect username',
           });
         }
+      },
+    ),
+  );
+
+  passport.use(
+    new JWTStrategy(
+      {
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+        secretOrKey: process.env.JWT_SECRET,
+      },
+      async function (jwtPayload, done) {
+        return User.findOne({ where: { userId: jwtPayload.userId } })
+          .then((user) => {
+            return done(null, user);
+          })
+          .catch((err) => {
+            return done(err);
+          });
       },
     ),
   );

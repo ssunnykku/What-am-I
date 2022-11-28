@@ -9,12 +9,10 @@ import session from 'express-session';
 import sessionMysql from 'express-mysql-session';
 
 //**Passport */
-import passportLocal from './src/utils/passport/passport';
-import auth from './src/utils/passport/auth';
+import passport from 'passport';
 
 //**Router */
 import { communityRouter } from './src/routes';
-import { authRouter } from './src/routes/auth.router';
 import { userRouter } from './src/routes/user.router';
 import { reviewAuthRouter } from './src/routes/review.route';
 import { reviewCommentAuthRouter } from './src/routes/revComment.route';
@@ -25,66 +23,49 @@ dotenv.config();
 
 const app = express();
 
-app.use(express.static('uploads'));
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: '*', credentials: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
-// app.use(compression());
-const MySqlStore = sessionMysql(session);
-const options = {
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER_NAME,
-  password: process.env.DB_USER_PASSWORD,
-  database: process.env.DB_NAME,
-  clearExpired: true,
-  checkExpirationInterval: 3600000,
-  expiration: 3600000,
-};
+import passportConfig from './src/utils/passport/index';
 
-const sessionStore = new MySqlStore(options);
+import jwt from 'jsonwebtoken';
+app.use(passport.initialize());
+passportConfig();
 
-app.use(
-  session({
-    secret: process.env.COOKIE_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    store: sessionStore,
-  }),
-);
-app.use(flash());
+app.post('/login', (req, res, next) => {
+  passport.authenticate('local', { session: false }, (error, user) => {
+    if (error || !user) {
+      res.status(400).json({
+        result: 'error',
+        user: user,
+        message: 'Something is not right',
+      });
+    }
+    req.login(user, { session: false }, (loginError) => {
+      if (loginError) {
+        res.status(400).send(loginError);
+      }
 
-// session 다음에 passport가 와야 함
-const passport = passportLocal(app);
-
-app.post(
-  '/auth/login_process',
-  passport.authenticate('local', {
-    successRedirect: '/', // 성공시
-    failureRedirect: '/login', // 실패 시 재진입
-    failureFlash: true,
-    successFlash: true,
-  }),
-);
-
-// 로그인 전송했을 때 passport가 그 로그인 데이터를 처리하기 위한 코드
-app.get('/', async (req, res, next) => {
-  console.log('/', req.user);
-  // const flashMsg = req.flash();
-  try {
-    auth.status(req, res);
-    return res.send('Team08 Backend');
-  } catch (error) {
-    next(error);
-  }
+      const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES,
+      });
+      res.status(200).json({
+        token,
+        userId: user.userId,
+        email: user.email,
+        nickname: user.nickname,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      });
+    });
+  })(req, res);
 });
+
 sequelize.sync({ force: false });
 
 app.use(userRouter);
-// app.use(authRouter);
 app.use(reviewAuthRouter);
 app.use(reviewCommentAuthRouter);
 
