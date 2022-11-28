@@ -17,7 +17,7 @@ import { communityRouter } from './src/routes';
 import { authRouter } from './src/routes/auth.router';
 import { userRouter } from './src/routes/user.router';
 import { reviewAuthRouter } from './src/routes/review.route';
-import { revCommentAuthRouter } from './src/routes/revComment.route';
+import { reviewCommentAuthRouter } from './src/routes/revComment.route';
 //**middleware */
 import errorMiddleware from './src/middlewares/error';
 
@@ -86,7 +86,7 @@ sequelize.sync({ force: false });
 app.use(userRouter);
 // app.use(authRouter);
 app.use(reviewAuthRouter);
-app.use(revCommentAuthRouter);
+app.use(reviewCommentAuthRouter);
 
 app.use(errorMiddleware);
 

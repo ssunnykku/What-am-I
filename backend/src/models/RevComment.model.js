@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize';
 
-module.exports = class RevComment extends Sequelize.Model {
+module.exports = class ReviewComment extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
