@@ -35,6 +35,23 @@ const reviewCommentController = {
       return res.status(400).json({ code: 400, message: error.message });
     }
   },
+  updateComment: async (req, res) => {
+    try {
+      const id = req.params.id;
+      const { description } = req.body;
+
+      const reviewComment = await reviewCommentService.updateComment({
+        description,
+        id,
+      });
+      if (reviewComment.errorMessage) {
+        throw new Error(reviewComment, errorMessage);
+      }
+      res.status(201).json(reviewComment);
+    } catch (error) {
+      return res.status(400).json({ code: 400, message: error.message });
+    }
+  },
 };
 
 export { reviewCommentController };

@@ -14,4 +14,9 @@ reviewCommentAuthRouter.get(
   reviewCommentController.showComments,
 );
 
+reviewCommentAuthRouter.put(
+  '/reviewComment/edit/:id',
+  reviewCommentController.updateComment,
+);
+
 export { reviewCommentAuthRouter };
