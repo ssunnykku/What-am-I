@@ -1,9 +1,9 @@
 import multer from 'multer';
 import path from 'path';
-import fs from 'fs';
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
-import multerS3 from ('multer-s3');
+import multerS3 from 'multer-s3';
+
 dotenv.config();
 
 function uploadImageS3() {
