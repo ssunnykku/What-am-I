@@ -1,17 +1,17 @@
 import { Router } from 'express';
-import { revCommentController } from '../controllers/revComment.ctrl';
+import { reviewCommentController } from '../controllers/revComment.ctrl';
 
-const revCommentAuthRouter = Router();
+const reviewCommentAuthRouter = Router();
 
 // 리뷰작성
 
-revCommentAuthRouter.post(
-  '/reviews/:reviewId',
-  revCommentController.reviewComments,
+reviewCommentAuthRouter.post(
+  '/reviewComment/:reviewId',
+  reviewCommentController.reviewComments,
 );
-revCommentAuthRouter.get(
-  '/revComment/:reviewId',
-  revCommentController.showComments,
+reviewCommentAuthRouter.get(
+  '/reviewComment/:reviewId',
+  reviewCommentController.showComments,
 );
 
-export { revCommentAuthRouter };
+export { reviewCommentAuthRouter };

@@ -1,9 +1,9 @@
-import RevComment from '../models/RevComment.model';
+import ReviewComment from '../models/RevComment.model';
 
-class revCommentService {
-  static async addRevComment({ description, reviewId }) {
+class reviewCommentService {
+  static async addReviewComment({ description, reviewId }) {
     // db에 저장
-    const createdNewComment = await RevComment.create({
+    const createdNewComment = await ReviewComment.create({
       description,
       reviewId,
     });
@@ -12,8 +12,8 @@ class revCommentService {
     return createdNewComment;
   }
 
-  static async showAllRevComments({ _reviewId: reviewId }) {
-    const _reviewId = await RevComment.findAll({
+  static async showAllReviewComments({ _reviewId: reviewId }) {
+    const _reviewId = await ReviewComment.findAll({
       where: { reviewId },
     });
     if (!_reviewId) {
@@ -25,4 +25,4 @@ class revCommentService {
   }
 }
 
-export { revCommentService };
+export { reviewCommentService };

@@ -12,7 +12,7 @@ import { communityRouter } from './src/routes';
 import { userAuthRouter } from './src/routes/user.router';
 import { userRouter } from './src/routes/user.router';
 import { reviewAuthRouter } from './src/routes/review.route';
-import { revCommentAuthRouter } from './src/routes/revComment.route';
+import { reviewCommentAuthRouter } from './src/routes/revComment.route';
 
 dotenv.config();
 
@@ -59,7 +59,7 @@ app.use(express.static('uploads'));
 
 app.use(userRouter);
 app.use(reviewAuthRouter);
-app.use(revCommentAuthRouter);
+app.use(reviewCommentAuthRouter);
 
 app.use(errorMiddleware);
 
