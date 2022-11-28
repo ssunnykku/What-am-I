@@ -24,12 +24,10 @@ function NavBar() {
         <li id="logo">
           <Link to="/">DogNA</Link>
         </li>
-        {menus.map((value, index) => {
+        {menus.map((value) => {
           return (
-            <li id={value.id} key={index}>
-              <Link to={value.path} key={index}>
-                {value.title}
-              </Link>
+            <li id={value.id} key={value.id}>
+              <Link to={value.path}>{value.title}</Link>
             </li>
           );
         })}
@@ -69,10 +67,6 @@ const NavDiv = styled.div`
     font-size: 2rem;
   }
 
-  ul {
-    /* display: inline-block; */
-  }
-
   ul a {
     margin: 0 2.5rem;
     text-decoration: none;
@@ -82,6 +76,7 @@ const NavDiv = styled.div`
   li {
     display: inline; /* a태그는 글자성격 = inline */
   }
+
   #profile {
     float: right;
     margin-right: 40px;
@@ -93,10 +88,10 @@ const NavDiv = styled.div`
   width: 100%;
   height: 4rem;
   min-width: 50rem;
-  line-height: 5rem;
+  line-height: 4rem;
   font-family: ${font.bold};
   font-size: 1.3rem;
-  padding-top: 2.5rem;
+  background-color: aliceblue;
 `;
 
 export default NavBar;

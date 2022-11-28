@@ -18,7 +18,7 @@ export default function TabPanel({ value, setValue }: TabPanelProps) {
     <Tabs value={value} onChange={handleChange}>
       <Tab value={PAGEVALUE.PROFILE} label="프로필" />
       <Tab value={PAGEVALUE.RESULT} label="DNA결과" />
-      <Tab value={PAGEVALUE.COMMUNITY} label="들어간 모임" />
+      <Tab value={PAGEVALUE.COMMUNITY} label="커뮤니티" />
       <Tab value={PAGEVALUE.MYCOMMUNITY} label="내가 만든 커뮤니티" />
     </Tabs>
   );

@@ -25,7 +25,6 @@ function Profile() {
 
 const Div = styled.div`
   margin: 0 auto;
-  margin-top: 50px;
   width: 400px;
   display: flex;
   flex-direction: column;
