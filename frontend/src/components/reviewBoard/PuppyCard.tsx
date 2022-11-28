@@ -5,11 +5,7 @@ interface PuppyCardProps {
 }
 
 const PuppyCard = ({ onCardModalClickEvent }: PuppyCardProps) => {
-  return (
-    <>
-      <PuppyCardBox onClick={onCardModalClickEvent}></PuppyCardBox>
-    </>
-  );
+  return <PuppyCardBox onClick={onCardModalClickEvent}></PuppyCardBox>;
 };
 
 export default PuppyCard;

@@ -1,24 +1,26 @@
 import styled from 'styled-components';
 import { font } from '../../assets/styles/common/fonts';
+import { theme } from '../../assets/styles/common/palette';
 
 const CommunityMaker = () => {
   return (
     <CommuMakeModalWrapper>
       <ModalHeader>커뮤니티 만들기</ModalHeader>
-      <ModalMiddle>
+      <ModalContent>
         <AddImage>
           커뮤니티 대표 이미지
           <button>사진 등록</button>
           <div></div>
         </AddImage>
         <AddName>
-          커뮤니티 명<div></div>
+          커뮤니티 명
+          <input type="text" />
         </AddName>
         <AddIntro>
           커뮤니티 소개글
-          <div></div>
+          <input type="text" />
         </AddIntro>
-      </ModalMiddle>
+      </ModalContent>
       <ModalBottom>
         <button>완료</button>
       </ModalBottom>
@@ -30,14 +32,14 @@ export default CommunityMaker;
 
 const CommuMakeModalWrapper = styled.div`
   width: 50%;
-  height: 80%;
-  max-width: 40rem;
+  height: 75%;
+  max-width: 35rem;
   min-width: 30rem;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: #f5f5f5;
   border-radius: 3%;
   font-family: ${font.bold};
   display: flex;
@@ -47,18 +49,18 @@ const CommuMakeModalWrapper = styled.div`
 
 const ModalHeader = styled.div`
   width: 15rem;
-  height: 3.5rem;
+  height: 3rem;
   margin-top: 3rem;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.12rem;
+  font-size: 1.2rem;
 `;
 
-const ModalMiddle = styled.div`
+const ModalContent = styled.div`
   width: 28rem;
-  height: 27rem;
+  height: 25rem;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -82,6 +84,7 @@ const AddImage = styled.div`
     border-radius: 50%;
   }
 `;
+
 const AddName = styled.div`
   width: 28rem;
   height: 4rem;
@@ -89,7 +92,7 @@ const AddName = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  div {
+  input {
     border: solid 1px black;
     width: 15rem;
     height: 2rem;
@@ -104,7 +107,7 @@ const AddIntro = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  div {
+  input {
     border: solid 1px black;
     width: 15rem;
     height: 6rem;
@@ -115,13 +118,18 @@ const AddIntro = styled.div`
 const ModalBottom = styled.div`
   width: 15rem;
   height: 3rem;
-  margin-top: 1rem;
+  margin-top: 1.8rem;
   display: flex;
   justify-content: center;
   button {
-    border: 0;
-    width: 10rem;
+    width: 12rem;
     height: 2.7rem;
     cursor: pointer;
+    border: 0;
+    color: white;
+    background-color: ${theme.mainColor};
+    border-radius: 20px;
+    font-family: ${font.bold};
+    font-size: 15px;
   }
 `;

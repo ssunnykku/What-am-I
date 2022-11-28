@@ -1,5 +1,23 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
+import useModal from '../../hooks/modal/useModal';
+import MyModal from './MyModal';
 import { font } from '../../assets/styles/common/fonts';
+import PuppyCard from '../reviewBoard/PuppyCard';
+import { theme } from '../../assets/styles/common/palette';
+import { EditDelBtn } from '../../assets/styles/common/commonComponentStyle';
+
+export const ContentsModal = () => {
+  const [isOpen, modalHandler] = useModal();
+
+  return (
+    <>
+      <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
+        <ContentsViewer />
+      </MyModal>
+      <PuppyCard onCardModalClickEvent={modalHandler}></PuppyCard>
+    </>
+  );
+};
 
 const ContentsViewer = () => {
   return (
@@ -9,16 +27,16 @@ const ContentsViewer = () => {
         <TopDiv>
           <div className="user-name">유저 프로필 사진 + 닉네임</div>
           <ButtonBox>
-            <button>수정</button>
-            <button>삭제</button>
+            <EditDelBtn>수정</EditDelBtn>
+            <EditDelBtn>삭제</EditDelBtn>
           </ButtonBox>
         </TopDiv>
         <div className="user-contents">글 보이는 창</div>
         <BottomDiv>
           <div className="like">🤍10</div>
           <div className="date">12월 17일</div>
-          <form className="comment">
-            댓글 달기
+          <CommentBox>
+            <input type="text" placeholder="댓글 달기..." />
             <button
               onClick={(e) => {
                 e.preventDefault();
@@ -27,7 +45,7 @@ const ContentsViewer = () => {
             >
               게시
             </button>
-          </form>
+          </CommentBox>
         </BottomDiv>
       </AddWriting>
     </ContentsModalWrapper>
@@ -89,14 +107,7 @@ const ButtonBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
-
-  button {
-    width: 3rem;
-    height: 1.5rem;
-    border: 0;
-    margin-top: 0.5rem;
-  }
+  justify-content: flex-end;
 `;
 
 const BottomDiv = styled.div`
@@ -110,24 +121,38 @@ const BottomDiv = styled.div`
     float: right;
     margin: 1% 2%;
   }
-  .comment {
-    border-top: solid 1px lightgray;
-    position: absolute;
-    bottom: 0;
-    width: 97%;
+`;
+
+const CommentBox = styled.div`
+  border-top: solid 1px lightgray;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  min-width: 19rem;
+  max-width: 50rem;
+  height: 3rem;
+  line-height: 3rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  input {
+    height: 2.5rem;
+    width: 100%;
+    padding: 0 2%;
+    border: 0;
+    outline: 0;
+  }
+  button {
+    width: 5.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
     height: 3rem;
     line-height: 3rem;
-    padding-left: 3%;
-    button {
-      float: right;
-      background: none;
-      border: none;
-      cursor: pointer;
-      height: 3rem;
-      line-height: 3rem;
-      font-family: ${font.bold};
-      padding: 0 2rem;
-      border-left: 1px solid lightgray;
-    }
+    font-family: ${font.bold};
+    border-left: 1px solid lightgray;
+    color: ${theme.mainColor};
+    font-size: 1rem;
   }
 `;

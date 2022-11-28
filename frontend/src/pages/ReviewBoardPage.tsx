@@ -1,41 +1,22 @@
-import styled, { keyframes } from 'styled-components';
-import useModal from '../hooks/modal/useModal';
-import PuppyCard from '../components/reviewBoard/PuppyCard';
+import styled from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import { SearchBox } from '../assets/styles/common/commonComponentStyle';
-import MyModal from '../components/modal/MyModal';
-import WritingEditor from '../components/reviewBoard/WritingEditor';
-import ContentsViewer from '../components/reviewBoard/ContentsViewer';
+import { WritingModal } from '../components/modal/WritingModal';
+import { ContentsModal } from '../components/modal/ContentsModal';
+import { theme } from '../assets/styles/common/palette';
 
 const ReviewBoardPage = () => {
-  const [isCreateOpen, handleCreateStateChange] = useModal();
-  const [isContentsOpen, handleContentsModalStateChange] = useModal();
-
   return (
     <>
-      <MyModal
-        isOpen={isCreateOpen}
-        onModalStateChangeEvent={handleCreateStateChange}
-      >
-        <WritingEditor />
-      </MyModal>
-      <MyModal
-        isOpen={isContentsOpen}
-        onModalStateChangeEvent={handleContentsModalStateChange}
-      >
-        <ContentsViewer />
-      </MyModal>
       <BoardBox>
         <BoardHeader>
           사람들과 AI 분석 결과를 공유해보세요.
-          <CreateBtn onClick={handleCreateStateChange}>글쓰기</CreateBtn>
+          <WritingModal />
         </BoardHeader>
         <BoardContent>
           <SlideLeftBtn />
           <CardBox>
-            <PuppyCard
-              onCardModalClickEvent={handleContentsModalStateChange}
-            ></PuppyCard>
+            <ContentsModal />
           </CardBox>
           <SlideRightBtn />
           <SearchBox style={{ position: 'absolute', bottom: '5%' }}>
@@ -50,41 +31,18 @@ const ReviewBoardPage = () => {
 
 export default ReviewBoardPage;
 
-const animation = keyframes`
-  50% {
-    transform: scale(1.05);
-  }
-`;
-
 const BoardBox = styled.div`
   width: 100%;
   height: 80vh;
-  font-family: ${font.normal};
+  font-family: ${font.bold};
 `;
 
 const BoardHeader = styled.div`
-  font-size: 1.15rem;
+  font-size: 19px;
   display: flexbox;
   justify-content: center;
-  margin-top: 2rem;
+  margin-top: 5rem;
   letter-spacing: 1px;
-`;
-
-const CreateBtn = styled.button`
-  margin-left: 2rem;
-  height: 2.5rem;
-  width: 7rem;
-  border: none;
-  outline: non1e;
-  border-radius: 50px;
-  cursor: pointer;
-  font-family: ${font.bold};
-  font-size: 1rem;
-  :hover {
-    animation-duration: 0.3s;
-    animation-timing-function: ease-in-out;
-    animation-name: ${animation};
-  }
 `;
 
 const BoardContent = styled.div`
@@ -92,7 +50,6 @@ const BoardContent = styled.div`
   justify-content: center;
   justify-content: space-evenly;
   align-items: center;
-  margin-top: 4rem;
 `;
 
 const CardBox = styled.div`
@@ -100,18 +57,10 @@ const CardBox = styled.div`
   justify-content: center;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  width: 73rem;
+  width: 70rem;
   min-width: 70rem;
-  height: 100%;
-`;
-
-const SlideRightBtn = styled.div`
-  width: 0;
-  height: 0;
-  border-bottom: 1.5rem solid transparent;
-  border-top: 1.5rem solid transparent;
-  border-left: 1.5rem solid lightgray;
-  border-right: 1.5rem solid transparent;
+  min-height: 27rem;
+  margin-top: 2.5rem;
 `;
 
 const SlideLeftBtn = styled.div`
@@ -120,5 +69,30 @@ const SlideLeftBtn = styled.div`
   border-bottom: 1.5rem solid transparent;
   border-top: 1.5rem solid transparent;
   border-left: 1.5rem solid transparent;
-  border-right: 1.5rem solid lightgray;
+  border-right: 1.5rem solid ${theme.backColor};
+
+  :hover {
+    border-bottom: 1.5rem solid transparent;
+    border-top: 1.5rem solid transparent;
+    border-left: 1.5rem solid transparent;
+    border-right: 1.5rem solid ${theme.pointColor};
+    cursor: pointer;
+  }
+`;
+
+const SlideRightBtn = styled.div`
+  width: 0;
+  height: 0;
+  border-bottom: 1.5rem solid transparent;
+  border-top: 1.5rem solid transparent;
+  border-left: 1.5rem solid ${theme.backColor};
+  border-right: 1.5rem solid transparent;
+
+  :hover {
+    border-bottom: 1.5rem solid transparent;
+    border-top: 1.5rem solid transparent;
+    border-left: 1.5rem solid ${theme.pointColor};
+    border-right: 1.5rem solid transparent;
+    cursor: pointer;
+  }
 `;

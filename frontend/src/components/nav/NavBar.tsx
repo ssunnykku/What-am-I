@@ -97,7 +97,6 @@ const NavDiv = styled.div`
   font-family: ${font.bold};
   font-size: 1.3rem;
   padding-top: 2.5rem;
-  padding-bottom: 1.6rem;
 `;
 
 export default NavBar;
