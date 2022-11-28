@@ -41,8 +41,8 @@ const options = {
   password: process.env.DB_USER_PASSWORD,
   database: process.env.DB_NAME,
   clearExpired: true,
-  checkExpirationInterval: 10000,
-  expiration: 10000,
+  checkExpirationInterval: 3600000,
+  expiration: 3600000,
 };
 
 const sessionStore = new MySqlStore(options);
@@ -84,7 +84,7 @@ app.get('/', async (req, res, next) => {
 sequelize.sync({ force: false });
 
 app.use(userRouter);
-app.use(authRouter);
+// app.use(authRouter);
 app.use(reviewAuthRouter);
 app.use(revCommentAuthRouter);
 

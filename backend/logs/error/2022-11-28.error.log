@@ -5,3 +5,11 @@
 2022-11-28 06:21:28 [undefined] error: POST /users
 2022-11-28 06:22:14 [undefined] error: POST /users
 2022-11-28 06:22:19 [undefined] error: POST /users
+2022-11-28 11:36:59 [undefined] error: POST, /users/login
+2022-11-28 11:37:23 [undefined] error: POST, /users/login
+2022-11-28 11:40:25 [undefined] error: POST, /login
+2022-11-28 11:40:49 [undefined] error: PATCH, /users/:userId/image
+2022-11-28 11:41:09 [undefined] error: PATCH, /users/:userId/image
+2022-11-28 11:43:02 [undefined] error: PATCH, /users/:userId/image
+2022-11-28 11:45:56 [undefined] error: PATCH, /users/:userId/image
+2022-11-28 11:47:16 [undefined] error: PATCH, /users/:userId/image

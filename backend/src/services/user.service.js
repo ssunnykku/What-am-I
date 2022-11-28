@@ -67,6 +67,7 @@ class userService {
 
     // return loginUser;
     return {
+      token: loginUser.token,
       userId: loginUser.userId,
       email: loginUser.email,
       nickname: loginUser.nickname,

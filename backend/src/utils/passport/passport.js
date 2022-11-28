@@ -1,8 +1,6 @@
 import passport from 'passport';
-import bcrypt from 'bcrypt';
-import Local from 'passport-local';
-import JWT from 'passport-jwt';
 import local from './localStrategy';
+import JWT from './jwtStrategy';
 import User from '../../models/User.model';
 
 module.exports = (app) => {

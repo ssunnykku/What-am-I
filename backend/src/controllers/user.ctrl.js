@@ -3,6 +3,9 @@ import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import { logger } from '../config/winston';
 
+import fs from 'fs';
+import AWS from 'aws-sdk';
+
 class userController {
   static async register(req, res, next) {
     try {
@@ -25,7 +28,7 @@ class userController {
   }
   static async login(req, res, next) {
     try {
-      logger.error('POST, /users/login');
+      logger.error('POST, /login');
       const { email, password } = req.body;
 
       const user = await userService.findUser({ email, password });
@@ -95,8 +98,8 @@ class userController {
     try {
       logger.error('PATCH, /users/:userId/image');
       const userId = req.params.userId;
-      const image = req.file.path;
-      // console.log(req.file);
+      const image = req.file.filename;
+      console.log('🤗', image);
       const PORT = process.env.SEVER_PORT;
       const profileImg = `http://localhost:${PORT}/${image}`;
 

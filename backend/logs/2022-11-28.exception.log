@@ -1466,3 +1466,20 @@ TypeError: (0 , _local.default) is not a function
     at Function.Module._load (node:internal/modules/cjs/loader:839:12)
     at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
     at node:internal/main/run_main_module:17:47
+2022-11-28 10:16:34 [undefined] error: uncaughtException: authenticateJWT is not defined
+ReferenceError: authenticateJWT is not defined
+    at Object.<anonymous> (C:\Users\sun\Desktop\team08 project\team08-project\backend\/app.js:74:9)
+    at Module._compile (node:internal/modules/cjs/loader:1126:14)
+    at Module._compile (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\pirates\lib\index.js:136:24)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1180:10)
+    at Object.newLoader [as .js] (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\pirates\lib\index.js:141:7)
+    at Module.load (node:internal/modules/cjs/loader:1004:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:839:12)
+    at Function.runMain (node:internal/modules/run_main:81:12)
+    at Object.<anonymous> (C:\Users\sun\Desktop\team08 project\team08-project\backend\node_modules\@babel\node\src\_babel-node.ts:214:12)
+    at Module._compile (node:internal/modules/cjs/loader:1126:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1180:10)
+    at Module.load (node:internal/modules/cjs/loader:1004:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:839:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
+    at node:internal/main/run_main_module:17:47
