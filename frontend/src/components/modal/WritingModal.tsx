@@ -1,5 +1,22 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
+import MyModal from './MyModal';
+import useModal from '../../hooks/modal/useModal';
+import { CreateBtn } from '../../assets/styles/common/commonComponentStyle';
 import { font } from '../../assets/styles/common/fonts';
+import { theme } from '../../assets/styles/common/palette';
+
+export const WritingModal = () => {
+  const [isOpen, modalHandler] = useModal();
+
+  return (
+    <>
+      <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
+        <WritingEditor />
+      </MyModal>
+      <CreateBtn onClick={modalHandler}> 글쓰기 </CreateBtn>
+    </>
+  );
+};
 
 const WritingEditor = () => {
   return (
@@ -28,8 +45,6 @@ const WritingEditor = () => {
   );
 };
 
-export default WritingEditor;
-
 const CreateModalWrapper = styled.div`
   width: 55%;
   height: 80%;
@@ -52,23 +67,26 @@ const ModalHeader = styled.div`
   align-items: center;
   font-size: 1.25rem;
   padding: 0 5%;
+  color: ${theme.mainColor};
 `;
 
 const ModalHeaderBtn = styled.button`
   margin-left: auto;
   background: none;
-  border: solid 1px;
+  border: solid 2px ${theme.mainColor};
   border-radius: 20px;
   font-size: 0.9rem;
-  height: 2.1rem;
+  height: 2rem;
   width: 6.2rem;
   cursor: pointer;
+  color: ${theme.mainColor};
 `;
 
 const ModalContents = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   font-family: ${font.normal};
+  font-size: 16px;
 `;
 
 const AddImage = styled.form`

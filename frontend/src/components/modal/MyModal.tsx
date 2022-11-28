@@ -22,7 +22,7 @@ const MyModal = ({
 
 const MyModalBackdrop = styled.div<{ isOpen: boolean }>`
   position: fixed;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
   top: 0;
   left: 0;
   right: 0;
