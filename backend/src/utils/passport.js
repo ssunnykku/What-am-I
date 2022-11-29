@@ -1,10 +1,9 @@
 import passport from 'passport';
 import passportJWT from 'passport-jwt';
+import passportKakao from 'passport-kakao';
 import dotenv from 'dotenv';
-import User from '../../models/User.model';
+import User from '../models/User.model';
 
-const JWTStrategy = passportJWT.Strategy;
-const ExtractJWT = passportJWT.ExtractJwt;
 dotenv.config();
 
 import bcrypt from 'bcrypt';
@@ -47,6 +46,9 @@ module.exports = () => {
     ),
   );
 
+  const JWTStrategy = passportJWT.Strategy;
+  const ExtractJWT = passportJWT.ExtractJwt;
+
   passport.use(
     new JWTStrategy(
       {
@@ -64,4 +66,37 @@ module.exports = () => {
       },
     ),
   );
+
+  const KakaoStrategy = passportKakao.Strategy;
+
+  const kakaoConfig = {
+    clientID: process.env.KAKAO_ID,
+    callbackURL: '/login',
+  };
+
+  const kakaoVarify = async (accessToken, refreshToken, profile, done) => {
+    try {
+      const exUser = await User.findOne({
+        where: { snsId: profile.id, provider: 'kakao-login' },
+      });
+      if (exUser) {
+        done(null, exUser);
+      } else {
+        console.log(profile);
+        // const userInfo = JSON.parse(profile._raw);
+        // const kakaoAccount = userInfo.kakao_account;
+        // const kakaoEmail = kakaoAccount.email;
+
+        // const newUser = await User.create({
+
+        // })
+        done(null, profile);
+        return;
+      }
+    } catch (error) {
+      done(error);
+    }
+  };
+
+  // passport.use('kakao-login', new KakaoStrategy(kakaoConfig, kakaoVarify));
 };

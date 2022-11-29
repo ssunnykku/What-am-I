@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: '*', credentials: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
-import passportConfig from './src/utils/passport/index';
+import passportConfig from './src/utils/passport.js';
 
 import jwt from 'jsonwebtoken';
 app.use(passport.initialize());
@@ -62,6 +62,30 @@ app.post('/login', (req, res, next) => {
     });
   })(req, res);
 });
+
+app.get(
+  '/kakao',
+  passport.authenticate('kakao-login', {
+    session: false,
+    failureRedirect: '/login',
+  }),
+  (req, res) => {
+    if (req.user) {
+      const secretKey = process.env.JWT_SECRET;
+      const user = req.user;
+      const userId = user.userId;
+      const role = user.role;
+      const token = jwt.sign({ userId, role }, secretKey, {
+        expireIn: process.env.JWT_EXPIRES,
+      });
+      res
+        .status(200)
+        .redirect(
+          `/login/success?token=${token}&userId=${userId}&role=${role}`,
+        );
+    }
+  },
+);
 
 sequelize.sync({ force: false });
 
