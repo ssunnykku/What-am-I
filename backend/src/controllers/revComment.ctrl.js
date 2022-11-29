@@ -1,20 +1,20 @@
-import { revCommentService } from '../services/revComment.service';
+import { reviewCommentService } from '../services/revComment.service';
 // import Joi from 'joi';
 
-const revCommentController = {
+const reviewCommentController = {
   reviewComments: async (req, res) => {
     try {
       const reviewId = req.params.reviewId;
       const { description } = req.body;
 
-      const revComment = await revCommentService.addRevComment({
+      const reviewComment = await reviewCommentService.addReviewComment({
         description,
         reviewId,
       });
-      if (revComment.errorMessage) {
-        throw new Error(revComment, errorMessage);
+      if (reviewComment.errorMessage) {
+        throw new Error(reviewComment, errorMessage);
       }
-      res.status(201).json(revComment);
+      res.status(201).json(reviewComment);
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
@@ -24,17 +24,34 @@ const revCommentController = {
       const _reviewId = req.params.reviewId;
       console.log(_reviewId);
 
-      const revComment = await revCommentService.showAllRevComments({
+      const reviewComments = await reviewCommentService.showAllReviewComments({
         _reviewId,
       });
-      if (revComment.errorMessage) {
-        throw new Error(revComment, errorMessage);
+      if (reviewComments.errorMessage) {
+        throw new Error(reviewComments, errorMessage);
       }
-      res.status(201).json(revComment);
+      res.status(201).json(reviewComments);
+    } catch (error) {
+      return res.status(400).json({ code: 400, message: error.message });
+    }
+  },
+  updateComment: async (req, res) => {
+    try {
+      const id = req.params.id;
+      const { description } = req.body;
+
+      const reviewComment = await reviewCommentService.updateComment({
+        description,
+        id,
+      });
+      if (reviewComment.errorMessage) {
+        throw new Error(reviewComment, errorMessage);
+      }
+      res.status(201).json(reviewComment);
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
   },
 };
 
-export { revCommentController };
+export { reviewCommentController };

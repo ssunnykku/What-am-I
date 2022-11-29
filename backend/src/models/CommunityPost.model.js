@@ -1,9 +1,15 @@
 import sequelize from '../config/sequelize';
-import { DataTypes } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 
-const CommunityPost = sequelize.define(
-  'communityPost',
+class CommunityPost extends Model {}
+
+CommunityPost.init(
   {
+    id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      unique: true,
+    },
     description: {
       type: DataTypes.TEXT,
       allowNull: false,
@@ -11,10 +17,10 @@ const CommunityPost = sequelize.define(
   },
   {
     sequelize,
-    timestamps: true,
     tableName: 'communityPosts',
-    charset: 'utf8',
-    collate: 'utf8_general_ci',
+    timestamps: true,
+    charset: 'utf8mb4',
+    collate: 'utf8mb4_general_ci',
   },
 );
 
