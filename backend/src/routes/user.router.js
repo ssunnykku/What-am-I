@@ -4,12 +4,15 @@ import { loginRequired } from '../middlewares/loginRequired.js';
 import { userValidator } from '../middlewares/userValidator';
 import { uploadImageS3 } from '../middlewares/uploadImageS3';
 
+import jwt from 'jsonwebtoken';
+import passport from 'passport';
+
 const userRouter = Router();
 const upload = uploadImageS3();
 
 userRouter.post('/users', userValidator, userController.register);
-// userRouter.post('/login', userController.login);
-userRouter.get('/users', userController.userList);
+userRouter.post('/login', userController.login);
+userRouter.get('/users', loginRequired, userController.userList);
 userRouter.get('/users/current', loginRequired, userController.current);
 userRouter.put('/users/:userId', loginRequired, userController.edit);
 userRouter.patch(

@@ -24,19 +24,34 @@ class userController {
     }
   }
   static async login(req, res, next) {
-    try {
-      logger.error('POST, /login');
-      const { email, password } = req.body;
-
-      const user = await userService.findUser({ email, password });
-      if (user.errorMessage) {
-        throw new Error(user.errorMessage);
+    passport.authenticate('local', { session: false }, (error, user) => {
+      if (error || !user) {
+        res.status(400).json({
+          result: 'error',
+          user: user,
+          message: 'Something is not right',
+        });
       }
-      return res.status(201).send(user);
-    } catch (error) {
-      next(error);
-    }
+      req.login(user, { session: false }, (loginError) => {
+        if (loginError) {
+          res.status(400).send(loginError);
+        }
+
+        const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
+          expiresIn: process.env.JWT_EXPIRES,
+        });
+        res.status(200).json({
+          token,
+          userId: user.userId,
+          email: user.email,
+          nickname: user.nickname,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+        });
+      });
+    })(req, res);
   }
+
   static async userList(req, res, next) {
     try {
       logger.error('GET, /users');

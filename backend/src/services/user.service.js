@@ -31,49 +31,6 @@ class userService {
     return `Successfully create a user account`;
   }
 
-  static async findUser({ email, password }) {
-    const user = await User.findOne({ where: { email: email } });
-    if (!user) {
-      const errorMessage = '해당 이메일은 가입 내역이 없습니다.';
-      return { errorMessage };
-    }
-
-    const correctPasswordHash = user.password;
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      correctPasswordHash,
-    );
-
-    if (!isPasswordCorrect) {
-      const errorMessage =
-        '비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.';
-      return { errorMessage };
-    }
-
-    const secretKey = process.env.JWT_SECRET || 'secret-key';
-    const token = jwt.sign({ userId: user.userId }, secretKey, {
-      expiresIn: process.env.JWT_EXPIRES,
-    });
-
-    const userId = user.userId;
-    const nickname = user.nickname;
-    const loginUser = {
-      token,
-      userId,
-      email,
-      nickname,
-      errorMessage: null,
-    };
-
-    // return loginUser;
-    return {
-      token: loginUser.token,
-      userId: loginUser.userId,
-      email: loginUser.email,
-      nickname: loginUser.nickname,
-      errorMessage: loginUser.errorMessage,
-    };
-  }
   // 비밀번호 어떻게 감추지??
   static async users() {
     const users = await User.findAll();
