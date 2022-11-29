@@ -31,6 +31,19 @@ class userService {
     return `Successfully create a user account`;
   }
 
+  static async findUser({ email, password }) {
+    const user = await User.findOne({ where: { email: email } });
+    if (!user) {
+      const errorMessage = '해당 이메일은 가입 내역이 없습니다.';
+      return { errorMessage };
+    }
+
+    const correctPasswordHash = user.password;
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      correctPasswordHash,
+    );
+  }
   static async users() {
     const users = await User.findAll({ attributes: { exclude: ['password'] } });
     return users;

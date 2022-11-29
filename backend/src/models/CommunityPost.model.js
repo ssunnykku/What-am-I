@@ -9,6 +9,7 @@ CommunityPost.init(
       type: DataTypes.UUID,
       allowNull: false,
       unique: true,
+      primaryKey: true,
     },
     description: {
       type: DataTypes.TEXT,
