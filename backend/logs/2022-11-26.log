@@ -1,3 +1,37 @@
 2022-11-26 03:47:12 info: GET, /users
 2022-11-26 03:49:56 info: GET, /users
 2022-11-26 03:51:19 info: GET, /users
+2022-11-26 14:31:16 error: POST /users (Error)
+2022-11-26 14:31:28 error: POST /users (Error)
+2022-11-26 14:32:18 error: POST /users (Error)
+2022-11-26 14:32:19 error: POST /users (Error)
+2022-11-26 14:33:43 error: POST /users (Error)
+2022-11-26 14:35:01 error: POST /users (Error)
+2022-11-26 14:35:23 error: POST /users (Error)
+2022-11-26 14:36:01 error: POST /users (Error)
+2022-11-26 14:36:08 error: POST /users (Error)
+2022-11-26 14:36:42 error: POST /users (Error)
+2022-11-26 14:37:11 error: POST /users (Error)
+2022-11-26 14:37:32 error: POST /users (Error)
+2022-11-26 14:38:03 error: POST /users (Error)
+2022-11-26 14:38:35 error: POST /users (Error)
+2022-11-26 14:39:02 error: POST /users (Error)
+2022-11-26 14:39:22 error: POST /users (Error)
+2022-11-26 14:40:06 error: POST /users (Error)
+2022-11-26 14:41:33 error: POST /users (Error)
+2022-11-26 14:42:59 error: POST /users (Error)
+2022-11-26 14:44:28 error: POST, /users/login(Error)
+2022-11-26 14:46:50 error: POST /users (Error)
+2022-11-26 14:47:12 error: POST /users (Error)
+2022-11-26 14:47:17 error: POST /users (Error)
+2022-11-26 14:52:28 error: POST /users (Error)
+2022-11-26 14:56:55 error: GET, /users/current (Error)
+2022-11-26 15:03:57 error: PUT, /users/:userId (Error)
+2022-11-26 15:04:20 error: PUT, /users/:userId (Error)
+2022-11-26 15:27:11 error: GET, /users (Error)
+2022-11-26 15:28:01 error: GET, /users (Error)
+2022-11-26 15:29:01 error: GET, /users (Error)
+2022-11-26 15:29:19 error: GET, /users (Error)
+2022-11-26 16:05:47 [undefined] error: PUT, /users/:userId
+2022-11-26 16:06:03 [undefined] error: PUT, /users/:userId
+2022-11-26 16:06:24 [undefined] error: POST /users
