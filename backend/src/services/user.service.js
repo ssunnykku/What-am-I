@@ -43,7 +43,31 @@ class userService {
       password,
       correctPasswordHash,
     );
+
+    if (!isPasswordCorrect) {
+      const errorMessage =
+        '비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.';
+      return { errorMessage };
+    }
+
+    const secretKey = process.env.JWT_SECRET || 'secret-key';
+    const token = jwt.sign({ userId: user.userId }, secretKey, {
+      expiresIn: '7d',
+    });
+
+    const userId = user.userId;
+    const nickname = user.nickname;
+    const loginUser = {
+      token,
+      userId,
+      email,
+      nickname,
+      errorMessage: null,
+    };
+
+    return loginUser;
   }
+
   static async users() {
     const users = await User.findAll({ attributes: { exclude: ['password'] } });
     return users;
