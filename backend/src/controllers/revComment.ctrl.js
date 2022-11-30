@@ -4,12 +4,14 @@ import { reviewCommentService } from '../services/revComment.service';
 const reviewCommentController = {
   reviewComments: async (req, res) => {
     try {
+      const userId = req.currentUserId;
       const reviewId = req.params.reviewId;
       const { description } = req.body;
 
       const reviewComment = await reviewCommentService.addReviewComment({
         description,
         reviewId,
+        userId,
       });
       if (reviewComment.errorMessage) {
         throw new Error(reviewComment, errorMessage);
