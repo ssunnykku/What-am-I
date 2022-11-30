@@ -34,35 +34,6 @@ import jwt from 'jsonwebtoken';
 app.use(passport.initialize());
 passportConfig();
 
-app.post('/login', (req, res, next) => {
-  passport.authenticate('local', { session: false }, (error, user) => {
-    if (error || !user) {
-      res.status(400).json({
-        result: 'error',
-        user: user,
-        message: 'Something is not right',
-      });
-    }
-    req.login(user, { session: false }, (loginError) => {
-      if (loginError) {
-        res.status(400).send(loginError);
-      }
-
-      const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES,
-      });
-      res.status(200).json({
-        token,
-        userId: user.userId,
-        email: user.email,
-        nickname: user.nickname,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-      });
-    });
-  })(req, res);
-});
-
 app.get(
   '/kakao',
   passport.authenticate('kakao-login', {

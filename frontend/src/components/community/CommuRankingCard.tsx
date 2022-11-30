@@ -1,16 +1,21 @@
+import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
+import { LikeNum } from '../../assets/styles/common/commonComponentStyle';
+import { theme } from '../../assets/styles/common/palette';
+import { font } from '../../assets/styles/common/fonts';
 
 const CommuRankingCard = () => {
+  const navigate = useNavigate();
+
   return (
-    <>
-      <CommuRankingCardBox>
-        <CommuImage></CommuImage>
-        <CommuDesc>
-          <CommuName>댕댕이를 사랑하는 일산인들의 모임</CommuName>
-          <CheckBtn>💙10</CheckBtn>
-        </CommuDesc>
-      </CommuRankingCardBox>
-    </>
+    <CommuRankingCardBox onClick={() => navigate('/likedcommunity')}>
+      <CommuImage></CommuImage>
+      <CommuName>댕댕이를 사랑하는 일산인들의 모임</CommuName>
+      {/* <CommuDesc>
+        <CommuName>댕댕이를 사랑하는 일산인들의 모임</CommuName>
+        <LikeNum>💙10</LikeNum>
+      </CommuDesc> */}
+    </CommuRankingCardBox>
   );
 };
 
@@ -18,7 +23,7 @@ export default CommuRankingCard;
 
 const popup = keyframes`
   from {
-    transform: translateY(0.4rem);
+    transform: translateY(0.5rem);
   }
   to {
     transform: translateY(0rem);
@@ -27,13 +32,18 @@ const popup = keyframes`
 
 const CommuRankingCardBox = styled.div`
   width: 11rem;
-  height: 17rem;
-  border: solid 1px black;
+  height: 12rem;
   border-radius: 20px;
-  margin: 1rem 0.5rem;
+  margin: 0px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: ${theme.backColor};
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+
   :hover {
-    background-color: rgba(0, 0, 0, 0.5);
-    animation-duration: 0.25s;
+    background-color: rgba(0, 0, 0, 0.4);
+    animation-duration: 0.3s;
     animation-timing-function: ease-in-out;
     animation-name: ${popup};
     animation-fill-mode: forwards;
@@ -42,26 +52,23 @@ const CommuRankingCardBox = styled.div`
 `;
 
 const CommuImage = styled.div`
-  height: 50%;
-  border: solid 1px black;
-  margin: 0.8rem 0.8rem;
-  border-radius: 50%;
+  height: 7rem;
+  width: 9rem;
+  border: solid 1px gray;
+  margin-top: 10px;
+  border-radius: 10px;
 `;
 
-const CommuDesc = styled.div`
-  height: 40%;
-  margin-top: 1rem;
-  padding: 0 0.8rem;
-`;
+// const CommuDesc = styled.div`
+//   height: 40%;
+//   padding: 0 0.8rem;
+// `;
 
 const CommuName = styled.div`
-  width: 100%;
-  height: 4rem;
-  letter-spacing: 1px;
-`;
-
-const CheckBtn = styled.div`
-  height: 2rem;
-  width: 3rem;
-  float: right;
+  width: 10rem;
+  height: 3.5rem;
+  margin-top: 10px;
+  text-align: center;
+  font-family: ${font.normal};
+  font-size: 14px;
 `;

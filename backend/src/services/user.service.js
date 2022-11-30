@@ -52,7 +52,7 @@ class userService {
 
     const secretKey = process.env.JWT_SECRET || 'secret-key';
     const token = jwt.sign({ userId: user.userId }, secretKey, {
-      expiresIn: process.env.JWT_EXPIRES,
+      expiresIn: '7d',
     });
 
     const userId = user.userId;
@@ -65,40 +65,26 @@ class userService {
       errorMessage: null,
     };
 
-    // return loginUser;
-    return {
-      token: loginUser.token,
-      userId: loginUser.userId,
-      email: loginUser.email,
-      nickname: loginUser.nickname,
-      errorMessage: loginUser.errorMessage,
-    };
+    return loginUser;
   }
-  // 비밀번호 어떻게 감추지??
+
   static async users() {
-    const users = await User.findAll();
+    const users = await User.findAll({ attributes: { exclude: ['password'] } });
     return users;
   }
 
   static async getUser({ userId }) {
-    const user = await User.findOne({ where: { userId: userId } });
+    const user = await User.findOne({
+      where: { userId: userId },
+      attributes: { exclude: ['password', 'deletedAt'] },
+    });
 
     if (!user) {
       const errorMessage = '가입내역이 없습니다.';
       return { errorMessage };
     }
     // return user;
-    return {
-      id: user.id,
-      userId: user.userId,
-      email: user.email,
-      nickname: user.nickname,
-      profileImg: user.profileImg,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-      deletedAt: user.deletedAt,
-      errorMessage: user.errorMessage,
-    };
+    return user;
   }
 
   static async setUser({ userId, nickname, password }) {
@@ -153,17 +139,11 @@ class userService {
     return;
   }
   static async findUserId({ userId }) {
-    const user = await User.findOne({ where: { userId: userId } });
-    return {
-      id: user.id,
-      userId: user.userId,
-      email: user.email,
-      nickname: user.nickname,
-      profileImg: user.profileImg,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-      deletedAt: user.deletedAt,
-    };
+    const user = await User.findOne({
+      where: { userId: userId },
+      attributes: { exclude: ['password'] },
+    });
+    return user;
   }
 }
 export { userService };

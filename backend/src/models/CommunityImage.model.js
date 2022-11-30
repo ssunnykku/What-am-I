@@ -1,13 +1,20 @@
 import sequelize from '../config/sequelize';
-import { DataTypes } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 
-const CommunityImage = sequelize.define(
-  'communityImage',
-  {},
+class CommunityImage extends Model {}
+
+CommunityImage.init(
+  {
+    images: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+  },
   {
     sequelize,
-    timestamps: true,
     tableName: 'communityImages',
+    timestamps: true,
     charset: 'utf8',
     collate: 'utf8_general_ci',
   },
