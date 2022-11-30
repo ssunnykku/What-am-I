@@ -21,7 +21,7 @@ module.exports = class ReviewComment extends Sequelize.Model {
   static associate(db) {
     db.RevComment.belongsTo(db.Review, {
       foreignKey: 'reviewId',
-      sourcekey: 'id',
+      sourcekey: 'reviewId',
       onDelete: 'cascade',
       onUpdate: 'cascade',
     });

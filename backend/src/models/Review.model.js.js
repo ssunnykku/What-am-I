@@ -4,6 +4,12 @@ module.exports = class Review extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
+        reviewId: {
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+          type: Sequelize.INTEGER,
+        },
         description: {
           type: DataTypes.STRING(500),
           allowNull: false,
@@ -32,7 +38,7 @@ module.exports = class Review extends Sequelize.Model {
 
     db.Review.hasMany(db.RevComment, {
       foreignKey: 'reviewId',
-      sourcekey: 'id',
+      sourcekey: 'reviewId',
       onDelete: 'cascade',
       onUpdate: 'cascade',
     });
