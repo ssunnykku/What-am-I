@@ -4,6 +4,12 @@ module.exports = class ReviewComment extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
+        reviewCommentId: {
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+          type: Sequelize.INTEGER,
+        },
         description: {
           type: DataTypes.STRING(500),
           allowNull: false,
