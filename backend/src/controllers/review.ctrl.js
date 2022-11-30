@@ -4,7 +4,9 @@ import { reviewService } from '../services/review.service';
 const reviewController = {
   register: async (req, res) => {
     try {
-      const { description, images, userId } = req.body;
+      const userId = req.currentUserId;
+      console.log(userId);
+      const { description, images } = req.body;
 
       const newReview = await reviewService.addReview({
         description,
@@ -22,7 +24,7 @@ const reviewController = {
   },
   myReviews: async (req, res) => {
     try {
-      const { userId } = req.body;
+      const userId = req.currentUserId;
 
       const myReviews = await reviewService.showMyReviews({
         userId,
@@ -37,6 +39,7 @@ const reviewController = {
   },
   reviewComments: async (req, res) => {
     try {
+      const userId = req.currentUserId;
       const reviewId = req.params.reviewId;
       const { description } = req.body;
 

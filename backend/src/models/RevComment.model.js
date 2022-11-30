@@ -25,5 +25,11 @@ module.exports = class ReviewComment extends Sequelize.Model {
       onDelete: 'cascade',
       onUpdate: 'cascade',
     });
+    db.RevComment.belongsTo(db.User, {
+      foreignKey: 'userId',
+      sourcekey: 'userId',
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    });
   }
 };

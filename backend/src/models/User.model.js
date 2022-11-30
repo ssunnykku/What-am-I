@@ -63,5 +63,12 @@ module.exports = class User extends Sequelize.Model {
       onDelete: 'cascade',
       onUpdate: 'cascade',
     });
+    db.ReviewComment,
+      {
+        foreignKey: 'userId',
+        sourceKey: 'userId',
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
+      };
   }
 };
