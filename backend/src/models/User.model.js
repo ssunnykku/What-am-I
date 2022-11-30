@@ -57,18 +57,21 @@ module.exports = class User extends Sequelize.Model {
     );
   }
   static associate(db) {
-    db.User.hasMany(db.Review, {
-      foreignKey: 'userId',
-      sourceKey: 'userId',
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    });
-    db.ReviewComment,
+    db.User.hasMany(
+      db.Review,
       {
         foreignKey: 'userId',
         sourceKey: 'userId',
         onDelete: 'cascade',
         onUpdate: 'cascade',
-      };
+      },
+      db.ReviewComment,
+      {
+        foreignKey: 'userId',
+        sourceKey: 'userId',
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
+      },
+    );
   }
 };
