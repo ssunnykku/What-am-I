@@ -2,6 +2,22 @@ import { reviewService } from '../services/review.service';
 // import Joi from 'joi';
 
 const reviewController = {
+  //모든 글들 다 보기
+  allReviews: async (req, res) => {
+    try {
+      // const _reviewId = req.params.reviewId;
+
+      const allReviews = await reviewService.showAllReviews({});
+      if (allReviews.errorMessage) {
+        throw new Error(allReviews, errorMessage);
+      }
+      res.status(201).json(allReviews);
+    } catch (error) {
+      return res.status(400).json({ code: 400, message: error.message });
+    }
+  },
+
+  //새로운 리뷰 등록
   register: async (req, res) => {
     try {
       const userId = req.currentUserId;
@@ -22,6 +38,7 @@ const reviewController = {
       return res.status(400).json({ code: 400, message: error.message });
     }
   },
+  //내가쓴 글들 모두 가지고 오기
   myReviews: async (req, res) => {
     try {
       const userId = req.currentUserId;
@@ -37,6 +54,7 @@ const reviewController = {
       return res.status(400).json({ code: 400, message: error.message });
     }
   },
+  //한개의 리뷰글 보기
   review: async (req, res) => {
     try {
       const _reviewId = req.params.reviewId;
@@ -48,6 +66,34 @@ const reviewController = {
         throw new Error(comments, errorMessage);
       }
       res.status(201).json(comments);
+    } catch (error) {
+      return res.status(400).json({ code: 400, message: error.message });
+    }
+  },
+
+  //작성한 리뷰 수정하기
+  updateReview: async (req, res) => {
+    try {
+      const userId = req.currentUserId;
+
+      const reviewId = req.params.reviewId;
+      const { description } = req.body;
+
+      const updateReview = await reviewService.updateReview({
+        description,
+        reviewId,
+        userId,
+      });
+
+      if (updateReview.errorMessage) {
+        throw new Error(updateReview, errorMessage);
+      }
+
+      const message = await reviewService.findMessage({
+        reviewId,
+        userId,
+      });
+      return res.status(200).json(message);
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
