@@ -6,11 +6,11 @@ const reviewAuthRouter = Router();
 
 // 리뷰작성
 reviewAuthRouter.post('/review', loginRequired, reviewController.register);
-reviewAuthRouter.get('/myReviews', loginRequired, reviewController.myReviews);
+reviewAuthRouter.get('/review', loginRequired, reviewController.myReviews);
 reviewAuthRouter.get(
-  '/reviews/:reviewId',
+  '/review/my/:reviewId',
   loginRequired,
-  reviewController.reviewComments,
+  reviewController.review,
 );
 
 export { reviewAuthRouter };

@@ -13,9 +13,9 @@ class reviewCommentService {
     return createdNewComment;
   }
 
-  static async showAllReviewComments({ _reviewId: reviewId }) {
+  static async showAllReviewComments({ _reviewId: reviewId, userId }) {
     const _reviewId = await ReviewComment.findAll({
-      where: { reviewId },
+      where: { reviewId, userId },
     });
     if (!_reviewId) {
       const errorMessage = '댓글이 없습니다';
@@ -31,11 +31,6 @@ class reviewCommentService {
     const descriptionId = await ReviewComment.findOne({
       where: { id: id },
     });
-
-    // console.log('1:', descriptionId);
-    // console.log('2:', id);
-    // console.log('3', descriptionId.dataValues.id);
-    // descriptionId가 null인거를 왜 못찾아내는지..?
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!descriptionId) {
       const errorMessage = '등록한 댓글이 없습니다. 다시 한 번 확인해 주세요.';
@@ -48,11 +43,6 @@ class reviewCommentService {
         { description: description },
         { where: { id: id } },
       );
-      console.log('4:', updateComment);
-      //왜 updateComment는 [1]이 나오는걸까....???
-
-      console.log('5', descriptionId);
-
       updateComment.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
       return descriptionId;

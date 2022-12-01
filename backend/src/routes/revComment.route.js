@@ -18,7 +18,7 @@ reviewCommentAuthRouter.get(
 );
 
 reviewCommentAuthRouter.put(
-  '/reviewComment/edit/:id',
+  '/reviewComment/:id',
   loginRequired,
   reviewCommentController.updateComment,
 );

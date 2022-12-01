@@ -37,14 +37,12 @@ const reviewController = {
       return res.status(400).json({ code: 400, message: error.message });
     }
   },
-  reviewComments: async (req, res) => {
+  review: async (req, res) => {
     try {
-      const userId = req.currentUserId;
-      const reviewId = req.params.reviewId;
-      const { description } = req.body;
+      const _reviewId = req.params.reviewId;
 
-      const comments = await reviewService.showReviewComments({
-        reviewId,
+      const comments = await reviewService.showReview({
+        _reviewId,
       });
       if (comments.errorMessage) {
         throw new Error(comments, errorMessage);
