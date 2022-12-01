@@ -20,6 +20,8 @@ const MyModal = ({
   );
 };
 
+export default MyModal;
+
 const MyModalBackdrop = styled.div<{ isOpen: boolean }>`
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
@@ -43,5 +45,3 @@ const CloseButton = styled.button`
   cursor: pointer;
   font-family: ${font.bold};
 `;
-
-export default MyModal;

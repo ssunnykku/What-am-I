@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import { LikeNum } from '../../assets/styles/common/commonComponentStyle';
 import { theme } from '../../assets/styles/common/palette';
 import { font } from '../../assets/styles/common/fonts';
+import LikeBtn from '../common/LikeBtn';
 
 const CommuRankingCard = () => {
   const navigate = useNavigate();
@@ -11,10 +11,9 @@ const CommuRankingCard = () => {
     <CommuRankingCardBox onClick={() => navigate('/likedcommunity')}>
       <CommuImage></CommuImage>
       <CommuName>댕댕이를 사랑하는 일산인들의 모임</CommuName>
-      {/* <CommuDesc>
-        <CommuName>댕댕이를 사랑하는 일산인들의 모임</CommuName>
-        <LikeNum>💙10</LikeNum>
-      </CommuDesc> */}
+      <div className="like-icon">
+        <LikeBtn />
+      </div>
     </CommuRankingCardBox>
   );
 };
@@ -41,6 +40,15 @@ const CommuRankingCardBox = styled.div`
   background-color: ${theme.backColor};
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
 
+  position: relative;
+  overflow: hidden;
+  .like-icon {
+    position: absolute;
+    z-index: 2;
+    color: #fff;
+    top: 150%;
+  }
+
   :hover {
     background-color: rgba(0, 0, 0, 0.4);
     animation-duration: 0.3s;
@@ -48,6 +56,10 @@ const CommuRankingCardBox = styled.div`
     animation-name: ${popup};
     animation-fill-mode: forwards;
     cursor: pointer;
+
+    .like-icon {
+      top: 45%;
+    }
   }
 `;
 
@@ -58,11 +70,6 @@ const CommuImage = styled.div`
   margin-top: 10px;
   border-radius: 10px;
 `;
-
-// const CommuDesc = styled.div`
-//   height: 40%;
-//   padding: 0 0.8rem;
-// `;
 
 const CommuName = styled.div`
   width: 10rem;
