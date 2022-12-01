@@ -20,14 +20,16 @@ const communityController = {
   },
 
   createCommunity: async (req, res, next) => {
+    const userId = req.currentUserId;
     const { name, communtyImage, introduction } = req.body;
     try {
-      await communityService.createCommunity(name, communtyImage, introduction);
-      res.status(201).json({
-        success: true,
-        status: 201,
-        message: 'Successfully CREATE new community',
-      });
+      const createCommunity = await communityService.createCommunity(
+        userId,
+        name,
+        communtyImage,
+        introduction,
+      );
+      res.status(201).json(createCommunity);
     } catch (err) {
       next(err);
     }

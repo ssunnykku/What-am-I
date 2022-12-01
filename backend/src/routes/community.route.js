@@ -5,7 +5,15 @@ import { loginRequired } from '../middlewares/loginRequired.js';
 
 const communityRouter = Router();
 
-communityRouter.get('/community', communityController.getCommunityList);
-communityRouter.post('/community', communityController.createCommunity);
+communityRouter.get(
+  '/community',
+  loginRequired,
+  communityController.getCommunityList,
+);
+communityRouter.post(
+  '/community',
+  loginRequired,
+  communityController.createCommunity,
+);
 
 export { communityRouter };

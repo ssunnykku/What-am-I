@@ -14,6 +14,10 @@ module.exports = class Community extends Sequelize.Model {
           type: DataTypes.STRING,
           allownull: false,
         },
+        introduction: {
+          type: DataTypes.TEXT,
+          allowNull: false,
+        },
         communityImage: {
           type: DataTypes.STRING,
           defaultValue:
@@ -21,10 +25,6 @@ module.exports = class Community extends Sequelize.Model {
         },
         userId: {
           type: DataTypes.STRING(500),
-        },
-        introduction: {
-          type: DataTypes.TEXT,
-          allowNull: false,
         },
       },
       {

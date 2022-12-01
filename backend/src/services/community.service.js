@@ -25,8 +25,15 @@ class communityService {
     return selectedCommunities;
   }
 
-  static async createCommunity(name, communityImage, introduction) {
-    return Community.create({ name, communityImage, introduction });
+  static async createCommunity(userId, name, communityImage, introduction) {
+    const createCommunity = await Community.create({
+      userId,
+      name,
+      communityImage,
+      introduction,
+    });
+    createCommunity.errorMessage = null;
+    return createCommunity;
   }
 }
 
