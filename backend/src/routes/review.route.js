@@ -8,7 +8,7 @@ const reviewAuthRouter = Router();
 reviewAuthRouter.post('/review', loginRequired, reviewController.register);
 reviewAuthRouter.get('/review', loginRequired, reviewController.myReviews);
 reviewAuthRouter.get(
-  '/review/my/:reviewId',
+  '/review/show/:reviewId',
   loginRequired,
   reviewController.review,
 );
