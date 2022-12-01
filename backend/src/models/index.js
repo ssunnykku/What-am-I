@@ -20,7 +20,8 @@ db.sequelize = sequelize;
 db.User = User;
 db.Review = Review;
 db.Like = Like;
-db.RevComment = RevComment;
+db.Community = Community;
+db.CommunityPost = CommunityPost;
 
 User.init(sequelize);
 Session.init(sequelize);
@@ -32,8 +33,8 @@ RevComment.init(sequelize);
 //커뮤니티
 Community.init(sequelize);
 CommunityPost.init(sequelize);
-CommunityImage.init(sequelize);
-CommunityComment.init(sequelize);
+// CommunityImage.init(sequelize);
+// CommunityComment.init(sequelize);
 
 // //외래키 오류나서 일단 주석처리
 // User.associate(db);

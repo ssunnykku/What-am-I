@@ -4,7 +4,7 @@ module.exports = class CommunityPost extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        communityPost: {
+        communityPostId: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
@@ -14,6 +14,10 @@ module.exports = class CommunityPost extends Sequelize.Model {
           type: DataTypes.STRING,
           allowNull: false,
           unique: true,
+        },
+        description: {
+          type: DataTypes.STRING(500),
+          allowNull: false,
         },
         communityId: {
           type: Sequelize.INTEGER,

@@ -12,8 +12,12 @@ import sessionMysql from 'express-mysql-session';
 import passport from 'passport';
 
 //**Router */
-import { communityRouter } from './src/routes/community.route';
 import { userRouter } from './src/routes/user.router';
+//**       Router-Community */
+import { communityRouter } from './src/routes/community.route';
+import { communityPostRouter } from './src/routes/communityPost.route';
+
+//**       Router-Review */
 import { reviewAuthRouter } from './src/routes/review.route';
 import { reviewCommentAuthRouter } from './src/routes/revComment.route';
 //**middleware */
@@ -65,6 +69,7 @@ app.use(userRouter);
 
 //Community
 app.use(communityRouter);
+app.use(communityPostRouter);
 
 //Review
 app.use(reviewAuthRouter);
