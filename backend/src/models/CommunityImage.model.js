@@ -15,6 +15,12 @@ module.exports = class CommunityImage extends Sequelize.Model {
           allowNull: false,
           unique: true,
         },
+        communityId: {
+          type: Sequelize.INTEGER,
+        },
+        userId: {
+          type: DataTypes.STRING(500),
+        },
       },
       {
         sequelize,

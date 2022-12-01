@@ -15,10 +15,16 @@ module.exports = class CommunityPost extends Sequelize.Model {
           allowNull: false,
           unique: true,
         },
+        communityId: {
+          type: Sequelize.INTEGER,
+        },
+        userId: {
+          type: DataTypes.STRING(500),
+        },
       },
       {
         sequelize,
-        tableName: 'communityImages',
+        tableName: 'communityPosts',
         timestamps: true,
         charset: 'utf8',
         collate: 'utf8_general_ci',
