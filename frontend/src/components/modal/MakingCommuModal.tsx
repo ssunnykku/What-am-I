@@ -1,19 +1,21 @@
 import MyModal from './MyModal';
 import useModal from '../../hooks/modal/useModal';
 import { CreateBtn } from '../../assets/styles/common/commonComponentStyle';
-import WritingEditor from '../writingeditor/WritingEditor';
+import CommunityMaker from '../communitymaker/CommunityMaker';
 
-const WritingModal = () => {
+const MakingCommuModal = () => {
   const [isOpen, modalHandler] = useModal();
 
   return (
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
-        <WritingEditor />
+        <CommunityMaker />
       </MyModal>
-      <CreateBtn onClick={modalHandler}> 글쓰기 </CreateBtn>
+      <CreateBtn style={{ width: '200px' }} onClick={modalHandler}>
+        커뮤니티 만들기
+      </CreateBtn>
     </>
   );
 };
 
-export default WritingModal;
+export default MakingCommuModal;

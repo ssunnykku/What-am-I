@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { menus } from '../commonConst/NavConst';
 import { font } from '../../assets/styles/common/fonts';
+import { theme } from '../../assets/styles/common/palette';
 
 function NavBar() {
   const [userImg, setUserImg] = useState<string>('/');
@@ -22,7 +23,7 @@ function NavBar() {
     <NavDiv>
       <ul>
         <li id="logo">
-          <Link to="/">DogNA</Link>
+          <Link to="/">나는뭐개🐶</Link>
         </li>
         {menus.map((value, index) => {
           return (
@@ -69,34 +70,31 @@ const NavDiv = styled.div`
     font-size: 2rem;
   }
 
-  ul {
-    /* display: inline-block; */
-  }
-
   ul a {
     margin: 0 2.5rem;
     text-decoration: none;
-    color: black;
+    color: #0583b5;
   }
 
   li {
     display: inline; /* a태그는 글자성격 = inline */
   }
+
   #profile {
     float: right;
     margin-right: 40px;
     text-decoration: none;
-    color: black;
+    color: #0583b5;
   }
 
   text-align: center;
   width: 100%;
-  height: 4rem;
+  height: 10vh;
   min-width: 50rem;
-  line-height: 5rem;
+  line-height: 10vh;
   font-family: ${font.bold};
   font-size: 1.3rem;
-  padding-top: 2.5rem;
+  background-color: ${theme.backColor};
 `;
 
 export default NavBar;

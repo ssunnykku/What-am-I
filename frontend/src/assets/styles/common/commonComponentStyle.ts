@@ -66,22 +66,17 @@ export const SearchBox = styled.div`
   }
 `;
 
-export const LikeNum = styled.div`
-  width: 5rem;
-  height: 2rem;
-`;
-
 export const CreateBtn = styled.button`
-  width: 8rem;
-  height: 2.4rem;
+  width: 125px;
+  height: 40px;
   border: none;
   border-radius: 20px;
   cursor: pointer;
   background-color: ${theme.pointColor};
   font-family: ${font.bold};
   color: white;
-  font-size: 15px;
-  margin-left: 20px;
+  font-size: 17px;
+  margin-left: 25px;
 
   :hover {
     animation-duration: 0.4s;
@@ -91,15 +86,15 @@ export const CreateBtn = styled.button`
 `;
 
 export const EntryBtn = styled.button`
-  width: 8rem;
-  height: 2.5rem;
+  width: 130px;
+  height: 40px;
   border-radius: 20px;
   cursor: pointer;
   border: solid 2px ${theme.mainColor};
   color: ${theme.mainColor};
   background-color: white;
   font-family: ${font.bold};
-  font-size: 15px;
+  font-size: 16px;
   margin-left: 20px;
 
   :hover {

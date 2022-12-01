@@ -42,16 +42,15 @@ const animation = keyframes`
 
 const MainContent = styled.div`
   width: 100%;
-  height: 85vh;
+  height: 90vh;
   font-family: ${font.bold};
   display: flex;
   flex-direction: row;
-  margin-top: 0.7rem;
 `;
 
 const MainImageBox = styled.div`
   width: 50%;
-  max-width: 50rem;
+  max-width: 60rem;
   position: relative;
   overflow: hidden;
 `;
@@ -71,12 +70,12 @@ const MainImage = styled.div`
 const MainLetterBox = styled.div`
   width: 50%;
   min-width: 30rem;
-  padding-left: 7.5rem;
-  padding-top: 10.5rem;
+  margin-left: 10rem;
+  margin-top: 12.5rem;
   font-size: 3.5rem;
   line-height: 130%;
   .description {
-    margin-top: 1.2rem;
+    margin-top: 1.3rem;
     font-size: 1.1rem;
     font-family: ${font.normal};
     line-height: 1.8rem;
@@ -86,9 +85,9 @@ const MainLetterBox = styled.div`
 const LetterBtn = styled.button`
   width: 14rem;
   height: 4rem;
-  margin-top: 2.3rem;
+  margin-top: 2.5rem;
   border-radius: 25px;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-family: ${font.bold};
   cursor: pointer;
   border: 0;

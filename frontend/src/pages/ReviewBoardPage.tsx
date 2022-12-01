@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import { SearchBox } from '../assets/styles/common/commonComponentStyle';
-import { WritingModal } from '../components/modal/WritingModal';
-import { ContentsModal } from '../components/modal/ContentsModal';
+import WritingModal from '../components/modal/WritingModal';
+import ContentsModal from '../components/modal/ContentsModal';
 import { theme } from '../assets/styles/common/palette';
 
 const ReviewBoardPage = () => {
@@ -17,13 +17,20 @@ const ReviewBoardPage = () => {
           <SlideLeftBtn />
           <CardBox>
             <ContentsModal />
+            <ContentsModal />
+            <ContentsModal />
+            <ContentsModal />
+            <ContentsModal />
+            <ContentsModal />
+            <ContentsModal />
+            <ContentsModal />
           </CardBox>
           <SlideRightBtn />
-          <SearchBox style={{ position: 'absolute', bottom: '5%' }}>
-            <input></input>
-            <button>검색</button>
-          </SearchBox>
         </BoardContent>
+        <SearchBox style={{ marginTop: '7vh' }}>
+          <input></input>
+          <button>검색</button>
+        </SearchBox>
       </BoardBox>
     </>
   );
@@ -33,23 +40,28 @@ export default ReviewBoardPage;
 
 const BoardBox = styled.div`
   width: 100%;
-  height: 80vh;
+  height: 85vh;
   font-family: ${font.bold};
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const BoardHeader = styled.div`
-  font-size: 19px;
+  font-size: 20px;
   display: flexbox;
   justify-content: center;
-  margin-top: 5rem;
+  margin-top: 8vh;
   letter-spacing: 1px;
 `;
 
 const BoardContent = styled.div`
   display: flexbox;
   justify-content: center;
-  justify-content: space-evenly;
   align-items: center;
+  height: 30rem;
+  margin-top: 5vh;
 `;
 
 const CardBox = styled.div`
@@ -60,7 +72,6 @@ const CardBox = styled.div`
   width: 70rem;
   min-width: 70rem;
   min-height: 27rem;
-  margin-top: 2.5rem;
 `;
 
 const SlideLeftBtn = styled.div`
@@ -69,7 +80,7 @@ const SlideLeftBtn = styled.div`
   border-bottom: 1.5rem solid transparent;
   border-top: 1.5rem solid transparent;
   border-left: 1.5rem solid transparent;
-  border-right: 1.5rem solid ${theme.backColor};
+  border-right: 1.5rem solid lightgray;
 
   :hover {
     border-bottom: 1.5rem solid transparent;
@@ -85,7 +96,7 @@ const SlideRightBtn = styled.div`
   height: 0;
   border-bottom: 1.5rem solid transparent;
   border-top: 1.5rem solid transparent;
-  border-left: 1.5rem solid ${theme.backColor};
+  border-left: 1.5rem solid lightgray;
   border-right: 1.5rem solid transparent;
 
   :hover {

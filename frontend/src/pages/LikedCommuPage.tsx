@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import {
@@ -6,12 +6,29 @@ import {
   EntryBtn,
   SearchBox,
 } from '../assets/styles/common/commonComponentStyle';
-import { WritingModal } from '../components/modal/WritingModal';
-import { ContentsModal } from '../components/modal/ContentsModal';
+import WritingModal from '../components/modal/WritingModal';
+import ContentsModal from '../components/modal/ContentsModal';
 import { theme } from '../assets/styles/common/palette';
-import Pagination from '../components/community/Pagination';
+import LikeBtn from '../components/common/LikeBtn';
+import StickyNote2Icon from '@mui/icons-material/StickyNote2';
+import { currentCommuListRequest } from '../apis/communityFetcher';
 
 const LikedCommuPage = () => {
+  const [posts, setPosts] = useState([]);
+
+  const limit = 6;
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
+
+  // const fetchData = async () => {
+  //   const res = await currentCommuListRequest('community?page="page"');
+  //   setPosts(res.data);
+  // };
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
   return (
     <>
       <BigBox>
@@ -38,14 +55,25 @@ const LikedCommuPage = () => {
               <button>검색</button>
             </SearchBox>
             <InfoBox>
-              <div>좋아요 수</div>
-              <div>게시물 수</div>
+              <div>
+                <LikeBtn />
+                &nbsp;10
+              </div>
+              <div>
+                <StickyNote2Icon />
+                &nbsp;10
+              </div>
             </InfoBox>
           </SmallBox>
           <ContentsBox>
-            <ContentsModal />
+            {/* {posts?.slice(offset, offset + limit).map((post, idx) => (
+              <ContentsModal key={idx.toString()} />
+            ))} */}
           </ContentsBox>
-          <PaginationBox></PaginationBox>
+          <PaginationBox>
+            <SideBtn>&lt;</SideBtn>
+            <SideBtn>&gt;</SideBtn>
+          </PaginationBox>
         </CommunityBox>
       </BigBox>
     </>
@@ -56,10 +84,12 @@ export default LikedCommuPage;
 
 const BigBox = styled.div`
   width: 100%;
-  height: 86vh;
+  height: 87.5vh;
   display: flex;
   justify-content: center;
+  align-items: center;
   font-family: ${font.normal};
+  margin-top: 10px;
 `;
 
 const CommunityBox = styled.div`
@@ -70,7 +100,8 @@ const CommunityBox = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: 30px;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
+  position: relative;
 `;
 
 const IntroBox = styled.div`
@@ -85,8 +116,8 @@ const IntroBox = styled.div`
 const ImageBox = styled.div`
   border: solid 1px black;
   border-radius: 50%;
-  height: 8rem;
-  width: 8rem;
+  height: 9rem;
+  width: 9rem;
   margin: 0rem 2rem;
 `;
 
@@ -118,15 +149,6 @@ const CommuIntro = styled.div`
   line-height: 1.3rem;
 `;
 
-// const EditBtn = styled.button`
-//   width: 6rem;
-//   height: 2rem;
-//   margin-top: 0.5rem;
-//   cursor: pointer;
-//   border: solid 1px black;
-//   background-color: white;
-// `;
-
 const BtnBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -140,7 +162,7 @@ const SmallBox = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   padding-right: 1rem;
 `;
 
@@ -153,6 +175,9 @@ const InfoBox = styled.div`
   align-items: center;
   div {
     margin-left: 10px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
   }
 `;
 
@@ -161,14 +186,20 @@ const ContentsBox = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 1rem;
+  margin: 1.5rem;
 `;
 
-const PaginationBox = styled.div`
+const PaginationBox = styled.nav`
   border: solid 1px black;
   height: 2rem;
   width: 35rem;
   margin-top: 0.7rem;
   position: absolute;
   bottom: 2%;
+`;
+
+const SideBtn = styled.button`
+  background: #e7e5e5;
+  cursor: revert;
+  transform: revert;
 `;
