@@ -14,6 +14,12 @@ module.exports = class ReviewComment extends Sequelize.Model {
           type: DataTypes.STRING(500),
           allowNull: false,
         },
+        reviewId: {
+          type: Sequelize.INTEGER,
+        },
+        userId: {
+          type: DataTypes.STRING(500),
+        },
       },
       {
         sequelize,
@@ -32,12 +38,12 @@ module.exports = class ReviewComment extends Sequelize.Model {
       onUpdate: 'cascade',
     });
   }
-  static associate(db) {
-    db.RevComment.belongsTo(db.User, {
-      foreignKey: 'userId',
-      sourcekey: 'userId',
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    });
-  }
+  // static associate(db) {
+  //   db.RevComment.belongsTo(db.User, {
+  //     foreignKey: 'userId',
+  //     sourcekey: 'userId',
+  //     onDelete: 'cascade',
+  //     onUpdate: 'cascade',
+  //   });
+  // }
 };

@@ -13,9 +13,9 @@ class reviewCommentService {
     return createdNewComment;
   }
 
-  static async showAllReviewComments({ _reviewId: reviewId, userId }) {
+  static async showAllReviewComments({ _reviewId: reviewId }) {
     const _reviewId = await ReviewComment.findAll({
-      where: { reviewId, userId },
+      where: { reviewId },
     });
     if (!_reviewId) {
       const errorMessage = '댓글이 없습니다';
@@ -25,11 +25,11 @@ class reviewCommentService {
     }
   }
 
-  static async updateComment({ description, id }) {
+  static async updateComment({ description, reviewCommentId, userId }) {
     //db검색
 
     const descriptionId = await ReviewComment.findOne({
-      where: { id: id },
+      where: { reviewCommentId: reviewCommentId, userId: userId },
     });
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!descriptionId) {
@@ -41,7 +41,7 @@ class reviewCommentService {
     if (descriptionId) {
       const updateComment = await ReviewComment.update(
         { description: description },
-        { where: { id: id } },
+        { where: { reviewCommentId: reviewCommentId, userId: userId } },
       );
       updateComment.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
@@ -49,9 +49,9 @@ class reviewCommentService {
     }
   }
 
-  static async deleteComment({ _id }) {
+  static async deleteComment({ reviewCommentId, userId }) {
     const id = await ReviewComment.destroy({
-      where: { id: _id },
+      where: { reviewCommentId: reviewCommentId, userId: userId },
     });
     if (!id) {
       const errorMessage = '댓글이 없습니다';

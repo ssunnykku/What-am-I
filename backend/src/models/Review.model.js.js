@@ -14,6 +14,9 @@ module.exports = class Review extends Sequelize.Model {
           type: DataTypes.STRING(500),
           allowNull: false,
         },
+        userId: {
+          type: DataTypes.STRING(500),
+        },
         images: {
           type: DataTypes.TEXT,
           allowNull: true,
@@ -28,19 +31,24 @@ module.exports = class Review extends Sequelize.Model {
       },
     );
   }
-  static associate(db) {
-    db.Review.belongsTo(db.User, {
-      foreignKey: 'userId',
-      sourceKey: 'userId',
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    });
+  // static associate(db) {
+  //   db.Review.belongsTo(db.User, {
+  //     foreignKey: 'userId',
+  //     sourceKey: 'userId',
+  //     onDelete: 'cascade',
+  //     onUpdate: 'cascade',
+  //   });
 
-    db.Review.hasMany(db.RevComment, {
-      foreignKey: 'reviewId',
-      sourcekey: 'reviewId',
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    });
-  }
+  //   db.Review.hasMany(db.RevComment, {
+  //     foreignKey: 'reviewId',
+  //     sourcekey: 'reviewId',
+  //     onDelete: 'cascade',
+  //     onUpdate: 'cascade',
+  //   });
+  // }
 };
+
+//외래키 따로 sql에 직접 입력해주었음.(associate 주석부분 에러나서)
+// alter table reviews add foreign key( userId ) references users(userId) on delete cascade;
+// alter table reviewComments add foreign key( userId ) references users(userId) on delete cascade;
+// alter table reviewComments add foreign key( reviewId ) references reviews(reviewId) on delete cascade;

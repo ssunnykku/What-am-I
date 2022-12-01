@@ -18,12 +18,12 @@ reviewCommentAuthRouter.get(
 );
 
 reviewCommentAuthRouter.put(
-  '/reviewComment/:id',
+  '/reviewComment/:reviewCommentId',
   loginRequired,
   reviewCommentController.updateComment,
 );
 reviewCommentAuthRouter.delete(
-  '/reviewComment/:id',
+  '/reviewComment/:reviewCommentId',
   loginRequired,
   reviewCommentController.deleteComment,
 );

@@ -28,8 +28,8 @@ Review.init(sequelize);
 Like.init(sequelize);
 RevComment.init(sequelize);
 
-User.associate(db);
-Review.associate(db);
-RevComment.associate(db);
+// User.associate(db);
+// Review.associate(db);
+// RevComment.associate(db);
 
 export { db, Community, CommunityPost, CommunityImage, CommunityComment };
