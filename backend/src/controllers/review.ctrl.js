@@ -11,7 +11,7 @@ const reviewController = {
       if (allReviews.errorMessage) {
         throw new Error(allReviews, errorMessage);
       }
-      res.status(201).json(allReviews);
+      return res.status(200).json(allReviews);
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
@@ -33,7 +33,7 @@ const reviewController = {
         throw new Error(newReview, errorMessage);
         // console.log(newUser.errorMessage);
       }
-      res.status(201).json(newReview);
+      return res.status(201).json(newReview);
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
@@ -49,7 +49,7 @@ const reviewController = {
       if (myReviews.errorMessage) {
         throw new Error(myReviews, errorMessage);
       }
-      res.status(201).json(myReviews);
+      return res.status(200).json(myReviews);
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
@@ -65,7 +65,7 @@ const reviewController = {
       if (comments.errorMessage) {
         throw new Error(comments, errorMessage);
       }
-      res.status(201).json(comments);
+      return res.status(200).json(comments);
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }

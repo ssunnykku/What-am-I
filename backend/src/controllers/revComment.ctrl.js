@@ -16,7 +16,7 @@ const reviewCommentController = {
       if (reviewComment.errorMessage) {
         throw new Error(reviewComment, errorMessage);
       }
-      res.status(201).json(reviewComment);
+      return res.status(201).json(reviewComment);
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
@@ -32,7 +32,7 @@ const reviewCommentController = {
       if (reviewComments.errorMessage) {
         throw new Error(reviewComments, errorMessage);
       }
-      res.status(200).json(reviewComments);
+      return res.status(200).json(reviewComments);
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
@@ -77,7 +77,7 @@ const reviewCommentController = {
       if (deleteComment.errorMessage) {
         throw new Error(deleteComment, errorMessage);
       }
-      res.status(200).json(deleteComment);
+      return res.status(200).json(deleteComment);
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
