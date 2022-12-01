@@ -60,12 +60,15 @@ app.get(
 
 sequelize.sync({ force: false });
 
-// app.use(userRouter);
+//User
+app.use(userRouter);
 
+//Community
 app.use(communityRouter);
 
-// app.use(reviewAuthRouter);
-// app.use(reviewCommentAuthRouter);
+//Review
+app.use(reviewAuthRouter);
+app.use(reviewCommentAuthRouter);
 
 app.use(errorMiddleware);
 

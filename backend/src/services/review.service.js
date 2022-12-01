@@ -1,22 +1,36 @@
 import Review from '../models/Review.model.js';
 import { REVIEW_PER_PAGE } from '../utils/Constant';
-
 import { Sequelize } from 'sequelize';
+
 const Op = Sequelize.Op;
 
 class reviewService {
   //모든리뷰 다 가지고 오기
-  static async showAllReviews({}) {
-    const reviewId = await Review.findAll({
-      where: { reviewId: { [Op.gt]: 0 } },
+  static async countReviewpage() {
+    const reviewCount = await Review.count();
+
+    // const reviewId = await Review.findAll({
+    //   where: { reviewId: { [Op.gt]: 0 } },
+    // });
+
+    if (reviewCount % REVIEW_PER_PAGE === 0) {
+      return reviewCount / REVIEW_PER_PAGE;
+    } else {
+      return Math.floor(reviewCount / REVIEW_PER_PAGE) + 1;
+    }
+  }
+
+  static async selectReviews(page) {
+    const selectedReivews = await Review.findAll({
+      offset: (page - 1) * REVIEW_PER_PAGE,
+      limit: REVIEW_PER_PAGE,
     });
 
-    if (!reviewId) {
-      const errorMessage = '작성하신 글이 없습니다';
-      return { errorMessage };
-    } else {
-      return reviewId;
+    if (!selectedReivews) {
+      throw ApiError.setBadRequest('No reivew available');
     }
+
+    return selectedReivews;
   }
 
   //

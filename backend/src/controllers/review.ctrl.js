@@ -5,12 +5,14 @@ const reviewController = {
   //모든 글들 다 보기
   allReviews: async (req, res) => {
     try {
-      // const _reviewId = req.params.reviewId;
-      const allReviews = await reviewService.showAllReviews({});
-      if (allReviews.errorMessage) {
-        throw new Error(allReviews, errorMessage);
+      const { page } = req.query;
+      const reviewCount = await reviewService.countReviewpage();
+      const selectedReviews = await reviewService.selectReviews(page);
+
+      if (selectedReviews.errorMessage) {
+        throw new Error(selectedReviews, errorMessage);
       }
-      return res.status(200).json(allReviews);
+      return res.status(200).json({ result: { reviewCount, selectedReviews } });
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
