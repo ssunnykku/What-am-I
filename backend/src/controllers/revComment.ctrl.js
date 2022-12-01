@@ -49,15 +49,21 @@ const reviewCommentController = {
         reviewCommentId,
         userId,
       });
+
       if (reviewComment.errorMessage) {
         throw new Error(reviewComment, errorMessage);
       }
-      const message = '수정되었습니다.';
-      res.status(200).json(message);
+
+      const message = await reviewCommentService.findMessage({
+        reviewCommentId,
+        userId,
+      });
+      return res.status(200).json(message);
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
   },
+
   deleteComment: async (req, res) => {
     try {
       const userId = req.currentUserId;
