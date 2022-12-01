@@ -98,6 +98,23 @@ const reviewController = {
       return res.status(400).json({ code: 400, message: error.message });
     }
   },
+  deleteReview: async (req, res) => {
+    try {
+      const userId = req.currentUserId;
+      const reviewId = req.params.reviewId;
+
+      const deleteReview = await reviewService.deleteReview({
+        reviewId,
+        userId,
+      });
+      if (deleteReview.errorMessage) {
+        throw new Error(deleteReview, errorMessage);
+      }
+      return res.status(200).json(deleteReview);
+    } catch (error) {
+      return res.status(400).json({ code: 400, message: error.message });
+    }
+  },
 };
 
 export { reviewController };

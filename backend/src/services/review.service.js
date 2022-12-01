@@ -105,6 +105,19 @@ class reviewService {
       return comment;
     }
   }
+
+  static async deleteReview({ reviewId, userId }) {
+    const id = await Review.destroy({
+      where: { reviewId: reviewId, userId: userId },
+    });
+    if (!id) {
+      const errorMessage = '후기가 없습니다';
+      return errorMessage;
+    } else {
+      const message = '후기가 삭제되었습니다.';
+      return message;
+    }
+  }
 }
 
 export { reviewService };

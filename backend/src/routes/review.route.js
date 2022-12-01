@@ -27,4 +27,11 @@ reviewAuthRouter.put(
   reviewController.updateReview,
 );
 
+//리뷰 삭제
+reviewAuthRouter.delete(
+  '/review/:reviewId',
+  loginRequired,
+  reviewController.deleteReview,
+);
+
 export { reviewAuthRouter };
