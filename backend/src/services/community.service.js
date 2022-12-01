@@ -79,6 +79,19 @@ class communityService {
       return comment;
     }
   }
+
+  static async deleteCommunity({ communityId, userId }) {
+    const id = await Community.destroy({
+      where: { communityId: communityId, userId: userId },
+    });
+    if (!id) {
+      const errorMessage = '생성한 커뮤니티가 없습니다';
+      return errorMessage;
+    } else {
+      const message = '커뮤니티가 삭제되었습니다.';
+      return message;
+    }
+  }
 }
 
 export { communityService };

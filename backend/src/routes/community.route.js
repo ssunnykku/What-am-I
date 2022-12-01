@@ -21,6 +21,12 @@ communityRouter.put(
   communityController.updateCommunity,
 );
 
+communityRouter.delete(
+  '/community/:communityId',
+  loginRequired,
+  communityController.deleteCommunity,
+);
+
 export { communityRouter };
 
 // 커뮤니티 외래키

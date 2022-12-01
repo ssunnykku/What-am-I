@@ -65,6 +65,24 @@ const communityController = {
       return res.status(400).json({ code: 400, message: error.message });
     }
   },
+
+  deleteCommunity: async (req, res) => {
+    try {
+      const userId = req.currentUserId;
+      const communityId = req.params.communityId;
+
+      const deleteCommunity = await communityService.deleteCommunity({
+        communityId,
+        userId,
+      });
+      if (deleteCommunity.errorMessage) {
+        throw new Error(deleteCommunity, errorMessage);
+      }
+      return res.status(200).json(deleteCommunity);
+    } catch (error) {
+      return res.status(400).json({ code: 400, message: error.message });
+    }
+  },
 };
 
 export { communityController };
