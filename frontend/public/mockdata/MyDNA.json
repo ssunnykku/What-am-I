@@ -1,24 +1,28 @@
 {
     "data": [
         {
-        "img": "/img/pepsi.jpg",
-        "name": "펩시",
-        "dna": "올드 잉글리시 쉽독 100%"
+            "id": 1,
+            "img": "/img/pepsi.jpg",
+            "name": "펩시",
+            "dna": "올드 잉글리시 쉽독 100%"
         },
         {
-        "img": "/img/potato.png",
-        "name": "펩시",
-        "dna": "올드 잉글리시 쉽독 100%"
+            "id": 2,
+            "img": "/img/potato.png",
+            "name": "펩시",
+            "dna": "올드 잉글리시 쉽독 100%"
         },
         {
-        "img": "/img/강아지1.jpg",
-        "name": "펩시",
-        "dna": "올드 잉글리시 쉽독 100%"
+            "id": 3,
+            "img": "/img/강아지1.jpg",
+            "name": "펩시",
+            "dna": "올드 잉글리시 쉽독 100%"
         },
         {
-        "img": "/img/푸들1.jpg",
-        "name": "펩시",
-        "dna": "올드 잉글리시 쉽독 100%"
+            "id": 4,
+            "img": "/img/푸들1.jpg",
+            "name": "펩시",
+            "dna": "올드 잉글리시 쉽독 100%"
         }
     ]
 }
