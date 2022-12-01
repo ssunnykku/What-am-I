@@ -36,12 +36,14 @@ function ResultCard({ img }: any) {
       <div>강아지이름</div>
       <div>종류 100%</div>
       {/* TODO 마우스 호버 시 버튼 컴포넌트가 카드 앞에 등장하게끔 어떻게할까*/}
-      <ButtonContainer id="ButtonContainer">
-        <Button color="#000000">상세</Button>
-        <Button color="#ff0000" onClick={confirmDelete}>
-          삭제
-        </Button>
-      </ButtonContainer>
+      <div className="wrapper">
+        <ButtonContainer id="ButtonContainer">
+          <Button color="#000000">상세</Button>
+          <Button color="#ff0000" onClick={confirmDelete}>
+            삭제
+          </Button>
+        </ButtonContainer>
+      </div>
     </CardContainer>
   );
 }
@@ -54,11 +56,23 @@ const CardContainer = styled.div`
   height: 200px;
   border: none;
   border-radius: 20px;
-  box-shadow: 2px 2px 5px gray;
+  box-shadow: 1px 2px 5px gray;
   padding: 20px;
-  transition: all 0.05s linear;
+  transition: all 0.1s linear;
+
   :hover {
     transform: scale(1.05);
+    .wrapper {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-radius: 20px;
+      box-shadow: 1px 2px 5px gray;
+      transition: all 0.02s linear;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
   }
 
   :hover #ButtonContainer {
@@ -70,27 +84,34 @@ const CardContainer = styled.div`
 const Img = styled.img`
   width: 120px;
   height: 120px;
+  min-height: 120px;
   border: none;
   margin-bottom: 10px;
   border-radius: 10px;
-  box-shadow: 1px 1px 3px gray;
+  box-shadow: 1px 2px 5px gray;
 `;
 
 const ButtonContainer = styled.div`
   visibility: hidden;
+  position: relative;
+  top: 150px;
+  left: 45px;
   display: flex;
   flex-direction: column;
   gap: 5px;
 `;
 
 const Button = styled.button`
+  z-index: 1;
+  width: 100px;
   padding: 5px 30px;
   border: 1.5px solid ${(props) => props.color || 'black'};
   border-radius: 5px;
-  background-color: white;
+  background-color: #ffffff;
   color: ${(props) => props.color || 'black'};
+  font-weight: 600;
   :hover {
-    background-color: ${(props) => props.color || 'black'}20;
+    background-color: #dedede;
   }
 `;
 
