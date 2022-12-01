@@ -24,9 +24,13 @@ db.RevComment = RevComment;
 
 User.init(sequelize);
 Session.init(sequelize);
-Review.init(sequelize);
 Like.init(sequelize);
-RevComment.init(sequelize);
+
+// //리뷰
+// Review.init(sequelize);
+// RevComment.init(sequelize);
+//커뮤니티
+Community.init(sequelize);
 
 // User.associate(db);
 // Review.associate(db);

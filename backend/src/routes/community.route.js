@@ -1,9 +1,11 @@
-import express from 'express';
-import { communityCtrl } from '../controllers';
+import { Router } from 'express';
 
-const router = express.Router();
+import { communityController } from '../controllers/community.ctrl';
+import { loginRequired } from '../middlewares/loginRequired.js';
 
-router.get('/', communityCtrl.getCommunityList);
-router.post('/', communityCtrl.createCommunity);
+const communityRouter = Router();
 
-export default router;
+communityRouter.get('/community', communityController.getCommunityList);
+communityRouter.post('/community', communityController.createCommunity);
+
+export { communityRouter };

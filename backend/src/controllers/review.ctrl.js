@@ -6,7 +6,6 @@ const reviewController = {
   allReviews: async (req, res) => {
     try {
       // const _reviewId = req.params.reviewId;
-
       const allReviews = await reviewService.showAllReviews({});
       if (allReviews.errorMessage) {
         throw new Error(allReviews, errorMessage);
@@ -21,7 +20,6 @@ const reviewController = {
   register: async (req, res) => {
     try {
       const userId = req.currentUserId;
-      console.log(userId);
       const { description, images } = req.body;
 
       const newReview = await reviewService.addReview({

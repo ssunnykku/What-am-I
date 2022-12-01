@@ -12,7 +12,7 @@ import sessionMysql from 'express-mysql-session';
 import passport from 'passport';
 
 //**Router */
-import { communityRouter } from './src/routes';
+import { communityRouter } from './src/routes/community.route';
 import { userRouter } from './src/routes/user.router';
 import { reviewAuthRouter } from './src/routes/review.route';
 import { reviewCommentAuthRouter } from './src/routes/revComment.route';
@@ -60,9 +60,12 @@ app.get(
 
 sequelize.sync({ force: false });
 
-app.use(userRouter);
-app.use(reviewAuthRouter);
-app.use(reviewCommentAuthRouter);
+// app.use(userRouter);
+
+app.use(communityRouter);
+
+// app.use(reviewAuthRouter);
+// app.use(reviewCommentAuthRouter);
 
 app.use(errorMiddleware);
 
