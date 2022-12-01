@@ -31,6 +31,9 @@ Like.init(sequelize);
 // RevComment.init(sequelize);
 //커뮤니티
 Community.init(sequelize);
+CommunityPost.init(sequelize);
+CommunityImage.init(sequelize);
+CommunityComment.init(sequelize);
 
 // User.associate(db);
 // Review.associate(db);
