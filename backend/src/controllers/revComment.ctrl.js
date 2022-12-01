@@ -4,12 +4,14 @@ import { reviewCommentService } from '../services/revComment.service';
 const reviewCommentController = {
   reviewComments: async (req, res) => {
     try {
+      const userId = req.currentUserId;
       const reviewId = req.params.reviewId;
       const { description } = req.body;
 
       const reviewComment = await reviewCommentService.addReviewComment({
         description,
         reviewId,
+        userId,
       });
       if (reviewComment.errorMessage) {
         throw new Error(reviewComment, errorMessage);
@@ -30,24 +32,52 @@ const reviewCommentController = {
       if (reviewComments.errorMessage) {
         throw new Error(reviewComments, errorMessage);
       }
-      res.status(201).json(reviewComments);
+      res.status(200).json(reviewComments);
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
   },
   updateComment: async (req, res) => {
     try {
-      const id = req.params.id;
+      const userId = req.currentUserId;
+
+      const reviewCommentId = req.params.reviewCommentId;
       const { description } = req.body;
 
       const reviewComment = await reviewCommentService.updateComment({
         description,
-        id,
+        reviewCommentId,
+        userId,
       });
+
       if (reviewComment.errorMessage) {
         throw new Error(reviewComment, errorMessage);
       }
-      res.status(201).json(reviewComment);
+
+      const message = await reviewCommentService.findMessage({
+        reviewCommentId,
+        userId,
+      });
+      return res.status(200).json(message);
+    } catch (error) {
+      return res.status(400).json({ code: 400, message: error.message });
+    }
+  },
+
+  deleteComment: async (req, res) => {
+    try {
+      const userId = req.currentUserId;
+
+      const reviewCommentId = req.params.reviewCommentId;
+
+      const deleteComment = await reviewCommentService.deleteComment({
+        reviewCommentId,
+        userId,
+      });
+      if (deleteComment.errorMessage) {
+        throw new Error(deleteComment, errorMessage);
+      }
+      res.status(200).json(deleteComment);
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }

@@ -2,13 +2,6 @@ import Review from '../models/Review.model.js';
 
 class reviewService {
   static async addReview({ description, images, userId }) {
-    // const user = await UserController.findByUserEmail({ email });
-
-    // if (user) {
-    //   const errorMessage = '사용중인 이메일입니다.';
-    //   return { errorMessage };
-    // }
-
     // db에 저장
     const createdNewReview = await Review.create({
       description,
@@ -31,15 +24,15 @@ class reviewService {
       return userId;
     }
   }
-  static async showReviewComments({ reviewId: UserId }) {
-    const reviewId = await Review.findAll({
-      where: { UserId },
+  static async showReview({ _reviewId: reviewId }) {
+    const reviewId_ = await Review.findOne({
+      where: { reviewId },
     });
-    if (!reviewId) {
+    if (!reviewId_) {
       const errorMessage = '작성하신 글이 없습니다';
       return { errorMessage };
     } else {
-      return reviewId;
+      return reviewId_;
     }
   }
 }

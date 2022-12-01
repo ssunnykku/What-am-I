@@ -3,11 +3,8 @@ import Joi from 'joi';
 async function userValidator(req, res, next) {
   try {
     const registerValidator = Joi.object({
-      nickname: Joi.string()
-        .min(1)
-        .max(8)
-        .required()
-        .pattern(new RegExp('/[^a-z|A-Z|0-9|ㄱ-ㅎ|가-힣]/g')),
+      nickname: Joi.string().min(1).required(),
+      // .pattern(new RegExp('/[^a-z|A-Z|0-9|ㄱ-ㅎ|가-힣]/g')),
       //한글, 영어, 숫자만 입력받기
       email: Joi.string()
         .email()

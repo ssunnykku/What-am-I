@@ -5,7 +5,7 @@ module.exports = class User extends Sequelize.Model {
     return super.init(
       {
         userId: {
-          type: DataTypes.UUID,
+          type: DataTypes.STRING(500),
           defaultValue: DataTypes.UUIDV4,
           unique: true,
         },
@@ -55,13 +55,23 @@ module.exports = class User extends Sequelize.Model {
         paranoid: true,
       },
     );
-  }
-  static associate(db) {
-    db.User.hasMany(db.Review, {
-      foreignKey: 'userId',
-      sourceKey: 'userId',
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    });
+    // }
+    // static associate(db) {
+    //   db.User.hasMany(
+    //     db.Review,
+    //     {
+    //       foreignKey: 'userId',
+    //       sourceKey: 'userId',
+    //       onDelete: 'cascade',
+    //       onUpdate: 'cascade',
+    //     },
+    //     db.ReviewComment,
+    //     {
+    //       foreignKey: 'userId',
+    //       sourceKey: 'userId',
+    //       onDelete: 'cascade',
+    //       onUpdate: 'cascade',
+    //     },
+    //   );
   }
 };
