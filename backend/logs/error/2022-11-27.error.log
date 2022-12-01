@@ -1,0 +1,3 @@
+2022-11-27 11:39:59 [undefined] error: POST /users
+2022-11-27 12:19:09 [undefined] error: POST /users
+2022-11-27 12:20:47 [undefined] error: GET, /users/:userId

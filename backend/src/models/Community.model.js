@@ -1,13 +1,13 @@
 import sequelize from '../config/sequelize';
-import { DataTypes } from 'sequelize';
+import { DataTypes, Sequelize, Model } from 'sequelize';
 
-const Community = sequelize.define(
-  'community',
+class Community extends Model {}
+
+Community.init(
   {
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
+      allownull: false,
     },
     communityImage: {
       type: DataTypes.STRING,
@@ -21,10 +21,10 @@ const Community = sequelize.define(
   },
   {
     sequelize,
-    timestamps: true,
     tableName: 'communities',
-    charset: 'utf8',
-    collate: 'utf8_general_ci',
+    timestamps: true,
+    charset: 'utf8mb4',
+    collate: 'utf8mb4_general_ci',
   },
 );
 

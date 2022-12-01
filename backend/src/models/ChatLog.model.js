@@ -1,22 +1,24 @@
 import sequelize from '../config/sequelize';
 import { DataTypes, Model } from 'sequelize';
 
-class CommunityComment extends Model {}
+class ChatLog extends Model {}
 
-CommunityComment.init(
+ChatLog.init(
   {
-    description: {
+    contents: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
+    logDate: DataTypes.DATETIME,
+    logTime: DataTypes.DATETIME,
   },
   {
     sequelize,
-    tableName: 'communityComments',
     timestamps: true,
+    tableName: 'chatLogs',
     charset: 'utf8mb4',
     collate: 'utf8mb4_general_ci',
   },
 );
 
-export default CommunityComment;
+export default ChatLog;

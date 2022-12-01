@@ -25,12 +25,10 @@ function NavBar() {
         <li id="logo">
           <Link to="/">나는뭐개🐶</Link>
         </li>
-        {menus.map((value, index) => {
+        {menus.map((value) => {
           return (
-            <li id={value.id} key={index}>
-              <Link to={value.path} key={index}>
-                {value.title}
-              </Link>
+            <li id={value.id} key={value.id}>
+              <Link to={value.path}>{value.title}</Link>
             </li>
           );
         })}
