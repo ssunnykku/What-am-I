@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ResultCard from './ResultCard';
 
 interface dnaListProps {
+  id: number;
   img: string;
   name: string;
   dna: string;
@@ -26,7 +27,7 @@ function Result() {
   return (
     <ResultContainer>
       {dnaList?.map((value: any) => (
-        <ResultCard img={value.img} />
+        <ResultCard img={value.img} key={value.id} />
       ))}
     </ResultContainer>
   );
