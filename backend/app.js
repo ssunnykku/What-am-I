@@ -34,36 +34,36 @@ import jwt from 'jsonwebtoken';
 app.use(passport.initialize());
 passportConfig();
 
-app.get(
-  '/kakao',
-  passport.authenticate('kakao-login', {
-    session: false,
-    failureRedirect: '/login',
-  }),
-  (req, res) => {
-    if (req.user) {
-      const secretKey = process.env.JWT_SECRET;
-      const user = req.user;
-      const userId = user.userId;
-      const role = user.role;
-      const token = jwt.sign({ userId, role }, secretKey, {
-        expireIn: process.env.JWT_EXPIRES,
-      });
-      res
-        .status(200)
-        .redirect(
-          `/login/success?token=${token}&userId=${userId}&role=${role}`,
-        );
-    }
-  },
-);
+// app.get(
+//   '/kakao',
+//   passport.authenticate('kakao-login', {
+//     session: false,
+//     failureRedirect: '/login',
+//   }),
+//   (req, res) => {
+//     if (req.user) {
+//       const secretKey = process.env.JWT_SECRET;
+//       const user = req.user;
+//       const userId = user.userId;
+//       const role = user.role;
+//       const token = jwt.sign({ userId, role }, secretKey, {
+//         expireIn: process.env.JWT_EXPIRES,
+//       });
+//       res
+//         .status(200)
+//         .redirect(
+//           `/login/success?token=${token}&userId=${userId}&role=${role}`,
+//         );
+//     }
+//   },
+// );
 
 sequelize.sync({ force: false });
 
 app.use(userRouter);
 app.use(reviewAuthRouter);
 app.use(reviewCommentAuthRouter);
-
+app.use('/communities', communityRouter);
 app.use(errorMiddleware);
 
 app.listen(process.env.SEVER_PORT, () =>

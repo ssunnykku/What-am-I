@@ -8,10 +8,10 @@ class UserCommunity extends Model {}
 UserCommunity.init(
   {
     userId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       references: {
         model: User,
-        key: id,
+        key: userId,
       },
     },
     communityId: {

@@ -31,7 +31,6 @@ class userController {
       }
       res.status(201).send(user);
     } catch (error) {
-      logger.error('POST, /users/login(Error)');
       next(error);
     }
   }

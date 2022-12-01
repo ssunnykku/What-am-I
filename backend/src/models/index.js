@@ -11,6 +11,7 @@ import Community from './Community.model';
 import CommunityPost from './CommunityPost.model';
 import CommunityImage from './CommunityImage.model';
 import CommunityComment from './CommunityComment.model';
+// import UserCommunity from './UserCommunity.model';
 
 const db = {};
 
@@ -32,4 +33,11 @@ User.associate(db);
 Review.associate(db);
 RevComment.associate(db);
 
-export { db, Community, CommunityPost, CommunityImage, CommunityComment };
+export {
+  db,
+  Community,
+  CommunityPost,
+  CommunityImage,
+  CommunityComment,
+  UserCommunity,
+};
