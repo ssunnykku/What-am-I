@@ -1,5 +1,9 @@
-import { useState } from 'react';
 import styled from 'styled-components';
+import { font } from '../../assets/styles/common/fonts';
+import {
+  EntryBtn,
+  CreateBtn,
+} from '../../assets/styles/common/commonComponentStyle';
 
 function ResultCard({ img }: any) {
   // 삭제버튼 클릭 시 확인창 함수
@@ -38,10 +42,10 @@ function ResultCard({ img }: any) {
       {/* TODO 마우스 호버 시 버튼 컴포넌트가 카드 앞에 등장하게끔 어떻게할까*/}
       <div className="wrapper">
         <ButtonContainer id="ButtonContainer">
-          <Button color="#000000">상세</Button>
-          <Button color="#ff0000" onClick={confirmDelete}>
+          <DetailButton color="#000000">상세</DetailButton>
+          <DeleteButton color="#ff0000" onClick={confirmDelete}>
             삭제
-          </Button>
+          </DeleteButton>
         </ButtonContainer>
       </div>
     </CardContainer>
@@ -52,13 +56,15 @@ const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 150px;
-  height: 200px;
+  width: 180px;
+  height: 250px;
   border: none;
   border-radius: 20px;
   box-shadow: 1px 2px 5px gray;
   padding: 20px;
+  background-color: #fffcf1;
   transition: all 0.1s linear;
+  font-family: ${font.normal};
 
   :hover {
     transform: scale(1.05);
@@ -71,7 +77,7 @@ const CardContainer = styled.div`
       border-radius: 20px;
       box-shadow: 1px 2px 5px gray;
       transition: all 0.02s linear;
-      background-color: rgba(0, 0, 0, 0.3);
+      background-color: rgba(0, 0, 0, 0.4);
     }
   }
 
@@ -82,9 +88,9 @@ const CardContainer = styled.div`
 `;
 
 const Img = styled.img`
-  width: 120px;
-  height: 120px;
-  min-height: 120px;
+  width: 150px;
+  height: 150px;
+  min-height: 150px;
   border: none;
   margin-bottom: 10px;
   border-radius: 10px;
@@ -93,26 +99,22 @@ const Img = styled.img`
 
 const ButtonContainer = styled.div`
   visibility: hidden;
-  position: relative;
-  top: 150px;
-  left: 45px;
+  position: absolute;
+  top: 180px;
+  left: 60px;
   display: flex;
   flex-direction: column;
   gap: 5px;
 `;
 
-const Button = styled.button`
-  z-index: 1;
+const DetailButton = styled(EntryBtn)`
+  margin-left: 0px;
   width: 100px;
-  padding: 5px 30px;
-  border: 1.5px solid ${(props) => props.color || 'black'};
-  border-radius: 5px;
-  background-color: #ffffff;
-  color: ${(props) => props.color || 'black'};
-  font-weight: 600;
-  :hover {
-    background-color: #dedede;
-  }
+`;
+
+const DeleteButton = styled(CreateBtn)`
+  margin-left: 0px;
+  width: 100px;
 `;
 
 export default ResultCard;
