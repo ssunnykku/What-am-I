@@ -12,7 +12,7 @@ class reviewService {
     // const reviewId = await Review.findAll({
     //   where: { reviewId: { [Op.gt]: 0 } },
     // });
-    console.log(reviewCount, REVIEW_PER_PAGE);
+    // console.log(reviewCount, REVIEW_PER_PAGE);
     if (reviewCount % REVIEW_PER_PAGE === 0) {
       return reviewCount / REVIEW_PER_PAGE;
     } else {
@@ -21,10 +21,10 @@ class reviewService {
   }
 
   static async selectReviews(page) {
-    console.log(page);
-    console.log(REVIEW_PER_PAGE);
+    // console.log(page);
+    // console.log(REVIEW_PER_PAGE);
 
-    console.log((page - 1) * REVIEW_PER_PAGE); // NaN
+    // console.log((page - 1) * REVIEW_PER_PAGE); // NaN
     const selectedReivews = await Review.findAll({
       offset: (page - 1) * REVIEW_PER_PAGE,
       limit: REVIEW_PER_PAGE,

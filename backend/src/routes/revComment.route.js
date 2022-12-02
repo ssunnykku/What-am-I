@@ -2,31 +2,31 @@ import { Router } from 'express';
 import { reviewCommentController } from '../controllers/revComment.ctrl';
 import { loginRequired } from '../middlewares/loginRequired.js';
 
-const reviewCommentAuthRouter = Router();
+const reviewCommentRouter = Router();
 
 //댓글쓰기
-reviewCommentAuthRouter.post(
+reviewCommentRouter.post(
   '/reviewComment/:reviewId',
   loginRequired,
   reviewCommentController.reviewComments,
 );
 //게시물(리뷰)에 댓글 전부 다 보기
-reviewCommentAuthRouter.get(
+reviewCommentRouter.get(
   '/reviewComment/:reviewId',
   loginRequired,
   reviewCommentController.showComments,
 );
 //내가 쓴 리뷰 수정
-reviewCommentAuthRouter.put(
+reviewCommentRouter.put(
   '/reviewComment/:reviewCommentId',
   loginRequired,
   reviewCommentController.updateComment,
 );
 //내가쓴 댓글 삭제
-reviewCommentAuthRouter.delete(
+reviewCommentRouter.delete(
   '/reviewComment/:reviewCommentId',
   loginRequired,
   reviewCommentController.deleteComment,
 );
 
-export { reviewCommentAuthRouter };
+export { reviewCommentRouter };
