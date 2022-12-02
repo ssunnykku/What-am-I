@@ -4,7 +4,10 @@ import { COMMUNITY_PER_PAGE } from '../utils/Constant';
 
 class communityService {
   static async createCommunity({ name, introduction }) {
-    const createCommunity = await Community.create({ name, introduction });
+    const createCommunity = await Community.create({
+      name,
+      introduction,
+    });
 
     return createCommunity;
   }
@@ -28,9 +31,9 @@ class communityService {
     }
   }
 
-  static async selectCommunities(page) {
+  static async selectCommunities(defaultPage) {
     const selectedCommunities = await Community.findAll({
-      offset: (page - 1) * COMMUNITY_PER_PAGE,
+      offset: (defaultPage - 1) * COMMUNITY_PER_PAGE,
       limit: COMMUNITY_PER_PAGE,
     });
 

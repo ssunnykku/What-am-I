@@ -4,6 +4,8 @@ import { communityService } from '../services/community.service';
 class communityController {
   static async addCommunity(req, res, next) {
     try {
+      const userId = req.currentUserId;
+
       const { name, introduction } = req.body;
       const newCommunity = await communityService.createCommunity({
         name,
@@ -43,9 +45,10 @@ class communityController {
   static async getCommunityList(req, res, next) {
     try {
       const { page } = req.query;
+      const defaultPage = page || 1;
       const communityCount = await communityService.countCommunityPage();
       const selectedCommunities = await communityService.selectCommunities(
-        page,
+        defaultPage,
       );
       if (selectedCommunities.errorMessage) {
         throw new Error(selectedCommunities, errorMessage);
@@ -55,8 +58,6 @@ class communityController {
       next(err);
     }
   }
-
-  //생성한 커뮤니티 수정하기
   static async updateCommunity(req, res) {
     try {
       const userId = req.currentUserId;

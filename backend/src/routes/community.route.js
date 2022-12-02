@@ -6,21 +6,19 @@ import { uploadImageS3 } from '../middlewares/uploadImageS3';
 const communityRouter = Router();
 const upload = uploadImageS3();
 
-communityRouter.put('/', communityController.addCommunity);
+communityRouter.post('/', loginRequired, communityController.addCommunity);
 communityRouter.put(
   '/image/:id',
   loginRequired,
   upload.single('communityImage'),
   communityController.communityImage,
 );
-communityRouter.get('/', loginRequired, communityController.getCommunityList);
-// community.get('/currentuser', communityController.getCurrentUserCommunity);
+// communityRouter.get('/', loginRequired, communityController.getCommunityList);
 communityRouter.put(
   '/:communityId',
   loginRequired,
   communityController.updateCommunity,
 );
-
 communityRouter.delete(
   '/:communityId',
   loginRequired,
