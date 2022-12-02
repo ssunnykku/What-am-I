@@ -16,7 +16,7 @@ function Community() {
 
   useEffect(() => {
     async function getData() {
-      const response = await axios.get('http://localhost:5001/reviews?page=1');
+      const response = await axios.get('http://localhost:5001/reviews');
       console.log(response);
     }
     getData();
