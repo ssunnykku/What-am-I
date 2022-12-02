@@ -4,35 +4,29 @@ import { SearchBox } from '../assets/styles/common/commonComponentStyle';
 import WritingModal from '../components/modal/WritingModal';
 import ContentsModal from '../components/modal/ContentsModal';
 import { theme } from '../assets/styles/common/palette';
+import { useEffect } from 'react';
 
 const ReviewBoardPage = () => {
+  useEffect(() => {}, []);
+
   return (
-    <>
-      <BoardBox>
-        <BoardHeader>
-          사람들과 AI 분석 결과를 공유해보세요.
-          <WritingModal />
-        </BoardHeader>
-        <BoardContent>
-          <SlideLeftBtn />
-          <CardBox>
-            <ContentsModal />
-            <ContentsModal />
-            <ContentsModal />
-            <ContentsModal />
-            <ContentsModal />
-            <ContentsModal />
-            <ContentsModal />
-            <ContentsModal />
-          </CardBox>
-          <SlideRightBtn />
-        </BoardContent>
-        <SearchBox style={{ marginTop: '7vh' }}>
-          <input></input>
-          <button>검색</button>
-        </SearchBox>
-      </BoardBox>
-    </>
+    <BoardBox>
+      <BoardHeader>
+        사람들과 AI 분석 결과를 공유해보세요.
+        <WritingModal />
+      </BoardHeader>
+      <BoardContent>
+        <SlideLeftBtn />
+        <CardBox>
+          <ContentsModal />
+        </CardBox>
+        <SlideRightBtn />
+      </BoardContent>
+      <SearchBox style={{ marginTop: '7vh' }}>
+        <input></input>
+        <button>검색</button>
+      </SearchBox>
+    </BoardBox>
   );
 };
 

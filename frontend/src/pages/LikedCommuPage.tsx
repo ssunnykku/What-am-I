@@ -11,14 +11,11 @@ import ContentsModal from '../components/modal/ContentsModal';
 import { theme } from '../assets/styles/common/palette';
 import LikeBtn from '../components/common/LikeBtn';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
-import { currentCommuListRequest } from '../apis/communityFetcher';
+import PaginateButton from '../components/pagination/PaginateButton';
 
 const LikedCommuPage = () => {
-  const [posts, setPosts] = useState([]);
-
-  const limit = 6;
-  const [page, setPage] = useState(1);
-  const offset = (page - 1) * limit;
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   // const fetchData = async () => {
   //   const res = await currentCommuListRequest('community?page="page"');
@@ -66,14 +63,13 @@ const LikedCommuPage = () => {
             </InfoBox>
           </SmallBox>
           <ContentsBox>
-            {/* {posts?.slice(offset, offset + limit).map((post, idx) => (
-              <ContentsModal key={idx.toString()} />
-            ))} */}
+            <ContentsModal />
           </ContentsBox>
-          <PaginationBox>
-            <SideBtn>&lt;</SideBtn>
-            <SideBtn>&gt;</SideBtn>
-          </PaginationBox>
+          <PaginateButton
+            page={page}
+            setPage={setPage}
+            totalPages={totalPages}
+          />
         </CommunityBox>
       </BigBox>
     </>
@@ -187,19 +183,4 @@ const ContentsBox = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   margin: 1.5rem;
-`;
-
-const PaginationBox = styled.nav`
-  border: solid 1px black;
-  height: 2rem;
-  width: 35rem;
-  margin-top: 0.7rem;
-  position: absolute;
-  bottom: 2%;
-`;
-
-const SideBtn = styled.button`
-  background: #e7e5e5;
-  cursor: revert;
-  transform: revert;
 `;

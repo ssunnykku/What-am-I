@@ -71,7 +71,7 @@ const NavDiv = styled.div`
   ul a {
     margin: 0 2.5rem;
     text-decoration: none;
-    color: #0583b5;
+    color: ${theme.boldColor};
   }
 
   li {
@@ -82,7 +82,7 @@ const NavDiv = styled.div`
     float: right;
     margin-right: 40px;
     text-decoration: none;
-    color: #0583b5;
+    color: ${theme.boldColor};
   }
 
   text-align: center;
