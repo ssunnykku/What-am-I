@@ -10,7 +10,7 @@ import { Like } from './Like.model';
 import { Community } from './Community.model';
 import { CommunityPost } from './CommunityPost.model';
 import { CommunityComment } from './CommunityComment.model';
-// import UserCommunity from './UserCommunity.model';
+import { CommunityLike } from './CommunityLike.model';
 
 const db = {};
 
@@ -24,6 +24,7 @@ db.ReviewComment = ReviewComment;
 db.Community = Community;
 db.CommunityPost = CommunityPost;
 db.CommunityComment = CommunityComment;
+db.CommunityLike = CommunityLike;
 
 User.init(sequelize);
 Session.init(sequelize);
@@ -33,11 +34,13 @@ Like.init(sequelize);
 Community.init(sequelize);
 CommunityPost.init(sequelize);
 CommunityComment.init(sequelize);
+CommunityLike.init(sequelize);
 
 Community.associate(db);
 CommunityPost.associate(db);
 CommunityComment.associate(db);
 User.associate(db);
+CommunityLike.associate(db);
 // Review.associate(db);
 // ReviewComment.associate(db);
 

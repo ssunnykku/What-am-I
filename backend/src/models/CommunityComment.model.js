@@ -4,7 +4,7 @@ class CommunityComment extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        communityCommentId: {
+        id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
@@ -14,12 +14,12 @@ class CommunityComment extends Sequelize.Model {
           type: DataTypes.TEXT,
           allowNull: false,
         },
-        communityId: {
-          type: Sequelize.INTEGER,
-        },
-        userId: {
-          type: DataTypes.STRING(500),
-        },
+        // communityId: {
+        //   type: Sequelize.INTEGER,
+        // },
+        // userId: {
+        //   type: DataTypes.STRING(500),
+        // },
       },
       {
         sequelize,
