@@ -1,3 +1,4 @@
+import { Community } from '../models/Community.model';
 import { communityService } from '../services/community.service';
 
 class communityController {
@@ -17,9 +18,27 @@ class communityController {
     }
   }
 
-  // static async communityImage(req, res, next) {
-  //   const {} = req.body;
-  // }
+  static async communityImage(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const id = req.params.id;
+      const communityImage = req.file.location;
+      const image = await communityService.addCommunityImage({
+        id,
+        userId,
+        communityImage,
+      });
+      return res.status(200).json({
+        id,
+        userId,
+        communityImage,
+        success: true,
+        message: '이미지가 저장되었습니다.',
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
   //전체 커뮤니티 리스트 10개씩
   static async getCommunityList(req, res, next) {
     try {
@@ -31,9 +50,7 @@ class communityController {
       if (selectedCommunities.errorMessage) {
         throw new Error(selectedCommunities, errorMessage);
       }
-      return res
-        .status(200)
-        .json({ result: { communityCount, selectedCommunities } });
+      return res.status(200).json(communityCount, selectedCommunities);
     } catch (err) {
       next(err);
     }

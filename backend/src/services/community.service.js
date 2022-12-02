@@ -9,6 +9,16 @@ class communityService {
     return createCommunity;
   }
 
+  static async addCommunityImage({ communityImage, userId, id }) {
+    const updateImage = await Community.update(
+      { communityImage: communityImage },
+      {
+        where: { userId, id },
+      },
+    );
+    return updateImage;
+  }
+
   static async countCommunityPage() {
     const communityCount = await Community.count();
     if (communityCount % COMMUNITY_PER_PAGE === 0) {
