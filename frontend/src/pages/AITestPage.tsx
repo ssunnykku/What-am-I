@@ -1,15 +1,67 @@
-import styled from 'styled-components';
+import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import { theme } from '../assets/styles/common/palette';
 
 const AITestPage = () => {
+  const [communityImage, setCommunityImage] = useState<
+    string | ArrayBuffer | null
+  >('');
+  const imageRef = useRef<HTMLInputElement>(null);
+
+  const navigate = useNavigate();
+
+  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        setCommunityImage(reader.result);
+      };
+    }
+  };
+
   return (
     <AiTestBox>
-      <Header>소중한 나의 댕댕이가 어디서 왔는지 알아보세요.</Header>
+      <div style={{ letterSpacing: '1px', fontSize: '23px' }}>
+        여러분의 소중한 강아지는 어디서 왔을까요?
+      </div>
       <InnerBox>
         <ImageBigBox>
-          <ImageBox></ImageBox>
-          <InputBox></InputBox>
+          <ImageBox>
+            {communityImage && (
+              <img src={communityImage.toString()} className="pre-img" />
+            )}
+          </ImageBox>
+          <InputBox>
+            <div className="filebox">
+              <div className="upload-box">
+                <label htmlFor="file">사진 업로드</label>
+              </div>
+              <input
+                className="upload-name"
+                value="김댕댕 사진"
+                placeholder="김댕댕 사진"
+              />
+              <input
+                type="file"
+                id="file"
+                ref={imageRef}
+                accept="image/*"
+                onChange={handleChangeFile}
+              />
+              <div style={{ marginTop: '15px', fontSize: '18px' }}>
+                강아지 이름
+              </div>
+              <input type="text" className="puppy-name" placeholder="김댕댕" />
+            </div>
+            <TestBtn onClick={() => navigate('/dnaresult')}>
+              AI로 종 분석하기
+            </TestBtn>
+          </InputBox>
         </ImageBigBox>
       </InnerBox>
     </AiTestBox>
@@ -18,9 +70,18 @@ const AITestPage = () => {
 
 export default AITestPage;
 
+const popup = keyframes`
+  0% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+`;
+
 const AiTestBox = styled.div`
-  width: 40rem;
-  height: 25rem;
+  width: 45rem;
+  height: 30rem;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -36,29 +97,93 @@ const AiTestBox = styled.div`
   justify-content: center;
 `;
 
-const Header = styled.div`
-  letter-spacing: 2px;
-  font-size: 17px;
-`;
-
 const InnerBox = styled.div`
-  border: solid 1px red;
-  width: 28rem;
-  height: 16rem;
-  margin-top: 1rem;
+  width: 34rem;
+  height: 20rem;
+  margin-top: 20px;
 `;
 
 const ImageBigBox = styled.div`
-  border: solid 1px blue;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 13rem;
+  height: 18rem;
+  margin-top: 20px;
 `;
 
 const ImageBox = styled.div`
-  border: solid 1px purple;
+  position: relative;
+  overflow: hidden;
+  border: solid 1px ${theme.boldColor};
+
+  .pre-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const InputBox = styled.div`
-  border: solid 1px pink;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 15px;
+  width: 15rem;
+
+  .filebox .upload-box {
+    border: solid 1px ${theme.boldColor};
+    background-color: ${theme.backColor};
+    width: 90px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .filebox label {
+    cursor: pointer;
+    width: 6rem;
+    height: 2rem;
+  }
+
+  .filebox .upload-name {
+    display: block;
+    height: 40px;
+    width: 100%;
+    color: #999999;
+    margin-top: 5px;
+  }
+
+  .filebox input[type='file'] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+  }
+
+  .filebox .puppy-name {
+    display: block;
+    height: 40px;
+    width: 100%;
+    margin-top: 5px;
+  }
+`;
+
+const TestBtn = styled.button`
+  font-family: ${font.bold};
+  border: 0;
+  width: 245px;
+  height: 65px;
+  border-radius: 10px;
+  color: ${theme.boldColor};
+  font-size: 23px;
+  cursor: pointer;
+
+  :hover {
+    animation-duration: 0.4s;
+    animation-timing-function: ease-in-out;
+    animation-name: ${popup};
+  }
 `;
