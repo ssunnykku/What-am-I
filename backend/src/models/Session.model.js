@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize';
 
-module.exports = class Session extends Sequelize.Model {
+class Session extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
@@ -24,4 +24,6 @@ module.exports = class Session extends Sequelize.Model {
       },
     );
   }
-};
+}
+
+export { Session };

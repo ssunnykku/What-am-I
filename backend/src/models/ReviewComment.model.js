@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize';
 
-module.exports = class ReviewComment extends Sequelize.Model {
+class ReviewComment extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
@@ -31,19 +31,21 @@ module.exports = class ReviewComment extends Sequelize.Model {
     );
   }
   static associate(db) {
-    db.RevComment.belongsTo(db.Review, {
+    db.ReviewComment.belongsTo(db.Review, {
       foreignKey: 'reviewId',
-      sourcekey: 'reviewId',
+      sourceKey: 'reviewId',
       onDelete: 'cascade',
       onUpdate: 'cascade',
     });
   }
-  // static associate(db) {
-  //   db.RevComment.belongsTo(db.User, {
-  //     foreignKey: 'userId',
-  //     sourcekey: 'userId',
-  //     onDelete: 'cascade',
-  //     onUpdate: 'cascade',
-  //   });
-  // }
-};
+  static associate(db) {
+    db.ReviewComment.belongsTo(db.User, {
+      foreignKey: 'userId',
+      sourceKey: 'userId',
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    });
+  }
+}
+
+export { ReviewComment };

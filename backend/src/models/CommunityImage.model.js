@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize';
 
-module.exports = class CommunityImage extends Sequelize.Model {
+class CommunityImage extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
@@ -31,4 +31,6 @@ module.exports = class CommunityImage extends Sequelize.Model {
       },
     );
   }
-};
+}
+
+export { CommunityImage };
