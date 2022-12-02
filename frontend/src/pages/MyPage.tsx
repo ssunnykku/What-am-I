@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import Community from '../components/mypage/Community';
+import MyCommunity from '../components/mypage/MyCommunity';
 import Profile from '../components/mypage/Profile';
 import Result from '../components/mypage/Result';
 import TabPanel from '../components/mypage/TabPanel';
@@ -27,7 +28,7 @@ function MyPage() {
         return <Community />;
 
       case PAGEVALUE.MYCOMMUNITY:
-        return <div>{PAGEVALUE.MYCOMMUNITY}</div>;
+        return <MyCommunity />;
     }
   };
 

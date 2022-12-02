@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import CommunityCard from './CommunityCard';
 
@@ -11,14 +13,18 @@ function Community() {
     img: '../img/pepsi.jpg',
     title: '댕댕이를 사랑하는 모임',
   };
+
+  useEffect(() => {
+    async function getData() {
+      const response = await axios.get('http://localhost:5001/reviews?page=1');
+      console.log(response);
+    }
+    getData();
+  }, []);
+
   return (
     <Div>
-      <CommunityCard value={value} />
-      <CommunityCard value={value} />
-      <CommunityCard value={value} />
-      <CommunityCard value={value} />
-      <CommunityCard value={value} />
-      <CommunityCard value={value} />
+      <CommunityCard value={value} mode={'Community'} />
     </Div>
   );
 }
