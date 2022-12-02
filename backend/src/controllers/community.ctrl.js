@@ -1,8 +1,8 @@
 import { communityService } from '../services/community.service';
 
-const communityController = {
+class communityController {
   //전체 커뮤니티 리스트 10개씩
-  getCommunityList: async (req, res, next) => {
+  static async getCommunityList(req, res, next) {
     try {
       const { page } = req.query;
       const communityCount = await communityService.countCommunityPage();
@@ -18,26 +18,22 @@ const communityController = {
     } catch (err) {
       next(err);
     }
-  },
+  }
   //커뮤니티 만들기
-  createCommunity: async (req, res, next) => {
+  static async createCommunity(req, res, next) {
     const userId = req.currentUserId;
     const { name, communtyImage, introduction } = req.body;
-    try {
-      const createCommunity = await communityService.createCommunity(
-        userId,
-        name,
-        communtyImage,
-        introduction,
-      );
-      res.status(201).json(createCommunity);
-    } catch (err) {
-      next(err);
-    }
-  },
+    const createCommunity = await communityService.createCommunity(
+      userId,
+      name,
+      communtyImage,
+      introduction,
+    );
+    res.status(201).json(createCommunity);
+  }
 
   //생성한 커뮤니티 수정하기
-  updateCommunity: async (req, res) => {
+  static async updateCommunity(req, res) {
     try {
       const userId = req.currentUserId;
 
@@ -64,9 +60,9 @@ const communityController = {
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
-  },
+  }
 
-  deleteCommunity: async (req, res) => {
+  static async deleteCommunity(req, res) {
     try {
       const userId = req.currentUserId;
       const communityId = req.params.communityId;
@@ -82,7 +78,7 @@ const communityController = {
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
-  },
-};
+  }
+}
 
 export { communityController };

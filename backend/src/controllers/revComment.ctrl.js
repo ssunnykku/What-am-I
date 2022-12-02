@@ -1,8 +1,8 @@
 import { reviewCommentService } from '../services/revComment.service';
 // import Joi from 'joi';
 
-const reviewCommentController = {
-  reviewComments: async (req, res) => {
+class reviewCommentController {
+  static async reviewComments(req, res) {
     try {
       const userId = req.currentUserId;
       const reviewId = req.params.reviewId;
@@ -20,8 +20,9 @@ const reviewCommentController = {
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
-  },
-  showComments: async (req, res) => {
+  }
+
+  static async showComments(req, res) {
     try {
       const _reviewId = req.params.reviewId;
       console.log(_reviewId);
@@ -36,8 +37,8 @@ const reviewCommentController = {
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
-  },
-  updateComment: async (req, res) => {
+  }
+  static async updateComment(req, res) {
     try {
       const userId = req.currentUserId;
 
@@ -62,9 +63,9 @@ const reviewCommentController = {
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
-  },
+  }
 
-  deleteComment: async (req, res) => {
+  static async deleteComment(req, res) {
     try {
       const userId = req.currentUserId;
 
@@ -81,7 +82,7 @@ const reviewCommentController = {
     } catch (error) {
       return res.status(400).json({ code: 400, message: error.message });
     }
-  },
-};
+  }
+}
 
 export { reviewCommentController };
