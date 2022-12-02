@@ -27,7 +27,6 @@ class communityService {
 
   static async createCommunity(userId, name, communityImage, introduction) {
     const createCommunity = await Community.create({
-      userId,
       name,
       communityImage,
       introduction,
