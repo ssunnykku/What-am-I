@@ -14,8 +14,8 @@ import passport from 'passport';
 //**Router */
 import { communityRouter } from './src/routes/community.route';
 import { userRouter } from './src/routes/user.router';
-import { reviewAuthRouter } from './src/routes/review.route';
-import { reviewCommentAuthRouter } from './src/routes/revComment.route';
+import { reviewRouter } from './src/routes/review.route';
+import { reviewCommentRouter } from './src/routes/revComment.route';
 import { myPageRouter } from './src/routes/myPage.route';
 //**middleware */
 import errorMiddleware from './src/middlewares/error';
@@ -39,8 +39,8 @@ passportConfig();
 app.use(userRouter);
 // app.use(communityRouter);
 // app.use(communityPostRouter);
-app.use(reviewAuthRouter);
-app.use(reviewCommentAuthRouter);
+app.use(reviewRouter);
+app.use(reviewCommentRouter);
 app.use('/communities', communityRouter);
 app.use(myPageRouter);
 app.use(errorMiddleware);

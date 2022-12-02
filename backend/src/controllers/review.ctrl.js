@@ -3,7 +3,7 @@ import { reviewService } from '../services/review.service';
 
 class reviewController {
   //모든 글들 다 보기
-  static async allReviews(req, res) {
+  static async allReviews(req, res, next) {
     try {
       // GET /review
       const { page } = req.query;
@@ -14,7 +14,7 @@ class reviewController {
       // console.log(reviewCount);
 
       const selectedReviews = await reviewService.selectReviews(defaultPage);
-      console.log();
+      // console.log();
 
       if (selectedReviews.errorMessage) {
         throw new Error(selectedReviews, errorMessage);
