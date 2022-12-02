@@ -5,9 +5,16 @@ class reviewController {
   //모든 글들 다 보기
   static async allReviews(req, res) {
     try {
+      // GET /review
       const { page } = req.query;
+      // 방어코드
+      const defaultPage = page || 1;
+
       const reviewCount = await reviewService.countReviewpage();
-      const selectedReviews = await reviewService.selectReviews(page);
+      // console.log(reviewCount);
+
+      const selectedReviews = await reviewService.selectReviews(defaultPage);
+      console.log();
 
       if (selectedReviews.errorMessage) {
         throw new Error(selectedReviews, errorMessage);
