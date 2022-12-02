@@ -58,12 +58,31 @@ class User extends Sequelize.Model {
     );
   }
   static associate(db) {
-    db.User.hasMany(db.Review, {
+    db.User.hasMany(db.Community, {
       foreignKey: 'userId',
       sourceKey: 'userId',
       onDelete: 'cascade',
       onUpdate: 'cascade',
-    });
+    }),
+      db.User.hasMany(db.CommunityPost, {
+        foreignKey: 'userId',
+        sourceKey: 'userId',
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
+      }),
+      db.User.hasMany(db.CommunityComment, {
+        foreignKey: 'userId',
+        sourceKey: 'userId',
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
+      });
+
+    // db.User.hasMany(db.Review, {
+    //   foreignKey: 'userId',
+    //   sourceKey: 'userId',
+    //   onDelete: 'cascade',
+    //   onUpdate: 'cascade',
+    // });
   }
 }
 

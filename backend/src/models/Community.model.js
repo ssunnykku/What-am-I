@@ -4,12 +4,6 @@ class Community extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        communityId: {
-          allowNull: false,
-          autoIncrement: true,
-          primaryKey: true,
-          type: Sequelize.INTEGER,
-        },
         name: {
           type: DataTypes.STRING,
           allownull: false,
@@ -23,9 +17,6 @@ class Community extends Sequelize.Model {
           defaultValue:
             'https://scontent.cdnsnapwidget.com/vp/4aefafd3bee59d1d0fa2b29a59fc2bc5/5D7701C4/t51.2885-15/sh0.08/e35/s640x640/47690229_1430752333723397_2893005724802088960_n.jpg',
         },
-        userId: {
-          type: DataTypes.STRING(500),
-        },
       },
       {
         sequelize,
@@ -35,6 +26,20 @@ class Community extends Sequelize.Model {
         collate: 'utf8mb4_general_ci',
       },
     );
+  }
+  static associate(db) {
+    db.Community.hasMany(db.CommunityPost, {
+      foreignKey: 'communityId',
+      sourceKey: 'id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    }),
+      db.Community.belongsTo(db.User, {
+        foreignKey: 'userId',
+        sourceKey: 'userId',
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
+      });
   }
 }
 

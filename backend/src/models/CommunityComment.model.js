@@ -30,6 +30,20 @@ class CommunityComment extends Sequelize.Model {
       },
     );
   }
+  static associate(db) {
+    db.CommunityComment.belongsTo(db.CommunityPost, {
+      foreignKey: 'communityPostId',
+      sourceKey: 'id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
+    }),
+      db.CommunityComment.belongsTo(db.User, {
+        foreignKey: 'userId',
+        sourceKey: 'userId',
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
+      });
+  }
 }
 
 export { CommunityComment };
