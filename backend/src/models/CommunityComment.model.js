@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize';
 
-module.exports = class CommunityComment extends Sequelize.Model {
+class CommunityComment extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
@@ -30,4 +30,6 @@ module.exports = class CommunityComment extends Sequelize.Model {
       },
     );
   }
-};
+}
+
+export { CommunityComment };

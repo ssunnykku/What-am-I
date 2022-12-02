@@ -1,7 +1,6 @@
-import sequelize from '../config/sequelize';
-import { DataTypes, Model } from 'sequelize';
+import { Sequelize, DataTypes } from 'sequelize';
 
-module.exports = class ChatLog extends Model {
+class ChatLog extends Sequelize.Model {
   static init(sequelize) {
     ChatLog.init(
       {
@@ -21,4 +20,6 @@ module.exports = class ChatLog extends Model {
       },
     );
   }
-};
+}
+
+export { ChatLog };

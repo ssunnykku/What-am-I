@@ -1,4 +1,4 @@
-import ReviewComment from '../models/RevComment.model';
+import ReviewComment from '../models/ReviewComment.model';
 
 class reviewCommentService {
   static async addReviewComment({ description, reviewId, userId }) {

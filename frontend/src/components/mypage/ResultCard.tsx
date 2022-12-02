@@ -4,8 +4,13 @@ import {
   EntryBtn,
   CreateBtn,
 } from '../../assets/styles/common/commonComponentStyle';
+import { dnaListProps } from './Result';
 
-function ResultCard({ img }: any) {
+interface receiveProps {
+  value: dnaListProps;
+}
+
+function ResultCard(props: receiveProps) {
   // 삭제버튼 클릭 시 확인창 함수
   // TODO 확인창 함수를 공통컴포넌트로 뺄까?
   const useConfirm = (message: any, onConfirm: any, onCancel: any) => {
@@ -36,9 +41,8 @@ function ResultCard({ img }: any) {
   );
   return (
     <CardContainer>
-      <Img src={img} alt="dog_img"></Img>
-      <div>강아지이름</div>
-      <div>종류 100%</div>
+      <Img src={props.value.img} alt="dog_img"></Img>
+      <Name>{props.value.name}</Name>
       {/* TODO 마우스 호버 시 버튼 컴포넌트가 카드 앞에 등장하게끔 어떻게할까*/}
       <div className="wrapper">
         <ButtonContainer id="ButtonContainer">
@@ -55,9 +59,10 @@ function ResultCard({ img }: any) {
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 10px;
   align-items: center;
   width: 180px;
-  height: 250px;
+  height: 230px;
   border: none;
   border-radius: 20px;
   box-shadow: 1px 2px 5px gray;
@@ -88,6 +93,7 @@ const CardContainer = styled.div`
 `;
 
 const Img = styled.img`
+  object-fit: cover; // 이미지 확대하여 비율유지
   width: 150px;
   height: 150px;
   min-height: 150px;
@@ -97,10 +103,15 @@ const Img = styled.img`
   box-shadow: 1px 2px 5px gray;
 `;
 
+const Name = styled.div`
+  font-family: ${font.bold};
+  font-size: large;
+`;
+
 const ButtonContainer = styled.div`
   visibility: hidden;
   position: absolute;
-  top: 180px;
+  top: 175px;
   left: 60px;
   display: flex;
   flex-direction: column;

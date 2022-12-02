@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ResultCard from './ResultCard';
 
-interface dnaListProps {
+export interface dnaListProps {
   id: number;
   img: string;
   name: string;
@@ -24,10 +24,11 @@ function Result() {
     }
     getDNA();
   }, []);
+
   return (
     <ResultContainer>
-      {dnaList?.map((value: any) => (
-        <ResultCard img={value.img} key={value.id} />
+      {dnaList?.map((value: dnaListProps) => (
+        <ResultCard value={value} key={value.id} />
       ))}
     </ResultContainer>
   );

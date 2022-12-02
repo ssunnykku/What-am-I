@@ -60,7 +60,7 @@ class reviewService {
   }
 
   //
-  static async showReview({ reviewId }) {
+  static async showReview({ _reviewId: reviewId }) {
     const reviewId_ = await Review.findOne({
       where: { reviewId },
     });

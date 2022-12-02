@@ -8,6 +8,7 @@ import { font } from '../../assets/styles/common/fonts';
 
 interface Props {
   value: CommunityProps;
+  mode: string;
 }
 
 function CommunityCard(props: Props) {
@@ -17,10 +18,17 @@ function CommunityCard(props: Props) {
         <Img alt="room_img" src={props.value.img}></Img>
         <RoomName>{props.value.title}</RoomName>
       </Content>
-      <ButtonContainer>
-        <EntryBtn>내가 쓴 글</EntryBtn>
-        <CreateBtn>나가기</CreateBtn>
-      </ButtonContainer>
+      {props.mode == 'MyCommunity' ? (
+        <ButtonContainer>
+          <EntryBtn>수정</EntryBtn>
+          <CreateBtn>삭제</CreateBtn>
+        </ButtonContainer>
+      ) : (
+        <ButtonContainer>
+          <EntryBtn>내가 쓴 글</EntryBtn>
+          <CreateBtn>나가기</CreateBtn>
+        </ButtonContainer>
+      )}
     </Card>
   );
 }
@@ -60,6 +68,7 @@ const Img = styled.img`
   width: 100px;
   height: 100px;
   border-radius: 15px;
+  object-fit: cover; // 이미지 확대하여 비율유지
 `;
 
 const RoomName = styled.div`
