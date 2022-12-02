@@ -5,9 +5,12 @@ import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import useDetectClose from '../../hooks/dropdown/useDetectClose';
 
+interface DropdownCssProps {
+  isDropped: boolean;
+}
+
 function NavBar() {
   const [myPageIsOpen, myPageRef, myPageHandler] = useDetectClose(false);
-  const [boardIsOpen, boardRef, boardHandler] = useDetectClose(false);
 
   return (
     <NavDiv>
@@ -92,7 +95,7 @@ const DropdownButton = styled.div`
   cursor: pointer;
 `;
 
-const Menu = styled.div`
+const Menu = styled.div<DropdownCssProps>`
   background: ${theme.backColor};
   position: absolute;
   top: 10vh;
