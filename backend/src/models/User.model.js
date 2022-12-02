@@ -7,6 +7,8 @@ class User extends Sequelize.Model {
         userId: {
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
+          unique: true,
+          allowNull: false,
         },
         email: {
           type: DataTypes.STRING(40),
@@ -59,26 +61,18 @@ class User extends Sequelize.Model {
     db.User.hasMany(db.Community, {
       foreignKey: 'userId',
       sourceKey: 'userId',
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
     }),
       db.User.hasMany(db.CommunityPost, {
         foreignKey: 'userId',
         sourceKey: 'userId',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
       }),
       db.User.hasMany(db.CommunityComment, {
         foreignKey: 'userId',
         sourceKey: 'userId',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
       }),
       db.User.hasMany(db.CommunityLike, {
         foreignKey: 'userId',
         sourceKey: 'userId',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
       });
 
     // db.User.hasMany(db.Review, {

@@ -25,9 +25,11 @@ class CommunityLike extends Sequelize.Model {
     db.CommunityLike.belongsTo(db.User, {
       foreignKey: 'userId',
       sourceKey: 'userId',
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
-    });
+    }),
+      db.CommunityLike.belongsTo(db.Community, {
+        foreignKey: 'communityId',
+        sourceKey: 'id',
+      });
   }
 }
 
