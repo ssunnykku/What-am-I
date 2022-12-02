@@ -4,19 +4,13 @@ class Review extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        reviewId: {
-          allowNull: false,
-          autoIncrement: true,
-          primaryKey: true,
-          type: Sequelize.INTEGER,
-        },
         description: {
           type: DataTypes.STRING(500),
           allowNull: false,
         },
-        userId: {
-          type: DataTypes.STRING(500),
-        },
+        // userId: {
+        //   type: DataTypes.STRING(500),
+        // },
         images: {
           type: DataTypes.TEXT,
           allowNull: true,
@@ -35,15 +29,11 @@ class Review extends Sequelize.Model {
     db.Review.belongsTo(db.User, {
       foreignKey: 'userId',
       sourceKey: 'userId',
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
     });
 
     db.Review.hasMany(db.ReviewComment, {
       foreignKey: 'reviewId',
-      sourceKey: 'reviewId',
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
+      sourceKey: 'id',
     });
   }
 }

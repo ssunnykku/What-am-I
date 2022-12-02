@@ -1,20 +1,20 @@
-import { User } from '../models/User.model.js';
+import { User } from '../models/User.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 class userService {
   static async addUser({ nickname, email, password, checkPassword }) {
     const user = await User.findOne({ where: { email: email } });
-
+    console.log(user);
     if (user) {
       const errorMessage = '사용중인 이메일입니다.';
       return { errorMessage };
     }
 
-    // if (password !== checkPassword) {
-    //   const errorMessage = '비밀번호가 일치하지 않습니다.';
-    //   return errorMessage;
-    // }
+    if (password !== checkPassword) {
+      const errorMessage = '비밀번호가 일치하지 않습니다.';
+      return errorMessage;
+    }
 
     // 비밀번호 해쉬화
     const hashedPassword = await bcrypt.hash(password, 10);

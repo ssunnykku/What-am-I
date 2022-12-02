@@ -6,11 +6,12 @@ class userController {
   static async register(req, res, next) {
     try {
       const { nickname, email, password, checkPassword } = req.body;
+
       const newUser = await userService.addUser({
-        nickname,
-        email,
-        password,
-        checkPassword,
+        nickname: nickname,
+        email: email,
+        password: password,
+        checkPassword: checkPassword,
       });
 
       if (newUser.errorMessage) {

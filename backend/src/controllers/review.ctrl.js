@@ -66,10 +66,10 @@ class reviewController {
   //한개의 리뷰글 보기
   static async review(req, res) {
     try {
-      const _reviewId = req.params.reviewId;
+      const _id = req.params.reviewId;
 
       const comments = await reviewService.showReview({
-        _reviewId,
+        _id,
       });
       if (comments.errorMessage) {
         throw new Error(comments, errorMessage);

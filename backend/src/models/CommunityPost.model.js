@@ -4,65 +4,53 @@ class CommunityPost extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        communityPostId: {
+        id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
-          type: Sequelize.INTEGER,
+          type: DataTypes.INTEGER,
         },
         images: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
           allowNull: false,
-          unique: true,
         },
         description: {
           type: DataTypes.STRING(500),
           allowNull: false,
         },
-        communityId: {
-          type: Sequelize.INTEGER,
-        },
-        userId: {
-          type: DataTypes.STRING(500),
-        },
+        // userId: {
+        //   type: DataTypes.UUID,
+        //   defaultValue: DataTypes.UUIDV4,
+        //   foreignKey: true,
+        //   unique: true,
+        // },
       },
       {
         sequelize,
         tableName: 'communityPosts',
         timestamps: true,
+        paranoid: true,
         charset: 'utf8',
         collate: 'utf8_general_ci',
       },
     );
   }
+  static associate(db) {
+    db.CommunityPost.belongsTo(db.Community, {
+      foreignKey: 'communityId',
+      sourceKey: 'id',
+    }),
+      db.CommunityPost.belongsTo(db.User, {
+        foreignKey: 'userId',
+        sourceKey: 'userId',
+      }),
+      db.CommunityPost.hasMany(db.CommunityComment, {
+        foreignKey: 'communityPostId',
+        sourceKey: 'id',
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
+      });
+  }
 }
 
 export { CommunityPost };
-// import sequelize from '../config/sequelize';
-// import { DataTypes, Model } from 'sequelize';
-
-// class CommunityPost extends Model {}
-
-// CommunityPost.init(
-//   {
-//     id: {
-//       type: DataTypes.UUID,
-//       allowNull: false,
-//       unique: true,
-//       primaryKey: true,
-//     },
-//     description: {
-//       type: DataTypes.TEXT,
-//       allowNull: false,
-//     },
-//   },
-//   {
-//     sequelize,
-//     tableName: 'communityPosts',
-//     timestamps: true,
-//     charset: 'utf8mb4',
-//     collate: 'utf8mb4_general_ci',
-//   },
-// );
-
-// export default CommunityPost;

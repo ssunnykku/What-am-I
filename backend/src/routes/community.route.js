@@ -1,41 +1,30 @@
 import { Router } from 'express';
-
 import { communityController } from '../controllers/community.ctrl';
 import { loginRequired } from '../middlewares/loginRequired.js';
+import { uploadImageS3 } from '../middlewares/uploadImageS3';
 
 const communityRouter = Router();
+// const upload = uploadImageS3();
 
-communityRouter.get(
-  '/community',
-  loginRequired,
-  communityController.getCommunityList,
-);
-communityRouter.post(
-  '/community',
-  loginRequired,
-  communityController.createCommunity,
-);
+communityRouter.post('/', loginRequired, communityController.addCommunity);
+// communityRouter.post(
+//   '/',
+//   loginRequired,
+//   upload.single('image'),
+//   communityController.communityImage,
+// );
+communityRouter.get('/', loginRequired, communityController.getCommunityList);
+// community.get('/currentuser', communityController.getCurrentUserCommunity);
 communityRouter.put(
-  '/community/:communityId',
+  '/:communityId',
   loginRequired,
   communityController.updateCommunity,
 );
 
 communityRouter.delete(
-  '/community/:communityId',
+  '/:communityId',
   loginRequired,
   communityController.deleteCommunity,
 );
 
 export { communityRouter };
-
-// 커뮤니티 외래키
-// alter table communities add foreign key( userId ) references users(userId) on delete cascade;
-// alter table communityComments add foreign key( userId ) references users(userId) on delete cascade;
-// alter table communityComments add foreign key( communityId ) references communities( communityId ) on delete cascade;
-
-// alter table communityImages add foreign key( userId ) references users(userId) on delete cascade;
-// alter table communityImages add foreign key( communityId ) references communities( communityId ) on delete cascade;
-
-// alter table communityPosts add foreign key( userId ) references users(userId) on delete cascade;
-// alter table communityPosts add foreign key( communityId ) references communities( communityId ) on delete cascade;
