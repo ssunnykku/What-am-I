@@ -4,9 +4,6 @@ import { loginRequired } from '../middlewares/loginRequired.js';
 import { userValidator } from '../middlewares/userValidator';
 import { uploadImageS3 } from '../middlewares/uploadImageS3';
 
-// import jwt from 'jsonwebtoken';
-// import passport from 'passport';
-
 const userRouter = Router();
 const upload = uploadImageS3();
 

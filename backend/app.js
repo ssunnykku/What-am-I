@@ -16,6 +16,7 @@ import { communityRouter } from './src/routes/community.route';
 import { userRouter } from './src/routes/user.router';
 import { reviewAuthRouter } from './src/routes/review.route';
 import { reviewCommentAuthRouter } from './src/routes/revComment.route';
+import { myPageRouter } from './src/routes/myPage.route';
 //**middleware */
 import errorMiddleware from './src/middlewares/error';
 
@@ -41,6 +42,7 @@ app.use(userRouter);
 app.use(reviewAuthRouter);
 app.use(reviewCommentAuthRouter);
 app.use('/communities', communityRouter);
+app.use(myPageRouter);
 app.use(errorMiddleware);
 
 app.listen(process.env.SEVER_PORT, () =>
