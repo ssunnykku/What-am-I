@@ -4,18 +4,22 @@ class communityController {
   static async addCommunity(req, res, next) {
     try {
       const { name, introduction } = req.body;
-      await communityService.createCommunity({
+      const newCommunity = await communityService.createCommunity({
         name,
         introduction,
       });
-      if (newUser.errorMessage) {
+      if (newCommunity.errorMessage) {
         throw new Error(newUser, errorMessage);
       }
-      return res.status(201).json(result);
+      return res.status(201).json(newCommunity);
     } catch (error) {
       next(error);
     }
   }
+
+  // static async communityImage(req, res, next) {
+  //   const {} = req.body;
+  // }
   //전체 커뮤니티 리스트 10개씩
   static async getCommunityList(req, res, next) {
     try {
