@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { createCommuRequest } from '../../apis/communityFetcher';
@@ -15,6 +15,7 @@ const CommunityMaker = () => {
   const [name, setName] = useState<string>('');
   const [introduction, setIntroduction] = useState<string>('');
 
+  const imageRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
   // 사진 미리보기
@@ -31,11 +32,13 @@ const CommunityMaker = () => {
   };
 
   const handleDeletePreviewFile = (e: React.MouseEvent) => {
-    // URL.revokeObjectURL(communityImage);
     e.preventDefault();
-    setCommunityImage(
-      `${import.meta.env.VITE_PUBLIC_URL}/img/default_image3.png`,
-    );
+    if (imageRef.current) {
+      imageRef.current.value = '';
+      setCommunityImage(
+        `${import.meta.env.VITE_PUBLIC_URL}/img/default_image3.png`,
+      );
+    }
   };
 
   const handleCreateCommuFormClick = async (e: React.FormEvent) => {
@@ -59,7 +62,12 @@ const CommunityMaker = () => {
               커뮤니티 대표 이미지
               <button onClick={handleDeletePreviewFile}>삭제</button>
             </div>
-            <input type="file" accept="image/*" onChange={handleChangeFile} />
+            <input
+              ref={imageRef}
+              type="file"
+              accept="image/*"
+              onChange={handleChangeFile}
+            />
           </ImageTextBox>
           <RoundImage>
             {communityImage && (
@@ -177,6 +185,7 @@ const AddName = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
   input {
     border: solid 1px black;
     width: 15rem;
@@ -194,6 +203,7 @@ const AddIntro = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
   textarea {
     border: solid 1px black;
     width: 15rem;

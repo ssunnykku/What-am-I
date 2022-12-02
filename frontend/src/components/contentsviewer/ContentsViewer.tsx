@@ -41,7 +41,7 @@ const ContentsViewer = () => {
 
 export default ContentsViewer;
 
-const ContentsModalWrapper = styled.div`
+const ContentsModalWrapper = styled.form`
   width: 65%;
   height: 80%;
   max-width: 57rem;
@@ -110,7 +110,7 @@ const BottomDiv = styled.div`
   }
 `;
 
-const CommentBox = styled.div`
+const CommentBox = styled.form`
   border-top: solid 1px lightgray;
   position: absolute;
   bottom: 0;
@@ -129,6 +129,7 @@ const CommentBox = styled.div`
     padding: 0 2%;
     border: 0;
     outline: 0;
+    font-size: 15px;
   }
   button {
     width: 5.5rem;
@@ -140,6 +141,6 @@ const CommentBox = styled.div`
     font-family: ${font.bold};
     border-left: 1px solid lightgray;
     color: ${theme.mainColor};
-    font-size: 1rem;
+    font-size: 17px;
   }
 `;

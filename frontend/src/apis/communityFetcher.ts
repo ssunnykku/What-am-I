@@ -1,11 +1,5 @@
+import { CreateCommuInitialType } from '../types/community/communityType';
 import { axiosInstance } from '../utils/axiosInstance';
-import Storage from '../storage/storage';
-
-export interface CreateCommuInitialType {
-  name: string;
-  communityImage?: string | Blob;
-  introduction: string;
-}
 
 export async function createCommuRequest(
   endpoint: string,

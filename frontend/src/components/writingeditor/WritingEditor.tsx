@@ -1,24 +1,28 @@
 import styled from '@emotion/styled';
+import React, { useState } from 'react';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 
 const WritingEditor = () => {
+  // resultcard를 가져 와야 함... 그러면 그냥 백엔드와 소통하지 않고 가져와도 되는 것 아닌가 ...?
+  const [images, setImages] = useState<string | ArrayBuffer | null>('');
+  const [description, setDescription] = useState<string>('');
+
+  const handleUploadResultCard = (e: React.ChangeEvent<HTMLInputElement>) => {};
+
+  const handleWritingEditorClick = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
-    <CreateModalWrapper>
+    <CreateModalWrapper onSubmit={handleWritingEditorClick}>
       <ModalHeader>
         새 게시물 작성하기
-        <ModalHeaderBtn>공유하기</ModalHeaderBtn>
+        <ModalHeaderBtn type="submit">공유하기</ModalHeaderBtn>
       </ModalHeader>
       <ModalContents>
         <AddImage>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              console.log(e);
-            }}
-          >
-            이미지 선택
-          </button>
+          <div>여기에 카드 목록 바로 띄워주기</div>
         </AddImage>
         <AddWriting>
           <div className="user-name">유저 프로필 사진 + 닉네임</div>
@@ -33,7 +37,7 @@ const WritingEditor = () => {
 
 export default WritingEditor;
 
-const CreateModalWrapper = styled.div`
+const CreateModalWrapper = styled.form`
   width: 55%;
   height: 80%;
   max-width: 47rem;
@@ -104,6 +108,7 @@ const AddWriting = styled.div`
       font-size: 16px;
       font-family: ${font.normal};
       line-height: 22px;
+      resize: none;
     }
   }
 `;
