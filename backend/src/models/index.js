@@ -28,9 +28,9 @@ db.CommunityLike = CommunityLike;
 
 User.init(sequelize);
 Session.init(sequelize);
-// Review.init(sequelize);
+Review.init(sequelize);
 Like.init(sequelize);
-// ReviewComment.init(sequelize);
+ReviewComment.init(sequelize);
 Community.init(sequelize);
 CommunityPost.init(sequelize);
 CommunityComment.init(sequelize);
@@ -41,7 +41,7 @@ CommunityPost.associate(db);
 CommunityComment.associate(db);
 User.associate(db);
 CommunityLike.associate(db);
-// Review.associate(db);
-// ReviewComment.associate(db);
+Review.associate(db);
+ReviewComment.associate(db);
 
 export { db };

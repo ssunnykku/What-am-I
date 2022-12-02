@@ -1,4 +1,4 @@
-import Review from '../models/Review.model.js';
+import { Review } from '../models/Review.model.js';
 import { REVIEW_PER_PAGE } from '../utils/Constant';
 import { Sequelize } from 'sequelize';
 
@@ -60,22 +60,22 @@ class reviewService {
   }
 
   //
-  static async showReview({ reviewId }) {
-    const reviewId_ = await Review.findOne({
-      where: { reviewId },
+  static async showReview({ _id: id }) {
+    const reviewId = await Review.findOne({
+      where: { id: id },
     });
-    if (!reviewId_) {
+    if (!reviewId) {
       const errorMessage = '작성하신 글이 없습니다';
       return { errorMessage };
     } else {
-      return reviewId_;
+      return reviewId;
     }
   }
 
-  static async updateReview({ description, reviewId, userId }) {
+  static async updateReview({ description, reviewId: id, userId }) {
     //db검색
     const updateReview = await Review.findOne({
-      where: { reviewId: reviewId, userId: userId },
+      where: { id: id, userId: userId },
     });
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!updateReview) {
@@ -86,7 +86,7 @@ class reviewService {
     if (updateReview) {
       const updateReview = await Review.update(
         { description: description },
-        { where: { reviewId: reviewId, userId: userId } },
+        { where: { id: id, userId: userId } },
       );
       updateReview.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
@@ -94,9 +94,9 @@ class reviewService {
     }
   }
 
-  static async findMessage({ reviewId, userId }) {
+  static async findMessage({ reviewId: id, userId }) {
     const comment = await Review.findOne({
-      where: { reviewId: reviewId, userId: userId },
+      where: { id: id, userId: userId },
     });
     if (!comment) {
       const errorMessage = '작성한 글이 없습니다';
@@ -106,11 +106,11 @@ class reviewService {
     }
   }
 
-  static async deleteReview({ reviewId, userId }) {
-    const id = await Review.destroy({
-      where: { reviewId: reviewId, userId: userId },
+  static async deleteReview({ reviewId: id, userId }) {
+    const _id = await Review.destroy({
+      where: { id: id, userId: userId },
     });
-    if (!id) {
+    if (!_id) {
       const errorMessage = '후기가 없습니다';
       return errorMessage;
     } else {
