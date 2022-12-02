@@ -4,7 +4,7 @@ import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 
 const WritingEditor = () => {
-  // resultcard를 가져 와야 함... 그러면 그냥 백엔드와 소통하지 않고 가져와도 되는 것 아닌가 ...?
+  // resultcard를 가져 와야 함... 그러면 그냥 백엔드와 소통하지 않고 가져와도 되는 거 아닌가 ...?
   const [images, setImages] = useState<string | ArrayBuffer | null>('');
   const [description, setDescription] = useState<string>('');
 
@@ -26,9 +26,9 @@ const WritingEditor = () => {
         </AddImage>
         <AddWriting>
           <div className="user-name">유저 프로필 사진 + 닉네임</div>
-          <form className="writing">
+          <div className="writing">
             <textarea placeholder="여러분의 댕댕이를 마음껏 자랑해주세요!"></textarea>
-          </form>
+          </div>
         </AddWriting>
       </ModalContents>
     </CreateModalWrapper>
@@ -81,7 +81,7 @@ const ModalContents = styled.div`
   font-size: 16px;
 `;
 
-const AddImage = styled.form`
+const AddImage = styled.div`
   border-right: solid 1px lightgray;
 `;
 

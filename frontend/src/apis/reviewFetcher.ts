@@ -30,3 +30,15 @@ export async function createReviewCommentRequest(
   });
   return res.data;
 }
+
+// 정보 불러오기
+
+export async function getReviewsListRequest(endpoint: string) {
+  const res = await axiosInstance.get(endpoint, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  console.log(res);
+  return res.data;
+}

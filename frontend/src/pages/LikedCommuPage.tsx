@@ -62,9 +62,7 @@ const LikedCommuPage = () => {
               </div>
             </InfoBox>
           </SmallBox>
-          <ContentsBox>
-            <ContentsModal />
-          </ContentsBox>
+          <ContentsBox>{/* <ContentsModal /> */}</ContentsBox>
           <PaginateButton
             page={page}
             setPage={setPage}

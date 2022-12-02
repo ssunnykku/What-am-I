@@ -2,12 +2,31 @@ import styled from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import { SearchBox } from '../assets/styles/common/commonComponentStyle';
 import WritingModal from '../components/modal/WritingModal';
-import ContentsModal from '../components/modal/ContentsModal';
 import { theme } from '../assets/styles/common/palette';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { getReviewsListRequest } from '../apis/reviewFetcher';
+import ContentsModal from '../components/modal/ContentsModal';
+import usePaginate from '../hooks/usePaginate/usePaginate';
+import { ReviewsListType } from '../types/reviewboard/reviewType';
 
 const ReviewBoardPage = () => {
-  useEffect(() => {}, []);
+  const [pages, setPages] = useState<number>(1);
+  const [data, setData] = useState<ReviewsListType[]>([]);
+  const [totalPages, setTotalPages] = useState<number>(1);
+
+  const { isFirst, isLast, handleNextBtnClick, handlePrevBtnClick } =
+    usePaginate(pages, setPages, totalPages, 1);
+
+  const getReviews = async () => {
+    const res = await getReviewsListRequest(`reviews?page=${pages}`);
+    console.log(res);
+    setData(res.result.selectedReviews);
+    setTotalPages(res.result);
+  };
+
+  useEffect(() => {
+    getReviews();
+  }, []);
 
   return (
     <BoardBox>
@@ -16,11 +35,13 @@ const ReviewBoardPage = () => {
         <WritingModal />
       </BoardHeader>
       <BoardContent>
-        <SlideLeftBtn />
+        <SlideLeftBtn disabled={isFirst} onClick={handlePrevBtnClick} />
         <CardBox>
-          <ContentsModal />
+          {data?.map((value) => (
+            <ContentsModal key={value.reviewId} value={value} />
+          ))}
         </CardBox>
-        <SlideRightBtn />
+        <SlideRightBtn disabled={isLast} onClick={handleNextBtnClick} />
       </BoardContent>
       <SearchBox style={{ marginTop: '7vh' }}>
         <input></input>
@@ -68,7 +89,8 @@ const CardBox = styled.div`
   min-height: 27rem;
 `;
 
-const SlideLeftBtn = styled.div`
+const SlideLeftBtn = styled.button`
+  background: 0;
   width: 0;
   height: 0;
   border-bottom: 1.5rem solid transparent;
@@ -83,9 +105,19 @@ const SlideLeftBtn = styled.div`
     border-right: 1.5rem solid ${theme.pointColor};
     cursor: pointer;
   }
+
+  &[disabled] {
+    border-bottom: 1.5rem solid transparent;
+    border-top: 1.5rem solid transparent;
+    border-left: 1.5rem solid transparent;
+    border-right: 1.5rem solid lightgray;
+    cursor: revert;
+    transform: revert;
+  }
 `;
 
-const SlideRightBtn = styled.div`
+const SlideRightBtn = styled.button`
+  background: 0;
   width: 0;
   height: 0;
   border-bottom: 1.5rem solid transparent;
@@ -99,5 +131,14 @@ const SlideRightBtn = styled.div`
     border-left: 1.5rem solid ${theme.pointColor};
     border-right: 1.5rem solid transparent;
     cursor: pointer;
+  }
+
+  &[disabled] {
+    border-bottom: 1.5rem solid transparent;
+    border-top: 1.5rem solid transparent;
+    border-left: 1.5rem solid lightgray;
+    border-right: 1.5rem solid transparent;
+    cursor: revert;
+    transform: revert;
   }
 `;
