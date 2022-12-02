@@ -15,7 +15,7 @@ import passport from 'passport';
 import { userRouter } from './src/routes/user.router';
 //**       Router-Community */
 import { communityRouter } from './src/routes/community.route';
-import { communityPostRouter } from './src/routes/communityPost.route';
+// import { communityPostRouter } from './src/routes/communityPost.route';
 
 //**       Router-Review */
 import { reviewAuthRouter } from './src/routes/review.route';
@@ -69,7 +69,7 @@ app.use(userRouter);
 
 //Community
 app.use(communityRouter);
-app.use(communityPostRouter);
+// app.use(communityPostRouter);
 
 //Review
 app.use(reviewAuthRouter);

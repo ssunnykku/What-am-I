@@ -20,8 +20,8 @@ db.sequelize = sequelize;
 db.User = User;
 db.Review = Review;
 db.Like = Like;
-db.Community = Community;
-db.CommunityPost = CommunityPost;
+// db.Community = Community;
+// db.CommunityPost = CommunityPost;
 
 User.init(sequelize);
 Session.init(sequelize);
