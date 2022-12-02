@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { theme } from '../../assets/styles/common/palette';
 import usePaginate from '../../hooks/usePaginate/usePaginate';
 
-interface PaginateButtonProps {
+export interface PaginateButtonProps {
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   totalPages: number;
@@ -16,7 +16,7 @@ const PaginateButton = ({ page, setPage, totalPages }: PaginateButtonProps) => {
     handleNextBtnClick,
     handlePageBtnClick,
     handlePrevBtnClick,
-  } = usePaginate(page, setPage, totalPages, 6);
+  } = usePaginate(page, setPage, totalPages, 10);
 
   return (
     <PaginateBox>
@@ -48,7 +48,7 @@ const PaginateBox = styled.div`
   width: 35rem;
   margin-top: 0.7rem;
   position: absolute;
-  bottom: 2%;
+  bottom: 2.5%;
   display: flex;
   justify-content: center;
 `;

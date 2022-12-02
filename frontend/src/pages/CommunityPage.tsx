@@ -18,8 +18,6 @@ const CommunityPage = () => {
           <RankingHeader>인기 커뮤니티</RankingHeader>
           <RankingBox>
             <CommuRankingCard />
-            <CommuRankingCard />
-            <CommuRankingCard />
           </RankingBox>
         </PopularCommuBox>
         <ListsBox>
@@ -32,10 +30,6 @@ const CommunityPage = () => {
           </CommuListHeader>
           <CommuListsBox>
             <ScrollBox>
-              <CommuListCard />
-              <CommuListCard />
-              <CommuListCard />
-              <CommuListCard />
               <CommuListCard />
             </ScrollBox>
           </CommuListsBox>

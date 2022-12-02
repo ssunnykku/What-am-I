@@ -3,8 +3,14 @@ import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import { EditDelBtn } from '../../assets/styles/common/commonComponentStyle';
 import LikeBtn from '../common/LikeBtn';
+import { ReviewsListTypeProps } from '../modal/ContentsModal';
 
-const ContentsViewer = () => {
+const ContentsViewer = ({ value }: ReviewsListTypeProps) => {
+  // {value}
+  // 뷰어에 딸린 아이디 기반으로 사진, 글, 글쓴이 아이디 불러지고
+  // useEffect로 get 함수 넣어주기
+  // 그럼 필요한 거 아이디, 사진, 글 프롭스로 보내기
+  // 댓글/ 수정/ 삭제
   return (
     <ContentsModalWrapper>
       <AddImage></AddImage>
@@ -16,7 +22,10 @@ const ContentsViewer = () => {
             <EditDelBtn>삭제</EditDelBtn>
           </ButtonBox>
         </TopDiv>
-        <div className="user-contents">글 보이는 창</div>
+        <ContentsBox className="user-contents">
+          {value.description}
+          <div className="user-comments">댓 보이는 창</div>
+        </ContentsBox>
         <BottomDiv>
           <div className="like">
             <LikeBtn />
@@ -44,7 +53,7 @@ export default ContentsViewer;
 const ContentsModalWrapper = styled.form`
   width: 65%;
   height: 80%;
-  max-width: 57rem;
+  max-width: 60rem;
   min-width: 40rem;
   position: fixed;
   top: 50%;
@@ -71,12 +80,18 @@ const AddWriting = styled.div`
     line-height: 5rem;
     padding-left: 3%;
   }
+`;
 
-  .user-contents {
-    border: solid 1px lightgray;
-    padding-left: 3%;
-    padding-top: 3%;
-    height: 70%;
+const ContentsBox = styled.div`
+  border: solid 1px lightgray;
+  padding: 3% 2%;
+  height: 70%;
+  max-width: 29rem;
+
+  .user-comments {
+    border-top: solid 1px lightgray;
+    margin-top: 10px;
+    padding-top: 10px;
   }
 `;
 
@@ -110,7 +125,7 @@ const BottomDiv = styled.div`
   }
 `;
 
-const CommentBox = styled.form`
+const CommentBox = styled.div`
   border-top: solid 1px lightgray;
   position: absolute;
   bottom: 0;
