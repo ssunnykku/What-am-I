@@ -1,6 +1,25 @@
 import { communityService } from '../services/community.service';
 
 class communityController {
+  static async addCommunity(req, res, next) {
+    try {
+      const { name, introduction } = req.body;
+      const newCommunity = await communityService.createCommunity({
+        name,
+        introduction,
+      });
+      if (newCommunity.errorMessage) {
+        throw new Error(newUser, errorMessage);
+      }
+      return res.status(201).json(newCommunity);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // static async communityImage(req, res, next) {
+  //   const {} = req.body;
+  // }
   //전체 커뮤니티 리스트 10개씩
   static async getCommunityList(req, res, next) {
     try {
@@ -18,18 +37,6 @@ class communityController {
     } catch (err) {
       next(err);
     }
-  }
-  //커뮤니티 만들기
-  static async createCommunity(req, res, next) {
-    const userId = req.currentUserId;
-    const { name, communtyImage, introduction } = req.body;
-    const createCommunity = await communityService.createCommunity(
-      userId,
-      name,
-      communtyImage,
-      introduction,
-    );
-    res.status(201).json(createCommunity);
   }
 
   //생성한 커뮤니티 수정하기

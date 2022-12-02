@@ -5,9 +5,16 @@ class reviewController {
   //모든 글들 다 보기
   static async allReviews(req, res) {
     try {
+      // GET /review
       const { page } = req.query;
+      // 방어코드
+      const defaultPage = page || 1;
+
       const reviewCount = await reviewService.countReviewpage();
-      const selectedReviews = await reviewService.selectReviews(page);
+      // console.log(reviewCount);
+
+      const selectedReviews = await reviewService.selectReviews(defaultPage);
+      console.log();
 
       if (selectedReviews.errorMessage) {
         throw new Error(selectedReviews, errorMessage);
@@ -59,10 +66,10 @@ class reviewController {
   //한개의 리뷰글 보기
   static async review(req, res) {
     try {
-      const _reviewId = req.params.reviewId;
+      const _id = req.params.reviewId;
 
       const comments = await reviewService.showReview({
-        _reviewId,
+        _id,
       });
       if (comments.errorMessage) {
         throw new Error(comments, errorMessage);

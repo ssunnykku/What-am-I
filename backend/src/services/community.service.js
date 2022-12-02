@@ -1,8 +1,14 @@
-import { Community } from '../models';
+import { Community } from '../models/Community.model';
 import ApiError from '../utils/ApiError';
 import { COMMUNITY_PER_PAGE } from '../utils/Constant';
 
 class communityService {
+  static async createCommunity({ name, introduction }) {
+    const createCommunity = await Community.create({ name, introduction });
+
+    return createCommunity;
+  }
+
   static async countCommunityPage() {
     const communityCount = await Community.count();
     if (communityCount % COMMUNITY_PER_PAGE === 0) {
@@ -23,17 +29,6 @@ class communityService {
     }
 
     return selectedCommunities;
-  }
-
-  static async createCommunity(userId, name, communityImage, introduction) {
-    const createCommunity = await Community.create({
-      userId,
-      name,
-      communityImage,
-      introduction,
-    });
-    createCommunity.errorMessage = null;
-    return createCommunity;
   }
 
   static async updateCommunity({
