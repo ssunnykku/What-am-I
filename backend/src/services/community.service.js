@@ -90,10 +90,10 @@ class communityService {
   }
 
   static async deleteCommunity({ id, userId }) {
-    const id = await Community.destroy({
+    const id_ = await Community.destroy({
       where: { id: id, userId: userId },
     });
-    if (!id) {
+    if (!id_) {
       const errorMessage = '생성한 커뮤니티가 없습니다';
       return errorMessage;
     } else {
