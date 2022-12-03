@@ -13,6 +13,8 @@ import passport from 'passport';
 
 //**Router */
 import { communityRouter } from './src/routes/community.route';
+import { communityPostRouter } from './src/routes/communityPost.route';
+
 import { userRouter } from './src/routes/user.router';
 import { reviewRouter } from './src/routes/review.route';
 import { reviewCommentRouter } from './src/routes/revComment.route';
@@ -38,7 +40,7 @@ passportConfig();
 
 app.use(userRouter);
 // app.use(communityRouter);
-// app.use(communityPostRouter);
+app.use(communityPostRouter);
 app.use(reviewRouter);
 app.use(reviewCommentRouter);
 app.use('/communities', communityRouter);
