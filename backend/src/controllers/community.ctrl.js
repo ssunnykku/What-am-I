@@ -90,10 +90,10 @@ class communityController {
   static async deleteCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
-      const communityId = req.params.communityId;
+      const id = req.params.communityId;
 
       const deleteCommunity = await communityService.deleteCommunity({
-        communityId,
+        id,
         userId,
       });
       if (deleteCommunity.errorMessage) {
