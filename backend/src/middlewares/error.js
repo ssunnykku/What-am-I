@@ -2,6 +2,10 @@ import ApiError from '../utils/ApiError';
 
 export default (err, req, res, next) => {
   if (err instanceof ApiError) {
+    console.log(
+      '\x1b[31m',
+      '-----------------------------------------------------------------------------------------------------------------------------------------',
+    );
     console.log('\x1b[33m%s\x1b[0m', err);
     res.status(err.status).json({
       success: false,
@@ -10,6 +14,10 @@ export default (err, req, res, next) => {
     });
     return;
   }
+  console.log(
+    '\x1b[31m',
+    '-----------------------------------------------------------------------------------------------------------------------------------------',
+  );
   console.log('\x1b[33m%s\x1b[0m', err);
   res.status(500).json({
     success: false,
