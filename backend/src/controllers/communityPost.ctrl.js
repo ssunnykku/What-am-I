@@ -1,13 +1,19 @@
 import { communityPostService } from '../services/communityPost.service';
+const testId = '1837fc37-c355-4497-b5af-48c6fe827f2b';
+import { Sequelize } from 'sequelize';
+
+const Op = Sequelize.Op;
 
 class communityPostController {
   static async addPost(req, res, next) {
     try {
-      const userId = req.currentUserId;
+      const userId = testId;
+      // const userId = req.currentUserId;
       const communityId = req.params.communityId;
 
       const { images, description } = req.body;
       const newPost = await communityPostService.createPost({
+        userId,
         communityId,
         images,
         description,
@@ -42,69 +48,85 @@ class communityPostController {
   //       next(error);
   //     }
   //   }
-  //   //전체 커뮤니티 리스트 10개씩
-  //   static async getCommunityList(req, res, next) {
-  //     try {
-  //       const { page } = req.query;
-  //       const defaultPage = page || 1;
-  //       const communityCount = await communityPostService.countCommunityPage();
-  //       const selectedCommunities = await communityPostService.selectCommunities(
-  //         defaultPage,
-  //       );
-  //       if (selectedCommunities.errorMessage) {
-  //         throw new Error(selectedCommunities, errorMessage);
-  //       }
-  //       return res.status(200).json(communityCount, selectedCommunities);
-  //     } catch (err) {
-  //       next(err);
-  //     }
-  //   }
-  //   static async updateCommunity(req, res) {
-  //     try {
-  //       const userId = req.currentUserId;
 
-  //       const communityId = req.params.communityId;
-  //       const { name, communtyImage, introduction } = req.body;
+  //전체 커뮤니티글 리스트 10개씩
+  static async getCommunityPostList(req, res, next) {
+    try {
+      const { page } = req.query;
+      const defaultPage = page || 1;
+      const communityId = req.params.communityId;
+      console.log('test', communityId);
 
-  //       const updateCommunity = await communityPostService.updateCommunity({
-  //         name,
-  //         communtyImage,
-  //         introduction,
-  //         communityId,
-  //         userId,
-  //       });
+      const communityPostCount = await communityPostService.communityPostCount(
+        communityId,
+      );
+      const selectedCommunityPost =
+        await communityPostService.selectCommunityPost(
+          defaultPage,
+          communityId,
+        );
+      if (selectedCommunityPost.errorMessage) {
+        throw new Error(selectedCommunityPost, errorMessage);
+      }
+      return res
+        .status(200)
+        .json({ result: { communityPostCount, selectedCommunityPost } });
+    } catch (err) {
+      next(err);
+    }
+  }
 
-  //       if (updateCommunity.errorMessage) {
-  //         throw new Error(updateCommunity, errorMessage);
-  //       }
+  //내가쓴 포스팅(글) 수정
+  static async updateCommunityPost(req, res) {
+    try {
+      const userId = testId;
+      // const userId = req.currentUserId;
 
-  //       const message = await communityPostService.findCommunity({
-  //         communityId,
-  //         userId,
-  //       });
-  //       return res.status(200).json(message);
-  //     } catch (error) {
-  //       return res.status(400).json({ code: 400, message: error.message });
-  //     }
-  //   }
+      const id = req.params.id;
+      const { images, description } = req.body;
 
-  //   static async deleteCommunity(req, res) {
-  //     try {
-  //       const userId = req.currentUserId;
-  //       const communityId = req.params.communityId;
+      const updateCommunityPost =
+        await communityPostService.updateCommunityPost({
+          images,
+          description,
+          id,
+          userId,
+        });
 
-  //       const deleteCommunity = await communityPostService.deleteCommunity({
-  //         communityId,
-  //         userId,
-  //       });
-  //       if (deleteCommunity.errorMessage) {
-  //         throw new Error(deleteCommunity, errorMessage);
-  //       }
-  //       return res.status(200).json(deleteCommunity);
-  //     } catch (error) {
-  //       return res.status(400).json({ code: 400, message: error.message });
-  //     }
-  //   }
+      if (updateCommunityPost.errorMessage) {
+        throw new Error(updateCommunityPost, errorMessage);
+      }
+
+      const message = await communityPostService.findCommunityPost({
+        id,
+        userId,
+      });
+      return res.status(200).json(message);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  //내가쓴 포스팅(글) 삭제하기
+  static async deleteCommunityPost(req, res) {
+    try {
+      const userId = testId;
+      // const userId = req.currentUserId;
+      const id = req.params.id;
+
+      const deleteCommunityPost =
+        await communityPostService.deleteCommunityPost({
+          id,
+          userId,
+        });
+      if (deleteCommunityPost.errorMessage) {
+        throw new Error(deleteCommunityPost, errorMessage);
+      }
+      return res.status(200).json(deleteCommunityPost);
+    } catch (error) {
+      return next(error);
+    }
+  }
 }
 
 export { communityPostController };

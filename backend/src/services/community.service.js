@@ -3,10 +3,11 @@ import ApiError from '../utils/ApiError';
 import { COMMUNITY_PER_PAGE } from '../utils/Constant';
 
 class communityService {
-  static async createCommunity({ name, introduction }) {
+  static async createCommunity({ name, introduction, userId }) {
     const createCommunity = await Community.create({
       name,
       introduction,
+      userId,
     });
 
     return createCommunity;
@@ -48,12 +49,12 @@ class communityService {
     name,
     communtyImage,
     introduction,
-    communityId,
+    id,
     userId,
   }) {
     //db검색
     const updateCommunity = await Community.findOne({
-      where: { communityId: communityId, userId: userId },
+      where: { id: id, userId: userId },
     });
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!updateCommunity) {
@@ -68,7 +69,7 @@ class communityService {
           communtyImage: communtyImage,
           introduction: introduction,
         },
-        { where: { communityId: communityId, userId: userId } },
+        { where: { id: id, userId: userId } },
       );
       updateCommunity.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
@@ -76,9 +77,9 @@ class communityService {
     }
   }
 
-  static async findCommunity({ communityId, userId }) {
+  static async findCommunity({ id, userId }) {
     const comment = await Community.findOne({
-      where: { communityId: communityId, userId: userId },
+      where: { id: id, userId: userId },
     });
     if (!comment) {
       const errorMessage = '작성한 글이 없습니다';
@@ -88,9 +89,9 @@ class communityService {
     }
   }
 
-  static async deleteCommunity({ communityId, userId }) {
+  static async deleteCommunity({ id, userId }) {
     const id = await Community.destroy({
-      where: { communityId: communityId, userId: userId },
+      where: { id: id, userId: userId },
     });
     if (!id) {
       const errorMessage = '생성한 커뮤니티가 없습니다';

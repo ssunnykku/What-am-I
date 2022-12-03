@@ -10,6 +10,7 @@ class communityController {
       const newCommunity = await communityService.createCommunity({
         name,
         introduction,
+        userId,
       });
       if (newCommunity.errorMessage) {
         throw new Error(newUser, errorMessage);
@@ -61,15 +62,15 @@ class communityController {
   static async updateCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
-
-      const communityId = req.params.communityId;
+      console.log(userId);
+      const id = req.params.communityId;
       const { name, communtyImage, introduction } = req.body;
 
       const updateCommunity = await communityService.updateCommunity({
         name,
         communtyImage,
         introduction,
-        communityId,
+        id,
         userId,
       });
 
@@ -78,7 +79,7 @@ class communityController {
       }
 
       const message = await communityService.findCommunity({
-        communityId,
+        id,
         userId,
       });
       return res.status(200).json(message);
@@ -90,10 +91,10 @@ class communityController {
   static async deleteCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
-      const communityId = req.params.communityId;
+      const id = req.params.communityId;
 
       const deleteCommunity = await communityService.deleteCommunity({
-        communityId,
+        id,
         userId,
       });
       if (deleteCommunity.errorMessage) {
