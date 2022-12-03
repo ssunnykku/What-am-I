@@ -1,6 +1,6 @@
 import { communityPostService } from '../services/communityPost.service';
-const testId = '1837fc37-c355-4497-b5af-48c6fe827f2b';
 import { Sequelize } from 'sequelize';
+const testId = '1ec7aefc-7d85-4a91-9cec-90dc069bd453';
 
 const Op = Sequelize.Op;
 

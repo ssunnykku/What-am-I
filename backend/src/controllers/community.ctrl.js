@@ -1,10 +1,12 @@
 import { Community } from '../models/Community.model';
 import { communityService } from '../services/community.service';
+const testId = '1ec7aefc-7d85-4a91-9cec-90dc069bd453';
 
 class communityController {
   static async addCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
+      // const userId = testId;
 
       const { name, introduction } = req.body;
       const newCommunity = await communityService.createCommunity({
@@ -24,6 +26,7 @@ class communityController {
   static async communityImage(req, res, next) {
     try {
       const userId = req.currentUserId;
+      // const userId = testId;
       const id = req.params.id;
       const communityImage = req.file.location;
       const image = await communityService.addCommunityImage({
@@ -62,6 +65,7 @@ class communityController {
   static async updateCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
+      // const userId = testId;
       console.log(userId);
       const id = req.params.communityId;
       const { name, communtyImage, introduction } = req.body;
@@ -91,6 +95,7 @@ class communityController {
   static async deleteCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
+      // const userId = testId;
       const id = req.params.communityId;
 
       const deleteCommunity = await communityService.deleteCommunity({
