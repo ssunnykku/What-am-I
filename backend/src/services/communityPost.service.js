@@ -1,4 +1,4 @@
-import { CommunityPost } from '../models/CommunityPost.model';
+import { Community } from '../models/Community.model';
 import ApiError from '../utils/ApiError';
 import { COMMUNITYPOST_PER_PAGE } from '../utils/Constant';
 
@@ -11,7 +11,7 @@ class communityPostService {
       description,
     });
 
-    return createPost;
+    return createCommunity;
   }
 
   // static async addCommunityImage({ communityImage, userId, id }) {
