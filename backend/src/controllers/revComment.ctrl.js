@@ -2,7 +2,7 @@ import { reviewCommentService } from '../services/revComment.service';
 // import Joi from 'joi';
 
 class reviewCommentController {
-  static async reviewComments(req, res) {
+  static async reviewComments(req, res, next) {
     try {
       const userId = req.currentUserId;
       const reviewId = req.params.reviewId;
@@ -18,11 +18,11 @@ class reviewCommentController {
       }
       return res.status(201).json(reviewComment);
     } catch (error) {
-      return res.status(400).json({ code: 400, message: error.message });
+      return next(error);
     }
   }
 
-  static async showComments(req, res) {
+  static async showComments(req, res, next) {
     try {
       const _reviewId = req.params.reviewId;
       console.log(_reviewId);
@@ -35,10 +35,10 @@ class reviewCommentController {
       }
       return res.status(200).json(reviewComments);
     } catch (error) {
-      return res.status(400).json({ code: 400, message: error.message });
+      return next(error);
     }
   }
-  static async updateComment(req, res) {
+  static async updateComment(req, res, next) {
     try {
       const userId = req.currentUserId;
 
@@ -61,11 +61,11 @@ class reviewCommentController {
       });
       return res.status(200).json(message);
     } catch (error) {
-      return res.status(400).json({ code: 400, message: error.message });
+      return next(error);
     }
   }
 
-  static async deleteComment(req, res) {
+  static async deleteComment(req, res, next) {
     try {
       const userId = req.currentUserId;
 
@@ -80,7 +80,7 @@ class reviewCommentController {
       }
       return res.status(200).json(deleteComment);
     } catch (error) {
-      return res.status(400).json({ code: 400, message: error.message });
+      return next(error);
     }
   }
 }

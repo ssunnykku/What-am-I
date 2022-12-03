@@ -58,7 +58,7 @@ class communityController {
       next(err);
     }
   }
-  static async updateCommunity(req, res) {
+  static async updateCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
 
@@ -83,11 +83,11 @@ class communityController {
       });
       return res.status(200).json(message);
     } catch (error) {
-      return res.status(400).json({ code: 400, message: error.message });
+      return next(error);
     }
   }
 
-  static async deleteCommunity(req, res) {
+  static async deleteCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
       const communityId = req.params.communityId;
@@ -101,7 +101,7 @@ class communityController {
       }
       return res.status(200).json(deleteCommunity);
     } catch (error) {
-      return res.status(400).json({ code: 400, message: error.message });
+      return next(error);
     }
   }
 }

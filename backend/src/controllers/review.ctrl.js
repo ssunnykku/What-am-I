@@ -21,12 +21,12 @@ class reviewController {
       }
       return res.status(200).json({ result: { reviewCount, selectedReviews } });
     } catch (error) {
-      return res.status(400).json({ code: 400, message: error.message });
+      return next(error);
     }
   }
 
   //새로운 리뷰 등록
-  static async register(req, res) {
+  static async register(req, res, next) {
     try {
       const userId = req.currentUserId;
       const { description, images } = req.body;
@@ -42,12 +42,12 @@ class reviewController {
       }
       return res.status(201).json(newReview);
     } catch (error) {
-      return res.status(400).json({ code: 400, message: error.message });
+      return next(error);
     }
   }
 
   //내가쓴 글들 모두 가지고 오기
-  static async myReviews(req, res) {
+  static async myReviews(req, res, next) {
     try {
       const userId = req.currentUserId;
 
@@ -59,12 +59,12 @@ class reviewController {
       }
       return res.status(200).json(myReviews);
     } catch (error) {
-      return res.status(400).json({ code: 400, message: error.message });
+      return next(error);
     }
   }
 
   //한개의 리뷰글 보기
-  static async review(req, res) {
+  static async review(req, res, next) {
     try {
       const _id = req.params.reviewId;
 
@@ -76,12 +76,12 @@ class reviewController {
       }
       return res.status(200).json(comments);
     } catch (error) {
-      return res.status(400).json({ code: 400, message: error.message });
+      return next(error);
     }
   }
 
   //작성한 리뷰 수정하기
-  static async updateReview(req, res) {
+  static async updateReview(req, res, next) {
     try {
       const userId = req.currentUserId;
 
@@ -104,11 +104,11 @@ class reviewController {
       });
       return res.status(200).json(message);
     } catch (error) {
-      return res.status(400).json({ code: 400, message: error.message });
+      return next(error);
     }
   }
 
-  static async deleteReview(req, res) {
+  static async deleteReview(req, res, next) {
     try {
       const userId = req.currentUserId;
       const reviewId = req.params.reviewId;
@@ -122,7 +122,7 @@ class reviewController {
       }
       return res.status(200).json(deleteReview);
     } catch (error) {
-      return res.status(400).json({ code: 400, message: error.message });
+      return next(error);
     }
   }
 }
