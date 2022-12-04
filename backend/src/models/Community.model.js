@@ -51,7 +51,7 @@ class Community extends Sequelize.Model {
       });
     db.Community.hasMany(db.CommunityLike, {
       foreignKey: 'communityId',
-      sourceKey: 'id',
+      targetKey: 'id',
     });
   }
 }

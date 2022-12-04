@@ -5,7 +5,6 @@ class communityLikeController {
     try {
       const userId = req.currentUserId;
       const communityId = req.params.communityId;
-      console.log(req.params);
       const findUser = await communityLikeService.addHeart({
         userId,
         communityId,
