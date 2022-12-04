@@ -8,6 +8,7 @@ class Community extends Sequelize.Model {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
+          foreignKey: true,
           type: DataTypes.INTEGER,
         },
         userId: {
@@ -42,20 +43,16 @@ class Community extends Sequelize.Model {
   static associate(db) {
     db.Community.hasMany(db.CommunityPost, {
       foreignKey: 'communityId',
-      targetKey: 'id',
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
+      sourceKey: 'id',
     }),
       db.Community.belongsTo(db.User, {
         foreignKey: 'userId',
         targetKey: 'userId',
-      }),
-      db.Community.hasMany(db.CommunityLike, {
-        foreignKey: 'communityId',
-        sourceKey: 'id',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
       });
+    db.Community.hasMany(db.CommunityLike, {
+      foreignKey: 'communityId',
+      sourceKey: 'id',
+    });
   }
 }
 
