@@ -39,6 +39,16 @@ class communityController {
     }
   }
 
+  static async getBestCommunities(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const getLikedCommunities = await communityService.findBestCommunities();
+      res.status(200).json(getLikedCommunities);
+    } catch (error) {
+      next(error);
+    }
+  }
+  // 이거야
   static async getCommunitiesAndPosts(req, res, next) {
     try {
       const userId = req.currentUserId;
