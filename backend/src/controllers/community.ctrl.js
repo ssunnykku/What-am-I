@@ -6,14 +6,12 @@ class communityController {
   static async addCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
-      // const userId = testId;
-
       const { name, introduction } = req.body;
-      const newCommunity = await communityService.createCommunity({
+      const newCommunity = await communityService.createCommunity(
         name,
         introduction,
         userId,
-      });
+      );
       if (newCommunity.errorMessage) {
         throw new Error(newUser, errorMessage);
       }

@@ -3,11 +3,11 @@ import ApiError from '../utils/ApiError';
 import { COMMUNITY_PER_PAGE } from '../utils/Constant';
 
 class communityService {
-  static async createCommunity({ name, introduction, userId }) {
+  static async createCommunity(name, introduction, userId) {
     const createCommunity = await Community.create({
-      name,
-      introduction,
-      userId,
+      name: name,
+      introduction: introduction,
+      userId: userId,
     });
 
     return createCommunity;

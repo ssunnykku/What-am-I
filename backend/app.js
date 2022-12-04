@@ -36,7 +36,7 @@ import passportConfig from './src/utils/passport.js';
 app.use(passport.initialize());
 passportConfig();
 
-// sequelize.sync({ force: false });
+sequelize.sync({ force: false });
 
 app.use(userRouter);
 // app.use(communityRouter);
