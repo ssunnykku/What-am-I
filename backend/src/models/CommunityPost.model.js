@@ -11,7 +11,7 @@ class CommunityPost extends Sequelize.Model {
           type: DataTypes.INTEGER,
         },
         images: {
-          type: DataTypes.TEXT,
+          type: DataTypes.STRING,
           allowNull: false,
         },
         description: {
