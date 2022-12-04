@@ -8,7 +8,7 @@ const upload = uploadImageS3();
 
 //해당커뮤니티에 나의 게시글 남기기
 communityPostRouter.post(
-  '/communityPost/:communityId',
+  '/communitypost/:communityId',
   loginRequired,
   communityPostController.addPost,
 );
@@ -22,21 +22,21 @@ communityPostRouter.post(
 
 //해당 커뮤니티의 게시글 전부 다 가지고 오기
 communityPostRouter.get(
-  '/communityPost/:communityId',
+  '/communitypost/:communityId',
   // loginRequired,
   communityPostController.getCommunityPostList,
 );
 
 //내가 쓴 포스팅(글) 수정하기
 communityPostRouter.put(
-  '/communityPost/:id',
+  '/communitypost/:id',
   // loginRequired,
   communityPostController.updateCommunityPost,
 );
 
 //내가 쓴 포스팅(글) 삭제하기
 communityPostRouter.delete(
-  '/communityPost/:id',
+  '/communitypost/:id',
   // loginRequired,
   communityPostController.deleteCommunityPost,
 );
