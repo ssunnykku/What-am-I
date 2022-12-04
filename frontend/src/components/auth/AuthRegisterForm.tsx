@@ -36,15 +36,15 @@ const AuthRegisterForm = ({
       </AuthFormInputContainer>
       <AuthFormInputContainer>
         <CommonMyInput
-          {...register('username', {
+          {...register('nickname', {
             required: true,
             minLength: 3,
             maxLength: 8,
           })}
-          placeholder="Please enter your username"
+          placeholder="Please enter your nicnkame"
         />
-        {errors.username && (
-          <CommonErrorText>Please check your username</CommonErrorText>
+        {errors.nickname && (
+          <CommonErrorText>Please check your nicnkame</CommonErrorText>
         )}
       </AuthFormInputContainer>
       <AuthFormInputContainer>
@@ -64,7 +64,7 @@ const AuthRegisterForm = ({
       </AuthFormInputContainer>
       <AuthFormInputContainer>
         <CommonMyInput
-          {...register('confirmPassword', {
+          {...register('checkPassword', {
             required: true,
             minLength: 8,
             maxLength: 15,
@@ -73,7 +73,7 @@ const AuthRegisterForm = ({
           type="password"
           placeholder="Please enter your password"
         />
-        {errors.password !== errors.confirmPassword && (
+        {errors.password !== errors.checkPassword && (
           <CommonErrorText>Please check your password</CommonErrorText>
         )}
       </AuthFormInputContainer>

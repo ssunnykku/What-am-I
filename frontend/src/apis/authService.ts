@@ -1,7 +1,7 @@
 import { axiosInstance } from '../utils/axiosInstance';
 
 export const authLoginRequest = async (email: string, password: string) => {
-  const res = await axiosInstance.post('auth/login', {
+  const res = await axiosInstance.post('login', {
     email: email,
     password: password,
   });
@@ -10,13 +10,15 @@ export const authLoginRequest = async (email: string, password: string) => {
 
 export const authRegisterRequest = async (
   email: string,
-  username: string,
+  nickname: string,
   password: string,
+  checkPassword: string,
 ) => {
-  const res = await axiosInstance.post('auth/register', {
+  const res = await axiosInstance.post('users', {
     email: email,
-    username: username,
+    nickname: nickname,
     password: password,
+    checkPassword: checkPassword,
   });
   return res.data;
 };
