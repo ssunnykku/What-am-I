@@ -1,22 +1,21 @@
 import { communityPostService } from '../services/communityPost.service';
 import { Sequelize } from 'sequelize';
-const testId = '1ec7aefc-7d85-4a91-9cec-90dc069bd453';
 
 const Op = Sequelize.Op;
 
 class communityPostController {
   static async addPost(req, res, next) {
     try {
-      const userId = testId;
+      const userId = req.currentUserId;
       // const userId = req.currentUserId;
       const communityId = req.params.communityId;
 
       const { images, description } = req.body;
       const newPost = await communityPostService.createPost({
-        userId,
-        communityId,
         images,
         description,
+        userId,
+        communityId,
       });
       if (newPost.errorMessage) {
         throw new Error(newPost, errorMessage);

@@ -12,9 +12,7 @@ class communityController {
         introduction,
         userId,
       );
-      if (newCommunity.errorMessage) {
-        throw new Error(newUser, errorMessage);
-      }
+
       return res.status(201).json(newCommunity);
     } catch (error) {
       next(error);
@@ -24,9 +22,12 @@ class communityController {
   static async communityImage(req, res, next) {
     try {
       const userId = req.currentUserId;
-      // const userId = testId;
       const id = req.params.id;
       const communityImage = req.file.location;
+      const findId = await communityService.findId({ id });
+      if (findId.errorMessage) {
+        throw new Error(findId.errorMessage);
+      }
       const image = await communityService.addCommunityImage({
         id,
         userId,
@@ -60,17 +61,24 @@ class communityController {
       next(err);
     }
   }
+
+  static async getCommunitiesAndPosts(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const getAll = await communityService.findAllCommunities();
+      res.status(200).json(getAll);
+    } catch (error) {
+      next(error);
+    }
+  }
   static async updateCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
-      // const userId = testId;
-      console.log(userId);
-      const id = req.params.communityId;
-      const { name, communtyImage, introduction } = req.body;
+      const { name, communityImage, introduction } = req.body;
 
       const updateCommunity = await communityService.updateCommunity({
         name,
-        communtyImage,
+        communityImage,
         introduction,
         id,
         userId,

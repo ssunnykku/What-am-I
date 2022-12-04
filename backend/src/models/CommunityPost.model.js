@@ -23,6 +23,10 @@ class CommunityPost extends Sequelize.Model {
           defaultValue: DataTypes.UUIDV4,
           foreignKey: true,
         },
+        communityId: {
+          foreignKey: true,
+          type: DataTypes.INTEGER,
+        },
       },
       {
         sequelize,
@@ -37,11 +41,13 @@ class CommunityPost extends Sequelize.Model {
   static associate(db) {
     db.CommunityPost.belongsTo(db.Community, {
       foreignKey: 'communityId',
-      sourceKey: 'id',
+      targetKey: 'id',
     }),
       db.CommunityPost.belongsTo(db.User, {
         foreignKey: 'userId',
         targetKey: 'userId',
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
       }),
       db.CommunityPost.hasMany(db.CommunityComment, {
         foreignKey: 'communityPostId',

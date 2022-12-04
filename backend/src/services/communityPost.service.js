@@ -5,10 +5,10 @@ import { COMMUNITYPOST_PER_PAGE } from '../utils/Constant';
 class communityPostService {
   static async createPost({ userId, communityId, images, description }) {
     const createPost = await CommunityPost.create({
-      userId,
-      communityId,
       images,
       description,
+      userId,
+      communityId,
     });
 
     return createPost;

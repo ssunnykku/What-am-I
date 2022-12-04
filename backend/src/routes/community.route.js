@@ -13,7 +13,13 @@ communityRouter.put(
   upload.single('communityImage'),
   communityController.communityImage,
 );
-// communityRouter.get('/', loginRequired, communityController.getCommunityList);
+communityRouter.get('/', loginRequired, communityController.getCommunityList);
+communityRouter.get(
+  '/posts',
+  loginRequired,
+  communityController.getCommunitiesAndPosts,
+);
+
 communityRouter.put(
   '/:communityId',
   loginRequired,

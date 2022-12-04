@@ -60,26 +60,18 @@ class User extends Sequelize.Model {
     db.User.hasMany(db.Community, {
       foreignKey: 'userId',
       targetKey: 'userId',
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
     }),
       db.User.hasMany(db.CommunityPost, {
         foreignKey: 'userId',
         targetKey: 'userId',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
       }),
       db.User.hasMany(db.CommunityComment, {
         foreignKey: 'userId',
         targetKey: 'userId',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
       }),
       db.User.hasMany(db.CommunityLike, {
         foreignKey: 'userId',
         targetKey: 'userId',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
       });
 
     db.User.hasMany(db.Review, {
