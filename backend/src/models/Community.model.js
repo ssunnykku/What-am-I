@@ -10,9 +10,14 @@ class Community extends Sequelize.Model {
           primaryKey: true,
           type: DataTypes.INTEGER,
         },
+        userId: {
+          type: DataTypes.UUID,
+          defaultValue: DataTypes.UUIDV4,
+          foreignKey: true,
+        },
         name: {
           type: DataTypes.STRING,
-          allownull: false,
+          allowNull: false,
         },
         introduction: {
           type: DataTypes.TEXT,
@@ -37,15 +42,13 @@ class Community extends Sequelize.Model {
   static associate(db) {
     db.Community.hasMany(db.CommunityPost, {
       foreignKey: 'communityId',
-      sourceKey: 'id',
+      targetKey: 'id',
       onDelete: 'cascade',
       onUpdate: 'cascade',
     }),
       db.Community.belongsTo(db.User, {
         foreignKey: 'userId',
-        sourceKey: 'userId',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
+        targetKey: 'userId',
       }),
       db.Community.hasMany(db.CommunityLike, {
         foreignKey: 'communityId',

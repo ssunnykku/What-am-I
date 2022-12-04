@@ -1,16 +1,27 @@
 import { Community } from '../models/Community.model';
+import { CommunityPost } from '../models/CommunityPost.model';
 import ApiError from '../utils/ApiError';
 import { COMMUNITY_PER_PAGE } from '../utils/Constant';
 
 class communityService {
-  static async createCommunity({ name, introduction, userId }) {
+  static async createCommunity(name, introduction, userId) {
     const createCommunity = await Community.create({
-      name,
-      introduction,
-      userId,
+      name: name,
+      introduction: introduction,
+      userId: userId,
     });
 
     return createCommunity;
+  }
+
+  static async findId({ id }) {
+    const findCommunity = await Community.findOne({
+      where: { id: id },
+    });
+    if (!findCommunity) {
+      const errorMessage = `Cannot find Community(id=${id})`;
+      return { errorMessage };
+    }
   }
 
   static async addCommunityImage({ communityImage, userId, id }) {
@@ -44,10 +55,16 @@ class communityService {
 
     return selectedCommunities;
   }
+  static async findAllCommunities() {
+    const findAll = await Community.findAll({
+      include: { model: CommunityPost },
+    });
+    return findAll;
+  }
 
   static async updateCommunity({
     name,
-    communtyImage,
+    communityImage,
     introduction,
     id,
     userId,
@@ -66,7 +83,7 @@ class communityService {
       const updateCommunity = await Community.update(
         {
           name: name,
-          communtyImage: communtyImage,
+          communityImage: communityImage,
           introduction: introduction,
         },
         { where: { id: id, userId: userId } },

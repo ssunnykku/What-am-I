@@ -9,7 +9,7 @@ const upload = uploadImageS3();
 //해당커뮤니티에 나의 게시글 남기기
 communityPostRouter.post(
   '/communityPost/:communityId',
-  // loginRequired,
+  loginRequired,
   communityPostController.addPost,
 );
 

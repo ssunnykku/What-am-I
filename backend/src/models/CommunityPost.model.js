@@ -18,31 +18,36 @@ class CommunityPost extends Sequelize.Model {
           type: DataTypes.STRING(500),
           allowNull: false,
         },
-        // userId: {
-        //   type: DataTypes.UUID,
-        //   defaultValue: DataTypes.UUIDV4,
-        //   foreignKey: true,
-        //   unique: true,
-        // },
+        userId: {
+          type: DataTypes.UUID,
+          defaultValue: DataTypes.UUIDV4,
+          foreignKey: true,
+        },
+        communityId: {
+          foreignKey: true,
+          type: DataTypes.INTEGER,
+        },
       },
       {
         sequelize,
         tableName: 'communityPosts',
         timestamps: true,
         paranoid: true,
-        charset: 'utf8',
-        collate: 'utf8_general_ci',
+        charset: 'utf8mb4',
+        collate: 'utf8mb4_general_ci',
       },
     );
   }
   static associate(db) {
     db.CommunityPost.belongsTo(db.Community, {
       foreignKey: 'communityId',
-      sourceKey: 'id',
+      targetKey: 'id',
     }),
       db.CommunityPost.belongsTo(db.User, {
         foreignKey: 'userId',
-        sourceKey: 'userId',
+        targetKey: 'userId',
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
       }),
       db.CommunityPost.hasMany(db.CommunityComment, {
         foreignKey: 'communityPostId',

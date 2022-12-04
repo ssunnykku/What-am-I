@@ -10,6 +10,11 @@ class CommunityLike extends Sequelize.Model {
           primaryKey: true,
           type: DataTypes.INTEGER,
         },
+        userId: {
+          type: DataTypes.UUID,
+          defaultValue: DataTypes.UUIDV4,
+          foreignKey: true,
+        },
       },
       {
         sequelize,
