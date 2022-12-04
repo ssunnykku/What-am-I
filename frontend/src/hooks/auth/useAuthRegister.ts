@@ -12,18 +12,22 @@ const useAuthRegister = () => {
     mode: 'onChange',
     defaultValues: {
       email: '',
-      username: '',
+      nickname: '',
       password: '',
-      confirmPassword: '',
+      checkPassword: '',
     },
   });
 
   const handleAuthRegisterSubmit = useCallback(
     async (userData: AuthRegisterType) => {
-      console.log(userData);
-      //   const { email, username, password } = userData;
-      //   const res = await authRegisterRequest(email, username, password);
-      //   console.log(res);
+      const { email, nickname, password, checkPassword } = userData;
+      const res = await authRegisterRequest(
+        email,
+        nickname,
+        password,
+        checkPassword,
+      );
+      if (res) window.location.replace('/login');
     },
     [],
   );
