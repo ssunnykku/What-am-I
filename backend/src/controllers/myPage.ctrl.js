@@ -5,9 +5,7 @@ class myPageController {
     try {
       const userId = req.currentUserId;
       const getCommunities = await myPageService.UserToCommunity({ userId });
-      if (getCommunities.errorMessage) {
-        return new Error(getCommunities.errorMessage);
-      }
+
       return res.status(200).send(getCommunities);
     } catch (error) {
       next(error);
@@ -24,16 +22,17 @@ class myPageController {
     }
   }
 
-  // static async getCommunityPosts(req, res, next) {
-  //   try {
-  //     const userId = req.currentUserId;
-  //     const myPosts = await myPageService.getMyCommunitiesAndPosts({ userId });
+  // 고민
+  static async getCommunityPosts(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const myPosts = await myPageService.getMyCommunitiesAndPosts({ userId });
 
-  //     return res.status(200).send(myPosts);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+      return res.status(200).send(myPosts);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export { myPageController };
