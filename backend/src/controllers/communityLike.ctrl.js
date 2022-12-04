@@ -32,11 +32,7 @@ class communityLikeController {
         throw new Error(findCommunityLike.errorMessage);
       }
 
-      return res.status(200).send({
-        communityId,
-        success: true,
-        message: `Successfully canceled a 'like'`,
-      });
+      return res.status(200).send(findCommunityLike);
     } catch (error) {
       next(error);
     }
