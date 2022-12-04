@@ -19,15 +19,20 @@ class myPageService {
     return findCommunities;
   }
 
-  static async getMyCommunitiesAndPosts({ userId }) {
-    const findUser = await Community.findAll({
-      where: { userId: userId },
+  static async getMyCommunitiesAndPosts({ userId, communityId }) {
+    const findUser = await CommunityPost.findAll({
+      where: { userId, communityId },
       order: [['id', 'DESC']],
-      include: {
-        model: CommunityPost,
-      },
     });
-    return { findUser };
+    return findUser;
+  }
+
+  static async findCommunity({ communityId }) {
+    const result = await CommunityPost.findAll({
+      where: { communityId },
+      order: [['id', 'DESC']],
+    });
+    return result;
   }
 }
 

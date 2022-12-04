@@ -1,5 +1,6 @@
 import { Community } from '../models/Community.model';
 import { CommunityPost } from '../models/CommunityPost.model';
+import { CommunityLike } from '../models/CommunityLike.model';
 import ApiError from '../utils/ApiError';
 import { COMMUNITY_PER_PAGE } from '../utils/Constant';
 
@@ -36,8 +37,15 @@ class communityService {
 
     return selectedCommunities;
   }
+
+  static async findBestCommunities() {
+    const result = await CommunityLike.count();
+    return result;
+  }
+
+  // 이거
   static async findAllCommunities() {
-    const findAll = await Community.findAll({
+    const findAll = await Community.findAndCountAll({
       include: { model: CommunityPost },
     });
     return findAll;

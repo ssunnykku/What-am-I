@@ -26,9 +26,26 @@ class myPageController {
   static async getCommunityPosts(req, res, next) {
     try {
       const userId = req.currentUserId;
-      const myPosts = await myPageService.getMyCommunitiesAndPosts({ userId });
+      const communityId = req.params.communityId;
+      const myPosts = await myPageService.getMyCommunitiesAndPosts({
+        userId,
+        communityId,
+      });
 
       return res.status(200).send(myPosts);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getPosts(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const communityId = req.params.communityId;
+      const findCommunityId = await myPageService.findCommunity({
+        communityId,
+      });
+      return res.status(200).json(findCommunityId);
     } catch (error) {
       next(error);
     }

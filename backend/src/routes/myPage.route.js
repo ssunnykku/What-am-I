@@ -17,9 +17,15 @@ myPageRouter.get(
 );
 
 myPageRouter.get(
-  '/communitiestoposts',
+  '/mycommunities/:communityId',
   loginRequired,
   myPageController.getCommunityPosts,
+);
+
+myPageRouter.get(
+  '/communityToPosts/:communityId',
+  loginRequired,
+  myPageController.getPosts,
 );
 
 export { myPageRouter };

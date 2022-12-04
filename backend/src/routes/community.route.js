@@ -19,6 +19,11 @@ communityRouter.get(
   loginRequired,
   communityController.getCommunitiesAndPosts,
 );
+communityRouter.get(
+  '/best',
+  loginRequired,
+  communityController.getBestCommunities,
+);
 
 communityRouter.put(
   '/:communityId',
