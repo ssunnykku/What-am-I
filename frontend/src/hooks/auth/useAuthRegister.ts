@@ -27,7 +27,7 @@ const useAuthRegister = () => {
         password,
         checkPassword,
       );
-      console.log(res);
+      if (res) window.location.replace('/login');
     },
     [],
   );

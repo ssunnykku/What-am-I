@@ -19,9 +19,8 @@ const useAuthLogin = () => {
   const handleAuthLoginSubmit = useCallback(
     async (userData: AuthCommonType) => {
       const { email, password } = userData;
-      console.log(userData);
       const res = await authLoginRequest(email, password);
-      console.log(res);
+      if (res) window.location.replace('/');
     },
     [],
   );
