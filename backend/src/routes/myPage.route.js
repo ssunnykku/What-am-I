@@ -5,15 +5,15 @@ import { loginRequired } from '../middlewares/loginRequired.js';
 const myPageRouter = Router();
 
 myPageRouter.get(
-  '/mycommunities/liked',
-  loginRequired,
-  myPageController.getLikedCommunities,
-);
-
-myPageRouter.get(
   '/mycommunities',
   loginRequired,
   myPageController.getMyCommunities,
+);
+
+myPageRouter.get(
+  '/mycommunities/liked',
+  loginRequired,
+  myPageController.getLikedCommunities,
 );
 
 myPageRouter.get(
