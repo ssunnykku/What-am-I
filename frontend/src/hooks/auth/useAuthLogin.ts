@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { authLoginRequest } from '../../apis/authService';
 import { AuthCommonType } from '../../types/auth/authType';
+import Storage from '../../storage/storage';
 
 const useAuthLogin = () => {
   const {
@@ -20,7 +21,10 @@ const useAuthLogin = () => {
     async (userData: AuthCommonType) => {
       const { email, password } = userData;
       const res = await authLoginRequest(email, password);
-      if (res) window.location.replace('/');
+      if (res) {
+        Storage.setTokenItem(res.token);
+        window.location.replace('/');
+      }
     },
     [],
   );
