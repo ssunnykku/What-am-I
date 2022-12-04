@@ -14,6 +14,5 @@ communityLikeRouter.delete(
   loginRequired,
   communityLikeController.cancelLike,
 );
-// communityLikeRouter.get('/', loginRequired, communityLikeController.getLike);
 
 export { communityLikeRouter };
