@@ -9,11 +9,11 @@ communityLikeRouter.post(
   loginRequired,
   communityLikeController.addLike,
 );
-// communityLikeRouter.delete(
-//   '/',
-//   loginRequired,
-//   communityLikeController.cancelLike,
-// );
+communityLikeRouter.delete(
+  '/communitieslikes/:communityId',
+  loginRequired,
+  communityLikeController.cancelLike,
+);
 // communityLikeRouter.get('/', loginRequired, communityLikeController.getLike);
 
 export { communityLikeRouter };

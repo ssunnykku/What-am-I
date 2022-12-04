@@ -19,6 +19,28 @@ class communityLikeService {
     });
     return newHeart;
   }
+
+  static async cancelCommunityLike({ userId, communityId }) {
+    const findUserLike = await CommunityLike.findOne({
+      where: {
+        userId: userId,
+        communityId: communityId,
+      },
+    });
+
+    if (!findUserLike) {
+      const errorMessage = `cannot find a 'like'`;
+      return { errorMessage };
+    }
+
+    const deleteLike = await CommunityLike.destroy({
+      where: {
+        userId: userId,
+        communityId: communityId,
+      },
+    });
+    return deleteLike;
+  }
 }
 
 export { communityLikeService };

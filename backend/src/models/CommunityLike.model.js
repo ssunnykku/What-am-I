@@ -23,7 +23,6 @@ class CommunityLike extends Sequelize.Model {
       {
         sequelize,
         timestamps: true,
-        paranoid: true,
         tableName: 'communityLikes',
         charset: 'utf8mb4',
         collate: 'utf8mb4_general_ci',
@@ -34,14 +33,10 @@ class CommunityLike extends Sequelize.Model {
     db.CommunityLike.belongsTo(db.User, {
       foreignKey: 'userId',
       targetKey: 'userId',
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
     }),
       db.CommunityLike.belongsTo(db.Community, {
         foreignKey: 'communityId',
         targetKey: 'id',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
       });
   }
 }

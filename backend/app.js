@@ -9,7 +9,7 @@ import session from 'express-session';
 import sessionMysql from 'express-mysql-session';
 
 //**Passport */
-import passport from 'passport';
+// import passport from 'passport';
 
 //**Router */
 import { communityRouter } from './src/routes/community.route';
@@ -32,10 +32,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: '*', credentials: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
-import passportConfig from './src/utils/passport.js';
+// import passportConfig from './src/utils/passport.js';
 
-app.use(passport.initialize());
-passportConfig();
+// app.use(passport.initialize());
+// passportConfig();
 
 sequelize.sync({ force: false });
 

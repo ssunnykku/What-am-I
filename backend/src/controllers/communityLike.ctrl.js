@@ -5,15 +5,38 @@ class communityLikeController {
     try {
       const userId = req.currentUserId;
       const communityId = req.params.communityId;
-      const getLike = await communityLikeService.addHeart({
+      const findCommunityLike = await communityLikeService.addHeart({
         userId,
         communityId,
       });
 
-      if (getLike.errorMessage) {
-        throw new Error(getLike.errorMessage);
+      if (findCommunityLike.errorMessage) {
+        throw new Error(findCommunityLike.errorMessage);
       }
-      return res.status(201).json(getLike);
+      return res.status(201).json(findCommunityLike);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async cancelLike(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const communityId = req.params.communityId;
+      const findCommunityLike = await communityLikeService.cancelCommunityLike({
+        userId,
+        communityId,
+      });
+
+      if (findCommunityLike.errorMessage) {
+        throw new Error(findCommunityLike.errorMessage);
+      }
+
+      return res.status(200).send({
+        communityId,
+        success: true,
+        message: `Successfully canceled a 'like'`,
+      });
     } catch (error) {
       next(error);
     }
