@@ -4,34 +4,15 @@ import ApiError from '../utils/ApiError';
 import { COMMUNITY_PER_PAGE } from '../utils/Constant';
 
 class communityService {
-  static async createCommunity(name, introduction, userId) {
+  static async createCommunity(name, introduction, userId, communityImage) {
     const createCommunity = await Community.create({
       name: name,
       introduction: introduction,
       userId: userId,
+      communityImage: communityImage,
     });
 
     return createCommunity;
-  }
-
-  static async findId({ id }) {
-    const findCommunity = await Community.findOne({
-      where: { id: id },
-    });
-    if (!findCommunity) {
-      const errorMessage = `Cannot find Community(id=${id})`;
-      return { errorMessage };
-    }
-  }
-
-  static async addCommunityImage({ communityImage, userId, id }) {
-    const updateImage = await Community.update(
-      { communityImage: communityImage },
-      {
-        where: { userId, id },
-      },
-    );
-    return updateImage;
   }
 
   static async countCommunityPage() {

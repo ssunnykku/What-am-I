@@ -6,44 +6,21 @@ class communityController {
   static async addCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
+      const communityImage = req.file.location;
       const { name, introduction } = req.body;
       const newCommunity = await communityService.createCommunity(
         name,
         introduction,
         userId,
+        communityImage,
       );
 
-      return res.status(201).json(newCommunity);
+      return res.status(201).send(newCommunity);
     } catch (error) {
       next(error);
     }
   }
 
-  static async communityImage(req, res, next) {
-    try {
-      const userId = req.currentUserId;
-      const id = req.params.id;
-      const communityImage = req.file.location;
-      const findId = await communityService.findId({ id });
-      if (findId.errorMessage) {
-        throw new Error(findId.errorMessage);
-      }
-      const image = await communityService.addCommunityImage({
-        id,
-        userId,
-        communityImage,
-      });
-      return res.status(200).json({
-        id,
-        userId,
-        communityImage,
-        success: true,
-        message: '이미지가 저장되었습니다.',
-      });
-    } catch (error) {
-      next(error);
-    }
-  }
   //전체 커뮤니티 리스트 10개씩
   static async getCommunityList(req, res, next) {
     try {
@@ -71,6 +48,7 @@ class communityController {
       next(error);
     }
   }
+
   static async updateCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;

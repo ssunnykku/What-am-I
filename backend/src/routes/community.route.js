@@ -6,13 +6,13 @@ import { uploadImageS3 } from '../middlewares/uploadImageS3';
 const communityRouter = Router();
 const upload = uploadImageS3();
 
-communityRouter.post('/', loginRequired, communityController.addCommunity);
-communityRouter.put(
-  '/image/:id',
+communityRouter.post(
+  '/',
   loginRequired,
   upload.single('communityImage'),
-  communityController.communityImage,
+  communityController.addCommunity,
 );
+
 communityRouter.get('/', loginRequired, communityController.getCommunityList);
 communityRouter.get(
   '/posts',
