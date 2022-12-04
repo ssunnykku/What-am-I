@@ -46,7 +46,7 @@ app.use(reviewRouter);
 app.use(reviewCommentRouter);
 app.use('/communities', communityRouter);
 app.use(myPageRouter);
-app.use('/communitieslikes', communityLikeRouter);
+app.use(communityLikeRouter);
 app.use(errorMiddleware);
 
 app.listen(process.env.SEVER_PORT, () =>

@@ -4,7 +4,11 @@ import { loginRequired } from '../middlewares/loginRequired.js';
 
 const communityLikeRouter = Router();
 
-communityLikeRouter.post('/', loginRequired, communityLikeController.addLike);
+communityLikeRouter.post(
+  '/communitieslikes/:communityId',
+  loginRequired,
+  communityLikeController.addLike,
+);
 // communityLikeRouter.delete(
 //   '/',
 //   loginRequired,
