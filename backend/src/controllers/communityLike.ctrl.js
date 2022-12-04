@@ -5,11 +5,15 @@ class communityLikeController {
     try {
       const userId = req.currentUserId;
       const communityId = req.params.communityId;
-      const findUser = await communityLikeService.addHeart({
+      const getLike = await communityLikeService.addHeart({
         userId,
         communityId,
       });
-      return res.status(201).json(findUser);
+
+      if (getLike.errorMessage) {
+        throw new Error(getLike.errorMessage);
+      }
+      return res.status(201).json(getLike);
     } catch (error) {
       next(error);
     }
