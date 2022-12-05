@@ -68,27 +68,27 @@ class communityService {
     name,
     communityImage,
     introduction,
-    id,
+    communityId,
     userId,
   }) {
     //db검색
-    const updateCommunity = await Community.findOne({
-      where: { id: id, userId: userId },
+    const updatedResult = await Community.findOne({
+      where: { id: communityId, userId: userId },
     });
     // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!updateCommunity) {
+    if (!updatedResult) {
       const errorMessage = '등록한 글이 없습니다. 다시 한 번 확인해 주세요.';
       return errorMessage;
     }
     // db에 저장
-    if (updateCommunity) {
+    if (updatedResult) {
       const updateCommunity = await Community.update(
         {
-          name: name,
-          communityImage: communityImage,
-          introduction: introduction,
+          name,
+          communityImage,
+          introduction,
         },
-        { where: { id: id, userId: userId } },
+        { where: { id: communityId, userId } },
       );
       updateCommunity.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
@@ -96,9 +96,9 @@ class communityService {
     }
   }
 
-  static async findCommunity({ id, userId }) {
+  static async findCommunity({ communityId, userId }) {
     const comment = await Community.findOne({
-      where: { id: id, userId: userId },
+      where: { id: communityId, userId: userId },
     });
     if (!comment) {
       const errorMessage = '작성한 글이 없습니다';

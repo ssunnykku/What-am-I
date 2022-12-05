@@ -30,6 +30,7 @@ communityRouter.get(
 communityRouter.put(
   '/:communityId',
   loginRequired,
+  upload.single('communityImage'),
   communityController.updateCommunity,
 );
 communityRouter.delete(

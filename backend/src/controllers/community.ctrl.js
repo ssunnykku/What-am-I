@@ -62,13 +62,15 @@ class communityController {
   static async updateCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
-      const { name, communityImage, introduction } = req.body;
-
+      const { name, introduction } = req.body;
+      const communityId = req.params.communityId;
+      const communityImage = req.file.location;
+      console.log(communityImage);
       const updateCommunity = await communityService.updateCommunity({
         name,
         communityImage,
         introduction,
-        id,
+        communityId,
         userId,
       });
 
@@ -77,7 +79,7 @@ class communityController {
       }
 
       const message = await communityService.findCommunity({
-        id,
+        communityId,
         userId,
       });
       return res.status(200).json(message);
