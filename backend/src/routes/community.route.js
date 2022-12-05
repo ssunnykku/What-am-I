@@ -14,15 +14,17 @@ communityRouter.post(
 );
 
 communityRouter.get('/', loginRequired, communityController.getCommunityList);
-communityRouter.get(
-  '/posts',
-  loginRequired,
-  communityController.getCommunitiesAndPosts,
-);
+
 communityRouter.get(
   '/best',
   loginRequired,
   communityController.getBestCommunities,
+);
+
+communityRouter.get(
+  '/posts',
+  loginRequired,
+  communityController.getCommunitiesAndPosts,
 );
 
 communityRouter.put(

@@ -39,7 +39,20 @@ class communityService {
   }
 
   static async findBestCommunities() {
-    const result = await CommunityLike.count();
+    const result = await CommunityLike.findAll({
+      attributes: [
+        'communityId',
+        [CommunityLike.sequelize.fn('count', '*'), 'countLike'],
+      ],
+      group: 'communityId',
+      order: [['countLike', 'DESC']],
+      limit: 3,
+      include: [
+        {
+          model: Community,
+        },
+      ],
+    });
     return result;
   }
 
