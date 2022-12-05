@@ -27,8 +27,9 @@ class communityService {
 
   static async selectCommunities(defaultPage) {
     const selectedCommunities = await Community.findAll({
-      offset: (defaultPage - 1) * COMMUNITY_PER_PAGE,
+      offset: (Number(defaultPage) - 1) * COMMUNITY_PER_PAGE,
       limit: COMMUNITY_PER_PAGE,
+      order: [['id', 'DESC']],
     });
 
     if (!selectedCommunities) {
