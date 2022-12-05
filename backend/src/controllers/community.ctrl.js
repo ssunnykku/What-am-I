@@ -33,7 +33,7 @@ class communityController {
       if (selectedCommunities.errorMessage) {
         throw new Error(selectedCommunities, errorMessage);
       }
-      return res.status(200).json(communityCount, selectedCommunities);
+      return res.status(200).json(selectedCommunities);
     } catch (err) {
       next(err);
     }
@@ -65,7 +65,6 @@ class communityController {
       const { name, introduction } = req.body;
       const communityId = req.params.communityId;
       const communityImage = req.file.location;
-      console.log(communityImage);
       const updateCommunity = await communityService.updateCommunity({
         name,
         communityImage,
