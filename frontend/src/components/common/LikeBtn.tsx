@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import styled, { keyframes } from 'styled-components';
+import { style } from '@mui/system';
 
 // 프롭스로 좋아요를 누른 유저와 받은 유저 id를 받아와야 한다.
 // 내가 좋아요를 누른 것과 별개로 좋아요 숫자가 떠 있어야 함.
@@ -47,38 +48,22 @@ const LikeBtn = () => {
   //   });
   // }, []);
 
-  const handleClickedLike = () => {
-    if (like) {
-      setLike(false);
-    } else {
-      setLike(true);
-    }
-  };
+  // const handleClickedLike = () => {
+  //   setLike((prev) => !prev);
+  // };
 
   return (
-    <>
+    <LikeBox
+      onClick={() => {
+        onClickLikeBtn();
+      }}
+    >
       {like ? (
-        <LikeBox
-          style={{ cursor: 'pointer', color: 'red' }}
-          onClick={() => {
-            onClickLikeBtn();
-            handleClickedLike();
-          }}
-        >
-          <FavoriteIcon />
-        </LikeBox>
+        <FavoriteIcon style={{ color: 'red' }} />
       ) : (
-        <LikeBox
-          style={{ cursor: 'pointer' }}
-          onClick={() => {
-            onClickLikeBtn();
-            handleClickedLike();
-          }}
-        >
-          <FavoriteBorderIcon />
-        </LikeBox>
+        <FavoriteBorderIcon />
       )}
-    </>
+    </LikeBox>
   );
 };
 

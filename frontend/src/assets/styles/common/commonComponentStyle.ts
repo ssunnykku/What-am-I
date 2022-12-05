@@ -11,7 +11,7 @@ const popup = keyframes`
   }
 `;
 
-const animation = keyframes`
+const jump = keyframes`
   50% {
     transform: scale(1.1);
   }
@@ -56,7 +56,7 @@ export const SearchBox = styled.div`
   width: 23rem;
   height: 2rem;
   display: flex;
-  flex-direction: row;
+
   input {
     width: 18.5rem;
   }
@@ -100,7 +100,7 @@ export const EntryBtn = styled.button`
   :hover {
     animation-duration: 0.3s;
     animation-timing-function: ease-in-out;
-    animation-name: ${animation};
+    animation-name: ${jump};
   }
 `;
 

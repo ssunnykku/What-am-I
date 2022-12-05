@@ -27,50 +27,44 @@ const LikedCommuPage = () => {
   // }, []);
 
   return (
-    <>
-      <BigBox>
-        <CommunityBox>
-          <IntroBox>
-            <ImageBox />
-            <NameBox>
-              <CommuName>커뮤니티 이름 [체크 버튼]</CommuName>
-              <CommuIntro>
-                커뮤니티 소개가 들어가는 칸입니다. 귀여운 내 새끼 나만 볼 수는
-                없죠! 마구마구 자랑해주시길 바랍니다. 그래서 만든 커뮤니티예요.
-                여러분 마구마구 자랑을 갈겨 주세요!
-              </CommuIntro>
-              <EditDelBtn>수정</EditDelBtn>
-            </NameBox>
-            <BtnBox>
-              <EntryBtn style={{ marginBottom: '1rem' }}>채팅방 입장</EntryBtn>
-              <WritingModal />
-            </BtnBox>
-          </IntroBox>
-          <SmallBox>
-            <SearchBox style={{ height: '1.8rem' }}>
-              <input></input>
-              <button>검색</button>
-            </SearchBox>
-            <InfoBox>
-              <div>
-                <LikeBtn />
-                &nbsp;10
-              </div>
-              <div>
-                <StickyNote2Icon />
-                &nbsp;10
-              </div>
-            </InfoBox>
-          </SmallBox>
-          <ContentsBox>{/* <ContentsModal /> */}</ContentsBox>
-          <PaginateButton
-            page={page}
-            setPage={setPage}
-            totalPages={totalPages}
-          />
-        </CommunityBox>
-      </BigBox>
-    </>
+    <BigBox>
+      <CommunityBox>
+        <IntroBox>
+          <ImageBox />
+          <NameBox>
+            <CommuName>커뮤니티 이름 [체크 버튼]</CommuName>
+            <CommuIntro>
+              커뮤니티 소개가 들어가는 칸입니다. 귀여운 내 새끼 나만 볼 수는
+              없죠! 마구마구 자랑해주시길 바랍니다. 그래서 만든 커뮤니티예요.
+              여러분 마구마구 자랑을 갈겨 주세요!
+            </CommuIntro>
+            <EditDelBtn>수정</EditDelBtn>
+          </NameBox>
+          <BtnBox>
+            <EntryBtn style={{ marginBottom: '1rem' }}>채팅방 입장</EntryBtn>
+            <WritingModal />
+          </BtnBox>
+        </IntroBox>
+        <SmallBox>
+          <SearchBox style={{ height: '1.8rem' }}>
+            <input></input>
+            <button>검색</button>
+          </SearchBox>
+          <InfoBox>
+            <div>
+              <LikeBtn />
+              &nbsp;10
+            </div>
+            <div>
+              <StickyNote2Icon />
+              &nbsp;10
+            </div>
+          </InfoBox>
+        </SmallBox>
+        <ContentsBox>{/* <ContentsModal /> */}</ContentsBox>
+        <PaginateButton page={page} setPage={setPage} totalPages={totalPages} />
+      </CommunityBox>
+    </BigBox>
   );
 };
 

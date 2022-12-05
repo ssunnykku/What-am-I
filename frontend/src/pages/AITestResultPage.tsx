@@ -1,8 +1,10 @@
 import styled, { keyframes } from 'styled-components';
 import { theme } from '../assets/styles/common/palette';
 import { font } from '../assets/styles/common/fonts';
+import { useNavigate } from 'react-router-dom';
 
 const AITestResultPage = () => {
+  const navigate = useNavigate();
   return (
     <ResultBox>
       <div style={{ letterSpacing: '1px', fontSize: '27px' }}>
@@ -13,7 +15,9 @@ const AITestResultPage = () => {
             "이름"의 견종 분석 결과
             <ResultText></ResultText>
             <div>로 확인되었습니다.</div>
-            <ShareBtn>다른 강아지 구경가기</ShareBtn>
+            <ShareBtn onClick={() => navigate('/reviewboard')}>
+              다른 강아지 구경가기
+            </ShareBtn>
           </PuppyResult>
         </ResultDescBox>
       </div>
@@ -30,8 +34,8 @@ const animation = keyframes`
 `;
 
 const ResultBox = styled.div`
-  width: 60rem;
-  height: 38rem;
+  width: 56rem;
+  height: 35rem;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -48,9 +52,9 @@ const ResultBox = styled.div`
 `;
 
 const ResultDescBox = styled.div`
-  width: 44rem;
+  width: 45rem;
   height: 25rem;
-  margin-top: 3rem;
+  margin-top: 2rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
@@ -81,8 +85,8 @@ const ShareBtn = styled.button`
   width: 20rem;
   margin-top: 15px;
   font-family: ${font.bold};
-  border: solid 1px ${theme.boldColor};
   border-radius: 10px;
+  border: solid 1px ${theme.boldColor};
   color: ${theme.boldColor};
   background-color: white;
   cursor: pointer;

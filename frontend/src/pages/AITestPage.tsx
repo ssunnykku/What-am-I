@@ -8,12 +8,13 @@ const AITestPage = () => {
   const [communityImage, setCommunityImage] = useState<
     string | ArrayBuffer | null
   >('');
-  const imageRef = useRef<HTMLInputElement>(null);
+  const [imgName, setImgName] = useState<string>('');
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   const navigate = useNavigate();
 
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
+    if (e.target.files && e.target.files.length !== 0) {
       const file = e.target.files[0];
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -21,6 +22,9 @@ const AITestPage = () => {
       reader.onload = () => {
         setCommunityImage(reader.result);
       };
+    }
+    if (imageInputRef.current) {
+      setImgName(imageInputRef.current.value);
     }
   };
 
@@ -43,13 +47,12 @@ const AITestPage = () => {
               </div>
               <input
                 className="upload-name"
-                value="김댕댕 사진"
-                placeholder="김댕댕 사진"
+                placeholder={imgName ? imgName : '김댕댕 사진'}
               />
               <input
                 type="file"
                 id="file"
-                ref={imageRef}
+                ref={imageInputRef}
                 accept="image/*"
                 onChange={handleChangeFile}
               />
@@ -173,7 +176,7 @@ const InputBox = styled.div`
 
 const TestBtn = styled.button`
   font-family: ${font.bold};
-  border: 0;
+  border: solid 1px ${theme.boldColor};
   width: 245px;
   height: 65px;
   border-radius: 10px;
