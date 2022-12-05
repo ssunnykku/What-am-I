@@ -22,7 +22,7 @@ const MyRouter = () => {
           <Route path="/" element={<MainPage />} />
           <Route path="/dna" element={<AITest />} />
           <Route path="/dnaresult" element={<AITestResult />} />
-          <Route path="/board" element={<ReviewBoard />} />
+          <Route path="/reviewboard" element={<ReviewBoard />} />
           <Route path="/community" element={<Community />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
