@@ -1,4 +1,4 @@
-const DNA_TOKEN = 'DNA_ACCESS_TOKEN';
+const DNA_TOKEN = 'userToken';
 
 class Storage {
   static setTokenItem(token: string) {

@@ -2,19 +2,19 @@ import useModal from '../../hooks/modal/useModal';
 import MyModal from './MyModal';
 import PuppyCard from '../reviewBoard/PuppyCard';
 import ContentsViewer from '../contentsviewer/ContentsViewer';
-import { ReviewsListType } from '../../types/reviewboard/reviewType';
+import { ReviewType } from '../../types/reviewboard/reviewType';
 
-export interface ReviewsListTypeProps {
-  value: ReviewsListType;
+export interface ReviewTypeProps {
+  review: ReviewType;
 }
 
-const ContentsModal = ({ value }: ReviewsListTypeProps) => {
+const ContentsModal = ({ review }: ReviewTypeProps) => {
   const [isOpen, modalHandler] = useModal();
 
   return (
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
-        <ContentsViewer value={value} />
+        <ContentsViewer review={review} />
       </MyModal>
       <PuppyCard onCardModalClickEvent={modalHandler}></PuppyCard>
     </>

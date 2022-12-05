@@ -1,17 +1,25 @@
-import styled from '@emotion/styled';
 import React, { useState } from 'react';
+import styled from '@emotion/styled';
+import { createReviewRequest } from '../../apis/reviewFetcher';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
+import { ReviewInitialType } from '../../types/reviewboard/reviewType';
 
 const WritingEditor = () => {
   // resultcard를 가져 와야 함... 그러면 그냥 백엔드와 소통하지 않고 가져와도 되는 거 아닌가 ...?
-  const [images, setImages] = useState<string | ArrayBuffer | null>('');
+  const [images, setImages] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const [data, setData] = useState<ReviewInitialType[]>([]);
 
   const handleUploadResultCard = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
-  const handleWritingEditorClick = (e: React.FormEvent) => {
+  const handleWritingEditorClick = async (e: React.FormEvent) => {
     e.preventDefault();
+    const res = await createReviewRequest('review', {
+      description,
+      images: 'test.img',
+    });
+    console.log(res);
   };
 
   return (
@@ -22,12 +30,15 @@ const WritingEditor = () => {
       </ModalHeader>
       <ModalContents>
         <AddImage>
-          <div>여기에 카드 목록 바로 띄워주기</div>
+          <div>{images}</div>
         </AddImage>
         <AddWriting>
           <div className="user-name">유저 프로필 사진 + 닉네임</div>
           <div className="writing">
-            <textarea placeholder="여러분의 댕댕이를 마음껏 자랑해주세요!"></textarea>
+            <textarea
+              placeholder="여러분의 댕댕이를 마음껏 자랑해주세요!"
+              onChange={(e) => setDescription(e.target.value)}
+            ></textarea>
           </div>
         </AddWriting>
       </ModalContents>

@@ -1,6 +1,6 @@
 export interface ReviewInitialType {
   description: string;
-  images: string | Blob;
+  images: string;
 }
 
 export interface ReviewCommentType {
@@ -9,7 +9,8 @@ export interface ReviewCommentType {
   reviewId: string;
   userId: string;
 }
-export interface ReviewsListType {
+
+export interface ReviewType {
   reviewId: number;
   description: string;
   userId: string;

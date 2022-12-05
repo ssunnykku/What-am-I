@@ -15,7 +15,7 @@ const CommunityMaker = () => {
   const [name, setName] = useState<string>('');
   const [introduction, setIntroduction] = useState<string>('');
 
-  const imageRef = useRef<HTMLInputElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
   // 사진 미리보기
@@ -33,27 +33,28 @@ const CommunityMaker = () => {
 
   const handleDeletePreviewFile = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (imageRef.current) {
-      imageRef.current.value = '';
+    if (imageInputRef.current) {
+      imageInputRef.current.value = '';
       setCommunityImage(
         `${import.meta.env.VITE_PUBLIC_URL}/img/default_image3.png`,
       );
     }
   };
 
-  const handleCreateCommuFormClick = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await createCommuRequest('community', {
-      name,
-      communityImage,
-      introduction,
-    });
-    // console.log(res.data);
-    // navigate('/likedcommunity');
-  };
+  // const handleCreateCommuFormClick = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   await createCommuRequest('community', {
+  //     name,
+  //     communityImage,
+  //     introduction,
+  //   });
+  //   // console.log(res.data);
+  //   // navigate('/likedcommunity');
+  // onSubmit={handleCreateCommuFormClick}
+  // };
 
   return (
-    <CommuMakeModalWrapper onSubmit={handleCreateCommuFormClick}>
+    <CommuMakeModalWrapper>
       <ModalHeader>커뮤니티 만들기</ModalHeader>
       <ModalContent>
         <AddImage>
@@ -63,7 +64,7 @@ const CommunityMaker = () => {
               <button onClick={handleDeletePreviewFile}>삭제</button>
             </div>
             <input
-              ref={imageRef}
+              ref={imageInputRef}
               type="file"
               accept="image/*"
               onChange={handleChangeFile}

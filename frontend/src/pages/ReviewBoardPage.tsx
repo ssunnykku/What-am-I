@@ -7,11 +7,11 @@ import { useEffect, useState } from 'react';
 import { getReviewsListRequest } from '../apis/reviewFetcher';
 import ContentsModal from '../components/modal/ContentsModal';
 import usePaginate from '../hooks/usePaginate/usePaginate';
-import { ReviewsListType } from '../types/reviewboard/reviewType';
+import { ReviewType } from '../types/reviewboard/reviewType';
 
 const ReviewBoardPage = () => {
   const [pages, setPages] = useState<number>(1);
-  const [data, setData] = useState<ReviewsListType[]>([]);
+  const [data, setData] = useState<ReviewType[]>([]);
   const [totalPages, setTotalPages] = useState<number>(1);
 
   const { isFirst, isLast, handleNextBtnClick, handlePrevBtnClick } =
@@ -19,14 +19,16 @@ const ReviewBoardPage = () => {
 
   const getReviews = async () => {
     const res = await getReviewsListRequest(`reviews?page=${pages}`);
-    console.log(res);
+
     setData(res.result.selectedReviews);
-    setTotalPages(res.result);
+    setTotalPages(res.result.reviewCount);
   };
+
+  // 아예 최신순으로 뒤집어진 걸 8개로 잘라서 보내주면? 애초에 백엔드에서 그렇게 보내주면 안 되나?
 
   useEffect(() => {
     getReviews();
-  }, []);
+  }, [handleNextBtnClick, handlePrevBtnClick, setData]);
 
   return (
     <BoardBox>
@@ -37,8 +39,8 @@ const ReviewBoardPage = () => {
       <BoardContent>
         <SlideLeftBtn disabled={isFirst} onClick={handlePrevBtnClick} />
         <CardBox>
-          {data?.map((value) => (
-            <ContentsModal key={value.reviewId} value={value} />
+          {data?.map((review, idx) => (
+            <ContentsModal key={idx} review={review} />
           ))}
         </CardBox>
         <SlideRightBtn disabled={isLast} onClick={handleNextBtnClick} />

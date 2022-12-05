@@ -25,10 +25,12 @@ function MainPage() {
         </MainImageBox>
         <MainLetterBox>
           <p>우리 집 댕댕이는</p>
-          <p className="second">어디에서 왔을까?</p>
+          <p>어디에서 왔을까?</p>
           <div className="description">
-            인공지능을 이용해 반려견의 종을 분석해보세요. <br /> 더 길게 쓰면
-            좋을 것 같은데 어떻게 써야 사람들이 이용하지 않고는 못 배길까요.
+            저 강아지의 엄마 아빠는 누굴까? 궁금할 때가 있습니다. AI로 종을
+            분석해 보세요. <br />
+            다른 강아지의 종 분석 결과도 구경할 수 있답니다. 사람들과 대화할 수
+            있는 공간도 있으니 마음껏 즐겨 보세요!
           </div>
           <LetterBtn onClick={() => navigate('/dna')}>
             AI 분석하러 가기
@@ -81,28 +83,31 @@ const MainLetterBox = styled.div`
   width: 50%;
   min-width: 30rem;
   margin-left: 10rem;
-  margin-top: 12.5rem;
+  margin-top: 12rem;
   font-size: 3.5rem;
   line-height: 130%;
+
   .description {
     margin-top: 1.3rem;
     font-size: 1.1rem;
     font-family: ${font.normal};
     line-height: 1.8rem;
+    width: 41rem;
   }
 `;
 
 const LetterBtn = styled.button`
-  width: 14rem;
+  width: 15rem;
   height: 4rem;
-  margin-top: 2.5rem;
-  border-radius: 25px;
-  font-size: 1.3rem;
+  margin-top: 2rem;
+  border-radius: 20px;
+  font-size: 1.4rem;
   font-family: ${font.bold};
   cursor: pointer;
   border: 0;
   background-color: ${theme.mainColor};
   color: white;
+
   :hover {
     animation: ${animation} 0.8s;
     background-color: ${theme.pointColor};

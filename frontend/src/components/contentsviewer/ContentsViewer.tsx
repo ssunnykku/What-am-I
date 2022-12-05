@@ -1,50 +1,115 @@
+import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import { EditDelBtn } from '../../assets/styles/common/commonComponentStyle';
 import LikeBtn from '../common/LikeBtn';
-import { ReviewsListTypeProps } from '../modal/ContentsModal';
+import { ReviewTypeProps } from '../modal/ContentsModal';
+import {
+  deleteReviewRequest,
+  editReviewRequest,
+  getOneReviewRequest,
+  getReviewCommentsRequest,
+} from '../../apis/reviewFetcher';
+import MyModal from '../modal/MyModal';
+import useModal from '../../hooks/modal/useModal';
+import WritingEditor from '../writingeditor/WritingEditor';
+import { useNavigate } from 'react-router-dom';
 
-const ContentsViewer = ({ value }: ReviewsListTypeProps) => {
-  // {value}
-  // 뷰어에 딸린 아이디 기반으로 사진, 글, 글쓴이 아이디 불러지고
+const ContentsViewer = ({ review }: ReviewTypeProps) => {
   // useEffect로 get 함수 넣어주기
   // 그럼 필요한 거 아이디, 사진, 글 프롭스로 보내기
   // 댓글/ 수정/ 삭제
+
+  const [isOpen, modalHandler] = useModal();
+  const [pages, setPages] = useState<number>(1);
+  const [comments, setComments] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+
+  const navigate = useNavigate();
+
+  // 리뷰 창 하나 누르면 내용 가져오기 이걸 굳이 받아올 필요가 있어? 이미 리뷰를 보여주는데
+  // const getOneReview = async () => {
+  //   await getOneReviewRequest(`review/show/${value.reviewId}`);
+  // };
+
+  // 리뷰 전체 댓글 가져오기
+  // const getReviewComments = async () => {
+  //   const res = await getReviewCommentsRequest(
+  //     `reviewComment/${review.reviewId}?page=${pages}`,
+  //   );
+  //   console.log(res.data);
+  //   // *** setComments(res.data); console로 뜨는 거 보고 수정
+  // };
+
+  // useEffect(() => {
+  //   getReviewComments();
+  // }, []);
+
+  // 리뷰 수정
+  const handleEditMyReview = async (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    await editReviewRequest(`review/${review.reviewId}`, description);
+  };
+
+  // 리뷰 삭제
+  const handleDeleteMyReview = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    alert('작성하신 리뷰를 삭제하시겠습니까?');
+    if (confirm('작성하신 리뷰를 삭제하시겠습니까?') === true) {
+      await deleteReviewRequest(`review/${review.reviewId}`);
+      navigate('/reviewboard');
+    }
+  };
+
   return (
-    <ContentsModalWrapper>
-      <AddImage></AddImage>
-      <AddWriting>
-        <TopDiv>
-          <div className="user-name">유저 프로필 사진 + 닉네임</div>
-          <ButtonBox>
-            <EditDelBtn>수정</EditDelBtn>
-            <EditDelBtn>삭제</EditDelBtn>
-          </ButtonBox>
-        </TopDiv>
-        <ContentsBox className="user-contents">
-          {value.description}
-          <div className="user-comments">댓 보이는 창</div>
-        </ContentsBox>
-        <BottomDiv>
-          <div className="like">
-            <LikeBtn />
-          </div>
-          <div className="date">12월 17일</div>
-          <CommentBox>
-            <input type="text" placeholder="댓글 달기..." />
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                console.log(e);
-              }}
-            >
-              게시
-            </button>
-          </CommentBox>
-        </BottomDiv>
-      </AddWriting>
-    </ContentsModalWrapper>
+    <>
+      <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
+        <WritingEditor />
+      </MyModal>
+      <ContentsModalWrapper>
+        <AddImage></AddImage>
+        <AddWriting>
+          <TopDiv>
+            <div className="user-name">유저 프로필 사진 + 닉네임</div>
+            <ButtonBox>
+              <EditDelBtn
+                onClick={(e) => {
+                  e.preventDefault();
+                  modalHandler;
+                  handleEditMyReview;
+                }}
+              >
+                수정
+              </EditDelBtn>
+              <EditDelBtn onClick={handleDeleteMyReview}>삭제</EditDelBtn>
+            </ButtonBox>
+          </TopDiv>
+          <ContentsBox className="user-contents">
+            {review.description}
+            <div className="user-comments">{comments}</div>
+          </ContentsBox>
+          <BottomDiv>
+            <div className="like">
+              <LikeBtn />
+            </div>
+            <div className="date">12월 17일</div>
+            <CommentBox>
+              <input type="text" placeholder="댓글 달기..." />
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log(e);
+                }}
+              >
+                게시
+              </button>
+            </CommentBox>
+          </BottomDiv>
+        </AddWriting>
+      </ContentsModalWrapper>
+    </>
   );
 };
 

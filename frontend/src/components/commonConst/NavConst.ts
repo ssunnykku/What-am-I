@@ -6,7 +6,7 @@ export const menus = [
   },
   {
     title: '후기게시판',
-    path: '/board',
+    path: '/reviewboard',
     id: 'board',
   },
   {
