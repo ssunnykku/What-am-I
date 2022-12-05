@@ -1,11 +1,14 @@
 import { userService } from '../services/user.service.js';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
+import Joi from 'joi';
+import { registerValidator } from '../middlewares/userValidator';
 
 class userController {
   static async register(req, res, next) {
     try {
-      const { nickname, email, password, checkPassword } = req.body;
+      const { nickname, email, password, checkPassword } =
+        await registerValidator.validateAsync(req.body);
 
       const newUser = await userService.addUser({
         nickname: nickname,
