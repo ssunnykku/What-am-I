@@ -12,8 +12,8 @@ reviewRouter.get('/reviews', reviewController.allReviews);
 // 리뷰 작성하기
 reviewRouter.post(
   '/review',
-  loginRequired,
-  upload.single('images'),
+  // loginRequired,
+  // upload.single('images'),
   reviewController.register,
 );
 
