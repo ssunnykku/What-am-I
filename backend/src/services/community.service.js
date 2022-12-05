@@ -57,10 +57,11 @@ class communityService {
     return result;
   }
 
-  // 이거
+  // 이거?
   static async findAllCommunities() {
     const findAll = await Community.findAndCountAll({
       include: { model: CommunityPost },
+      order: [['id', 'DESC']],
     });
     return findAll;
   }
