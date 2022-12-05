@@ -24,21 +24,21 @@ communityPostRouter.post(
 //해당 커뮤니티의 게시글 전부 다 가지고 오기
 communityPostRouter.get(
   '/communitypost/:communityId',
-  // loginRequired,
+  loginRequired,
   communityPostController.getCommunityPostList,
 );
 
 //내가 쓴 포스팅(글) 수정하기
 communityPostRouter.put(
   '/communitypost/:id',
-  // loginRequired,
+  loginRequired,
   communityPostController.updateCommunityPost,
 );
 
 //내가 쓴 포스팅(글) 삭제하기
 communityPostRouter.delete(
   '/communitypost/:id',
-  // loginRequired,
+  loginRequired,
   communityPostController.deleteCommunityPost,
 );
 

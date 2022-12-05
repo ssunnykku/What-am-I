@@ -18,7 +18,7 @@ class reviewCommentController {
       }
       return res.status(201).json(reviewComment);
     } catch (error) {
-      return next(error);
+      next(error);
     }
   }
 
@@ -35,19 +35,18 @@ class reviewCommentController {
       }
       return res.status(200).json(reviewComments);
     } catch (error) {
-      return next(error);
+      next(error);
     }
   }
   static async updateComment(req, res, next) {
     try {
       const userId = req.currentUserId;
-
-      const reviewCommentId = req.params.reviewCommentId;
+      const id = req.params.reviewCommentId;
       const { description } = req.body;
 
       const reviewComment = await reviewCommentService.updateComment({
         description,
-        reviewCommentId,
+        id,
         userId,
       });
 
@@ -56,12 +55,12 @@ class reviewCommentController {
       }
 
       const message = await reviewCommentService.findMessage({
-        reviewCommentId,
+        id,
         userId,
       });
       return res.status(200).json(message);
     } catch (error) {
-      return next(error);
+      next(error);
     }
   }
 
@@ -69,10 +68,10 @@ class reviewCommentController {
     try {
       const userId = req.currentUserId;
 
-      const reviewCommentId = req.params.reviewCommentId;
+      const id = req.params.reviewCommentId;
 
       const deleteComment = await reviewCommentService.deleteComment({
-        reviewCommentId,
+        id,
         userId,
       });
       if (deleteComment.errorMessage) {
@@ -80,7 +79,7 @@ class reviewCommentController {
       }
       return res.status(200).json(deleteComment);
     } catch (error) {
-      return next(error);
+      next(error);
     }
   }
 }

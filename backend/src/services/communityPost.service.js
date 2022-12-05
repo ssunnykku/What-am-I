@@ -58,9 +58,11 @@ class communityPostService {
 
   static async updateCommunityPost({ images, description, id, userId }) {
     //db검색
+
     const updateCommunityPost = await CommunityPost.findOne({
       where: { id: id, userId: userId },
     });
+
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!updateCommunityPost) {
       const errorMessage = '등록한 글이 없습니다. 다시 한 번 확인해 주세요.';
@@ -73,7 +75,7 @@ class communityPostService {
           images: images,
           description: description,
         },
-        { where: { id: id } },
+        { where: { id: id, userId: userId } },
       );
       updateCommunityPost.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 

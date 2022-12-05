@@ -27,39 +27,17 @@ class communityPostController {
     }
   }
 
-  //   static async communityImage(req, res, next) {
-  //     try {
-  //       const userId = req.currentUserId;
-  //       const id = req.params.id;
-  //       const communityImage = req.file.location;
-  //       const image = await communityPostService.addCommunityImage({
-  //         id,
-  //         userId,
-  //         communityImage,
-  //       });
-  //       return res.status(200).json({
-  //         id,
-  //         userId,
-  //         communityImage,
-  //         success: true,
-  //         message: '이미지가 저장되었습니다.',
-  //       });
-  //     } catch (error) {
-  //       next(error);
-  //     }
-  //   }
-
   //전체 커뮤니티글 리스트 10개씩
   static async getCommunityPostList(req, res, next) {
     try {
       const { page } = req.query;
       const defaultPage = page || 1;
       const communityId = req.params.communityId;
-      console.log('test', communityId);
 
       const communityPostCount = await communityPostService.communityPostCount(
         communityId,
       );
+
       const selectedCommunityPost =
         await communityPostService.selectCommunityPost(
           defaultPage,
@@ -77,11 +55,11 @@ class communityPostController {
   }
 
   //내가쓴 포스팅(글) 수정
-  static async updateCommunityPost(req, res) {
+  static async updateCommunityPost(req, res, next) {
     try {
-      const userId = testId;
-      // const userId = req.currentUserId;
-
+      // const userId = testId;
+      const userId = req.currentUserId;
+      console.log(userId);
       const id = req.params.id;
       const { images, description } = req.body;
 
@@ -103,15 +81,15 @@ class communityPostController {
       });
       return res.status(200).json(message);
     } catch (error) {
-      return next(error);
+      next(error);
     }
   }
 
   //내가쓴 포스팅(글) 삭제하기
-  static async deleteCommunityPost(req, res) {
+  static async deleteCommunityPost(req, res, next) {
     try {
-      const userId = testId;
-      // const userId = req.currentUserId;
+      // const userId = testId;
+      const userId = req.currentUserId;
       const id = req.params.id;
 
       const deleteCommunityPost =
@@ -124,7 +102,7 @@ class communityPostController {
       }
       return res.status(200).json(deleteCommunityPost);
     } catch (error) {
-      return next(error);
+      next(error);
     }
   }
 }
