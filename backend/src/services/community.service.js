@@ -27,8 +27,9 @@ class communityService {
 
   static async selectCommunities(defaultPage) {
     const selectedCommunities = await Community.findAll({
-      offset: (defaultPage - 1) * COMMUNITY_PER_PAGE,
+      offset: (Number(defaultPage) - 1) * COMMUNITY_PER_PAGE,
       limit: COMMUNITY_PER_PAGE,
+      order: [['id', 'DESC']],
     });
 
     if (!selectedCommunities) {
@@ -56,10 +57,11 @@ class communityService {
     return result;
   }
 
-  // 이거
+  // 이거?
   static async findAllCommunities() {
     const findAll = await Community.findAndCountAll({
       include: { model: CommunityPost },
+      order: [['id', 'DESC']],
     });
     return findAll;
   }
