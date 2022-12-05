@@ -10,11 +10,19 @@ class CommunityLike extends Sequelize.Model {
           primaryKey: true,
           type: DataTypes.INTEGER,
         },
+        userId: {
+          type: DataTypes.UUID,
+          defaultValue: DataTypes.UUIDV4,
+          foreignKey: true,
+        },
+        communityId: {
+          foreignKey: true,
+          type: DataTypes.INTEGER,
+        },
       },
       {
         sequelize,
         timestamps: true,
-        paranoid: true,
         tableName: 'communityLikes',
         charset: 'utf8mb4',
         collate: 'utf8mb4_general_ci',
@@ -24,11 +32,11 @@ class CommunityLike extends Sequelize.Model {
   static associate(db) {
     db.CommunityLike.belongsTo(db.User, {
       foreignKey: 'userId',
-      sourceKey: 'userId',
+      targetKey: 'userId',
     }),
       db.CommunityLike.belongsTo(db.Community, {
         foreignKey: 'communityId',
-        sourceKey: 'id',
+        targetKey: 'id',
       });
   }
 }

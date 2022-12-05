@@ -4,7 +4,8 @@ import { font } from '../../assets/styles/common/fonts';
 const AuthHeader = () => {
   return (
     <AuthHeaderWrapper>
-      <AuthHeaderText>여기는 제목</AuthHeaderText>
+      <AuthHeaderText>WELCOME</AuthHeaderText>
+      <AuthHeaderText2>DOGNA</AuthHeaderText2>
     </AuthHeaderWrapper>
   );
 };
@@ -16,7 +17,14 @@ const AuthHeaderWrapper = styled.div`
 `;
 
 const AuthHeaderText = styled.p`
-  font-size: 1rem;
+  padding-top: 10rem;
+  padding-bottom: 2rem;
+  font-size: 3rem;
+`;
+
+const AuthHeaderText2 = styled.p`
+  font-size: 3rem;
+  padding-bottom: 1rem;
 `;
 
 export default AuthHeader;

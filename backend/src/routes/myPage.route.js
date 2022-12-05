@@ -9,6 +9,23 @@ myPageRouter.get(
   loginRequired,
   myPageController.getMyCommunities,
 );
-// myPageRouter.get('/mycommunities/liked', myPageController.getlikedCommunities);
+
+myPageRouter.get(
+  '/mycommunities/liked',
+  loginRequired,
+  myPageController.getLikedCommunities,
+);
+
+myPageRouter.get(
+  '/mycommunities/:communityId',
+  loginRequired,
+  myPageController.getCommunityPosts,
+);
+
+myPageRouter.get(
+  '/communityToPosts/:communityId',
+  loginRequired,
+  myPageController.getPosts,
+);
 
 export { myPageRouter };

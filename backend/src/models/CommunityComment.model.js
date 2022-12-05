@@ -14,12 +14,11 @@ class CommunityComment extends Sequelize.Model {
           type: DataTypes.TEXT,
           allowNull: false,
         },
-        // communityId: {
-        //   type: Sequelize.INTEGER,
-        // },
-        // userId: {
-        //   type: DataTypes.STRING(500),
-        // },
+        userId: {
+          type: DataTypes.UUID,
+          defaultValue: DataTypes.UUIDV4,
+          foreignKey: true,
+        },
       },
       {
         sequelize,

@@ -23,12 +23,21 @@ export const CommonMyButton = styled.button`
   padding-bottom: 1rem;
   cursor: pointer;
   font-weight: bold;
-  border-radius: 10px;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  background-color: ${theme.pointColor};
+  transition: 0.4s;
+  &:hover {
+    color: ${theme.pointColor};
+    background-color: white;
+    border: 2px solid ${theme.pointColor};
+  }
 `;
 
 export const CommonMyInput = styled.input`
-  width: 94%;
-  padding: 6px 12px;
+  width: 90%;
+  padding: 8px 16px;
   border-radius: 10px;
   outline: none;
 `;

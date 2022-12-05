@@ -4,6 +4,6 @@ export interface AuthCommonType {
 }
 
 export interface AuthRegisterType extends AuthCommonType {
-  username: string;
-  confirmPassword: string;
+  nickname: string;
+  checkPassword: string;
 }

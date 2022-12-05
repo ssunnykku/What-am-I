@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 class userService {
   static async addUser({ nickname, email, password, checkPassword }) {
     const user = await User.findOne({ where: { email: email } });
-    console.log(user);
+
     if (user) {
       const errorMessage = '사용중인 이메일입니다.';
       return { errorMessage };
@@ -83,7 +83,6 @@ class userService {
       const errorMessage = '가입내역이 없습니다.';
       return { errorMessage };
     }
-    // return user;
     return user;
   }
 

@@ -4,6 +4,12 @@ class User extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
+        id: {
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+          type: DataTypes.INTEGER,
+        },
         userId: {
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
@@ -61,36 +67,27 @@ class User extends Sequelize.Model {
     db.User.hasMany(db.Community, {
       foreignKey: 'userId',
       sourceKey: 'userId',
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
     }),
       db.User.hasMany(db.CommunityPost, {
         foreignKey: 'userId',
         sourceKey: 'userId',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
       }),
       db.User.hasMany(db.CommunityComment, {
         foreignKey: 'userId',
         sourceKey: 'userId',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
       }),
       db.User.hasMany(db.CommunityLike, {
         foreignKey: 'userId',
         sourceKey: 'userId',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
+      }),
+      db.User.hasMany(db.Review, {
+        foreignKey: 'userId',
+        sourceKey: 'userId',
+      }),
+      db.User.hasMany(db.ReviewComment, {
+        foreignKey: 'userId',
+        sourceKey: 'userId',
       });
-
-    db.User.hasMany(db.Review, {
-      foreignKey: 'userId',
-      sourceKey: 'userId',
-    });
-    db.User.hasMany(db.ReviewComment, {
-      foreignKey: 'userId',
-      sourceKey: 'userId',
-    });
   }
 }
 

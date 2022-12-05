@@ -1,106 +1,111 @@
 import { CommunityPost } from '../models/CommunityPost.model';
 import ApiError from '../utils/ApiError';
-import { COMMUNITY_PER_PAGE } from '../utils/Constant';
+import { COMMUNITYPOST_PER_PAGE } from '../utils/Constant';
 
 class communityPostService {
-  static async createPost({ communityId, images, description }) {
+  static async createPost({ userId, communityId, images, description }) {
     const createPost = await CommunityPost.create({
-      communityId,
       images,
       description,
+      userId,
+      communityId,
     });
 
     return createPost;
   }
 
-  //   static async addCommunityImage({ communityImage, userId, id }) {
-  //     const updateImage = await CommunityPost.update(
-  //       { communityImage: communityImage },
-  //       {
-  //         where: { userId, id },
-  //       },
-  //     );
-  //     return updateImage;
-  //   }
+  // static async addCommunityImage({ communityImage, userId, id }) {
+  //   const updateImage = await CommunityPost.update(
+  //     { communityImage: communityImage },
+  //     {
+  //       where: { userId, id },
+  //     },
+  //   );
+  //   return updateImage;
+  // }
 
-  //   static async countCommunityPage() {
-  //     const communityCount = await CommunityPost.count();
-  //     if (communityCount % COMMUNITY_PER_PAGE === 0) {
-  //       return communityCount / COMMUNITY_PER_PAGE;
-  //     } else {
-  //       return Math.floor(communityCount / COMMUNITY_PER_PAGE) + 1;
-  //     }
-  //   }
+  static async communityPostCount(communityId) {
+    console.log('communityId', communityId);
+    const communityPostCount = await CommunityPost.findAll({
+      attributes: [communityId],
+      where: {
+        communityId: communityId,
+      },
+    });
+    console.log(communityPostCount);
 
-  //   static async selectCommunities(defaultPage) {
-  //     const selectedCommunities = await CommunityPost.findAll({
-  //       offset: (defaultPage - 1) * COMMUNITY_PER_PAGE,
-  //       limit: COMMUNITY_PER_PAGE,
-  //     });
+    // const communityPostCount = await CommunityPost.findAndCountAll(where: { communityId:  {communityId} },);
+    if (communityPostCount % COMMUNITYPOST_PER_PAGE === 0) {
+      return communityPostCount / COMMUNITYPOST_PER_PAGE;
+    } else {
+      return Math.floor(communityPostCount / COMMUNITYPOST_PER_PAGE) + 1;
+    }
+  }
 
-  //     if (!selectedCommunities) {
-  //       throw ApiError.setBadRequest('No community available');
-  //     }
+  static async selectCommunityPost(defaultPage, communityId) {
+    const selectedCommunityPost = await CommunityPost.findAll({
+      where: { communityId: { communityId } },
 
-  //     return selectedCommunities;
-  //   }
+      offset: (defaultPage - 1) * COMMUNITYPOST_PER_PAGE,
+      limit: COMMUNITYPOST_PER_PAGE,
+    });
 
-  //   static async updateCommunity({
-  //     name,
-  //     communtyImage,
-  //     introduction,
-  //     communityId,
-  //     userId,
-  //   }) {
-  //     //db검색
-  //     const updateCommunity = await CommunityPost.findOne({
-  //       where: { communityId: communityId, userId: userId },
-  //     });
-  //     // db에서 찾지 못한 경우, 에러 메시지 반환
-  //     if (!updateCommunity) {
-  //       const errorMessage = '등록한 글이 없습니다. 다시 한 번 확인해 주세요.';
-  //       return errorMessage;
-  //     }
-  //     // db에 저장
-  //     if (updateCommunity) {
-  //       const updateCommunity = await CommunityPost.update(
-  //         {
-  //           name: name,
-  //           communtyImage: communtyImage,
-  //           introduction: introduction,
-  //         },
-  //         { where: { communityId: communityId, userId: userId } },
-  //       );
-  //       updateCommunity.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
+    if (!selectedCommunityPost) {
+      throw ApiError.setBadRequest('No community available');
+    }
 
-  //       return updateCommunity;
-  //     }
-  //   }
+    return selectedCommunityPost;
+  }
 
-  //   static async findCommunity({ communityId, userId }) {
-  //     const comment = await CommunityPost.findOne({
-  //       where: { communityId: communityId, userId: userId },
-  //     });
-  //     if (!comment) {
-  //       const errorMessage = '작성한 글이 없습니다';
-  //       return { errorMessage };
-  //     } else {
-  //       return comment;
-  //     }
-  //   }
+  static async updateCommunityPost({ images, description, id, userId }) {
+    //db검색
+    const updateCommunityPost = await CommunityPost.findOne({
+      where: { id: id, userId: userId },
+    });
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!updateCommunityPost) {
+      const errorMessage = '등록한 글이 없습니다. 다시 한 번 확인해 주세요.';
+      return errorMessage;
+    }
+    // db에 저장
+    if (updateCommunityPost) {
+      const updateCommunityPost = await CommunityPost.update(
+        {
+          images: images,
+          description: description,
+        },
+        { where: { id: id } },
+      );
+      updateCommunityPost.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
-  //   static async deleteCommunity({ communityId, userId }) {
-  //     const id = await CommunityPost.destroy({
-  //       where: { communityId: communityId, userId: userId },
-  //     });
-  //     if (!id) {
-  //       const errorMessage = '생성한 커뮤니티가 없습니다';
-  //       return errorMessage;
-  //     } else {
-  //       const message = '커뮤니티가 삭제되었습니다.';
-  //       return message;
-  //     }
-  //   }
+      return updateCommunityPost;
+    }
+  }
+
+  static async findCommunityPost({ id, userId }) {
+    const post = await CommunityPost.findOne({
+      where: { id: id, userId: userId },
+    });
+    if (!post) {
+      const errorMessage = '작성한 글이 없습니다';
+      return { errorMessage };
+    } else {
+      return post;
+    }
+  }
+
+  static async deleteCommunityPost({ id, userId }) {
+    const _id = await CommunityPost.destroy({
+      where: { id: id, userId: userId },
+    });
+    if (!_id) {
+      const errorMessage = '생성한 글이 없습니다';
+      return errorMessage;
+    } else {
+      const message = '글이 삭제되었습니다.';
+      return message;
+    }
+  }
 }
 
 export { communityPostService };

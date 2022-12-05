@@ -9,16 +9,17 @@ import session from 'express-session';
 import sessionMysql from 'express-mysql-session';
 
 //**Passport */
-import passport from 'passport';
+// import passport from 'passport';
 
 //**Router */
 import { communityRouter } from './src/routes/community.route';
 import { communityPostRouter } from './src/routes/communityPost.route';
-
 import { userRouter } from './src/routes/user.router';
 import { reviewRouter } from './src/routes/review.route';
 import { reviewCommentRouter } from './src/routes/revComment.route';
 import { myPageRouter } from './src/routes/myPage.route';
+import { communityLikeRouter } from './src/routes/communityLike.route';
+
 //**middleware */
 import errorMiddleware from './src/middlewares/error';
 
@@ -31,12 +32,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: '*', credentials: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
-import passportConfig from './src/utils/passport.js';
+// import passportConfig from './src/utils/passport.js';
 
-app.use(passport.initialize());
-passportConfig();
+// app.use(passport.initialize());
+// passportConfig();
 
-// sequelize.sync({ force: false });
+sequelize.sync({ force: false });
 
 app.use(userRouter);
 // app.use(communityRouter);
@@ -45,6 +46,7 @@ app.use(reviewRouter);
 app.use(reviewCommentRouter);
 app.use('/communities', communityRouter);
 app.use(myPageRouter);
+app.use(communityLikeRouter);
 app.use(errorMiddleware);
 
 app.listen(process.env.SEVER_PORT, () =>
