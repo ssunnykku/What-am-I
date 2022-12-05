@@ -29,9 +29,9 @@ class reviewController {
   static async register(req, res, next) {
     try {
       const userId = req.currentUserId;
-      const images = req.file.location;
+      // const userId = testId;
 
-      const { description } = req.body;
+      const { description, images } = req.body;
 
       const newReview = await reviewService.addReview({
         description,
