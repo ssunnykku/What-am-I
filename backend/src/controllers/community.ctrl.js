@@ -105,6 +105,21 @@ class communityController {
       return next(error);
     }
   }
+
+  static async getFoundCommunities(req, res, next) {
+    try {
+      const search = req.query.data;
+      const searchedData = await communityService.searchedCommunities({
+        search,
+      });
+      if (searchedData.errorMessage) {
+        throw new Error(searchedData, errorMessage);
+      }
+      res.status(200).json(searchedData);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export { communityController };

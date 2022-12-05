@@ -3,6 +3,7 @@ import { CommunityPost } from '../models/CommunityPost.model';
 import { CommunityLike } from '../models/CommunityLike.model';
 import ApiError from '../utils/ApiError';
 import { COMMUNITY_PER_PAGE } from '../utils/Constant';
+import { Op } from 'sequelize';
 
 class communityService {
   static async createCommunity(name, introduction, userId, communityImage) {
@@ -121,6 +122,32 @@ class communityService {
       const message = '커뮤니티가 삭제되었습니다.';
       return message;
     }
+  }
+  // [Op.and]: [{a: 5}, {b: 6}] // (a = 5) AND (b = 6)
+  // [Op.or]: [{a: 5}, {a: 6}]  // (a = 5 OR a = 6)
+  static async searchedCommunities({ search }) {
+    const searchResult = await Community.findAll({
+      where: {
+        [Op.or]: [
+          {
+            name: {
+              [Op.like]: `%${search}%`,
+            },
+          },
+          {
+            introduction: {
+              [Op.like]: `%${search}%`,
+            },
+          },
+        ],
+      },
+      order: [['id', 'DESC']],
+    });
+    if (searchResult.length === 0) {
+      const errorMessage = `Cannot find information about '${search}' `;
+      return errorMessage;
+    }
+    return searchResult;
   }
 }
 

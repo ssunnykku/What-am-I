@@ -39,4 +39,6 @@ communityRouter.delete(
   communityController.deleteCommunity,
 );
 
+communityRouter.get('/search', communityController.getFoundCommunities);
+
 export { communityRouter };
