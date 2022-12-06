@@ -1,20 +1,20 @@
 import { Community } from '../models/Community.model';
 import { communityService } from '../services/community.service';
-const testId = '1ec7aefc-7d85-4a91-9cec-90dc069bd453';
 
 class communityController {
   static async addCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
-      const communityImage = req.file.location;
       const { name, introduction } = req.body;
+      const image = req.file;
+
+      const communityImage = image == undefined ? null : image.location;
       const newCommunity = await communityService.createCommunity(
         name,
         introduction,
         userId,
         communityImage,
       );
-
       return res.status(201).send(newCommunity);
     } catch (error) {
       next(error);

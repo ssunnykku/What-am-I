@@ -70,7 +70,6 @@ class userController {
   static async edit(req, res, next) {
     try {
       const userId = req.params.userId;
-      console.log(userId);
 
       // 수정할 사용자 정보
       const { nickname, password } = req.body ?? null;
@@ -95,16 +94,16 @@ class userController {
     try {
       const userId = req.params.userId;
       const profileImg = req.file.location;
-      await userService.updateImage({
-        profileImg,
-        userId,
-      });
-
       if (req.file === undefined) {
         res
           .status(400)
           .send({ success: false, message: '이미지가 존재하지 않습니다.' });
       }
+      await userService.updateImage({
+        profileImg,
+        userId,
+      });
+
       return res.status(200).json({
         success: true,
         message: '이미지가 저장되었습니다.',

@@ -15,7 +15,7 @@ class communityLikeService {
           communityId: communityId,
         },
       });
-      // const errorMessage = `you can do 'like' only once per a community`;
+
       return { deletedLike };
     }
 
@@ -28,7 +28,7 @@ class communityLikeService {
       where: { communityId: communityId },
     });
 
-    return { newLike, countLikes };
+    return { countLikes, newLike };
   }
 }
 
