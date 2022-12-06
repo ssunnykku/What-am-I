@@ -4,14 +4,14 @@ export interface ReviewInitialType {
 }
 
 export interface ReviewCommentType {
-  reviewCommentId: number;
   description: string;
-  reviewId: string;
+  id: number;
+  reviewId: number;
   userId: string;
 }
 
 export interface ReviewType {
-  reviewId: number;
+  id: number;
   description: string;
   userId: string;
   images: string;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
@@ -6,67 +6,78 @@ import { EditDelBtn } from '../../assets/styles/common/commonComponentStyle';
 import LikeBtn from '../common/LikeBtn';
 import { ReviewTypeProps } from '../modal/ContentsModal';
 import {
+  createReviewCommentRequest,
   deleteReviewRequest,
   editReviewRequest,
-  getOneReviewRequest,
-  getReviewCommentsRequest,
+  getReviewRequest,
 } from '../../apis/reviewFetcher';
 import MyModal from '../modal/MyModal';
 import useModal from '../../hooks/modal/useModal';
 import WritingEditor from '../writingeditor/WritingEditor';
 import { useNavigate } from 'react-router-dom';
+import { ReviewCommentType } from '../../types/reviewboard/reviewType';
 
-const ContentsViewer = ({ review }: ReviewTypeProps) => {
-  // useEffect로 get 함수 넣어주기
-  // 그럼 필요한 거 아이디, 사진, 글 프롭스로 보내기
+const ContentsViewer = (props: ReviewTypeProps) => {
+  // 그럼 필요한 거 아이디 프롭스로 보내기
   // 댓글/ 수정/ 삭제
 
   const [isOpen, modalHandler] = useModal();
   const [pages, setPages] = useState<number>(1);
-  const [comments, setComments] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const [comments, setComments] = useState<ReviewCommentType[]>([]);
+  const [date, setDate] = useState(props.review?.createdAt);
+  const newDate = date?.split(' ')[0];
 
   const navigate = useNavigate();
 
-  // 리뷰 창 하나 누르면 내용 가져오기 이걸 굳이 받아올 필요가 있어? 이미 리뷰를 보여주는데
-  // const getOneReview = async () => {
-  //   await getOneReviewRequest(`review/show/${value.reviewId}`);
-  // };
-
   // 리뷰 전체 댓글 가져오기
-  // const getReviewComments = async () => {
-  //   const res = await getReviewCommentsRequest(
-  //     `reviewComment/${review.reviewId}?page=${pages}`,
-  //   );
-  //   console.log(res.data);
-  //   // *** setComments(res.data); console로 뜨는 거 보고 수정
-  // };
+  const getReviewComments = async () => {
+    const res = await getReviewRequest(
+      `reviewComment/${props.review?.id}?page=${pages}`,
+    );
+    setComments(res.reverse());
+  };
 
-  // useEffect(() => {
-  //   getReviewComments();
-  // }, []);
+  // 리뷰 댓글 쓰기
+  const postReviewComments = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await createReviewCommentRequest(
+      `reviewComment/${props.review?.id}`,
+      description,
+    );
+
+    const res = await getReviewRequest(
+      `reviewComment/${props.review?.id}?page=${pages}`,
+    );
+    setComments(res.reverse());
+    setDescription('');
+  };
+
+  useEffect(() => {
+    getReviewComments();
+  }, []);
 
   // 리뷰 수정
   const handleEditMyReview = async (e: React.MouseEvent) => {
     e.preventDefault();
-
-    await editReviewRequest(`review/${review.reviewId}`, description);
+    await editReviewRequest(`review/${props.review?.id}`, description);
   };
 
   // 리뷰 삭제
-  const handleDeleteMyReview = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    alert('작성하신 리뷰를 삭제하시겠습니까?');
-    if (confirm('작성하신 리뷰를 삭제하시겠습니까?') === true) {
-      await deleteReviewRequest(`review/${review.reviewId}`);
-      navigate('/reviewboard');
-    }
+  const handleDeleteMyReview = async () => {
+    await deleteReviewRequest(`review/${props.review?.id}`);
+    // navigate('/reviewboard');
+
+    // if (confirm('작성하신 리뷰를 삭제하시겠습니까?') === true) {
+    //   await deleteReviewRequest(`review/${review.reviewId}`);
+    //   navigate('/reviewboard');
+    // }
   };
 
   return (
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
-        <WritingEditor />
+        <WritingEditor review={props.review} mode="edit" />
       </MyModal>
       <ContentsModalWrapper>
         <AddImage></AddImage>
@@ -77,7 +88,7 @@ const ContentsViewer = ({ review }: ReviewTypeProps) => {
               <EditDelBtn
                 onClick={(e) => {
                   e.preventDefault();
-                  modalHandler;
+                  modalHandler();
                   handleEditMyReview;
                 }}
               >
@@ -86,25 +97,27 @@ const ContentsViewer = ({ review }: ReviewTypeProps) => {
               <EditDelBtn onClick={handleDeleteMyReview}>삭제</EditDelBtn>
             </ButtonBox>
           </TopDiv>
-          <ContentsBox className="user-contents">
-            {review.description}
-            <div className="user-comments">{comments}</div>
+          <ContentsBox>
+            <div className="user-contents">{props.review?.description}</div>
+            {comments?.map((comment) => (
+              <div key={comment.id} className="user-comments">
+                {comment.description}
+              </div>
+            ))}
           </ContentsBox>
           <BottomDiv>
             <div className="like">
               <LikeBtn />
             </div>
-            <div className="date">12월 17일</div>
+            <div className="date">{newDate}</div>
             <CommentBox>
-              <input type="text" placeholder="댓글 달기..." />
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  console.log(e);
-                }}
-              >
-                게시
-              </button>
+              <input
+                type="text"
+                placeholder="댓글 달기..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+              <button onClick={postReviewComments}>게시</button>
             </CommentBox>
           </BottomDiv>
         </AddWriting>
@@ -152,11 +165,27 @@ const ContentsBox = styled.div`
   padding: 3% 2%;
   height: 70%;
   max-width: 29rem;
+  max-height: 35rem;
+  font-size: 17px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  .user-contents {
+    border-bottom: solid 1px lightgray;
+    padding-bottom: 10px;
+    line-height: 22px;
+  }
 
   .user-comments {
-    border-top: solid 1px lightgray;
-    margin-top: 10px;
     padding-top: 10px;
+    width: 100%;
+    line-height: 20px;
   }
 `;
 

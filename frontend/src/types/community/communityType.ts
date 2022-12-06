@@ -1,6 +1,6 @@
 export interface CreateCommuInitialType {
   name: string;
-  communityImage?: any;
+  communityImage?: string | Blob;
   introduction: string;
 }
 

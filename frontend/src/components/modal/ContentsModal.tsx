@@ -5,7 +5,8 @@ import ContentsViewer from '../contentsviewer/ContentsViewer';
 import { ReviewType } from '../../types/reviewboard/reviewType';
 
 export interface ReviewTypeProps {
-  review: ReviewType;
+  review?: ReviewType;
+  mode?: string;
 }
 
 const ContentsModal = ({ review }: ReviewTypeProps) => {

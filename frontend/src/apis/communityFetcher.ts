@@ -1,14 +1,14 @@
 import { CreateCommuInitialType } from '../types/community/communityType';
 import { axiosInstance } from '../utils/axiosInstance';
 
-export async function createCommuRequest(
+export async function createCommunityRequest(
   endpoint: string,
-  { name, communityImage, introduction }: CreateCommuInitialType,
+  { name, introduction, communityImage }: CreateCommuInitialType,
 ) {
   const formData = new FormData();
   formData.append('name', name);
-  formData.append('communityImage', communityImage as File);
   formData.append('introduction', introduction);
+  formData.append('communityImage', communityImage as File);
   const res = await axiosInstance.post(endpoint, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
