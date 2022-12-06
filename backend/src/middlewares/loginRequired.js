@@ -2,8 +2,6 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyZmFmMTNiNi1jODZiLTRjNGUtYTVlMS00NzIzMDQ2NGQxNGYiLCJpYXQiOjE2NzAzMDMwODcsImV4cCI6MTY3MDkwNzg4N30.3aPs27CKFw6yb44LB3PDnpWKd-zVtZU5dG9rZntdJ-4';
 function loginRequired(req, res, next) {
   // const userToken = req.headers['authorization']?.split(' ')[1] ?? 'null';
   const userToken = token;
