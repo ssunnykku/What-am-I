@@ -1,3 +1,4 @@
+import Storage from '../storage/storage';
 import { axiosInstance } from '../utils/axiosInstance';
 
 // 프로필
@@ -13,7 +14,7 @@ export async function EditUserImg({ profileImg }: any) {
   formData.append('profileImg', profileImg);
 
   const res = await axiosInstance.post(
-    `/users/14335541-3a85-4298-b7ad-addfef815fce/image`,
+    `/users/${Storage.getUserIdItem()}/image`,
     formData,
     {
       headers: {
@@ -26,7 +27,7 @@ export async function EditUserImg({ profileImg }: any) {
 // 유저 닉네임 수정
 export async function EditUserData(nickname: string, password: string) {
   const response = await axiosInstance.put(
-    `/users/14335541-3a85-4298-b7ad-addfef815fce`, // userId 하드코딩했음
+    `/users/${Storage.getUserIdItem()}`,
     {
       nickname,
       password,
