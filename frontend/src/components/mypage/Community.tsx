@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import styled from 'styled-components';
+import { getUserLiked } from '../../apis/mypageFetcher';
 import CommunityCard from './CommunityCard';
 
 export interface CommunityProps {
@@ -14,9 +15,10 @@ function Community() {
     title: '댕댕이를 사랑하는 모임',
   };
 
+  // TODO 아래 코드 response에 커뮤니티 이미지와 커뮤니티 방 이름이 있어야 할 것 같다.
   useEffect(() => {
     async function getData() {
-      const response = await axios.get('http://localhost:5001/reviews');
+      const response = await getUserLiked();
       console.log(response);
     }
     getData();

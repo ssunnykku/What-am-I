@@ -1,23 +1,66 @@
-import Avatar from '@mui/material/Avatar';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { CommonMyInput } from '../../assets/styles/common/commonComponentStyle';
+import Avatar from '@mui/material/Avatar';
+import {
+  CommonMyInput,
+  EntryBtn,
+  CreateBtn,
+} from '../../assets/styles/common/commonComponentStyle';
+import { EditUserImg, getUserData } from '../../apis/mypageFetcher';
 
 function Profile() {
-  const [userImg, setUserImg] = useState<string>('/');
+  const [profileImg, setProfileImg] = useState<string>('/');
+  const [imgPreview, setImgPreview] = useState<string>(profileImg);
+  const [nickname, setNickname] = useState<string>('');
+
+  // TODO 현재 아래 코드를 사용하면 모든 사용자의 데이터가 불러와지는데 특정 사용자의 데이터는 어떻게 불러와야되는거지?
+  useEffect(() => {
+    async function getData() {
+      const response = await getUserData();
+      console.log(response);
+      // setProfileImg(response.profileImg);
+      // setNickname(response.nickname);
+    }
+    getData();
+  }, []);
+
+  // TODO e type지정에 React.ChangeEvent<HTMLInputElement>가 아닌가?
+  async function EditImg(e: any) {
+    setImgPreview(URL.createObjectURL(e.target.files[0]));
+    setProfileImg(e.target.files[0]);
+    // const response = await EditUserImg(profileImg);
+    // console.log(response);
+  }
 
   return (
     <Div>
-      <Avatar sx={{ width: 150, height: 150 }} src={userImg} />
+      <ProfileImgContainer>
+        <label htmlFor="ex_file">
+          <Avatar
+            className="btnStart"
+            sx={{ width: 150, height: 150 }}
+            src={imgPreview}
+          />
+        </label>
+        <input
+          type="file"
+          id="ex_file"
+          accept="image/jpg, image/png, image/jpeg"
+          onChange={EditImg}
+        />
+      </ProfileImgContainer>
+      <EditButton>이미지 수정</EditButton>
+
       <InputContainer>
         닉네임
-        <CommonMyInput></CommonMyInput>
-        비밀번호
-        <CommonMyInput></CommonMyInput>
+        <CommonMyInput
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value)}
+        ></CommonMyInput>
       </InputContainer>
       <ButtonContainer>
-        <ProfileBtn>수정</ProfileBtn>
-        <ProfileBtn>삭제</ProfileBtn>
+        <EditButton>수정</EditButton>
+        <DeleteButton>회원 탈퇴</DeleteButton>
       </ButtonContainer>
     </Div>
   );
@@ -49,14 +92,36 @@ const ButtonContainer = styled.div`
   gap: 10px;
 `;
 
-const ProfileBtn = styled.button`
-  width: 50%;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  cursor: pointer;
-  border-radius: 10px;
-  background-color: white;
-  border: 2px solid black;
+const EditButton = styled(EntryBtn)`
+  width: 290px;
+  margin-left: 0px;
+`;
+
+const DeleteButton = styled(CreateBtn)`
+  width: 290px;
+  margin-left: 0px;
+`;
+
+const ProfileImgContainer = styled.div`
+  label {
+    display: inline-block;
+    border-radius: 100%;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+
+  input[type='file'] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
 `;
 
 export default Profile;
