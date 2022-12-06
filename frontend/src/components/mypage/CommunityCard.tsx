@@ -15,8 +15,8 @@ function CommunityCard(props: Props) {
   return (
     <Card>
       <Content>
-        <Img alt="room_img" src={props.value.img}></Img>
-        <RoomName>{props.value.title}</RoomName>
+        <Img alt="room_img" src={props.value.communityImage}></Img>
+        <RoomName>{props.value.name}</RoomName>
       </Content>
       {props.mode == 'MyCommunity' ? (
         <ButtonContainer>

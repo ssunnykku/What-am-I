@@ -6,7 +6,7 @@ import {
   CreateBtn,
 } from '../../assets/styles/common/commonComponentStyle';
 import { ReviewsProps } from './Result';
-import { getUserReview } from '../../apis/mypageFetcher';
+import { deleteUserReview, getUserReview } from '../../apis/mypageFetcher';
 import { useConfirm } from '../../hooks/confirm/useConfirm';
 
 interface receiveProps {
@@ -18,11 +18,12 @@ function ResultCard(props: receiveProps) {
     const response = await getUserReview(props.value.reviewId);
     console.log(response);
   }
+  async function deleteReview() {
+    const response = await deleteUserReview(props.value.reviewId);
+    console.log(response);
+  }
 
-  // 삭제버튼 클릭 시 확인창 함수
-  // TODO 확인창 함수를 공통컴포넌트로 뺄까?
-
-  const deleteConfirm = () => window.alert('삭제했습니다.');
+  const deleteConfirm = () => (deleteReview(), window.alert('삭제했습니다.'));
   const cancelConfirm = () => window.alert('취소했습니다.');
 
   const confirmDelete = useConfirm(
@@ -34,7 +35,6 @@ function ResultCard(props: receiveProps) {
     <CardContainer>
       <Img src={props.value.images} alt="dog_img"></Img>
       <Name>{props.value.description}</Name>
-      {/* TODO 마우스 호버 시 버튼 컴포넌트가 카드 앞에 등장하게끔 어떻게할까*/}
       <div className="wrapper">
         <ButtonContainer id="ButtonContainer">
           <DetailButton color="#000000" onClick={getReview}>

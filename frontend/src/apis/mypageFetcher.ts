@@ -13,7 +13,7 @@ export async function EditUserImg({ profileImg }: any) {
   formData.append('profileImg', profileImg);
 
   const res = await axiosInstance.post(
-    `/users/${sessionStorage.getItem('userId')}/image`,
+    `/users/14335541-3a85-4298-b7ad-addfef815fce/image`,
     formData,
     {
       headers: {
@@ -24,9 +24,13 @@ export async function EditUserImg({ profileImg }: any) {
   return res.data;
 }
 // 유저 닉네임 수정
-export async function EditUserData() {
-  const response = await axiosInstance.get(
-    `/users/${sessionStorage.getItem('userId')}`,
+export async function EditUserData(nickname: string, password: string) {
+  const response = await axiosInstance.put(
+    `/users/14335541-3a85-4298-b7ad-addfef815fce`, // userId 하드코딩했음
+    {
+      nickname,
+      password,
+    },
   );
   return response.data;
 }

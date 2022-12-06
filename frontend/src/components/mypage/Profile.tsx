@@ -6,30 +6,39 @@ import {
   EntryBtn,
   CreateBtn,
 } from '../../assets/styles/common/commonComponentStyle';
-import { EditUserImg, getUserData } from '../../apis/mypageFetcher';
+import {
+  EditUserData,
+  EditUserImg,
+  getUserData,
+} from '../../apis/mypageFetcher';
 
 function Profile() {
   const [profileImg, setProfileImg] = useState<string>('/');
   const [imgPreview, setImgPreview] = useState<string>(profileImg);
   const [nickname, setNickname] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  // TODO 현재 아래 코드를 사용하면 모든 사용자의 데이터가 불러와지는데 특정 사용자의 데이터는 어떻게 불러와야되는거지?
   useEffect(() => {
     async function getData() {
       const response = await getUserData();
-      console.log(response);
-      // setProfileImg(response.profileImg);
-      // setNickname(response.nickname);
+      setProfileImg(response.profileImg);
+      setNickname(response.nickname);
     }
     getData();
   }, []);
 
   // TODO e type지정에 React.ChangeEvent<HTMLInputElement>가 아닌가?
+  // TODO 왜 네트워크 응답에 profileImg가 undefined이지?
   async function EditImg(e: any) {
     setImgPreview(URL.createObjectURL(e.target.files[0]));
-    setProfileImg(e.target.files[0]);
-    // const response = await EditUserImg(profileImg);
-    // console.log(response);
+    // await setProfileImg(e.target.files[0]);
+    const response = await EditUserImg(e.target.files[0]);
+    console.log(response);
+  }
+
+  async function EditData(e: any) {
+    const response = await EditUserData(nickname, password);
+    console.log(response);
   }
 
   return (
@@ -49,7 +58,6 @@ function Profile() {
           onChange={EditImg}
         />
       </ProfileImgContainer>
-      <EditButton>이미지 수정</EditButton>
 
       <InputContainer>
         닉네임
@@ -57,9 +65,14 @@ function Profile() {
           value={nickname}
           onChange={(e) => setNickname(e.target.value)}
         ></CommonMyInput>
+        패스워드(유저 확인용)
+        <CommonMyInput
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        ></CommonMyInput>
       </InputContainer>
       <ButtonContainer>
-        <EditButton>수정</EditButton>
+        <EditButton onClick={EditData}>수정</EditButton>
         <DeleteButton>회원 탈퇴</DeleteButton>
       </ButtonContainer>
     </Div>
@@ -113,6 +126,10 @@ const ProfileImgContainer = styled.div`
   }
 
   input[type='file'] {
+    :hover {
+      background-color: black;
+      border-radius: 100%;
+    }
     position: absolute;
     width: 0;
     height: 0;
@@ -121,6 +138,20 @@ const ProfileImgContainer = styled.div`
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     border: 0;
+  }
+
+  :hover {
+    .wrapper {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-radius: 20px;
+      box-shadow: 1px 2px 5px gray;
+      transition: all 0.02s linear;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
   }
 `;
 

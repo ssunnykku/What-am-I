@@ -13,12 +13,6 @@ export interface ReviewsProps {
   userId?: string;
 }
 
-const tempValue = {
-  description: '댕댕',
-  images: 'temp.img',
-  reviewId: 3,
-};
-
 function Result() {
   const [reviews, setReviews] = useState<ReviewsProps[]>([]);
 
@@ -36,7 +30,6 @@ function Result() {
       {reviews?.map((value: ReviewsProps) => (
         <ResultCard value={value} key={value.reviewId} />
       ))}
-      <ResultCard value={tempValue} key={1} />
     </ResultContainer>
   );
 }
