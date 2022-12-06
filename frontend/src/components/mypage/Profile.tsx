@@ -11,6 +11,7 @@ import {
   EditUserImg,
   getUserData,
 } from '../../apis/mypageFetcher';
+import Storage from '../../storage/storage';
 
 function Profile() {
   const [profileImg, setProfileImg] = useState<string>('/');
@@ -38,6 +39,11 @@ function Profile() {
 
   async function EditData(e: any) {
     const response = await EditUserData(nickname, password);
+    response.statusText === 'OK'
+      ? (window.alert('성공적으로 수정하였습니다.'),
+        Storage.setNicknameItem(response.data.nickname),
+        location.reload())
+      : window.alert('수정에 실패하였습니다.');
     console.log(response);
   }
 
@@ -67,6 +73,7 @@ function Profile() {
         ></CommonMyInput>
         패스워드(유저 확인용)
         <CommonMyInput
+          type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         ></CommonMyInput>

@@ -1,5 +1,6 @@
 const USER_TOKEN = 'userToken';
 const USER_ID = 'userId';
+const NICKNAME = 'nickname';
 
 class Storage {
   static setTokenItem(token: string) {
@@ -8,12 +9,18 @@ class Storage {
   static setUserIdItem(userId: string) {
     sessionStorage.setItem(USER_ID, userId);
   }
+  static setNicknameItem(nickname: string) {
+    sessionStorage.setItem(NICKNAME, nickname);
+  }
 
   static getTokenItem() {
     return sessionStorage.getItem(USER_TOKEN);
   }
   static getUserIdItem() {
     return sessionStorage.getItem(USER_ID);
+  }
+  static getNicknameItem() {
+    return sessionStorage.getItem(NICKNAME);
   }
 
   static clearItemAll() {

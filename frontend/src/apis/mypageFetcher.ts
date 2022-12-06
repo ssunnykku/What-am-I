@@ -33,7 +33,8 @@ export async function EditUserData(nickname: string, password: string) {
       password,
     },
   );
-  return response.data;
+  console.log(response);
+  return response;
 }
 
 // 리뷰

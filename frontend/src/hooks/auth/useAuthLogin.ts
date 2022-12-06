@@ -24,6 +24,7 @@ const useAuthLogin = () => {
       if (res) {
         Storage.setTokenItem(res.token);
         Storage.setUserIdItem(res.userId);
+        Storage.setNicknameItem(res.nickname);
         window.location.replace('/');
       }
     },
