@@ -27,7 +27,9 @@ const useAuthRegister = () => {
         password,
         checkPassword,
       );
-      if (res) window.location.replace('/login');
+      if (res) {
+        window.location.replace('/login'), window.alert('회원가입 되었습니다.');
+      }
     },
     [],
   );

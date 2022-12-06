@@ -8,6 +8,8 @@ import {
   AuthFormButtonContainer,
 } from '../../assets/styles/common/commonComponentStyle';
 import { AuthCommonType } from '../../types/auth/authType';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 interface AuthLoginFormProps {
   register: UseFormRegister<AuthCommonType>;
@@ -50,10 +52,17 @@ const AuthLoginForm = ({
         )}
       </AuthFormInputContainer>
       <AuthFormButtonContainer>
-        <CommonMyButton type="submit">LOGIN</CommonMyButton>
+        <CommonMyButton type="submit">로그인</CommonMyButton>
+        <Link to="/register">
+          <CommonMyButton>회원가입</CommonMyButton>
+        </Link>
       </AuthFormButtonContainer>
     </AuthFormWrapper>
   );
 };
+
+const LoginButton = styled(CommonMyButton)``;
+
+// const AuthFormInputContainer = styled(AuthFormInputContainer)``;
 
 export default AuthLoginForm;
