@@ -35,6 +35,10 @@ class Review extends Sequelize.Model {
       foreignKey: 'reviewId',
       sourceKey: 'id',
     });
+    db.Review.hasMany(db.ReviewLike, {
+      foreignKey: 'reviewId',
+      sourceKey: 'id',
+    });
   }
 }
 

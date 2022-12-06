@@ -88,6 +88,10 @@ class User extends Sequelize.Model {
         foreignKey: 'userId',
         sourceKey: 'userId',
       });
+    db.User.hasMany(db.ReviewLike, {
+      foreignKey: 'userId',
+      sourceKey: 'userId',
+    });
   }
 }
 
