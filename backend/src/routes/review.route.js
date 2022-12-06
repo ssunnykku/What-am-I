@@ -12,7 +12,7 @@ reviewRouter.get('/reviews', reviewController.allReviews);
 // 리뷰 작성하기
 reviewRouter.post(
   '/review',
-  // loginRequired,
+  loginRequired,
   // upload.single('images'),
   reviewController.register,
 );
