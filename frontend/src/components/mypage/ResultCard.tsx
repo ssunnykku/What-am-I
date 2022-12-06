@@ -1,38 +1,30 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { font } from '../../assets/styles/common/fonts';
 import {
   EntryBtn,
   CreateBtn,
 } from '../../assets/styles/common/commonComponentStyle';
-import { dnaListProps } from './Result';
+import { ReviewsProps } from './Result';
+import { deleteUserReview, getUserReview } from '../../apis/mypageFetcher';
+import { useConfirm } from '../../hooks/confirm/useConfirm';
 
 interface receiveProps {
-  value: dnaListProps;
+  value: ReviewsProps;
 }
 
 function ResultCard(props: receiveProps) {
-  // 삭제버튼 클릭 시 확인창 함수
-  // TODO 확인창 함수를 공통컴포넌트로 뺄까?
-  const useConfirm = (message: any, onConfirm: any, onCancel: any) => {
-    if (!onConfirm || typeof onConfirm !== 'function') {
-      return;
-    }
-    if (onCancel && typeof onCancel !== 'function') {
-      return;
-    }
+  async function getReview() {
+    const response = await getUserReview(props.value.reviewId);
+    console.log(response);
+  }
+  async function deleteReview() {
+    const response = await deleteUserReview(props.value.reviewId);
+    console.log(response);
+  }
 
-    const confirmAction = () => {
-      if (window.confirm(message)) {
-        onConfirm();
-      } else {
-        onCancel();
-      }
-    };
-    return confirmAction;
-  };
-
-  const deleteConfirm = () => console.log('삭제했습니다.');
-  const cancelConfirm = () => console.log('취소했습니다.');
+  const deleteConfirm = () => (deleteReview(), window.alert('삭제했습니다.'));
+  const cancelConfirm = () => window.alert('취소했습니다.');
 
   const confirmDelete = useConfirm(
     '삭제하시겠습니까?',
@@ -41,12 +33,13 @@ function ResultCard(props: receiveProps) {
   );
   return (
     <CardContainer>
-      <Img src={props.value.img} alt="dog_img"></Img>
-      <Name>{props.value.name}</Name>
-      {/* TODO 마우스 호버 시 버튼 컴포넌트가 카드 앞에 등장하게끔 어떻게할까*/}
+      <Img src={props.value.images} alt="dog_img"></Img>
+      <Name>{props.value.description}</Name>
       <div className="wrapper">
         <ButtonContainer id="ButtonContainer">
-          <DetailButton color="#000000">상세</DetailButton>
+          <DetailButton color="#000000" onClick={getReview}>
+            상세
+          </DetailButton>
           <DeleteButton color="#ff0000" onClick={confirmDelete}>
             삭제
           </DeleteButton>

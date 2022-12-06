@@ -4,6 +4,7 @@ import { menus } from '../commonConst/NavConst';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import useDetectClose from '../../hooks/dropdown/useDetectClose';
+import Storage from '../../storage/storage';
 
 interface DropdownCssProps {
   isDropped: boolean;
@@ -11,6 +12,10 @@ interface DropdownCssProps {
 
 function NavBar() {
   const [myPageIsOpen, myPageRef, myPageHandler] = useDetectClose(false);
+
+  function onLogout() {
+    Storage.clearItemAll();
+  }
 
   return (
     <NavDiv>
@@ -26,25 +31,25 @@ function NavBar() {
           );
         })}
         <li id="profile">
-          <DropdownContainer>
-            <DropdownButton onClick={myPageHandler} ref={myPageRef}>
-              마이페이지
-            </DropdownButton>
-            <Menu isDropped={myPageIsOpen}>
-              <Ul>
-                <LinkWrapper to="/mypage" style={{ margin: '0' }}>
-                  <Li>
-                    {/* <Link to="/mypage" style={{ margin: '0' }}> */}
-                    마이페이지
-                    {/* </Link> */}
-                  </Li>
-                </LinkWrapper>
-                <LinkWrapper to="/login">
-                  <Li>로그아웃</Li>
-                </LinkWrapper>
-              </Ul>
-            </Menu>
-          </DropdownContainer>
+          {Storage.getTokenItem() ? (
+            <DropdownContainer>
+              <DropdownButton onClick={myPageHandler} ref={myPageRef}>
+                {Storage.getNicknameItem()} 님
+              </DropdownButton>
+              <Menu isDropped={myPageIsOpen}>
+                <Ul>
+                  <LinkWrapper to="/mypage" style={{ margin: '0' }}>
+                    <Li>마이페이지</Li>
+                  </LinkWrapper>
+                  <LinkWrapper onClick={onLogout} to="/">
+                    <Li>로그아웃</Li>
+                  </LinkWrapper>
+                </Ul>
+              </Menu>
+            </DropdownContainer>
+          ) : (
+            <Link to="/login">로그인</Link>
+          )}
         </li>
       </ul>
     </NavDiv>
