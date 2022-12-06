@@ -1,4 +1,3 @@
-import { Community } from '../models/Community.model';
 import { communityService } from '../services/community.service';
 
 class communityController {
