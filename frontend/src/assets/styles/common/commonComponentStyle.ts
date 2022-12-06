@@ -48,15 +48,23 @@ export const AuthFormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 1rem;
+  align-items: center;
+  gap: 20px;
+  margin-top: 1rem;
 `;
 
 export const AuthFormInputContainer = styled.div`
   width: 100%;
-  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
 `;
 
 export const AuthFormButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   width: 100%;
   margin-top: 1rem;
 `;
