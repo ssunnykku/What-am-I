@@ -1,31 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { createReviewRequest } from '../../apis/reviewFetcher';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import { ReviewInitialType } from '../../types/reviewboard/reviewType';
+import useModal from '../../hooks/modal/useModal';
+import { ReviewTypeProps } from '../modal/ContentsModal';
+import { editReviewRequest } from '../../apis/reviewFetcher';
 
-const WritingEditor = () => {
+const WritingEditor = (props: ReviewTypeProps) => {
   // resultcard를 가져 와야 함... 그러면 그냥 백엔드와 소통하지 않고 가져와도 되는 거 아닌가 ...?
   const [images, setImages] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
+  const [description, setDescription] = useState<string>(
+    props.review?.description ? props.review?.description : '',
+  );
   const [data, setData] = useState<ReviewInitialType[]>([]);
 
   const handleUploadResultCard = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
-  const handleWritingEditorClick = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // const descriptionChangeHandler = useCallback(
+  //   (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  //     let contents = e.target.value;
+  //     contents = contents.replaceAll('<br>', '\r\n');
+
+  //     setDescription(contents);
+  //   },
+  //   [],
+  // );
+
+  const handleWritingEditorClick = async () => {
     const res = await createReviewRequest('review', {
       description,
-      images: 'test.img',
+      images,
     });
     console.log(res);
   };
 
+  const handleEditMyReview = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    await editReviewRequest(`review/${props.review?.id}`, description);
+  };
+
   return (
-    <CreateModalWrapper onSubmit={handleWritingEditorClick}>
+    <CreateModalWrapper
+      onSubmit={(e: any) => {
+        props.mode === 'edit'
+          ? handleEditMyReview(e)
+          : handleWritingEditorClick();
+      }}
+    >
       <ModalHeader>
-        새 게시물 작성하기
+        게시물 작성하기
         <ModalHeaderBtn type="submit">공유하기</ModalHeaderBtn>
       </ModalHeader>
       <ModalContents>
@@ -36,7 +61,10 @@ const WritingEditor = () => {
           <div className="user-name">유저 프로필 사진 + 닉네임</div>
           <div className="writing">
             <textarea
-              placeholder="여러분의 댕댕이를 마음껏 자랑해주세요!"
+              maxLength={300}
+              // placeholder="여러분의 댕댕이를 마음껏 자랑해주세요!"
+              placeholder="여러분의 댕댕이가 궁금해요."
+              value={description}
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
           </div>
@@ -120,6 +148,7 @@ const AddWriting = styled.div`
       font-family: ${font.normal};
       line-height: 22px;
       resize: none;
+      white-space: pre-wrap;
     }
   }
 `;

@@ -8,15 +8,6 @@ import { useEffect } from 'react';
 
 function MainPage() {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    async function getData() {
-      const response = await axios.get('http://localhost:5001/reviews');
-      console.log(response);
-    }
-    getData();
-  }, []);
-
   return (
     <CommonWrapper>
       <MainContent>

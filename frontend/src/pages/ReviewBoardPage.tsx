@@ -4,23 +4,23 @@ import { SearchBox } from '../assets/styles/common/commonComponentStyle';
 import WritingModal from '../components/modal/WritingModal';
 import { theme } from '../assets/styles/common/palette';
 import { useEffect, useState } from 'react';
-import { getReviewsListRequest } from '../apis/reviewFetcher';
+import { getReviewRequest } from '../apis/reviewFetcher';
 import ContentsModal from '../components/modal/ContentsModal';
 import usePaginate from '../hooks/usePaginate/usePaginate';
 import { ReviewType } from '../types/reviewboard/reviewType';
 
 const ReviewBoardPage = () => {
   const [pages, setPages] = useState<number>(1);
-  const [data, setData] = useState<ReviewType[]>([]);
+  const [reviews, setReviews] = useState<ReviewType[]>([]);
   const [totalPages, setTotalPages] = useState<number>(1);
 
   const { isFirst, isLast, handleNextBtnClick, handlePrevBtnClick } =
     usePaginate(pages, setPages, totalPages, 1);
 
   const getReviews = async () => {
-    const res = await getReviewsListRequest(`reviews?page=${pages}`);
+    const res = await getReviewRequest(`reviews?page=${pages}`);
 
-    setData(res.result.selectedReviews);
+    setReviews(res.result.selectedReviews);
     setTotalPages(res.result.reviewCount);
   };
 
@@ -28,7 +28,7 @@ const ReviewBoardPage = () => {
 
   useEffect(() => {
     getReviews();
-  }, [handleNextBtnClick, handlePrevBtnClick, setData]);
+  }, [handleNextBtnClick, handlePrevBtnClick, setReviews]);
 
   return (
     <BoardBox>
@@ -39,7 +39,7 @@ const ReviewBoardPage = () => {
       <BoardContent>
         <SlideLeftBtn disabled={isFirst} onClick={handlePrevBtnClick} />
         <CardBox>
-          {data?.map((review, idx) => (
+          {reviews?.map((review, idx) => (
             <ContentsModal key={idx} review={review} />
           ))}
         </CardBox>

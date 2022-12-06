@@ -5,7 +5,7 @@ const AuthHeader = () => {
   return (
     <AuthHeaderWrapper>
       <AuthHeaderText>WELCOME</AuthHeaderText>
-      <AuthHeaderText2>DOGNA</AuthHeaderText2>
+      <AuthHeaderText2>나는뭐개🐶</AuthHeaderText2>
     </AuthHeaderWrapper>
   );
 };

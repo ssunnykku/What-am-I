@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Storage from '../storage/storage';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -6,12 +7,16 @@ export const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
+    // 'Authorization': Storage.getTokenItem(),
   },
   timeout: 3000,
 });
 
 axiosInstance.interceptors.request.use(
   (req) => {
+    // req.headers = {
+    //   'Autorization' : `Bearer ${sessionStorage.getItem('userToken')}`
+    // }
     return req;
   },
   (error) => {
