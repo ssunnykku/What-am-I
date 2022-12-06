@@ -7,21 +7,41 @@ class myPageService {
     // 전체 커뮤니티 수
     const communities = await Community.count({ where: { userId } });
 
-    const findUser = await Community.findAndCountAll({
+    const findUser = await Community.findAll({
       where: { userId },
       order: [['id', 'DESC']],
     });
     return findUser;
   }
 
-  static async getMyCommunities({ userId }) {
-    const findCommunities = await CommunityLike.findAll({
+  static async getMyCommunities({ userId, page }) {
+    const countCommunities = await CommunityLike.count({
       where: { userId: userId },
+    });
+    const sizePerPage = 10;
+    const totalPage = Math.ceil(countCommunities / 10);
+
+    const requestedPage = page * sizePerPage - 10;
+    const size =
+      requestedPage > totalPage
+        ? totalPage
+        : requestedPage <= 0
+        ? 0
+        : requestedPage;
+
+    const findCommunities = await CommunityLike.findAndCountAll({
+      where: { userId: userId },
+      attributes: {
+        exclude: ['id', 'userId', 'communityId', 'createdAt', 'updatedAt'],
+      },
+      limit: sizePerPage,
+      offset: size,
       include: {
         model: Community,
       },
       order: [['id', 'DESC']],
     });
+
     return findCommunities;
   }
 
