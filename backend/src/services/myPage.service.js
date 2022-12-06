@@ -1,6 +1,7 @@
 import { Community } from '../models/Community.model';
 import { CommunityLike } from '../models/CommunityLike.model';
 import { CommunityPost } from '../models/CommunityPost.model';
+import { sizePerPage } from '../utils/pagination';
 
 class myPageService {
   static async UserToCommunity({ userId }) {
@@ -18,24 +19,15 @@ class myPageService {
     const countCommunities = await CommunityLike.count({
       where: { userId: userId },
     });
-    const sizePerPage = 10;
-    const totalPage = Math.ceil(countCommunities / 10);
-
-    const requestedPage = page * sizePerPage - 10;
-    const size =
-      requestedPage > totalPage
-        ? totalPage
-        : requestedPage <= 0
-        ? 0
-        : requestedPage;
+    const limit = 10;
 
     const findCommunities = await CommunityLike.findAndCountAll({
       where: { userId: userId },
       attributes: {
         exclude: ['id', 'userId', 'communityId', 'createdAt', 'updatedAt'],
       },
-      limit: sizePerPage,
-      offset: size,
+      limit,
+      offset: sizePerPage(countCommunities, limit, page),
       include: {
         model: Community,
       },
