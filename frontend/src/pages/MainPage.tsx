@@ -3,8 +3,6 @@ import CommonWrapper from '../components/common/CommonWrapper';
 import styled, { keyframes } from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import { theme } from '../assets/styles/common/palette';
-import axios from 'axios';
-import { useEffect } from 'react';
 
 function MainPage() {
   const navigate = useNavigate();

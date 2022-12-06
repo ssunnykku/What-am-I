@@ -20,6 +20,7 @@ export async function createReviewRequest(
   // const res = await axiosInstance.post(endpoint, {
   //   headers: {
   //     'Content-Type': 'multipart/form-data',
+  //     Authorization: `Bearer ${Storage.getTokenItem()}`,
   //   },
   // });
   return res.data;
@@ -41,7 +42,7 @@ export async function getReviewRequest(endpoint: string) {
   const res = await axiosInstance.get(endpoint, {
     headers: {
       'Content-Type': 'application/json',
-      // Authorization: `Bearer ${Storage.getTokenItem()}`,
+      Authorization: `Bearer ${Storage.getTokenItem()}`,
     },
   });
   return res.data;
@@ -57,7 +58,7 @@ export async function editReviewRequest(endpoint: string, description: string) {
     {
       headers: {
         'Content-Type': 'application/json',
-        // Authorization: `Bearer ${Storage.getTokenItem()}`,
+        Authorization: `Bearer ${Storage.getTokenItem()}`,
       },
     },
   );
@@ -66,13 +67,10 @@ export async function editReviewRequest(endpoint: string, description: string) {
 
 // 리뷰 삭제
 export async function deleteReviewRequest(endpoint: string) {
-  const res = await axiosInstance.delete(
-    endpoint,
-    //   {
-    //   headers: {
-    //     Authorization: `Bearer ${Storage.getTokenItem()}`,
-    //   },
-    // }
-  );
+  const res = await axiosInstance.delete(endpoint, {
+    headers: {
+      Authorization: `Bearer ${Storage.getTokenItem()}`,
+    },
+  });
   return res.data;
 }

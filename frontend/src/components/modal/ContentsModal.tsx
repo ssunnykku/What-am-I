@@ -7,15 +7,17 @@ import { ReviewType } from '../../types/reviewboard/reviewType';
 export interface ReviewTypeProps {
   review?: ReviewType;
   mode?: string;
+  getReviews?: () => Promise<void>;
+  modalHandler?: () => void;
 }
 
-const ContentsModal = ({ review }: ReviewTypeProps) => {
+const ContentsModal = ({ review, getReviews }: ReviewTypeProps) => {
   const [isOpen, modalHandler] = useModal();
 
   return (
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
-        <ContentsViewer review={review} />
+        <ContentsViewer review={review} getReviews={getReviews} />
       </MyModal>
       <PuppyCard onCardModalClickEvent={modalHandler}></PuppyCard>
     </>

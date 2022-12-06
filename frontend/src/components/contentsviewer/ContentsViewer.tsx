@@ -14,8 +14,9 @@ import {
 import MyModal from '../modal/MyModal';
 import useModal from '../../hooks/modal/useModal';
 import WritingEditor from '../writingeditor/WritingEditor';
-import { useNavigate } from 'react-router-dom';
 import { ReviewCommentType } from '../../types/reviewboard/reviewType';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const ContentsViewer = (props: ReviewTypeProps) => {
   // 그럼 필요한 거 아이디 프롭스로 보내기
@@ -27,8 +28,6 @@ const ContentsViewer = (props: ReviewTypeProps) => {
   const [comments, setComments] = useState<ReviewCommentType[]>([]);
   const [date, setDate] = useState(props.review?.createdAt);
   const newDate = date?.split(' ')[0];
-
-  const navigate = useNavigate();
 
   // 리뷰 전체 댓글 가져오기
   const getReviewComments = async () => {
@@ -50,6 +49,7 @@ const ContentsViewer = (props: ReviewTypeProps) => {
       `reviewComment/${props.review?.id}?page=${pages}`,
     );
     setComments(res.reverse());
+    console.log(res);
     setDescription('');
   };
 
@@ -60,8 +60,17 @@ const ContentsViewer = (props: ReviewTypeProps) => {
   // 리뷰 수정
   const handleEditMyReview = async (e: React.MouseEvent) => {
     e.preventDefault();
-    await editReviewRequest(`review/${props.review?.id}`, description);
+    const res = await editReviewRequest(
+      `review/${props.review?.id}`,
+      description,
+    );
   };
+
+  useEffect(() => {
+    if (props.getReviews) {
+      props.getReviews();
+    }
+  }, [isOpen]);
 
   // 리뷰 삭제
   const handleDeleteMyReview = async () => {
@@ -74,10 +83,41 @@ const ContentsViewer = (props: ReviewTypeProps) => {
     // }
   };
 
+  // 댓글 수정
+  const handleEditMyComment = async (
+    e: React.MouseEvent,
+    comment: ReviewCommentType,
+  ) => {
+    e.preventDefault();
+    const res = await editReviewRequest(
+      `reviewComment/${comment.id}`,
+      description,
+    );
+  };
+
+  // 댓글 삭제
+  const handleDeleteMyComment = async (
+    e: React.MouseEvent,
+    comment: ReviewCommentType,
+  ) => {
+    e.preventDefault();
+    await deleteReviewRequest(`reviewComment/${comment.id}
+    `);
+
+    const result = await getReviewRequest(
+      `reviewComment/${props.review?.id}?page=${pages}`,
+    );
+    setComments(result.reverse());
+  };
+
   return (
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
-        <WritingEditor review={props.review} mode="edit" />
+        <WritingEditor
+          review={props.review}
+          mode="edit"
+          modalHandler={modalHandler}
+        />
       </MyModal>
       <ContentsModalWrapper>
         <AddImage></AddImage>
@@ -102,6 +142,14 @@ const ContentsViewer = (props: ReviewTypeProps) => {
             {comments?.map((comment) => (
               <div key={comment.id} className="user-comments">
                 {comment.description}
+                <BtnContainer className="btn-box">
+                  <button onClick={(e) => handleEditMyComment(e, comment)}>
+                    <EditIcon />
+                  </button>
+                  <button onClick={(e) => handleDeleteMyComment(e, comment)}>
+                    <DeleteIcon />
+                  </button>
+                </BtnContainer>
               </div>
             ))}
           </ContentsBox>
@@ -179,13 +227,46 @@ const ContentsBox = styled.div`
   .user-contents {
     border-bottom: solid 1px lightgray;
     padding-bottom: 10px;
+    margin-bottom: 5px;
     line-height: 22px;
   }
 
   .user-comments {
-    padding-top: 10px;
+    display: inline-flex;
+    justify-content: space-between;
+    position: relative;
+    padding: 5px 0px;
     width: 100%;
     line-height: 20px;
+
+    :hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    :hover .btn-box {
+      visibility: visible;
+    }
+  }
+`;
+
+const BtnContainer = styled.div`
+  visibility: hidden;
+  display: inline-flex;
+  flex-direction: row;
+  /* justify-content: flex-end; */
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+
+  button {
+    border: 0;
+    background: 0;
+    cursor: pointer;
+    font-size: small;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
   }
 `;
 

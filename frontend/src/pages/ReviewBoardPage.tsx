@@ -24,8 +24,6 @@ const ReviewBoardPage = () => {
     setTotalPages(res.result.reviewCount);
   };
 
-  // 아예 최신순으로 뒤집어진 걸 8개로 잘라서 보내주면? 애초에 백엔드에서 그렇게 보내주면 안 되나?
-
   useEffect(() => {
     getReviews();
   }, [handleNextBtnClick, handlePrevBtnClick, setReviews]);
@@ -40,7 +38,7 @@ const ReviewBoardPage = () => {
         <SlideLeftBtn disabled={isFirst} onClick={handlePrevBtnClick} />
         <CardBox>
           {reviews?.map((review, idx) => (
-            <ContentsModal key={idx} review={review} />
+            <ContentsModal key={idx} review={review} getReviews={getReviews} />
           ))}
         </CardBox>
         <SlideRightBtn disabled={isLast} onClick={handleNextBtnClick} />
