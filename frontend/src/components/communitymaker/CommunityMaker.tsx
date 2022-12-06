@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { createCommunityRequest } from '../../apis/communityFetcher';
+import { createCommuRequest } from '../../apis/communityFetcher';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 
@@ -9,9 +9,9 @@ import { theme } from '../../assets/styles/common/palette';
 // 일단 alert으로 일러주기
 
 const CommunityMaker = () => {
-  const [communityImage, setCommunityImage] = useState<any>(
-    `${import.meta.env.VITE_PUBLIC_URL}/img/default_image3.png`,
-  );
+  const [communityImage, setCommunityImage] = useState<
+    string | ArrayBuffer | null
+  >(`${import.meta.env.VITE_PUBLIC_URL}/img/default_image3.png`);
   const [name, setName] = useState<string>('');
   const [introduction, setIntroduction] = useState<string>('');
 
@@ -41,19 +41,20 @@ const CommunityMaker = () => {
     }
   };
 
-  const handleCreateCommuFormClick = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const res = await createCommunityRequest('communities', {
-      name,
-      communityImage,
-      introduction,
-    });
-    console.log(res);
-    // navigate('/likedcommunity');
-  };
+  // const handleCreateCommuFormClick = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   await createCommuRequest('community', {
+  //     name,
+  //     communityImage,
+  //     introduction,
+  //   });
+  //   // console.log(res.data);
+  //   // navigate('/likedcommunity');
+  // onSubmit={handleCreateCommuFormClick}
+  // };
 
   return (
-    <CommuMakeModalWrapper onSubmit={handleCreateCommuFormClick}>
+    <CommuMakeModalWrapper>
       <ModalHeader>커뮤니티 만들기</ModalHeader>
       <ModalContent>
         <AddImage>
@@ -190,7 +191,7 @@ const AddName = styled.div`
     border: solid 1px black;
     width: 15rem;
     height: 2rem;
-    margin-left: 35px;
+    margin-left: 30px;
     font-size: 15px;
     font-family: ${font.normal};
   }
