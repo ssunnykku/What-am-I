@@ -9,7 +9,6 @@ class myPageService {
 
     const findUser = await Community.findAndCountAll({
       where: { userId },
-
       order: [['id', 'DESC']],
     });
     return findUser;

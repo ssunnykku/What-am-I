@@ -7,8 +7,6 @@ class myPageController {
       const userId = req.currentUserId;
       const getCommunities = await myPageService.UserToCommunity({
         userId,
-        page,
-        size,
       });
 
       return res.status(200).send(getCommunities);
