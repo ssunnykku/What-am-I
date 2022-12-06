@@ -9,6 +9,7 @@ export async function createCommunityRequest(
   formData.append('name', name);
   formData.append('introduction', introduction);
   formData.append('communityImage', communityImage as File);
+
   const res = await axiosInstance.post(endpoint, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',

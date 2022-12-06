@@ -9,12 +9,10 @@ import { ReviewTypeProps } from '../modal/ContentsModal';
 import { editReviewRequest } from '../../apis/reviewFetcher';
 
 const WritingEditor = (props: ReviewTypeProps) => {
-  // resultcard를 가져 와야 함... 그러면 그냥 백엔드와 소통하지 않고 가져와도 되는 거 아닌가 ...?
   const [images, setImages] = useState<string>('');
   const [description, setDescription] = useState<string>(
     props.review?.description ? props.review?.description : '',
   );
-  const [data, setData] = useState<ReviewInitialType[]>([]);
 
   const handleUploadResultCard = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
@@ -39,38 +37,43 @@ const WritingEditor = (props: ReviewTypeProps) => {
   const handleEditMyReview = async (e: React.MouseEvent) => {
     e.preventDefault();
     await editReviewRequest(`review/${props.review?.id}`, description);
+
+    if (props.modalHandler) {
+      props.modalHandler();
+    }
   };
 
   return (
-    <CreateModalWrapper
-      onSubmit={(e: any) => {
-        props.mode === 'edit'
-          ? handleEditMyReview(e)
-          : handleWritingEditorClick();
-      }}
-    >
-      <ModalHeader>
-        게시물 작성하기
-        <ModalHeaderBtn type="submit">공유하기</ModalHeaderBtn>
-      </ModalHeader>
-      <ModalContents>
-        <AddImage>
-          <div>{images}</div>
-        </AddImage>
-        <AddWriting>
-          <div className="user-name">유저 프로필 사진 + 닉네임</div>
-          <div className="writing">
-            <textarea
-              maxLength={300}
-              // placeholder="여러분의 댕댕이를 마음껏 자랑해주세요!"
-              placeholder="여러분의 댕댕이가 궁금해요."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            ></textarea>
-          </div>
-        </AddWriting>
-      </ModalContents>
-    </CreateModalWrapper>
+    <>
+      <CreateModalWrapper
+        onSubmit={(e: any) => {
+          props.mode === 'edit'
+            ? handleEditMyReview(e)
+            : handleWritingEditorClick();
+        }}
+      >
+        <ModalHeader>
+          게시물 작성하기
+          <ModalHeaderBtn type="submit">공유하기</ModalHeaderBtn>
+        </ModalHeader>
+        <ModalContents>
+          <AddImage>
+            <div>{images}</div>
+          </AddImage>
+          <AddWriting>
+            <div className="user-name">유저 프로필 사진 + 닉네임</div>
+            <div className="writing">
+              <textarea
+                maxLength={300}
+                placeholder="여러분의 댕댕이가 궁금해요."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              ></textarea>
+            </div>
+          </AddWriting>
+        </ModalContents>
+      </CreateModalWrapper>
+    </>
   );
 };
 

@@ -47,7 +47,7 @@ const AITestPage = () => {
               </div>
               <input
                 className="upload-name"
-                placeholder={imgName ? imgName : '김댕댕 사진'}
+                placeholder={imgName ? imgName : '임펩시 사진'}
               />
               <input
                 type="file"
@@ -59,7 +59,7 @@ const AITestPage = () => {
               <div style={{ marginTop: '15px', fontSize: '18px' }}>
                 강아지 이름
               </div>
-              <input type="text" className="puppy-name" placeholder="김댕댕" />
+              <input type="text" className="puppy-name" placeholder="임펩시" />
             </div>
             <TestBtn onClick={() => navigate('/dnaresult')}>
               AI로 종 분석하기

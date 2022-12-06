@@ -4,6 +4,7 @@ export interface ReviewInitialType {
 }
 
 export interface ReviewCommentType {
+  reviewCommentId: number;
   description: string;
   id: number;
   reviewId: number;
