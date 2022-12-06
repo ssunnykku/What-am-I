@@ -1,7 +1,7 @@
 import { axiosInstance } from '../utils/axiosInstance';
 
 export const authLoginRequest = async (email: string, password: string) => {
-  const res = await axiosInstance.post('/login', {
+  const res = await axiosInstance.post('login', {
     email,
     password,
   });

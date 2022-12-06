@@ -23,6 +23,7 @@ const useAuthLogin = () => {
       const res = await authLoginRequest(email, password);
       if (res) {
         Storage.setTokenItem(res.token);
+        Storage.setUserIdItem(res.userId);
         window.location.replace('/');
       }
     },
