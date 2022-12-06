@@ -1,34 +1,34 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { getUserReviews } from '../../apis/mypageFetcher';
 import ResultCard from './ResultCard';
 
-export interface dnaListProps {
-  id: number;
-  img: string;
-  name: string;
-  dna: string;
+export interface ReviewsProps {
+  reviewId: number;
+  description: string;
+  images: string;
+  createdAt?: string;
+  updatedAt?: string;
+  userId?: string;
 }
 
 function Result() {
-  const [dnaList, setDnaList] = useState<dnaListProps[]>([]);
+  const [reviews, setReviews] = useState<ReviewsProps[]>([]);
+
   useEffect(() => {
-    async function getDNA() {
-      try {
-        const response = await axios.get('./mockdata/MyDNA.json');
-        setDnaList(response.data.data);
-        console.log(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
+    async function getReviews() {
+      const response = await getUserReviews();
+      setReviews(response);
+      console.log(response);
     }
-    getDNA();
+    getReviews();
   }, []);
 
   return (
     <ResultContainer>
-      {dnaList?.map((value: dnaListProps) => (
-        <ResultCard value={value} key={value.id} />
+      {reviews?.map((value: ReviewsProps) => (
+        <ResultCard value={value} key={value.reviewId} />
       ))}
     </ResultContainer>
   );

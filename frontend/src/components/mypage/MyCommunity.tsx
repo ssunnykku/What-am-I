@@ -1,29 +1,21 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { getUserCommunites } from '../../apis/mypageFetcher';
+import { CommunityProps } from './Community';
 import CommunityCard from './CommunityCard';
-
-export interface CommunityProps {
-  id: number;
-  img: string;
-  title: string;
-}
 
 function MyCommunity() {
   const [communityLists, setCommunityLists] = useState<CommunityProps[]>([]);
 
   useEffect(() => {
-    async function getLists() {
-      try {
-        const response = await axios.get('./mockdata/MyCommunity.json');
-        setCommunityLists(response.data.data);
-        console.log(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
+    async function getData() {
+      const response = await getUserCommunites();
+      setCommunityLists(response);
     }
-    getLists();
+    getData();
   }, []);
+
   return (
     <Div>
       {communityLists.map((value) => (
