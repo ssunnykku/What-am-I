@@ -18,8 +18,9 @@ class myPageService {
   static async getMyCommunities({ userId }) {
     const findCommunities = await CommunityLike.findAll({
       where: { userId: userId },
-      limit,
-      offset,
+      include: {
+        model: Community,
+      },
       order: [['id', 'DESC']],
     });
     return findCommunities;
