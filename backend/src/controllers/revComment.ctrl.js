@@ -2,7 +2,7 @@ import { reviewCommentService } from '../services/revComment.service';
 // import Joi from 'joi';
 
 class reviewCommentController {
-  static async reviewComments(req, res, next) {
+  static async newReviewComments(req, res, next) {
     try {
       const userId = req.currentUserId;
       const reviewId = req.params.reviewId;
@@ -13,8 +13,9 @@ class reviewCommentController {
         reviewId,
         userId,
       });
+
       if (reviewComment.errorMessage) {
-        throw new Error(reviewComment, errorMessage);
+        throw new Error(reviewComment);
       }
       return res.status(201).json(reviewComment);
     } catch (error) {
@@ -22,7 +23,7 @@ class reviewCommentController {
     }
   }
 
-  static async showComments(req, res, next) {
+  static async showReviewComments(req, res, next) {
     try {
       const _reviewId = req.params.reviewId;
       console.log(_reviewId);
@@ -31,7 +32,7 @@ class reviewCommentController {
         _reviewId,
       });
       if (reviewComments.errorMessage) {
-        throw new Error(reviewComments, errorMessage);
+        throw new Error(reviewComments);
       }
       return res.status(200).json(reviewComments);
     } catch (error) {
@@ -51,7 +52,7 @@ class reviewCommentController {
       });
 
       if (reviewComment.errorMessage) {
-        throw new Error(reviewComment, errorMessage);
+        throw new Error(reviewComment);
       }
 
       const message = await reviewCommentService.findMessage({
@@ -75,7 +76,7 @@ class reviewCommentController {
         userId,
       });
       if (deleteComment.errorMessage) {
-        throw new Error(deleteComment, errorMessage);
+        throw new Error(deleteComment);
       }
       return res.status(200).json(deleteComment);
     } catch (error) {

@@ -7,7 +7,7 @@ class communityPostController {
   static async addPost(req, res, next) {
     try {
       const userId = req.currentUserId;
-      // const userId = req.currentUserId;
+
       const communityId = req.params.communityId;
       const images = req.file.location;
 
@@ -19,7 +19,7 @@ class communityPostController {
         communityId,
       });
       if (newPost.errorMessage) {
-        throw new Error(newPost, errorMessage);
+        throw new Error(newPost);
       }
       return res.status(201).json(newPost);
     } catch (error) {
@@ -44,7 +44,7 @@ class communityPostController {
           communityId,
         );
       if (selectedCommunityPost.errorMessage) {
-        throw new Error(selectedCommunityPost, errorMessage);
+        throw new Error(selectedCommunityPost);
       }
       return res
         .status(200)
@@ -72,7 +72,7 @@ class communityPostController {
         });
 
       if (updateCommunityPost.errorMessage) {
-        throw new Error(updateCommunityPost, errorMessage);
+        throw new Error(updateCommunityPost);
       }
 
       const message = await communityPostService.findCommunityPost({
@@ -98,7 +98,7 @@ class communityPostController {
           userId,
         });
       if (deleteCommunityPost.errorMessage) {
-        throw new Error(deleteCommunityPost, errorMessage);
+        throw new Error(deleteCommunityPost);
       }
       return res.status(200).json(deleteCommunityPost);
     } catch (error) {

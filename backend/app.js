@@ -17,6 +17,8 @@ import { communityPostRouter } from './src/routes/communityPost.route';
 import { userRouter } from './src/routes/user.router';
 import { reviewRouter } from './src/routes/review.route';
 import { reviewCommentRouter } from './src/routes/revComment.route';
+import { reviewLikeRouter } from './src/routes/reviewLike.route.js';
+
 import { myPageRouter } from './src/routes/myPage.route';
 import { communityLikeRouter } from './src/routes/communityLike.route';
 
@@ -44,6 +46,8 @@ app.use(userRouter);
 app.use(communityPostRouter);
 app.use(reviewRouter);
 app.use(reviewCommentRouter);
+app.use(reviewLikeRouter);
+
 app.use('/communities', communityRouter);
 app.use(myPageRouter);
 app.use(communityLikeRouter);

@@ -17,7 +17,7 @@ class reviewController {
       // console.log();
 
       if (selectedReviews.errorMessage) {
-        throw new Error(selectedReviews, errorMessage);
+        throw new Error(selectedReviews);
       }
       return res.status(200).json({ result: { reviewCount, selectedReviews } });
     } catch (error) {
@@ -39,8 +39,7 @@ class reviewController {
         userId,
       });
       if (newReview.errorMessage) {
-        throw new Error(newReview, errorMessage);
-        // console.log(newUser.errorMessage);
+        throw new Error(newReview);
       }
       return res.status(201).json(newReview);
     } catch (error) {
@@ -57,7 +56,7 @@ class reviewController {
         userId,
       });
       if (myReviews.errorMessage) {
-        throw new Error(myReviews, errorMessage);
+        throw new Error(myReviews);
       }
       return res.status(200).json(myReviews);
     } catch (error) {
@@ -74,7 +73,7 @@ class reviewController {
         _id,
       });
       if (comments.errorMessage) {
-        throw new Error(comments, errorMessage);
+        throw new Error(comments);
       }
       return res.status(200).json(comments);
     } catch (error) {
@@ -97,7 +96,7 @@ class reviewController {
       });
 
       if (updateReview.errorMessage) {
-        throw new Error(updateReview, errorMessage);
+        throw new Error(updateReview);
       }
 
       const message = await reviewService.findMessage({
@@ -120,7 +119,7 @@ class reviewController {
         userId,
       });
       if (deleteReview.errorMessage) {
-        throw new Error(deleteReview, errorMessage);
+        throw new Error(deleteReview);
       }
       return res.status(200).json(deleteReview);
     } catch (error) {
