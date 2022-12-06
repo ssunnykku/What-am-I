@@ -6,7 +6,7 @@ import { Session } from './Session.model';
 import { Review } from './Review.model.js';
 import { ReviewComment } from './ReviewComment.model.js';
 
-import { Like } from './Like.model';
+import { ReviewLike } from './ReviewLike.model';
 import { Community } from './Community.model';
 import { CommunityPost } from './CommunityPost.model';
 import { CommunityComment } from './CommunityComment.model';
@@ -19,7 +19,7 @@ db.sequelize = sequelize;
 
 db.User = User;
 db.Review = Review;
-db.Like = Like;
+db.ReviewLike = ReviewLike;
 db.ReviewComment = ReviewComment;
 db.Community = Community;
 db.CommunityPost = CommunityPost;
@@ -29,7 +29,7 @@ db.CommunityLike = CommunityLike;
 User.init(sequelize);
 Session.init(sequelize);
 Review.init(sequelize);
-Like.init(sequelize);
+ReviewLike.init(sequelize);
 ReviewComment.init(sequelize);
 Community.init(sequelize);
 CommunityPost.init(sequelize);
@@ -43,5 +43,6 @@ User.associate(db);
 CommunityLike.associate(db);
 Review.associate(db);
 ReviewComment.associate(db);
+ReviewLike.associate(db);
 
 export { db };

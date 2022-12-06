@@ -25,9 +25,9 @@ class reviewCommentService {
     }
   }
 
-  static async findMessage({ reviewCommentId, userId }) {
+  static async findMessage({ id, userId }) {
     const comment = await ReviewComment.findOne({
-      where: { reviewCommentId: reviewCommentId, userId: userId },
+      where: { id: id, userId: userId },
     });
     if (!comment) {
       const errorMessage = '댓글이 없습니다';
@@ -37,11 +37,11 @@ class reviewCommentService {
     }
   }
 
-  static async updateComment({ description, reviewCommentId, userId }) {
+  static async updateComment({ description, id, userId }) {
     //db검색
 
     const descriptionId = await ReviewComment.findOne({
-      where: { reviewCommentId: reviewCommentId, userId: userId },
+      where: { id: id, userId: userId },
     });
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!descriptionId) {
@@ -53,7 +53,7 @@ class reviewCommentService {
     if (descriptionId) {
       const updateComment = await ReviewComment.update(
         { description: description },
-        { where: { reviewCommentId: reviewCommentId, userId: userId } },
+        { where: { id: id, userId: userId } },
       );
       updateComment.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
@@ -61,11 +61,11 @@ class reviewCommentService {
     }
   }
 
-  static async deleteComment({ reviewCommentId, userId }) {
-    const id = await ReviewComment.destroy({
-      where: { reviewCommentId: reviewCommentId, userId: userId },
+  static async deleteComment({ id, userId }) {
+    const id_ = await ReviewComment.destroy({
+      where: { id: id, userId: userId },
     });
-    if (!id) {
+    if (!id_) {
       const errorMessage = '댓글이 없습니다';
       return errorMessage;
     } else {

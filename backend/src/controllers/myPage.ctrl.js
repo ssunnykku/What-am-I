@@ -3,9 +3,11 @@ import { myPageService } from '../services/myPage.service';
 class myPageController {
   static async getMyCommunities(req, res, next) {
     try {
+      // const { page } = req.query;
       const userId = req.currentUserId;
-      const getCommunities = await myPageService.UserToCommunity({ userId });
-
+      const getCommunities = await myPageService.UserToCommunity({
+        userId,
+      });
       return res.status(200).send(getCommunities);
     } catch (error) {
       next(error);
@@ -15,7 +17,12 @@ class myPageController {
   static async getLikedCommunities(req, res, next) {
     try {
       const userId = req.currentUserId;
-      const likedCommunities = await myPageService.getMyCommunities({ userId });
+      // const page = 1;
+      const { page } = req.query;
+      const likedCommunities = await myPageService.getMyCommunities({
+        userId,
+        page,
+      });
       return res.status(200).send(likedCommunities);
     } catch (error) {
       next(error);

@@ -1,7 +1,4 @@
-import {
-  ReviewCommentType,
-  ReviewInitialType,
-} from '../types/reviewboard/reviewType';
+import { ReviewInitialType } from '../types/reviewboard/reviewType';
 import axiosInstance from '../utils/axiosInstance';
 import Storage from '../storage/storage';
 
@@ -31,40 +28,20 @@ export async function createReviewRequest(
 // 리뷰 창에서 댓글 달기
 export async function createReviewCommentRequest(
   endpoint: string,
-  description: ReviewCommentType,
+  description: string,
 ) {
   const res = await axiosInstance.post(endpoint, {
-    description: description,
+    description,
   });
   return res.data;
 }
 
-// 리뷰 전체 불러오기
-export async function getReviewsListRequest(endpoint: string) {
+// 리뷰 불러오기
+export async function getReviewRequest(endpoint: string) {
   const res = await axiosInstance.get(endpoint, {
     headers: {
       'Content-Type': 'application/json',
       // Authorization: `Bearer ${Storage.getTokenItem()}`,
-    },
-  });
-  return res.data;
-}
-
-// // 리뷰 하나 클릭하면 하나 가져오기
-export async function getOneReviewRequest(endpoint: string) {
-  const res = await axiosInstance.get(endpoint, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  return res.data;
-}
-
-// 리뷰 댓글 불러오기
-export async function getReviewCommentsRequest(endpoint: string) {
-  const res = await axiosInstance.get(endpoint, {
-    headers: {
-      'Content-Type': 'application/json',
     },
   });
   return res.data;
@@ -80,19 +57,22 @@ export async function editReviewRequest(endpoint: string, description: string) {
     {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${Storage.getTokenItem()}`,
+        // Authorization: `Bearer ${Storage.getTokenItem()}`,
       },
     },
   );
   return res.data;
 }
 
-// 댓글 삭제
+// 리뷰 삭제
 export async function deleteReviewRequest(endpoint: string) {
-  const res = await axiosInstance.delete(endpoint, {
-    headers: {
-      Authorization: `Bearer ${Storage.getTokenItem()}`,
-    },
-  });
+  const res = await axiosInstance.delete(
+    endpoint,
+    //   {
+    //   headers: {
+    //     Authorization: `Bearer ${Storage.getTokenItem()}`,
+    //   },
+    // }
+  );
   return res.data;
 }

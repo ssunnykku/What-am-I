@@ -14,27 +14,24 @@ class communityPostService {
     return createPost;
   }
 
-  // static async addCommunityImage({ communityImage, userId, id }) {
-  //   const updateImage = await CommunityPost.update(
-  //     { communityImage: communityImage },
-  //     {
-  //       where: { userId, id },
-  //     },
-  //   );
-  //   return updateImage;
-  // }
-
   static async communityPostCount(communityId) {
-    console.log('communityId', communityId);
-    const communityPostCount = await CommunityPost.findAll({
-      attributes: [communityId],
+    const { count, rows } = await CommunityPost.findAndCountAll({
+      where: {
+        communityId: { communityId },
+      },
+      // offset: 10,
+      // limit: 2
+    });
+    console.log('count:', count);
+    console.log('rows', rows);
+
+    const communityPostCount = await CommunityPost.count({
       where: {
         communityId: communityId,
       },
     });
-    console.log(communityPostCount);
+    console.log('1:', communityPostCount);
 
-    // const communityPostCount = await CommunityPost.findAndCountAll(where: { communityId:  {communityId} },);
     if (communityPostCount % COMMUNITYPOST_PER_PAGE === 0) {
       return communityPostCount / COMMUNITYPOST_PER_PAGE;
     } else {
@@ -44,11 +41,13 @@ class communityPostService {
 
   static async selectCommunityPost(defaultPage, communityId) {
     const selectedCommunityPost = await CommunityPost.findAll({
-      where: { communityId: { communityId } },
+      where: { communityId: communityId },
+      order: [['id', 'DESC']],
 
       offset: (defaultPage - 1) * COMMUNITYPOST_PER_PAGE,
       limit: COMMUNITYPOST_PER_PAGE,
     });
+    console.log('????', selectedCommunityPost);
 
     if (!selectedCommunityPost) {
       throw ApiError.setBadRequest('No community available');
@@ -59,9 +58,11 @@ class communityPostService {
 
   static async updateCommunityPost({ images, description, id, userId }) {
     //db검색
+
     const updateCommunityPost = await CommunityPost.findOne({
       where: { id: id, userId: userId },
     });
+
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!updateCommunityPost) {
       const errorMessage = '등록한 글이 없습니다. 다시 한 번 확인해 주세요.';
@@ -74,7 +75,7 @@ class communityPostService {
           images: images,
           description: description,
         },
-        { where: { id: id } },
+        { where: { id: id, userId: userId } },
       );
       updateCommunityPost.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 

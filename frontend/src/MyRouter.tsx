@@ -1,5 +1,9 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as BrowserRouter,
+  Routes,
+  Route,
+} from 'react-router-dom';
 import CustomSpinner from './components/loader/CustomSpinner';
 import NavBar from './components/nav/NavBar';
 

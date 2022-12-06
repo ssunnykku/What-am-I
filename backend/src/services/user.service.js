@@ -8,7 +8,7 @@ class userService {
 
     if (user) {
       const errorMessage = '사용중인 이메일입니다.';
-      return { errorMessage };
+      return errorMessage;
     }
 
     if (password !== checkPassword) {

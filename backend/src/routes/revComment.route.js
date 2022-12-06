@@ -8,13 +8,13 @@ const reviewCommentRouter = Router();
 reviewCommentRouter.post(
   '/reviewComment/:reviewId',
   loginRequired,
-  reviewCommentController.reviewComments,
+  reviewCommentController.newReviewComments,
 );
 //게시물(리뷰)에 댓글 전부 다 보기
 reviewCommentRouter.get(
   '/reviewComment/:reviewId',
   loginRequired,
-  reviewCommentController.showComments,
+  reviewCommentController.showReviewComments,
 );
 //내가 쓴 리뷰 수정
 reviewCommentRouter.put(
