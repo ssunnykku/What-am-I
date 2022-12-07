@@ -107,6 +107,7 @@ class communityController {
 
   static async getFoundCommunities(req, res, next) {
     try {
+      const userId = req.currentUserId;
       const search = req.query.data;
       const searchedData = await communityService.searchedCommunities({
         search,
