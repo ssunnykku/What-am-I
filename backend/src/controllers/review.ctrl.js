@@ -126,6 +126,22 @@ class reviewController {
       return next(error);
     }
   }
+
+  static async getFoundReviews(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const search = req.query.data;
+      const foundReviews = await reviewService.searchReviews({
+        search,
+      });
+      if (foundReviews.errorMessage) {
+        throw new Error(foundReviews, errorMessage);
+      }
+      res.status(200).json(foundReviews);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export { reviewController };

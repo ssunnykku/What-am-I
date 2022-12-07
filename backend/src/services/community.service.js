@@ -123,10 +123,9 @@ class communityService {
       return message;
     }
   }
-  // [Op.and]: [{a: 5}, {b: 6}] // (a = 5) AND (b = 6)
-  // [Op.or]: [{a: 5}, {a: 6}]  // (a = 5 OR a = 6)
+
   static async searchedCommunities({ search }) {
-    const searchResult = await Community.findAll({
+    const searchResult = await Community.findAndCountAll({
       where: {
         [Op.or]: [
           {

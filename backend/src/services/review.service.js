@@ -121,6 +121,22 @@ class reviewService {
       return message;
     }
   }
+
+  static async searchReviews({ search }) {
+    const searchResult = await Review.findAndCountAll({
+      where: {
+        description: {
+          [Op.like]: `%${search}%`,
+        },
+      },
+      order: [['id', 'DESC']],
+    });
+    if (searchResult.length === 0) {
+      const errorMessage = `Cannot find information about '${search}' `;
+      return errorMessage;
+    }
+    return searchResult;
+  }
 }
 
 export { reviewService };

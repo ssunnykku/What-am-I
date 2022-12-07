@@ -41,4 +41,10 @@ reviewRouter.delete(
   reviewController.deleteReview,
 );
 
+reviewRouter.get(
+  '/review/search',
+  loginRequired,
+  reviewController.getFoundReviews,
+);
+
 export { reviewRouter };
