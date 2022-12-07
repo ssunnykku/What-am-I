@@ -3,11 +3,13 @@ import { myPageService } from '../services/myPage.service';
 class myPageController {
   static async getMyCommunities(req, res, next) {
     try {
-      // const { page } = req.query;
+      const { page } = req.query;
       const userId = req.currentUserId;
       const getCommunities = await myPageService.UserToCommunity({
         userId,
+        page,
       });
+
       return res.status(200).send(getCommunities);
     } catch (error) {
       next(error);
@@ -38,8 +40,11 @@ class myPageController {
         userId,
         communityId,
       });
+      if (myPosts.errorMessage) {
+        throw new Error(myPosts, errorMessage);
+      }
 
-      return res.status(200).send(myPosts);
+      return res.status(200).json(myPosts);
     } catch (error) {
       next(error);
     }
