@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import { EditDelBtn } from '../../assets/styles/common/commonComponentStyle';
 import LikeBtn from '../common/LikeBtn';
-import { ReviewTypeProps } from '../modal/ContentsModal';
+import { ReviewTypeProps } from '../modal/ReviewContentsModal';
 import {
   createReviewCommentRequest,
   deleteReviewRequest,
@@ -13,12 +13,13 @@ import {
 } from '../../apis/reviewFetcher';
 import MyModal from '../modal/MyModal';
 import useModal from '../../hooks/modal/useModal';
-import WritingEditor from '../writingeditor/WritingEditor';
+import ReviewWritingEditor from '../writingeditor/ReviewWritingEditor';
 import { ReviewCommentType } from '../../types/reviewboard/reviewType';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 
-const ContentsViewer = (props: ReviewTypeProps) => {
+const CommuContentsViewer = (props: ReviewTypeProps) => {
   // 그럼 필요한 거 아이디 프롭스로 보내기
   // 댓글/ 수정/ 삭제
 
@@ -49,7 +50,6 @@ const ContentsViewer = (props: ReviewTypeProps) => {
       `reviewComment/${props.review?.id}?page=${pages}`,
     );
     setComments(res.reverse());
-    console.log(res);
     setDescription('');
   };
 
@@ -84,7 +84,7 @@ const ContentsViewer = (props: ReviewTypeProps) => {
   };
 
   // 댓글 수정
-  const handleEditMyComment = async (
+  const handleCommentEditButton = async (
     e: React.MouseEvent,
     comment: ReviewCommentType,
   ) => {
@@ -93,6 +93,18 @@ const ContentsViewer = (props: ReviewTypeProps) => {
       `reviewComment/${comment.id}`,
       description,
     );
+    if (res.description === '') {
+      console.log('hello');
+      console.log(comment.description);
+      // setComments(comment.description);
+    }
+
+    // console.log(res);
+
+    const result = await getReviewRequest(
+      `reviewComment/${props.review?.id}?page=${pages}`,
+    );
+    setComments(result.reverse());
   };
 
   // 댓글 삭제
@@ -113,7 +125,7 @@ const ContentsViewer = (props: ReviewTypeProps) => {
   return (
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
-        <WritingEditor
+        <ReviewWritingEditor
           review={props.review}
           mode="edit"
           modalHandler={modalHandler}
@@ -141,11 +153,10 @@ const ContentsViewer = (props: ReviewTypeProps) => {
             <div className="user-contents">{props.review?.description}</div>
             {comments?.map((comment) => (
               <div key={comment.id} className="user-comments">
-                {comment.description}
+                <input />
+                <div>{comment.description}</div>
+                {/* <div>{comment.description}</div> */}
                 <BtnContainer className="btn-box">
-                  <button onClick={(e) => handleEditMyComment(e, comment)}>
-                    <EditIcon />
-                  </button>
                   <button onClick={(e) => handleDeleteMyComment(e, comment)}>
                     <DeleteIcon />
                   </button>
@@ -165,7 +176,12 @@ const ContentsViewer = (props: ReviewTypeProps) => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
-              <button onClick={postReviewComments}>게시</button>
+              <button
+                onClick={postReviewComments}
+                disabled={description.length === 0}
+              >
+                게시
+              </button>
             </CommentBox>
           </BottomDiv>
         </AddWriting>
@@ -174,7 +190,7 @@ const ContentsViewer = (props: ReviewTypeProps) => {
   );
 };
 
-export default ContentsViewer;
+export default CommuContentsViewer;
 
 const ContentsModalWrapper = styled.form`
   width: 65%;
@@ -188,7 +204,7 @@ const ContentsModalWrapper = styled.form`
   background-color: white;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border-radius: 2%;
+  border-radius: 10px;
   font-family: ${font.normal};
 `;
 
@@ -202,8 +218,8 @@ const AddWriting = styled.div`
   position: relative;
 
   .user-name {
-    height: 4.3rem;
-    line-height: 5rem;
+    height: 4.5rem;
+    line-height: 4.8rem;
     padding-left: 3%;
   }
 `;
@@ -267,6 +283,11 @@ const BtnContainer = styled.div`
     height: 25px;
     display: flex;
     justify-content: center;
+
+    /* &[disabled] {
+      background: rgba(0, 0, 0, 0.1);
+      cursor: revert;
+    } */
   }
 `;
 
@@ -332,5 +353,10 @@ const CommentBox = styled.div`
     border-left: 1px solid lightgray;
     color: ${theme.mainColor};
     font-size: 17px;
+
+    &[disabled] {
+      background: rgba(0, 0, 0, 0.1);
+      cursor: revert;
+    }
   }
 `;

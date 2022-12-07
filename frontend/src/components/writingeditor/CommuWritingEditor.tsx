@@ -1,30 +1,16 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { createReviewRequest } from '../../apis/reviewFetcher';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
-import { ReviewInitialType } from '../../types/reviewboard/reviewType';
-import useModal from '../../hooks/modal/useModal';
-import { ReviewTypeProps } from '../modal/ContentsModal';
+import { ReviewTypeProps } from '../modal/ReviewContentsModal';
 import { editReviewRequest } from '../../apis/reviewFetcher';
 
-const WritingEditor = (props: ReviewTypeProps) => {
+const CommuWritingEditor = (props: ReviewTypeProps) => {
   const [images, setImages] = useState<string>('');
   const [description, setDescription] = useState<string>(
     props.review?.description ? props.review?.description : '',
   );
-
-  const handleUploadResultCard = (e: React.ChangeEvent<HTMLInputElement>) => {};
-
-  // const descriptionChangeHandler = useCallback(
-  //   (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-  //     let contents = e.target.value;
-  //     contents = contents.replaceAll('<br>', '\r\n');
-
-  //     setDescription(contents);
-  //   },
-  //   [],
-  // );
 
   const handleWritingEditorClick = async () => {
     const res = await createReviewRequest('review', {
@@ -65,7 +51,7 @@ const WritingEditor = (props: ReviewTypeProps) => {
             <div className="writing">
               <textarea
                 maxLength={300}
-                placeholder="여러분의 댕댕이가 궁금해요."
+                placeholder="여러분의 댕댕이를 마음껏 뽐내 주세요."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
@@ -77,7 +63,7 @@ const WritingEditor = (props: ReviewTypeProps) => {
   );
 };
 
-export default WritingEditor;
+export default CommuWritingEditor;
 
 const CreateModalWrapper = styled.form`
   width: 55%;
@@ -91,7 +77,7 @@ const CreateModalWrapper = styled.form`
   background-color: white;
   display: grid;
   grid-template-rows: 4rem 1fr;
-  border-radius: 3%;
+  border-radius: 20px;
   font-family: ${font.bold};
 `;
 
