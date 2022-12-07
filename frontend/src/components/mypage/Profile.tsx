@@ -18,7 +18,6 @@ import Storage from '../../storage/storage';
 function Profile() {
   const [open, setOpen] = useState(false);
   const [profileImg, setProfileImg] = useState<string>('/');
-  const [imgPreview, setImgPreview] = useState<string>(profileImg);
   const [nickname, setNickname] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -35,23 +34,23 @@ function Profile() {
   }, []);
 
   // TODO e type지정에 React.ChangeEvent<HTMLInputElement>가 아닌가?
-  // TODO 왜 네트워크 응답에 profileImg가 undefined이지?
   async function EditImg(e: any) {
-    setImgPreview(URL.createObjectURL(e.target.files[0]));
-    // await setProfileImg(e.target.files[0]);
+    setProfileImg(URL.createObjectURL(e.target.files[0]));
     const response = await EditUserImg(e.target.files[0]);
     console.log(response);
   }
 
   async function EditData(e: any) {
     e.preventDefault();
-    const response = await EditUserData(nickname, password);
-    response.statusText === 'OK'
-      ? (window.alert('성공적으로 수정되었습니다.'),
-        Storage.setNicknameItem(response.data.nickname),
-        location.reload())
-      : window.alert('수정에 실패하였습니다.');
-    console.log(response);
+    try {
+      const response = await EditUserData(nickname, password);
+      window.alert('성공적으로 수정되었습니다.');
+      Storage.setNicknameItem(response.data.nickname);
+      location.reload();
+    } catch (e) {
+      console.log(e);
+      window.alert('비밀번호를 확인해주세요.');
+    }
   }
 
   return (
@@ -61,7 +60,7 @@ function Profile() {
           <Avatar
             className="btnStart"
             sx={{ width: 150, height: 150 }}
-            src={imgPreview}
+            src={profileImg}
           />
         </label>
         <input
@@ -90,15 +89,19 @@ function Profile() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
+        {/* 닉네임 수정버튼 클릭 시 모달창 */}
         <ModalContainer>
-          비밀번호를 입력해주세요{' '}
-          <form onSubmit={EditData}>
+          <FormWrapper onSubmit={EditData}>
+            비밀번호를 입력해주세요{' '}
             <CommonMyInput
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             ></CommonMyInput>
-            <CommonMyButton type="submit">로그인</CommonMyButton>
-          </form>
+            <EditButton style={{ width: '100px' }} type="submit">
+              수정
+            </EditButton>
+          </FormWrapper>
         </ModalContainer>
       </Modal>
     </Div>
@@ -192,9 +195,17 @@ const ModalContainer = styled.div`
   justify-content: center;
   width: 300px;
   height: 150px;
-  padding: 20px 50px;
+  padding: 20px 100px;
   border: 1px solid #000;
   background-color: white;
+`;
+
+const FormWrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 `;
 
 export default Profile;
