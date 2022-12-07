@@ -4,13 +4,16 @@ import { CommunityPost } from '../models/CommunityPost.model';
 import { sizePerPage } from '../utils/pagination';
 
 class myPageService {
-  static async UserToCommunity({ userId }) {
+  static async UserToCommunity({ userId, page }) {
     // 전체 커뮤니티 수
     const communities = await Community.count({ where: { userId } });
+    const limit = 10;
 
-    const findUser = await Community.findAll({
+    const findUser = await Community.findAndCountAll({
       where: { userId },
       order: [['id', 'DESC']],
+      limit,
+      offset: sizePerPage(communities, limit, page),
     });
     return findUser;
   }
@@ -38,11 +41,19 @@ class myPageService {
   }
 
   static async getMyCommunitiesAndPosts({ userId, communityId }) {
-    const findUser = await CommunityPost.findAll({
+    const isMyCommunity = await CommunityLike.findOne({
+      where: { userId, communityId },
+    });
+    if (!isMyCommunity) {
+      const errorMessage = `Cannot find data. It is not this user's Community`;
+      throw errorMessage;
+    }
+    const findUserAndCommunityId = await CommunityPost.findAll({
       where: { userId, communityId },
       order: [['id', 'DESC']],
     });
-    return findUser;
+
+    return findUserAndCommunityId;
   }
 
   static async findCommunity({ communityId }) {
