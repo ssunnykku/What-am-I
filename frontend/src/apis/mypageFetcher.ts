@@ -13,7 +13,7 @@ export async function EditUserImg({ profileImg }: any) {
   const formData = new FormData();
   formData.append('profileImg', profileImg);
 
-  const res = await axiosInstance.post(
+  const res = await axiosInstance.patch(
     `/users/${Storage.getUserIdItem()}/image`,
     formData,
     {

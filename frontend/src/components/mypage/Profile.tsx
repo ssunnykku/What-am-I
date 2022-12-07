@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Avatar from '@mui/material/Avatar';
+import { Avatar, Modal } from '@mui/material';
+
 import {
   CommonMyInput,
   EntryBtn,
   CreateBtn,
+  CommonMyButton,
 } from '../../assets/styles/common/commonComponentStyle';
 import {
   EditUserData,
@@ -14,10 +16,14 @@ import {
 import Storage from '../../storage/storage';
 
 function Profile() {
+  const [open, setOpen] = useState(false);
   const [profileImg, setProfileImg] = useState<string>('/');
   const [imgPreview, setImgPreview] = useState<string>(profileImg);
   const [nickname, setNickname] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     async function getData() {
@@ -38,9 +44,10 @@ function Profile() {
   }
 
   async function EditData(e: any) {
+    e.preventDefault();
     const response = await EditUserData(nickname, password);
     response.statusText === 'OK'
-      ? (window.alert('성공적으로 수정하였습니다.'),
+      ? (window.alert('성공적으로 수정되었습니다.'),
         Storage.setNicknameItem(response.data.nickname),
         location.reload())
       : window.alert('수정에 실패하였습니다.');
@@ -71,17 +78,29 @@ function Profile() {
           value={nickname}
           onChange={(e) => setNickname(e.target.value)}
         ></CommonMyInput>
-        패스워드(유저 확인용)
-        <CommonMyInput
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        ></CommonMyInput>
       </InputContainer>
       <ButtonContainer>
-        <EditButton onClick={EditData}>수정</EditButton>
+        <EditButton onClick={handleOpen}>수정</EditButton>
+        {/* <EditButton onClick={EditData}>수정</EditButton> */}
         <DeleteButton>회원 탈퇴</DeleteButton>
       </ButtonContainer>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <ModalContainer>
+          비밀번호를 입력해주세요{' '}
+          <form onSubmit={EditData}>
+            <CommonMyInput
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            ></CommonMyInput>
+            <CommonMyButton type="submit">로그인</CommonMyButton>
+          </form>
+        </ModalContainer>
+      </Modal>
     </Div>
   );
 }
@@ -160,6 +179,22 @@ const ProfileImgContainer = styled.div`
       background-color: rgba(0, 0, 0, 0.4);
     }
   }
+`;
+
+const ModalContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 150px;
+  padding: 20px 50px;
+  border: 1px solid #000;
+  background-color: white;
 `;
 
 export default Profile;
