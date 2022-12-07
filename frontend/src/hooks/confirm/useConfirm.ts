@@ -6,10 +6,11 @@ export const useConfirm = (message: any, onConfirm: any, onCancel: any) => {
     return;
   }
 
-  const confirmAction = () => {
+  const confirmAction = (e: React.MouseEvent) => {
     if (window.confirm(message)) {
       onConfirm();
     } else {
+      e.preventDefault();
       onCancel();
     }
   };

@@ -26,6 +26,10 @@ const GlobalStyle = createGlobalStyle`
             padding: 0;
             margin: 0 auto;
         }
+
+        input {
+            font-family: 'ONE-Mobile-Regular';
+        }
     }
 `;
 
