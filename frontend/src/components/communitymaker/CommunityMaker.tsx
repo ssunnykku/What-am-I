@@ -9,11 +9,10 @@ import { theme } from '../../assets/styles/common/palette';
 // 일단 alert으로 일러주기
 
 const CommunityMaker = () => {
-  const [communityImage, setCommunityImage] = useState<string>(
-    `${import.meta.env.VITE_PUBLIC_URL}/img/default_image2.png`,
-  );
+  const [communityImage, setCommunityImage] = useState<File | null>(null);
   const [name, setName] = useState<string>('');
   const [introduction, setIntroduction] = useState<string>('');
+  const [preview, setPreview] = useState<string>('');
 
   const imageInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -22,11 +21,12 @@ const CommunityMaker = () => {
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
+      setCommunityImage(file);
       const reader = new FileReader();
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        setCommunityImage(reader.result);
+        setPreview(reader.result as string);
       };
     }
   };
@@ -35,22 +35,25 @@ const CommunityMaker = () => {
     e.preventDefault();
     if (imageInputRef.current) {
       imageInputRef.current.value = '';
-      setCommunityImage(
-        `${import.meta.env.VITE_PUBLIC_URL}/img/default_image2.png`,
-      );
+      // setCommunityImage(
+      //   `${import.meta.env.VITE_PUBLIC_URL}/img/default_image2.png`,
+      // );
     }
   };
 
   // 커뮤니티 만들기
   const handleCreateCommuFormClick = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await createCommunityRequest('communities', {
-      name,
-      communityImage,
-      introduction,
-    });
-
-    navigate('/likedcommunity');
+    if (communityImage) {
+      await createCommunityRequest('communities', {
+        name,
+        communityImage,
+        introduction,
+      });
+      navigate('/likedcommunity');
+    } else {
+      alert('커뮤니티 이미지를 넣어 주세요.');
+    }
   };
 
   return (
@@ -71,9 +74,7 @@ const CommunityMaker = () => {
             />
           </ImageTextBox>
           <RoundImage>
-            {communityImage && (
-              <img src={communityImage.toString()} className="pre-img" />
-            )}
+            {preview && <img src={preview} className="pre-img" />}
           </RoundImage>
         </AddImage>
         <AddName>

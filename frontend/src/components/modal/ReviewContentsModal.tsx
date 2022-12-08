@@ -2,11 +2,15 @@ import useModal from '../../hooks/modal/useModal';
 import MyModal from './MyModal';
 import PuppyCard from '../reviewBoard/PuppyCard';
 import ReviewContentsViewer from '../contentsviewer/ReviewContentsViewer';
-import { ReviewType } from '../../types/reviewboard/reviewType';
+import {
+  ReviewCommentType,
+  ReviewType,
+} from '../../types/reviewboard/reviewType';
 
 export interface ReviewTypeProps {
   userId?: string;
   review?: ReviewType;
+  value?: ReviewCommentType;
   mode?: string;
   getReviews?: () => Promise<void>;
   modalHandler?: () => void;

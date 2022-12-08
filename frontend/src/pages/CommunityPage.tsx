@@ -17,7 +17,7 @@ import {
 
 const CommunityPage = () => {
   const [rankings, setRankings] = useState<CommunityType[]>([]);
-  const [commuLists, setCommuLists] = useState<CommunityType[]>([]);
+  const [commuList, setCommuList] = useState<CommunityType[]>([]);
   const [pages, setPages] = useState<number>(1);
 
   // 베스트 커뮤니티
@@ -28,15 +28,15 @@ const CommunityPage = () => {
   };
 
   // 전체 커뮤니티 목록
-  const getCommunityLists = async () => {
+  const getCommunitiesList = async () => {
     const res = await getCommunitiesRequest(`communities?page=${pages}`);
 
-    setCommuLists(res.result.selectedCommunity);
+    setCommuList(res.result.selectedCommunity);
   };
 
   useEffect(() => {
     getRankingCommunity();
-    getCommunityLists();
+    getCommunitiesList();
   }, []);
 
   return (
@@ -64,8 +64,8 @@ const CommunityPage = () => {
           </CommuListHeader>
           <CommuListsBox>
             <ScrollBox>
-              {commuLists?.map((list) => (
-                <CommuListCard key={list.id} list={list} />
+              {commuList?.map((commu) => (
+                <CommuListCard key={commu.id} commu={commu} />
               ))}
             </ScrollBox>
           </CommuListsBox>

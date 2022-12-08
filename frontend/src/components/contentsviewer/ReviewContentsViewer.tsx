@@ -54,14 +54,16 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     setIsReviewer(res.userId);
   };
   // 댓글 하나 가져오기
-  // const getOneReviewComment = async () => {
-  //   const res = await getReviewRequest(`reviewComment/my/${props.review?.id}`);
-  //   setIsComment(res.userId);
-  //   console.log('댓글 하나', res.userId);
-  // };
+  const getOneReviewComment = async () => {
+    const res = await getReviewRequest(
+      `reviewComment/${props.value?.reviewId}/${props.value?.id}`,
+    );
+    // setIsComment(res.userId);
+    console.log('댓글 하나', res);
+  };
   useEffect(() => {
     getOneReview();
-    // getOneReviewComment();
+    getOneReviewComment();
   }, []);
 
   const checkCurrentReviewer = () => {
@@ -80,7 +82,6 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     );
     setComments(res.reverse());
     const result = res.map((res: ReviewCommentType) => res.userId);
-    console.log('맵으로 돌린', result);
   };
 
   // 리뷰 댓글 쓰기

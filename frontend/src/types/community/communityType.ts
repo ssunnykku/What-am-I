@@ -1,7 +1,7 @@
 export interface CreateCommuInitialType {
   name: string;
   introduction: string;
-  communityImage: string;
+  communityImage: File;
 }
 
 export interface CommunityType {

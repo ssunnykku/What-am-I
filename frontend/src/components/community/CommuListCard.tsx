@@ -7,19 +7,19 @@ import { CommunityType } from '../../types/community/communityType';
 import { font } from '../../assets/styles/common/fonts';
 
 export interface CommunityListsTypeProps {
-  list: CommunityType;
+  commu: CommunityType;
 }
 
-const CommuListCard = ({ list }: CommunityListsTypeProps) => {
+const CommuListCard = ({ commu }: CommunityListsTypeProps) => {
   const navigate = useNavigate();
 
   return (
     <ListCardBox>
       <ListImage>
-        <img src={list.communityImage} />
+        <img src={commu.communityImage} />
       </ListImage>
       <SmallBox>
-        <CommuName>{list.name}</CommuName>
+        <CommuName>{commu.name}</CommuName>
         <LikeNum>
           <LikeBtn />
         </LikeNum>
