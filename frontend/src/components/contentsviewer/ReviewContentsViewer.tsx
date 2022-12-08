@@ -30,6 +30,9 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
   const [comments, setComments] = useState<ReviewCommentType[]>([]);
   const [isReviewer, setIsReviewer] = useState<string>('');
   const [isEditable, setIsEditable] = useState<boolean>(false);
+
+  // const [isComment, setIsComment] = useState<string>('');
+
   const [date, setDate] = useState(props.review?.createdAt);
   const newDate = date?.split(' ')[0];
   const [editing, setEditing] = useState<boolean>(false);
@@ -50,8 +53,17 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     const res = await getReviewRequest(`review/show/${props.review?.id}`);
     setIsReviewer(res.userId);
   };
+  // 댓글 하나 가져오기
+  const getOneReviewComment = async () => {
+    const res = await getReviewRequest(
+      `reviewComment/${props.value?.reviewId}/${props.value?.id}`,
+    );
+    // setIsComment(res.userId);
+    console.log('댓글 하나', res);
+  };
   useEffect(() => {
     getOneReview();
+    getOneReviewComment();
   }, []);
 
   const checkCurrentReviewer = () => {
@@ -63,18 +75,13 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     checkCurrentReviewer();
   }, [isReviewer]);
 
-  // 댓글 하나 가져오기도 필요
-  // 착각한 이유: 아이디만 똑같으면 된다고 생각했다 . . .
-  // 리뷰 아이디 !== 댓글 아이디 ...
-  // 내가 쓴 리뷰에서는 버튼이 뜨지만 다른 사람이 쓴 리뷰의 댓 버튼은 안 뜬다.
-
   // 리뷰 전체 댓글 가져오기
   const getReviewComments = async () => {
     const res = await getReviewRequest(
       `reviewComment/${props.review?.id}?page=${pages}`,
     );
     setComments(res.reverse());
-    console.log(res);
+    const result = res.map((res: ReviewCommentType) => res.userId);
   };
 
   // 리뷰 댓글 쓰기
@@ -206,7 +213,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
                 ) : (
                   <div>{comment.description}</div>
                 )}
-
+                {/* {isEditable ? ( */}
                 <BtnContainer className="btn-box">
                   {selectedIdx === idx && editing ? (
                     <button>
@@ -233,6 +240,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
                     </>
                   )}
                 </BtnContainer>
+                {/* ) : null} */}
               </div>
             ))}
           </ContentsBox>

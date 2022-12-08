@@ -283,11 +283,6 @@ const BtnContainer = styled.div`
     height: 25px;
     display: flex;
     justify-content: center;
-
-    /* &[disabled] {
-      background: rgba(0, 0, 0, 0.1);
-      cursor: revert;
-    } */
   }
 `;
 

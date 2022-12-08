@@ -12,10 +12,23 @@ import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import PaginateButton from '../components/pagination/PaginateButton';
 import CommuWritingModal from '../components/modal/CommuWritingModal';
 import CommuContentsModal from '../components/modal/CommuContentsModal';
+import { getCurrentCommuListRequest } from '../apis/communityFetcher';
+import { CommunityType } from '../types/community/communityType';
 
-const LikedCommuPage = () => {
+const LikedCommuPage = (props: CommunityType) => {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+
+  // 커뮤니티 가져오기 내가 누른 커뮤니티나 만든 커뮤니티 아이디와 가져올 커뮤니티 아이디가 같을 때
+  const getCommunityData = async () => {
+    const res = await getCurrentCommuListRequest(
+      `communities/posts/${props.id}`,
+    );
+    console.log(res);
+  };
+  useEffect(() => {
+    getCommunityData();
+  }, []);
 
   // const fetchData = async () => {
   //   const res = await currentCommuListRequest('community?page="page"');
@@ -41,7 +54,7 @@ const LikedCommuPage = () => {
             <EditDelBtn>수정</EditDelBtn>
           </NameBox>
           <BtnBox>
-            <EntryBtn style={{ marginBottom: '1rem' }}>채팅방 입장</EntryBtn>
+            {/* <EntryBtn style={{ marginBottom: '1rem' }}>채팅방 입장</EntryBtn> */}
             <CommuWritingModal />
           </BtnBox>
         </IntroBox>
@@ -108,7 +121,7 @@ const ImageBox = styled.div`
   border-radius: 50%;
   height: 9rem;
   width: 9rem;
-  margin: 0rem 2rem;
+  margin: 0rem 20px;
 `;
 
 const NameBox = styled.div`
@@ -140,9 +153,10 @@ const CommuIntro = styled.div`
 `;
 
 const BtnBox = styled.div`
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
   width: 11rem;
+  margin-top: 70px;
 `;
 
 const SmallBox = styled.div`
