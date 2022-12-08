@@ -29,35 +29,35 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: '*', credentials: true }));
-app.use(cookieParser(process.env.COOKIE_SECRET));
+// app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // import passportConfig from './src/utils/passport.js';
 
 // app.use(passport.initialize());
 // passportConfig();
 
-const MySqlStore = sessionMysql(session);
-const options = {
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER_NAME,
-  password: process.env.DB_USER_PASSWORD,
-  database: process.env.DB_NAME,
-  clearExpired: true,
-  checkExpirationInterval: 10000,
-  expiration: 10000,
-};
+// const MySqlStore = sessionMysql(session);
+// const options = {
+//   host: process.env.DB_HOST,
+//   port: process.env.DB_PORT,
+//   user: process.env.DB_USER_NAME,
+//   password: process.env.DB_USER_PASSWORD,
+//   database: process.env.DB_NAME,
+//   clearExpired: true,
+//   checkExpirationInterval: 10000,
+//   expiration: 10000,
+// };
 
-const sessionStore = new MySqlStore(options);
+// const sessionStore = new MySqlStore(options);
 
-app.use(
-  session({
-    secret: process.env.COOKIE_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    store: sessionStore,
-  }),
-);
+// app.use(
+//   session({
+//     secret: process.env.COOKIE_SECRET,
+//     resave: false,
+//     saveUninitialized: true,
+//     store: sessionStore,
+//   }),
+// );
 
 sequelize.sync({ force: false });
 
