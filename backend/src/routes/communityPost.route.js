@@ -14,13 +14,6 @@ communityPostRouter.post(
   communityPostController.addPost,
 );
 
-// communityPostRouter.put(
-//   '/image/:id',
-//   loginRequired,
-//   upload.single('communityImage'),
-//   communityPostRouter.communityImage,
-// );
-
 //해당 커뮤니티의 게시글 전부 다 가지고 오기
 communityPostRouter.get(
   '/communitypost/:communityId',

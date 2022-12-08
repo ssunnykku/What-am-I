@@ -59,7 +59,7 @@ app.use(cors({ origin: '*', credentials: true }));
 //   }),
 // );
 
-// sequelize.sync({ force: false });
+sequelize.sync({ force: false });
 
 app.use(userRouter);
 app.use(communityPostRouter);
