@@ -14,6 +14,7 @@ import {
   CommunityRankingType,
   CommunityType,
 } from '../types/community/communityType';
+import { Link } from 'react-router-dom';
 
 const CommunityPage = () => {
   const [rankings, setRankings] = useState<CommunityType[]>([]);

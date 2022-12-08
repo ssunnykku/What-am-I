@@ -5,13 +5,13 @@ export interface CreateCommuInitialType {
 }
 
 export interface CommunityType {
-  id: number;
-  userId: string;
-  name: string;
-  introduction: string;
-  communityImage: string;
-  createdAt: string;
-  updatedAt: string;
+  id?: number;
+  userId?: string;
+  name?: string;
+  introduction?: string;
+  communityImage?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface CommunityRankingType {

@@ -21,18 +21,11 @@ import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import { useConfirm } from '../../hooks/confirm/useConfirm';
 
 const ReviewContentsViewer = (props: ReviewTypeProps) => {
-  // 그럼 필요한 거 아이디 프롭스로 보내기
-  // 댓글/ 수정/ 삭제
-
   const [isOpen, modalHandler] = useModal();
   const [pages, setPages] = useState<number>(1);
   const [description, setDescription] = useState<string>('');
   const [comments, setComments] = useState<ReviewCommentType[]>([]);
   const [isReviewer, setIsReviewer] = useState<string>('');
-  const [isEditable, setIsEditable] = useState<boolean>(false);
-
-  // const [isComment, setIsComment] = useState<string>('');
-
   const [date, setDate] = useState(props.review?.createdAt);
   const newDate = date?.split(' ')[0];
   const [editing, setEditing] = useState<boolean>(false);
@@ -53,27 +46,9 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     const res = await getReviewRequest(`review/show/${props.review?.id}`);
     setIsReviewer(res.userId);
   };
-  // 댓글 하나 가져오기
-  const getOneReviewComment = async () => {
-    const res = await getReviewRequest(
-      `reviewComment/${props.value?.reviewId}/${props.value?.id}`,
-    );
-    // setIsComment(res.userId);
-    console.log('댓글 하나', res);
-  };
   useEffect(() => {
     getOneReview();
-    getOneReviewComment();
   }, []);
-
-  const checkCurrentReviewer = () => {
-    if (props.currentUser === isReviewer) {
-      setIsEditable(true);
-    }
-  };
-  useEffect(() => {
-    checkCurrentReviewer();
-  }, [isReviewer]);
 
   // 리뷰 전체 댓글 가져오기
   const getReviewComments = async () => {
@@ -182,7 +157,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
         <AddWriting>
           <TopDiv>
             <div className="user-name">유저 프로필 사진 + 닉네임</div>
-            {isEditable ? (
+            {props.currentUser === isReviewer ? (
               <ButtonBox>
                 <EditDelBtn
                   onClick={(e) => {
@@ -213,34 +188,34 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
                 ) : (
                   <div>{comment.description}</div>
                 )}
-                {/* {isEditable ? ( */}
-                <BtnContainer className="btn-box">
-                  {selectedIdx === idx && editing ? (
-                    <button>
-                      <AutoFixHighIcon
+                {comment.userId === props.currentUser ? (
+                  <BtnContainer className="btn-box">
+                    {selectedIdx === idx && editing ? (
+                      <button
                         className="edit-button"
                         onClick={(e) => handleCommentEditButton(e, comment)}
-                      />
-                    </button>
-                  ) : (
-                    <>
-                      <button
-                        onClick={(e) => {
-                          onClickCommentEditButton(e);
-                          setSelectedIdx(idx);
-                        }}
                       >
-                        <EditIcon />
+                        edit
                       </button>
-                      <button
-                        onClick={(e) => handleDeleteMyComment(e, comment)}
-                      >
-                        <DeleteIcon />
-                      </button>
-                    </>
-                  )}
-                </BtnContainer>
-                {/* ) : null} */}
+                    ) : (
+                      <>
+                        <button
+                          onClick={(e) => {
+                            onClickCommentEditButton(e);
+                            setSelectedIdx(idx);
+                          }}
+                        >
+                          <EditIcon />
+                        </button>
+                        <button
+                          onClick={(e) => handleDeleteMyComment(e, comment)}
+                        >
+                          <DeleteIcon />
+                        </button>
+                      </>
+                    )}
+                  </BtnContainer>
+                ) : null}
               </div>
             ))}
           </ContentsBox>
@@ -384,9 +359,17 @@ const ContentsBox = styled.div`
     }
 
     input {
-      width: 88.5%;
+      width: 88%;
       height: 20px;
       font-size: 15px;
+    }
+
+    .edit-button {
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 30px;
     }
   }
 `;
