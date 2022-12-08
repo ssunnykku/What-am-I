@@ -1,5 +1,6 @@
 import { communityPostService } from '../services/communityPost.service';
 import { Sequelize } from 'sequelize';
+import Joi from 'joi';
 
 const Op = Sequelize.Op;
 
@@ -9,19 +10,27 @@ class communityPostController {
       const userId = req.currentUserId;
 
       const communityId = req.params.communityId;
-      const imgs = req.files.images;
-      const imageData = imgs.map((x, i) => imgs[i].location);
-      const images = imageData.toString();
-      const { description } = req.body;
+
+      const imgs = JSON.stringify(req.files);
+      const images =
+        imgs == '{}'
+          ? null
+          : JSON.parse(imgs)
+              .images.map((x, i) => JSON.parse(imgs).images[i].location)
+              .toString();
+
+      // const { description } = req.body;
+      const schema = Joi.object().keys({
+        description: Joi.string().min(1).max(200),
+      });
+      const { description } = await schema.validateAsync(req.body);
+
       const newPost = await communityPostService.createPost({
         images,
         description,
         userId,
         communityId,
       });
-      if (newPost.errorMessage) {
-        throw new Error(newPost);
-      }
       return res.status(201).json(newPost);
     } catch (error) {
       next(error);
