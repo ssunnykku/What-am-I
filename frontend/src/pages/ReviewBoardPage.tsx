@@ -1,29 +1,51 @@
 import styled from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import { SearchBox } from '../assets/styles/common/commonComponentStyle';
-import WritingModal from '../components/modal/WritingModal';
+import ReviewCreateModal from '../components/modal/ReviewWritingModal';
 import { theme } from '../assets/styles/common/palette';
 import { useEffect, useState } from 'react';
 import { getReviewRequest } from '../apis/reviewFetcher';
-import ContentsModal from '../components/modal/ContentsModal';
+import ReviewContentsModal from '../components/modal/ReviewContentsModal';
 import usePaginate from '../hooks/usePaginate/usePaginate';
 import { ReviewType } from '../types/reviewboard/reviewType';
+import { getUserData } from '../apis/mypageFetcher';
 
 const ReviewBoardPage = () => {
   const [pages, setPages] = useState<number>(1);
   const [reviews, setReviews] = useState<ReviewType[]>([]);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [currentUser, setCurrentUser] = useState<string>('');
+  const [isLogin, setIsLogin] = useState<boolean>(false);
 
   const { isFirst, isLast, handleNextBtnClick, handlePrevBtnClick } =
     usePaginate(pages, setPages, totalPages, 1);
 
+  // 현재 로그인 중인 유저 닉네임 받기
+  const getCurrentUser = async () => {
+    const res = await getUserData();
+    setCurrentUser(res.userId);
+  };
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
+  // 로그인 상태인지 아닌지 체크
+  // const checkLogin = () => {
+  //   if (currentUser !== '') {
+  //     setIsLogin(true);
+  //   }
+  // };
+  // useEffect(() => {
+  //   checkLogin();
+  // }, [currentUser]);
+
+  // 리뷰 게시판 전체 리뷰 받기
   const getReviews = async () => {
     const res = await getReviewRequest(`reviews?page=${pages}`);
 
     setReviews(res.result.selectedReviews);
     setTotalPages(res.result.reviewCount);
   };
-
   useEffect(() => {
     getReviews();
   }, [handleNextBtnClick, handlePrevBtnClick, setReviews]);
@@ -32,13 +54,18 @@ const ReviewBoardPage = () => {
     <BoardBox>
       <BoardHeader>
         사람들과 AI 분석 결과를 공유해보세요.
-        <WritingModal />
+        <ReviewCreateModal />
       </BoardHeader>
       <BoardContent>
         <SlideLeftBtn disabled={isFirst} onClick={handlePrevBtnClick} />
         <CardBox>
           {reviews?.map((review, idx) => (
-            <ContentsModal key={idx} review={review} getReviews={getReviews} />
+            <ReviewContentsModal
+              key={idx}
+              review={review}
+              getReviews={getReviews}
+              currentUser={currentUser}
+            />
           ))}
         </CardBox>
         <SlideRightBtn disabled={isLast} onClick={handleNextBtnClick} />

@@ -6,12 +6,12 @@ import {
   EntryBtn,
   SearchBox,
 } from '../assets/styles/common/commonComponentStyle';
-import WritingModal from '../components/modal/WritingModal';
-import ContentsModal from '../components/modal/ContentsModal';
 import { theme } from '../assets/styles/common/palette';
 import LikeBtn from '../components/common/LikeBtn';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import PaginateButton from '../components/pagination/PaginateButton';
+import CommuWritingModal from '../components/modal/CommuWritingModal';
+import CommuContentsModal from '../components/modal/CommuContentsModal';
 
 const LikedCommuPage = () => {
   const [page, setPage] = useState<number>(1);
@@ -32,7 +32,7 @@ const LikedCommuPage = () => {
         <IntroBox>
           <ImageBox />
           <NameBox>
-            <CommuName>커뮤니티 이름 [체크 버튼]</CommuName>
+            <CommuName>커뮤니티 이름</CommuName>
             <CommuIntro>
               커뮤니티 소개가 들어가는 칸입니다. 귀여운 내 새끼 나만 볼 수는
               없죠! 마구마구 자랑해주시길 바랍니다. 그래서 만든 커뮤니티예요.
@@ -42,7 +42,7 @@ const LikedCommuPage = () => {
           </NameBox>
           <BtnBox>
             <EntryBtn style={{ marginBottom: '1rem' }}>채팅방 입장</EntryBtn>
-            <WritingModal />
+            <CommuWritingModal />
           </BtnBox>
         </IntroBox>
         <SmallBox>
@@ -61,7 +61,9 @@ const LikedCommuPage = () => {
             </div>
           </InfoBox>
         </SmallBox>
-        <ContentsBox>{/* <ContentsModal /> */}</ContentsBox>
+        <ContentsBox>
+          <CommuContentsModal />
+        </ContentsBox>
         <PaginateButton page={page} setPage={setPage} totalPages={totalPages} />
       </CommunityBox>
     </BigBox>

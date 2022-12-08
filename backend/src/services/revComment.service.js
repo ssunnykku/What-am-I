@@ -25,6 +25,18 @@ class reviewCommentService {
     }
   }
 
+  static async showOneReviewComments({ id: id, userId: userId }) {
+    const _id = await ReviewComment.findOne({
+      where: { id: id, userId: userId },
+    });
+    if (!_id) {
+      const errorMessage = '댓글이 없습니다';
+      return { errorMessage };
+    } else {
+      return _id;
+    }
+  }
+
   static async findMessage({ id, userId }) {
     const comment = await ReviewComment.findOne({
       where: { id: id, userId: userId },

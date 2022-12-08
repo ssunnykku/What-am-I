@@ -26,7 +26,6 @@ class reviewCommentController {
   static async showReviewComments(req, res, next) {
     try {
       const _reviewId = req.params.reviewId;
-      console.log(_reviewId);
 
       const reviewComments = await reviewCommentService.showAllReviewComments({
         _reviewId,
@@ -39,6 +38,28 @@ class reviewCommentController {
       next(error);
     }
   }
+
+  static async showOneReviewComments(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+
+      const id = req.params.reviewCommentId;
+
+      const oneReviewComment = await reviewCommentService.showOneReviewComments(
+        {
+          id,
+          userId,
+        },
+      );
+      if (oneReviewComment.errorMessage) {
+        throw new Error(oneReviewComment);
+      }
+      return res.status(200).json(oneReviewComment);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async updateComment(req, res, next) {
     try {
       const userId = req.currentUserId;
