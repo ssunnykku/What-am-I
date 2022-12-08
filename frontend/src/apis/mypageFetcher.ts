@@ -9,11 +9,11 @@ export const getUserData = async () => {
 };
 // 유져 이미지 수정
 // TODO 폼데이터 이미지는 어떤 타입을 명시해줘야되는거지?
-export async function EditUserImg({ profileImg }: any) {
+export async function EditUserImg(profileImg: File) {
   const formData = new FormData();
   formData.append('profileImg', profileImg);
 
-  const res = await axiosInstance.post(
+  const res = await axiosInstance.patch(
     `/users/${Storage.getUserIdItem()}/image`,
     formData,
     {

@@ -19,8 +19,8 @@ const jump = keyframes`
 
 export const CommonMyButton = styled.button`
   width: 100%;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  height: 50px;
+  line-height: 50px;
   cursor: pointer;
   font-weight: bold;
   border: none;
