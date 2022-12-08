@@ -19,6 +19,10 @@ class communityService {
 
   static async getOneCommunity({ id }) {
     const getCommunity = await Community.findOne({ where: { id } });
+    if (!getCommunity) {
+      const errorMessage = `Cannot find id = ${id} community`;
+      return errorMessage;
+    }
     return getCommunity;
   }
 

@@ -37,22 +37,18 @@ class Review extends Sequelize.Model {
   static associate(db) {
     db.Review.belongsTo(db.User, {
       foreignKey: 'userId',
-      sourceKey: 'userId',
+      targetKey: 'userId',
     });
 
     db.Review.hasMany(db.ReviewComment, {
       foreignKey: 'reviewId',
-      sourceKey: 'id',
+      targetKey: 'id',
     });
     db.Review.hasMany(db.ReviewLike, {
       foreignKey: 'reviewId',
-      sourceKey: 'id',
+      targetKey: 'id',
     });
   }
 }
 
 export { Review };
-//외래키 따로 sql에 직접 입력해주었음.(associate 주석부분 에러나서)
-// alter table reviews add foreign key( userId ) references users(userId) on delete cascade;
-// alter table reviewComments add foreign key( userId ) references users(userId) on delete cascade;
-// alter table reviewComments add foreign key( reviewId ) references reviews(reviewId) on delete cascade;
