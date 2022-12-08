@@ -3,14 +3,21 @@ import styled, { keyframes } from 'styled-components';
 import { theme } from '../../assets/styles/common/palette';
 import { font } from '../../assets/styles/common/fonts';
 import LikeBtn from '../common/LikeBtn';
+import { CommunityType } from '../../types/community/communityType';
 
-const CommuRankingCard = () => {
+export interface CommunityTypeProps {
+  ranking: CommunityType;
+}
+
+const CommuRankingCard = ({ ranking }: CommunityTypeProps) => {
   const navigate = useNavigate();
 
   return (
     <CommuRankingCardBox onClick={() => navigate('/likedcommunity')}>
-      <CommuImage></CommuImage>
-      <CommuName>댕댕이를 사랑하는 일산인들의 모임</CommuName>
+      <CommuImage>
+        <img src={ranking.communityImage} />
+      </CommuImage>
+      <CommuName>{ranking.name}</CommuName>
       <div className="like-icon">
         <LikeBtn />
       </div>
@@ -30,7 +37,7 @@ const popup = keyframes`
 `;
 
 const CommuRankingCardBox = styled.div`
-  width: 11rem;
+  width: 12rem;
   height: 12rem;
   border-radius: 20px;
   margin: 0px 10px;
@@ -64,11 +71,20 @@ const CommuRankingCardBox = styled.div`
 `;
 
 const CommuImage = styled.div`
-  height: 7rem;
-  width: 9rem;
+  height: 150px;
+  width: 170px;
   border: solid 1px gray;
-  margin-top: 10px;
+  margin-top: 15px;
   border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const CommuName = styled.div`
@@ -76,6 +92,6 @@ const CommuName = styled.div`
   height: 3.5rem;
   margin-top: 10px;
   text-align: center;
-  font-family: ${font.normal};
-  font-size: 14px;
+  font-family: ${font.bold};
+  font-size: 15px;
 `;

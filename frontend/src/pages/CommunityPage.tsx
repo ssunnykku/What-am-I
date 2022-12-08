@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import CommuRankingCard from '../components/community/CommuRankingCard';
@@ -5,8 +6,39 @@ import CommuListCard from '../components/community/CommuListCard';
 import { SearchBox } from '../assets/styles/common/commonComponentStyle';
 import { theme } from '../assets/styles/common/palette';
 import MakingCommuModal from '../components/modal/MakingCommuModal';
+import {
+  getCommunitiesRequest,
+  getRankingCommunityRequest,
+} from '../apis/communityFetcher';
+import {
+  CommunityRankingType,
+  CommunityType,
+} from '../types/community/communityType';
 
 const CommunityPage = () => {
+  const [rankings, setRankings] = useState<CommunityType[]>([]);
+  const [commuList, setCommuList] = useState<CommunityType[]>([]);
+  const [pages, setPages] = useState<number>(1);
+
+  // 베스트 커뮤니티
+  const getRankingCommunity = async () => {
+    const res = await getRankingCommunityRequest('communities/best');
+    const resMap = res.map((res: CommunityRankingType) => res.Community);
+    setRankings(resMap);
+  };
+
+  // 전체 커뮤니티 목록
+  const getCommunitiesList = async () => {
+    const res = await getCommunitiesRequest(`communities?page=${pages}`);
+
+    setCommuList(res.result.selectedCommunity);
+  };
+
+  useEffect(() => {
+    getRankingCommunity();
+    getCommunitiesList();
+  }, []);
+
   return (
     <CommuBox>
       <Header>
@@ -17,7 +49,9 @@ const CommunityPage = () => {
         <PopularCommuBox>
           <RankingHeader>인기 커뮤니티</RankingHeader>
           <RankingBox>
-            <CommuRankingCard />
+            {rankings?.map((ranking) => (
+              <CommuRankingCard key={ranking.id} ranking={ranking} />
+            ))}
           </RankingBox>
         </PopularCommuBox>
         <ListsBox>
@@ -30,7 +64,9 @@ const CommunityPage = () => {
           </CommuListHeader>
           <CommuListsBox>
             <ScrollBox>
-              <CommuListCard />
+              {commuList?.map((commu) => (
+                <CommuListCard key={commu.id} commu={commu} />
+              ))}
             </ScrollBox>
           </CommuListsBox>
         </ListsBox>
@@ -107,7 +143,7 @@ const CommuListHeader = styled.div`
 
 const CommuListsBox = styled.div`
   height: 100%;
-  width: 52rem;
+  width: 51rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -119,8 +155,8 @@ const CommuListsBox = styled.div`
 const ScrollBox = styled.div`
   border: solid 2px ${theme.mainColor};
   border-radius: 10px;
-  width: 50rem;
-  height: 35rem;
+  width: 51rem;
+  height: 36rem;
   display: flex;
   flex-direction: column;
   align-items: center;

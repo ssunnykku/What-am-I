@@ -8,7 +8,7 @@ export async function createCommunityRequest(
   const formData = new FormData();
   formData.append('name', name);
   formData.append('introduction', introduction);
-  formData.append('communityImage', communityImage as File);
+  formData.append('communityImage', communityImage);
 
   const res = await axiosInstance.post(endpoint, formData, {
     headers: {
@@ -18,11 +18,37 @@ export async function createCommunityRequest(
   return res.data;
 }
 
-export async function currentCommuListRequest(endpoint: string) {
+export async function getCurrentCommuListRequest(endpoint: string) {
   const res = await axiosInstance.get(endpoint, {
     headers: {
       'Content-Type': 'application/json',
     },
   });
   return res.data;
+}
+
+export async function getRankingCommunityRequest(endpoint: string) {
+  const res = await axiosInstance.get(endpoint, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return res.data;
+}
+
+export async function getCommunitiesRequest(endpoint: string) {
+  const res = await axiosInstance.get(endpoint, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return res.data;
+}
+
+// like fetcher
+export async function postLikeBtnRequest(
+  endpoint: string,
+  // { 커뮤니티 아이디, 내 유저 아이디 } : 타입
+) {
+  const res = await axiosInstance.post(endpoint);
 }

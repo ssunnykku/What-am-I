@@ -9,7 +9,8 @@ import { style } from '@mui/system';
 // 체크 버튼과 같이 쓸 수 있는가?
 
 const LikeBtn = () => {
-  const [like, setLike] = useState<boolean>(false);
+  const [liked, setLiked] = useState<boolean>(false);
+  const [likeCount, setLikeCount] = useState<number>(0);
 
   const onClickLikeBtn = () => {
     // const body = {
@@ -33,7 +34,7 @@ const LikeBtn = () => {
     //     }
     //   });
     // }
-    setLike((prev) => !prev);
+    setLiked((prev) => !prev);
   };
 
   // useEffect(() => {
@@ -58,10 +59,10 @@ const LikeBtn = () => {
         onClickLikeBtn();
       }}
     >
-      {like ? (
-        <FavoriteIcon style={{ color: 'red' }} />
+      {liked ? (
+        <FavoriteIcon style={{ color: 'red', fontSize: '25px' }} />
       ) : (
-        <FavoriteBorderIcon />
+        <FavoriteBorderIcon style={{ fontSize: '25px' }} />
       )}
     </LikeBox>
   );
