@@ -42,13 +42,14 @@ class reviewCommentController {
   static async showOneReviewComments(req, res, next) {
     try {
       const userId = req.currentUserId;
+      const reviewId = req.params.reviewId;
 
       const id = req.params.reviewCommentId;
 
       const oneReviewComment = await reviewCommentService.showOneReviewComments(
         {
           id,
-          userId,
+          reviewId,
         },
       );
       if (oneReviewComment.errorMessage) {

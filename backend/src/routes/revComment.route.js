@@ -17,12 +17,13 @@ reviewCommentRouter.get(
   reviewCommentController.showReviewComments,
 );
 
-//게시물(리뷰)에 나의 댓글 한개 보기
+//게시물(리뷰)에 댓글 한개 보기
 reviewCommentRouter.get(
-  '/reviewComment/my/:reviewCommentId',
+  '/reviewComment/:reviewId/:reviewCommentId',
   loginRequired,
   reviewCommentController.showOneReviewComments,
 );
+
 //내가 쓴 리뷰 수정
 reviewCommentRouter.put(
   '/reviewComment/:reviewCommentId',

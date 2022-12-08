@@ -25,9 +25,9 @@ class reviewCommentService {
     }
   }
 
-  static async showOneReviewComments({ id: id, userId: userId }) {
+  static async showOneReviewComments({ id: id, reviewId: reviewId }) {
     const _id = await ReviewComment.findOne({
-      where: { id: id, userId: userId },
+      where: { id: id, reviewId: reviewId },
     });
     if (!_id) {
       const errorMessage = '댓글이 없습니다';
