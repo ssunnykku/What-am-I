@@ -8,14 +8,19 @@ class reviewLikeService {
         reviewId: reviewId,
       },
     });
-    const myLikedeleted_totalLike = await ReviewLike.destroy({
-      where: {
-        userId: userId,
-        reviewId: reviewId,
-      },
-    });
 
     if (findUserLiked) {
+      const myLikedeleted = await ReviewLike.destroy({
+        where: {
+          userId: userId,
+          reviewId: reviewId,
+        },
+      });
+
+      const myLikedeleted_totalLike = await ReviewLike.count({
+        where: { reviewId: reviewId },
+      });
+
       return { myLikedeleted_totalLike };
     } else {
       const myLikeInformation = await ReviewLike.create({
@@ -30,33 +35,6 @@ class reviewLikeService {
       return { myLikeInformation, totalLikes };
     }
   }
-
-  //   static async cancelReviewLike({ userId, reviewId }) {
-  //     const findUserLiked = await ReviewLike.findOne({
-  //       where: {
-  //         userId: userId,
-  //         reviewId: reviewId,
-  //       },
-  //     });
-
-  //     if (!findUserLiked) {
-  //       const errorMessage = `cannot find a 'like'`;
-  //       return { errorMessage };
-  //     }
-
-  //     const deletedLike = await ReviewLike.destroy({
-  //       where: {
-  //         userId: userId,
-  //         reviewId: reviewId,
-  //       },
-  //     });
-
-  //     const countReviewLikes = await ReviewLike.count({
-  //       where: { reviewId: reviewId },
-  //     });
-
-  //     return { countReviewLikes };
-  //   }
 }
 
 export { reviewLikeService };
