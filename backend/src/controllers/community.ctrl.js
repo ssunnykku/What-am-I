@@ -19,7 +19,16 @@ class communityController {
       next(error);
     }
   }
-
+  static async getOne(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const id = req.params.communityId;
+      const findOne = await communityService.getOneCommunity({ id });
+      return res.status(200).json(findOne);
+    } catch (error) {
+      next(error);
+    }
+  }
   //전체 커뮤니티 리스트 10개씩
   static async getCommunityList(req, res, next) {
     try {

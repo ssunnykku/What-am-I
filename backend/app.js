@@ -8,9 +8,6 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import sessionMysql from 'express-mysql-session';
 
-//**Passport */
-// import passport from 'passport';
-
 //**Router */
 import { communityRouter } from './src/routes/community.route';
 import { communityPostRouter } from './src/routes/communityPost.route';
@@ -39,10 +36,32 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 // app.use(passport.initialize());
 // passportConfig();
 
+const MySqlStore = sessionMysql(session);
+const options = {
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER_NAME,
+  password: process.env.DB_USER_PASSWORD,
+  database: process.env.DB_NAME,
+  clearExpired: true,
+  checkExpirationInterval: 10000,
+  expiration: 10000,
+};
+
+const sessionStore = new MySqlStore(options);
+
+app.use(
+  session({
+    secret: process.env.COOKIE_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore,
+  }),
+);
+
 sequelize.sync({ force: false });
 
 app.use(userRouter);
-// app.use(communityRouter);
 app.use(communityPostRouter);
 app.use(reviewRouter);
 app.use(reviewCommentRouter);

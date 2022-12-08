@@ -17,6 +17,11 @@ class communityService {
     return createCommunity;
   }
 
+  static async getOneCommunity({ id }) {
+    const getCommunity = await Community.findOne({ where: { id } });
+    return getCommunity;
+  }
+
   static async countCommunityPage() {
     const communityCount = await Community.count();
     if (communityCount % COMMUNITY_PER_PAGE === 0) {

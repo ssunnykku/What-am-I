@@ -12,7 +12,7 @@ communityRouter.post(
   upload.single('communityImage'),
   communityController.addCommunity,
 );
-
+communityRouter.get('/:communityId', loginRequired, communityController.getOne);
 communityRouter.get('/', loginRequired, communityController.getCommunityList);
 
 communityRouter.get(

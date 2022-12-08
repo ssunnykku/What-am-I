@@ -4,13 +4,22 @@ class Review extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
+        id: {
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+          foreignKey: true,
+          type: DataTypes.INTEGER,
+        },
         description: {
           type: DataTypes.STRING(500),
           allowNull: false,
         },
-        // userId: {
-        //   type: DataTypes.STRING(500),
-        // },
+        userId: {
+          type: DataTypes.UUID,
+          defaultValue: DataTypes.UUIDV4,
+          foreignKey: true,
+        },
         images: {
           type: DataTypes.TEXT,
           allowNull: true,
