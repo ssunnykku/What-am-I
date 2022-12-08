@@ -19,14 +19,14 @@ function uploadImageS3() {
     acl: 'public-read',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key(req, file, cb) {
-      cb(null, `profileImg/${Date.now()}_${path.basename(file.originalname)}`); // original 폴더안에다 파일을 저장
+      cb(null, `${Date.now()}_${path.basename(file.originalname)}`); // original 폴더안에다 파일을 저장
     },
   });
 
   return multer({
     storage: storage,
     //* 용량 제한
-    limits: { fileSize: 500 * 1024 * 1024 }, //300MB });
+    limits: { fileSize: 500 * 1024 * 1024 }, //500MB });
     // return storage;
   });
 }

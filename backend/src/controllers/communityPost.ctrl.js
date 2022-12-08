@@ -9,8 +9,9 @@ class communityPostController {
       const userId = req.currentUserId;
 
       const communityId = req.params.communityId;
-      const images = req.file.location;
-
+      const imgs = req.files.images;
+      const imageData = imgs.map((x, i) => imgs[i].location);
+      const images = imageData.toString();
       const { description } = req.body;
       const newPost = await communityPostService.createPost({
         images,

@@ -8,10 +8,11 @@ class CommunityPost extends Sequelize.Model {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
+          foreignKey: true,
           type: DataTypes.INTEGER,
         },
         images: {
-          type: DataTypes.TEXT,
+          type: DataTypes.STRING,
           allowNull: true,
         },
         description: {
