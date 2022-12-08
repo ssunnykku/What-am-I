@@ -32,19 +32,27 @@ class communityController {
       next(error);
     }
   }
+
   //전체 커뮤니티 리스트 10개씩
   static async getCommunityList(req, res, next) {
     try {
       const { page } = req.query;
+      const id = 0;
       const defaultPage = page || 1;
-      const communityCount = await communityService.countCommunityPage();
-      const selectedCommunities = await communityService.selectCommunities(
+      const communityCount = await communityService.countCommunity();
+      //
+      const selectedCommunity = await communityService.selectCommunity(
         defaultPage,
       );
-      if (selectedCommunities.errorMessage) {
-        throw new Error(selectedCommunities, errorMessage);
+
+      //
+
+      if (!selectedCommunity) {
+        throw new Error(selectedCommunity);
       }
-      return res.status(200).json(selectedCommunities);
+      return res
+        .status(200)
+        .json({ result: { communityCount, selectedCommunity } });
     } catch (err) {
       next(err);
     }

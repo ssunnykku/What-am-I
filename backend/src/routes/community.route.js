@@ -17,7 +17,11 @@ communityRouter.get(
   loginRequired,
   communityController.getOne,
 );
-communityRouter.get('/', loginRequired, communityController.getCommunityList);
+communityRouter.get(
+  '/',
+  // loginRequired,
+  communityController.getCommunityList,
+);
 
 communityRouter.get(
   '/best',

@@ -3,6 +3,7 @@ import { CommunityPost } from '../models/CommunityPost.model';
 import { CommunityLike } from '../models/CommunityLike.model';
 import ApiError from '../utils/ApiError';
 import { COMMUNITY_PER_PAGE } from '../utils/Constant';
+
 import { Op } from 'sequelize';
 
 class communityService {
@@ -26,16 +27,62 @@ class communityService {
     return getCommunity;
   }
 
-  static async countCommunityPage() {
-    const communityCount = await Community.count();
-    if (communityCount % COMMUNITY_PER_PAGE === 0) {
-      return communityCount / COMMUNITY_PER_PAGE;
+  // static async communityCount(id) {
+  //   const { count, rows } = await Community.findAndCountAll({
+  //     where: {
+  //       id: { id },
+  //     },
+  //     // offset: 10,
+  //     // limit: 2
+  //   });
+  //   console.log('count:', count);
+  //   console.log('rows', rows);
+
+  //   const communityCount = await Community.count({
+  //     where: {
+  //       id: id,
+  //     },
+  //   });
+  //   console.log('1:', communityCount);
+
+  //   if (communityCount % COMMUNITY_PER_PAGE === 0) {
+  //     return communityCount / COMMUNITY_PER_PAGE;
+  //   } else {
+  //     return Math.floor(communityCount / COMMUNITY_PER_PAGE) + 1;
+  //   }
+  // }
+
+  //모든리뷰 다 가지고 오기
+  static async countCommunity() {
+    const showCommunityCount = await Community.count({
+      where: { id: { [Op.gt]: 0 } },
+      order: [['id', 'DESC']],
+    });
+    console.log(showCommunityCount);
+
+    if (showCommunityCount % COMMUNITY_PER_PAGE === 0) {
+      return showCommunityCount / COMMUNITY_PER_PAGE;
     } else {
-      return Math.floor(communityCount / COMMUNITY_PER_PAGE) + 1;
+      return Math.floor(showCommunityCount / COMMUNITY_PER_PAGE) + 1;
     }
   }
 
-  static async selectCommunities(defaultPage) {
+  static async selectCommunity(defaultPage) {
+    const selectedCommunity = await Community.findAll({
+      where: { id: { [Op.gt]: 0 } },
+      order: [['id', 'DESC']],
+
+      offset: (defaultPage - 1) * COMMUNITY_PER_PAGE,
+      limit: COMMUNITY_PER_PAGE,
+    });
+
+    if (!selectedCommunity) {
+      throw ApiError.setBadRequest('No community available');
+    }
+    return selectedCommunity;
+  }
+
+  static async showAllCommunities(defaultPage) {
     const selectedCommunities = await Community.findAll({
       offset: (Number(defaultPage) - 1) * COMMUNITY_PER_PAGE,
       limit: COMMUNITY_PER_PAGE,
