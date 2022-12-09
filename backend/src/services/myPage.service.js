@@ -7,13 +7,13 @@ class myPageService {
   static async UserToCommunity({ userId, page }) {
     // 전체 커뮤니티 수
     const communities = await Community.count({ where: { userId } });
-    const limit = 10;
+    const dataSize = 10;
 
     const findUser = await Community.findAndCountAll({
       where: { userId },
       order: [['id', 'DESC']],
-      limit,
-      offset: sizePerPage(communities, limit, page),
+      limit: dataSize,
+      offset: sizePerPage(communities, dataSize, page),
     });
     return findUser;
   }
@@ -22,15 +22,15 @@ class myPageService {
     const countCommunities = await CommunityLike.count({
       where: { userId: userId },
     });
-    const limit = 10;
+    const dataSize = 10;
 
     const findCommunities = await CommunityLike.findAndCountAll({
       where: { userId: userId },
       attributes: {
         exclude: ['id', 'userId', 'communityId', 'createdAt', 'updatedAt'],
       },
-      limit,
-      offset: sizePerPage(countCommunities, limit, page),
+      limit: dataSize,
+      offset: sizePerPage(countCommunities, dataSize, page),
       include: {
         model: Community,
       },
