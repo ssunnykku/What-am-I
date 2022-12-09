@@ -1,6 +1,6 @@
 function sizePerPage(countData, limit, page) {
-  const lastPage = Math.ceil(countData / 10);
-  const requestedPage = page * limit - 10;
+  const lastPage = Math.ceil(countData / limit);
+  const requestedPage = page * limit - limit;
   const offset =
     page > lastPage
       ? lastPage * limit - limit
