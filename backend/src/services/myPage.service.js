@@ -8,12 +8,13 @@ class myPageService {
     // 전체 커뮤니티 수
     const communities = await Community.count({ where: { userId } });
     const dataSize = 10;
+    const lastData = sizePerPage(communities, dataSize, defaultPage);
 
     const findUser = await Community.findAndCountAll({
       where: { userId },
       order: [['id', 'DESC']],
       limit: dataSize,
-      offset: sizePerPage(communities, dataSize, defaultPage),
+      offset: lastData,
     });
     return findUser;
   }
@@ -23,6 +24,7 @@ class myPageService {
       where: { userId: userId },
     });
     const dataSize = 10;
+    const latsData = sizePerPage(countCommunities, dataSize, defaultPage);
 
     const findCommunities = await CommunityLike.findAndCountAll({
       where: { userId: userId },
@@ -30,7 +32,7 @@ class myPageService {
         exclude: ['id', 'userId', 'communityId', 'createdAt', 'updatedAt'],
       },
       limit: dataSize,
-      offset: sizePerPage(countCommunities, dataSize, defaultPage),
+      offset: latsData,
       include: {
         model: Community,
       },

@@ -61,12 +61,12 @@ export async function deleteUserReview(reviewId: number) {
 
 // 커뮤니티
 export async function getUserLiked() {
-  const response = await axiosInstance.get(`/mycommunities/liked`);
+  const response = await axiosInstance.get(`/mycommunities/liked?page=1`);
   return response.data;
 }
 
 // 내 커뮤니티
 export async function getUserCommunites() {
-  const response = await axiosInstance.get(`/mycommunities`);
+  const response = await axiosInstance.get(`/mycommunities?page=1`);
   return response.data;
 }
