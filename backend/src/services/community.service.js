@@ -27,31 +27,6 @@ class communityService {
     return getCommunity;
   }
 
-  // static async communityCount(id) {
-  //   const { count, rows } = await Community.findAndCountAll({
-  //     where: {
-  //       id: { id },
-  //     },
-  //     // offset: 10,
-  //     // limit: 2
-  //   });
-  //   console.log('count:', count);
-  //   console.log('rows', rows);
-
-  //   const communityCount = await Community.count({
-  //     where: {
-  //       id: id,
-  //     },
-  //   });
-  //   console.log('1:', communityCount);
-
-  //   if (communityCount % COMMUNITY_PER_PAGE === 0) {
-  //     return communityCount / COMMUNITY_PER_PAGE;
-  //   } else {
-  //     return Math.floor(communityCount / COMMUNITY_PER_PAGE) + 1;
-  //   }
-  // }
-
   static async countCommunity() {
     const showCommunityCount = await Community.count({
       where: { id: { [Op.gt]: 0 } },
@@ -101,7 +76,7 @@ class communityService {
   }
 
   static async findBestCommunities() {
-    const result = await CommunityLike.findAll({
+    const bestThree = await CommunityLike.findAll({
       attributes: [
         'communityId',
         [CommunityLike.sequelize.fn('count', '*'), 'countLike'],
@@ -115,7 +90,11 @@ class communityService {
         },
       ],
     });
-    return result;
+    for (const community of bestThree) {
+      console.log(community);
+    }
+
+    return bestThree;
   }
 
   // 이거?

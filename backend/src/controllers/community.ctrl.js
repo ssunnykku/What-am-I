@@ -39,14 +39,14 @@ class communityController {
       const userId = req.currentUserId;
       const { page } = req.query;
       const defaultPage = page || 1;
-      const communityCount = await communityService.countCommunity();
+      const countCommunityPage = await communityService.countCommunity();
       const selectedCommunity = await communityService.selectCommunity(
         defaultPage,
       );
       if (!selectedCommunity) {
         throw new Error(selectedCommunity);
       }
-      return res.status(200).json({ communityCount, selectedCommunity });
+      return res.status(200).json({ countCommunityPage, selectedCommunity });
     } catch (err) {
       next(err);
     }
