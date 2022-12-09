@@ -42,9 +42,9 @@ class userController {
   static async userList(req, res, next) {
     try {
       const users = await userService.users();
-      if (users.errorMessage) {
-        throw new Error(users.errorMessage);
-      }
+      // if (users.errorMessage) {
+      //   throw new Error(users.errorMessage);
+      // }
       return res.status(200).send(users);
     } catch (error) {
       next(error);

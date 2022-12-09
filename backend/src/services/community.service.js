@@ -52,7 +52,6 @@ class communityService {
   //   }
   // }
 
-  //모든리뷰 다 가지고 오기
   static async countCommunity() {
     const showCommunityCount = await Community.count({
       where: { id: { [Op.gt]: 0 } },
@@ -70,14 +69,20 @@ class communityService {
     const selectedCommunity = await Community.findAll({
       where: { id: { [Op.gt]: 0 } },
       order: [['id', 'DESC']],
-
       offset: (defaultPage - 1) * COMMUNITY_PER_PAGE,
       limit: COMMUNITY_PER_PAGE,
     });
 
-    if (!selectedCommunity) {
-      throw ApiError.setBadRequest('No community available');
+    for (const community of selectedCommunity) {
+      community.dataValues.likeCount = await CommunityLike.count({
+        where: { communityId: community.id },
+      });
+
+      community.dataValues.likeStatus = await CommunityLike.count({
+        where: { userId: community.userId, communityId: community.id },
+      });
     }
+
     return selectedCommunity;
   }
 
