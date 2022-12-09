@@ -95,7 +95,7 @@ class communityService {
         where: { userId: userId, communityId: community.communityId },
       });
     }
-    console.log(bestThree);
+
     return bestThree;
   }
 
