@@ -58,7 +58,6 @@ class communityService {
       where: { id: { [Op.gt]: 0 } },
       order: [['id', 'DESC']],
     });
-    console.log(showCommunityCount);
 
     if (showCommunityCount % COMMUNITY_PER_PAGE === 0) {
       return showCommunityCount / COMMUNITY_PER_PAGE;

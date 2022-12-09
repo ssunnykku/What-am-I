@@ -4,10 +4,11 @@ class myPageController {
   static async getMyCommunities(req, res, next) {
     try {
       const { page } = req.query;
+      const defaultPage = page || 1;
       const userId = req.currentUserId;
       const getCommunities = await myPageService.UserToCommunity({
         userId,
-        page,
+        defaultPage,
       });
 
       return res.status(200).send(getCommunities);
@@ -21,9 +22,10 @@ class myPageController {
       const userId = req.currentUserId;
       // const page = 1;
       const { page } = req.query;
+      const defaultPage = page || 1;
       const likedCommunities = await myPageService.getMyCommunities({
         userId,
-        page,
+        defaultPage,
       });
       return res.status(200).send(likedCommunities);
     } catch (error) {

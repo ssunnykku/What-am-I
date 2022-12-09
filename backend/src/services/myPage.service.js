@@ -4,7 +4,7 @@ import { CommunityPost } from '../models/CommunityPost.model';
 import { sizePerPage } from '../utils/pagination';
 
 class myPageService {
-  static async UserToCommunity({ userId, page }) {
+  static async UserToCommunity({ userId, defaultPage }) {
     // 전체 커뮤니티 수
     const communities = await Community.count({ where: { userId } });
     const dataSize = 10;
@@ -13,12 +13,12 @@ class myPageService {
       where: { userId },
       order: [['id', 'DESC']],
       limit: dataSize,
-      offset: sizePerPage(communities, dataSize, page),
+      offset: sizePerPage(communities, dataSize, defaultPage),
     });
     return findUser;
   }
 
-  static async getMyCommunities({ userId, page }) {
+  static async getMyCommunities({ userId, defaultPage }) {
     const countCommunities = await CommunityLike.count({
       where: { userId: userId },
     });
@@ -30,7 +30,7 @@ class myPageService {
         exclude: ['id', 'userId', 'communityId', 'createdAt', 'updatedAt'],
       },
       limit: dataSize,
-      offset: sizePerPage(countCommunities, dataSize, page),
+      offset: sizePerPage(countCommunities, dataSize, defaultPage),
       include: {
         model: Community,
       },
