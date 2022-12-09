@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { theme } from '../../assets/styles/common/palette';
 import { font } from '../../assets/styles/common/fonts';
@@ -10,18 +10,21 @@ export interface CommunityTypeProps {
 }
 
 const CommuRankingCard = ({ ranking }: CommunityTypeProps) => {
-  const navigate = useNavigate();
-
   return (
-    <CommuRankingCardBox onClick={() => navigate('/likedcommunity')}>
-      <CommuImage>
-        <img src={ranking.communityImage} />
-      </CommuImage>
-      <CommuName>{ranking.name}</CommuName>
-      <div className="like-icon">
-        <LikeBtn />
-      </div>
-    </CommuRankingCardBox>
+    <Link
+      style={{ textDecoration: 'none', color: 'black' }}
+      to={`/likedcommunity?id=${ranking.id}`}
+    >
+      <CommuRankingCardBox>
+        <CommuImage>
+          <img src={ranking.communityImage} />
+        </CommuImage>
+        <CommuName>{ranking.name}</CommuName>
+        <div className="like-icon">
+          <LikeBtn />
+        </div>
+      </CommuRankingCardBox>
+    </Link>
   );
 };
 
@@ -73,7 +76,6 @@ const CommuRankingCardBox = styled.div`
 const CommuImage = styled.div`
   height: 150px;
   width: 170px;
-  border: solid 1px gray;
   margin-top: 15px;
   border-radius: 10px;
   position: relative;

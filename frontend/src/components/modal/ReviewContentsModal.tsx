@@ -10,7 +10,6 @@ import {
 export interface ReviewTypeProps {
   userId?: string;
   review?: ReviewType;
-  value?: ReviewCommentType;
   mode?: string;
   getReviews?: () => Promise<void>;
   modalHandler?: () => void;

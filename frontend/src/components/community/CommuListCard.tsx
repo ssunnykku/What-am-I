@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { EntryBtn } from '../../assets/styles/common/commonComponentStyle';
@@ -24,7 +25,9 @@ const CommuListCard = ({ commu }: CommunityListsTypeProps) => {
           <LikeBtn />
         </LikeNum>
       </SmallBox>
-      <EntryBtn onClick={() => navigate('/likedcommunity')}>입장하기</EntryBtn>
+      <Link to={`/likedcommunity?id=${commu.id}`}>
+        <EntryBtn>입장하기</EntryBtn>
+      </Link>
     </ListCardBox>
   );
 };

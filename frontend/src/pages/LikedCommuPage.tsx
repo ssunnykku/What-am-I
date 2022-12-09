@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import {
   EditDelBtn,
-  EntryBtn,
   SearchBox,
 } from '../assets/styles/common/commonComponentStyle';
 import { theme } from '../assets/styles/common/palette';
@@ -18,45 +17,37 @@ import { CommunityType } from '../types/community/communityType';
 const LikedCommuPage = (props: CommunityType) => {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [commuInfo, setCommuInfo] = useState<CommunityType>();
 
-  // 커뮤니티 가져오기 내가 누른 커뮤니티나 만든 커뮤니티 아이디와 가져올 커뮤니티 아이디가 같을 때
-  const getCommunityData = async () => {
-    const res = await getCurrentCommuListRequest(
-      `communities/posts/${props.id}`,
-    );
-    console.log(res);
-  };
   useEffect(() => {
+    let getParameter = (key: string) => {
+      return new URLSearchParams(location.search).get(key);
+    };
+    const id = getParameter('id');
+    const getCommunityData = async () => {
+      const res = await getCurrentCommuListRequest(`communities/posts/${id}`);
+      setCommuInfo(res);
+    };
     getCommunityData();
   }, []);
-
-  // const fetchData = async () => {
-  //   const res = await currentCommuListRequest('community?page="page"');
-  //   setPosts(res.data);
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
 
   return (
     <BigBox>
       <CommunityBox>
         <IntroBox>
-          <ImageBox />
+          <ImageBox>
+            <img src={commuInfo?.communityImage} />
+          </ImageBox>
           <NameBox>
-            <CommuName>커뮤니티 이름</CommuName>
-            <CommuIntro>
-              커뮤니티 소개가 들어가는 칸입니다. 귀여운 내 새끼 나만 볼 수는
-              없죠! 마구마구 자랑해주시길 바랍니다. 그래서 만든 커뮤니티예요.
-              여러분 마구마구 자랑을 갈겨 주세요!
-            </CommuIntro>
-            <EditDelBtn>수정</EditDelBtn>
+            <CommuName>
+              {commuInfo?.name}
+              <EditDelBtn style={{ marginLeft: '10px' }}>수정</EditDelBtn>
+            </CommuName>
+            <CommuIntro>{commuInfo?.introduction}</CommuIntro>
           </NameBox>
-          <BtnBox>
-            {/* <EntryBtn style={{ marginBottom: '1rem' }}>채팅방 입장</EntryBtn> */}
+          <WritingBtnBox>
             <CommuWritingModal />
-          </BtnBox>
+          </WritingBtnBox>
         </IntroBox>
         <SmallBox>
           <SearchBox style={{ height: '1.8rem' }}>
@@ -112,8 +103,8 @@ const IntroBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  margin-top: 1.5rem;
+  margin-top: 25px;
+  position: relative;
 `;
 
 const ImageBox = styled.div`
@@ -121,42 +112,52 @@ const ImageBox = styled.div`
   border-radius: 50%;
   height: 9rem;
   width: 9rem;
-  margin: 0rem 20px;
+  margin-right: 15px;
+  margin-left: 5rem;
+  position: relative;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const NameBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 30rem;
+  width: 29rem;
   height: 75%;
+  margin-left: 10px;
 `;
 
 const CommuName = styled.div`
   display: flex;
   align-items: center;
-  width: 25rem;
+  width: 500px;
   height: 3rem;
   font-family: ${font.bold};
-  font-size: 1.3rem;
+  font-size: 22px;
   letter-spacing: 0.1rem;
 `;
 
 const CommuIntro = styled.div`
   display: flex;
-  align-items: center;
-  width: 30rem;
+  width: 500px;
   height: 4rem;
   font-family: ${font.normal};
-  font-size: 0.85rem;
-  line-height: 1.3rem;
+  font-size: 17px;
+  margin-top: 5px;
 `;
 
-const BtnBox = styled.div`
-  /* display: flex;
-  flex-direction: column; */
-  width: 11rem;
-  margin-top: 70px;
+const WritingBtnBox = styled.div`
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  right: 80px;
 `;
 
 const SmallBox = styled.div`
@@ -167,7 +168,7 @@ const SmallBox = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: 1rem;
-  padding-right: 1rem;
+  padding-right: 20px;
 `;
 
 const InfoBox = styled.div`
