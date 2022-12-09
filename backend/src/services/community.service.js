@@ -75,7 +75,7 @@ class communityService {
     return selectedCommunities;
   }
 
-  static async findBestCommunities() {
+  static async findBestCommunities({ userId }) {
     const bestThree = await CommunityLike.findAll({
       attributes: [
         'communityId',
@@ -91,9 +91,11 @@ class communityService {
       ],
     });
     for (const community of bestThree) {
-      console.log(community);
+      community.dataValues.likeStatus = await CommunityLike.count({
+        where: { userId: userId, communityId: community.communityId },
+      });
     }
-
+    console.log(bestThree);
     return bestThree;
   }
 

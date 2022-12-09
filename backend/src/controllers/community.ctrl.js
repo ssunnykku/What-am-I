@@ -55,7 +55,9 @@ class communityController {
   static async getBestCommunities(req, res, next) {
     try {
       const userId = req.currentUserId;
-      const getLikedCommunities = await communityService.findBestCommunities();
+      const getLikedCommunities = await communityService.findBestCommunities({
+        userId,
+      });
       res.status(200).json(getLikedCommunities);
     } catch (error) {
       next(error);
