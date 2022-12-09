@@ -24,7 +24,7 @@ class myPageService {
       where: { userId: userId },
     });
     const dataSize = 10;
-    const latsData = sizePerPage(countCommunities, dataSize, defaultPage);
+    const lastData = sizePerPage(countCommunities, dataSize, defaultPage);
 
     const findCommunities = await CommunityLike.findAndCountAll({
       where: { userId: userId },
@@ -32,7 +32,7 @@ class myPageService {
         exclude: ['id', 'userId', 'communityId', 'createdAt', 'updatedAt'],
       },
       limit: dataSize,
-      offset: latsData,
+      offset: lastData,
       include: {
         model: Community,
       },

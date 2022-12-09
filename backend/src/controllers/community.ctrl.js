@@ -40,12 +40,10 @@ class communityController {
       const id = 0;
       const defaultPage = page || 1;
       const communityCount = await communityService.countCommunity();
-      //
+
       const selectedCommunity = await communityService.selectCommunity(
         defaultPage,
       );
-
-      //
 
       if (!selectedCommunity) {
         throw new Error(selectedCommunity);
