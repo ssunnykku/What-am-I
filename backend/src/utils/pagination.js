@@ -1,11 +1,7 @@
 function sizePerPage(countData, dataSize, page) {
   const lastPage = Math.ceil(countData / dataSize);
-  const requestedPage = page * dataSize - dataSize;
-
-  if (page > lastPage) {
-    const offset = lastPage * dataSize - dataSize;
-    return offset;
-  } else if (page <= 0) {
+  const requestedPage = (page - 1) * dataSize;
+  if (page <= 0) {
     const offset = 0;
     return offset;
   } else {
@@ -18,7 +14,6 @@ function sizePerPage(countData, dataSize, page) {
   //     : requestedPage <= 0
   //     ? 0
   //     : requestedPage;
-  return offset;
 }
 
 export { sizePerPage };
