@@ -1,4 +1,8 @@
-import { CreateCommuInitialType } from '../types/community/communityType';
+import {
+  CommuLikePostType,
+  CreateCommuInitialType,
+  CreateCurrentCommunityPostType,
+} from '../types/community/communityType';
 import { axiosInstance } from '../utils/axiosInstance';
 
 export async function createCommunityRequest(
@@ -18,37 +22,48 @@ export async function createCommunityRequest(
   return res.data;
 }
 
-export async function getCurrentCommuListRequest(endpoint: string) {
-  const res = await axiosInstance.get(endpoint, {
+export async function CreateCurrentCommunityPostRequest(
+  endpoint: string,
+  { images, description }: CreateCurrentCommunityPostType,
+) {
+  const formData = new FormData();
+  formData.append('images', images);
+  formData.append('description', description);
+
+  const res = await axiosInstance.post(endpoint, formData, {
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
   });
   return res.data;
 }
 
-export async function getRankingCommunityRequest(endpoint: string) {
-  const res = await axiosInstance.get(endpoint, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+export async function getCurrentCommunityRequest(endpoint: string) {
+  const res = await axiosInstance.get(endpoint);
   return res.data;
 }
 
-export async function getCommunitiesRequest(endpoint: string) {
-  const res = await axiosInstance.get(endpoint, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+export async function getRankingCommunityRequest() {
+  const res = await axiosInstance.get(`communities/best`);
   return res.data;
 }
+
+export async function getCommunitiesRequest(pages: number) {
+  const res = await axiosInstance.get(`communities?page=${pages}`);
+  return res.data;
+}
+
+// 커뮤니티 내 게시물 수정
+// export async function editCurrentPostRequest() {
+//   const res = await axiosInstance.put()
+//   return res.data
+// }
 
 // like fetcher
-export async function postLikeBtnRequest(
+export async function postCommuLikeRequest(
   endpoint: string,
-  // { 커뮤니티 아이디, 내 유저 아이디 } : 타입
+  { id, userId }: CommuLikePostType,
 ) {
-  const res = await axiosInstance.post(endpoint);
+  const res = await axiosInstance.post(endpoint, { id, userId });
+  return res.data;
 }

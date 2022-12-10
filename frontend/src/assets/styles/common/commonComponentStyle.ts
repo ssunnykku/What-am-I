@@ -124,7 +124,6 @@ export const EntryBtn = styled.button`
 export const EditDelBtn = styled.button`
   width: 3rem;
   height: 1.6rem;
-  margin-top: 10px;
   border-radius: 20px;
   background-color: white;
   border: solid 1px ${theme.mainColor};
