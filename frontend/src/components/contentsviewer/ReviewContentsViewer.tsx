@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import { EditDelBtn } from '../../assets/styles/common/commonComponentStyle';
-import LikeBtn from '../common/LikeBtn';
 import { ReviewTypeProps } from '../modal/ReviewContentsModal';
 import {
   createReviewCommentRequest,
@@ -19,6 +18,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import { useConfirm } from '../../hooks/confirm/useConfirm';
+import ReviewLikeBtn from '../reviewBoard/ReviewLikeBtn';
 
 const ReviewContentsViewer = (props: ReviewTypeProps) => {
   const [isOpen, modalHandler] = useModal();
@@ -221,7 +221,10 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
           </ContentsBox>
           <BottomDiv>
             <div className="like">
-              <LikeBtn />
+              <ReviewLikeBtn
+                review={props.review}
+                currentUser={props.currentUser}
+              />
             </div>
             <div className="date">{newDate}</div>
             <CommentBox>
@@ -316,6 +319,7 @@ const ButtonBox = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
+  padding-right: 5px;
 `;
 
 const ContentsBox = styled.div`

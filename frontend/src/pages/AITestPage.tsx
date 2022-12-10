@@ -5,10 +5,9 @@ import { font } from '../assets/styles/common/fonts';
 import { theme } from '../assets/styles/common/palette';
 
 const AITestPage = () => {
-  const [communityImage, setCommunityImage] = useState<
-    string | ArrayBuffer | null
-  >('');
+  const [communityImage, setCommunityImage] = useState<File | null>(null);
   const [imgName, setImgName] = useState<string>('');
+  const [preview, setPreview] = useState<string>('');
   const imageInputRef = useRef<HTMLInputElement>(null);
 
   const navigate = useNavigate();
@@ -16,11 +15,12 @@ const AITestPage = () => {
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length !== 0) {
       const file = e.target.files[0];
+      setCommunityImage(file);
       const reader = new FileReader();
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        setCommunityImage(reader.result);
+        setPreview(reader.result as string);
       };
     }
     if (imageInputRef.current) {
@@ -36,9 +36,7 @@ const AITestPage = () => {
       <InnerBox>
         <ImageBigBox>
           <ImageBox>
-            {communityImage && (
-              <img src={communityImage.toString()} className="pre-img" />
-            )}
+            {preview && <img src={preview} className="pre-img" />}
           </ImageBox>
           <InputBox>
             <div className="filebox">
@@ -92,7 +90,7 @@ const AiTestBox = styled.div`
   border-radius: 20px;
   font-family: ${font.bold};
   color: ${theme.boldColor};
-  background-color: #fffcf1;
+  background-color: ${theme.lightColor};
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;

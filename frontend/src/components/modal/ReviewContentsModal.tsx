@@ -1,11 +1,8 @@
 import useModal from '../../hooks/modal/useModal';
 import MyModal from './MyModal';
-import PuppyCard from '../reviewBoard/PuppyCard';
+import ReviewPuppyCard from '../reviewBoard/ReviewPuppyCard';
 import ReviewContentsViewer from '../contentsviewer/ReviewContentsViewer';
-import {
-  ReviewCommentType,
-  ReviewType,
-} from '../../types/reviewboard/reviewType';
+import { ReviewType } from '../../types/reviewboard/reviewType';
 
 export interface ReviewTypeProps {
   userId?: string;
@@ -32,7 +29,7 @@ const ReviewContentsModal = ({
           currentUser={currentUser}
         />
       </MyModal>
-      <PuppyCard onCardModalClickEvent={modalHandler}></PuppyCard>
+      <ReviewPuppyCard onCardModalClickEvent={modalHandler}></ReviewPuppyCard>
     </>
   );
 };

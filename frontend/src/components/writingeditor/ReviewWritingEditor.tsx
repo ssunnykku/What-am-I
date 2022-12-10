@@ -1,10 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { createReviewRequest } from '../../apis/reviewFetcher';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
-import { ReviewInitialType } from '../../types/reviewboard/reviewType';
-import useModal from '../../hooks/modal/useModal';
 import { ReviewTypeProps } from '../modal/ReviewContentsModal';
 import { editReviewRequest } from '../../apis/reviewFetcher';
 
@@ -21,10 +19,9 @@ const ReviewWritingEditor = (props: ReviewTypeProps) => {
       description,
       images,
     });
-    console.log(res);
   };
 
-  const handleEditMyReview = async (e: React.MouseEvent) => {
+  const handleEditMyReview = async (e: React.FormEvent) => {
     e.preventDefault();
     await editReviewRequest(`review/${props.review?.id}`, description);
 
@@ -36,7 +33,7 @@ const ReviewWritingEditor = (props: ReviewTypeProps) => {
   return (
     <>
       <CreateModalWrapper
-        onSubmit={(e: any) => {
+        onSubmit={(e: React.FormEvent) => {
           props.mode === 'edit'
             ? handleEditMyReview(e)
             : handleWritingEditorClick();
