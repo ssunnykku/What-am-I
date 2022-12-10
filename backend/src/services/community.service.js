@@ -33,7 +33,6 @@ class communityService {
         communityId: id,
       },
     });
-    console.log(getCommunity);
     return getCommunity;
   }
 
