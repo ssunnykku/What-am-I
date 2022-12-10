@@ -5,6 +5,8 @@ import {
   CreateBtn,
 } from '../../assets/styles/common/commonComponentStyle';
 import { font } from '../../assets/styles/common/fonts';
+import { useConfirm } from '../../hooks/confirm/useConfirm';
+import { deleteUserCommunites } from '../../apis/mypageFetcher';
 
 interface Props {
   value: CommunityProps;
@@ -12,6 +14,19 @@ interface Props {
 }
 
 function CommunityCard(props: Props) {
+  async function deleteReview() {
+    const response = await deleteUserCommunites(props.value.id);
+    console.log(response);
+  }
+
+  const deleteConfirm = () => (deleteReview(), window.alert('삭제했습니다.'));
+  const cancelConfirm = () => window.alert('취소했습니다.');
+
+  const confirmDelete = useConfirm(
+    '삭제하시겠습니까?',
+    deleteConfirm,
+    cancelConfirm,
+  );
   return (
     <Card>
       <Content>
@@ -21,7 +36,7 @@ function CommunityCard(props: Props) {
       {props.mode == 'MyCommunity' ? (
         <ButtonContainer>
           <EntryBtn>수정</EntryBtn>
-          <CreateBtn>삭제</CreateBtn>
+          <CreateBtn onClick={confirmDelete}>삭제</CreateBtn>
         </ButtonContainer>
       ) : (
         <ButtonContainer>
@@ -67,7 +82,7 @@ const Content = styled.div`
 const Img = styled.img`
   width: 100px;
   height: 100px;
-  border-radius: 15px;
+  border-radius: 100%;
   object-fit: cover; // 이미지 확대하여 비율유지
 `;
 

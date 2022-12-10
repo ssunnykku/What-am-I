@@ -22,7 +22,7 @@ function Community() {
   useEffect(() => {
     async function getData() {
       const response = await getUserLiked();
-      setUserLikedList(response);
+      setUserLikedList(response.rows);
       console.log(response);
     }
     getData();
@@ -30,9 +30,13 @@ function Community() {
 
   return (
     <Div>
-      {userLikedList.map((value) => (
-        <CommunityCard value={value} mode={'Community'} key={value.id} />
-      ))}
+      {userLikedList.length ? (
+        userLikedList.map((value) => (
+          <CommunityCard value={value} mode={'Community'} key={value.id} />
+        ))
+      ) : (
+        <div>내가 좋아요 한 커뮤니티가 없습니다</div>
+      )}
     </Div>
   );
 }

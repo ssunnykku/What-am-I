@@ -11,16 +11,21 @@ function MyCommunity() {
   useEffect(() => {
     async function getData() {
       const response = await getUserCommunites();
-      setCommunityLists(response);
+      setCommunityLists(response.rows);
+      console.log(response);
     }
     getData();
   }, []);
 
   return (
     <Div>
-      {communityLists.map((value) => (
-        <CommunityCard value={value} mode={'MyCommunity'} key={value.id} />
-      ))}
+      {communityLists.length ? (
+        communityLists.map((value) => (
+          <CommunityCard value={value} mode={'MyCommunity'} key={value.id} />
+        ))
+      ) : (
+        <div>내 커뮤니티가 없습니다</div>
+      )}
     </Div>
   );
 }

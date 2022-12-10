@@ -15,11 +15,11 @@ interface receiveProps {
 
 function ResultCard(props: receiveProps) {
   async function getReview() {
-    const response = await getUserReview(props.value.reviewId);
+    const response = await getUserReview(props.value.id);
     console.log(response);
   }
   async function deleteReview() {
-    const response = await deleteUserReview(props.value.reviewId);
+    const response = await deleteUserReview(props.value.id);
     console.log(response);
   }
 

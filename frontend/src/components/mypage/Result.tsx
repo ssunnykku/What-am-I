@@ -5,7 +5,7 @@ import { getUserReviews } from '../../apis/mypageFetcher';
 import ResultCard from './ResultCard';
 
 export interface ReviewsProps {
-  reviewId: number;
+  id: number;
   description: string;
   images: string;
   createdAt?: string;
@@ -28,7 +28,10 @@ function Result() {
   return (
     <ResultContainer>
       {reviews?.map((value: ReviewsProps) => (
-        <ResultCard value={value} key={value.reviewId} />
+        <>
+          <ResultCard value={value} key={value.id} />
+          {console.log(value)}
+        </>
       ))}
     </ResultContainer>
   );

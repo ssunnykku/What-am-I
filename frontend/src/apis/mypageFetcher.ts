@@ -70,3 +70,9 @@ export async function getUserCommunites() {
   const response = await axiosInstance.get(`/mycommunities?page=1`);
   return response.data;
 }
+
+// 내 커뮤니티 삭제
+export async function deleteUserCommunites(communityId: number) {
+  const response = await axiosInstance.delete(`/communities/${communityId}`);
+  return response.data;
+}
