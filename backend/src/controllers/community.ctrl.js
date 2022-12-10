@@ -23,7 +23,7 @@ class communityController {
     try {
       const userId = req.currentUserId;
       const id = req.params.communityId;
-      const findOne = await communityService.getOneCommunity({ id });
+      const findOne = await communityService.getOneCommunity({ id, userId });
       if (findOne.errorMessage) {
         throw new Error(findOne, errorMessage);
       }
