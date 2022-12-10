@@ -14,30 +14,36 @@ import {
   CommunityRankingType,
   CommunityType,
 } from '../types/community/communityType';
-import { Link } from 'react-router-dom';
+import { getUserData } from '../apis/mypageFetcher';
 
 const CommunityPage = () => {
   const [rankings, setRankings] = useState<CommunityType[]>([]);
   const [commuList, setCommuList] = useState<CommunityType[]>([]);
   const [pages, setPages] = useState<number>(1);
+  const [currentUser, setCurrentUser] = useState<string>('');
+
+  // 현재 로그인 중인 유저 닉네임 받기
+  const getCurrentUser = async () => {
+    const res = await getUserData();
+    setCurrentUser(res.userId);
+  };
 
   // 베스트 커뮤니티
   const getRankingCommunity = async () => {
-    const res = await getRankingCommunityRequest('communities/best');
+    const res = await getRankingCommunityRequest();
     const resMap = res.map((res: CommunityRankingType) => res.Community);
     setRankings(resMap);
   };
 
   // 전체 커뮤니티 목록
   const getCommunitiesList = async () => {
-    const res = await getCommunitiesRequest(`communities?page=${pages}`);
-
-    setCommuList(res.result.selectedCommunity);
+    const res = await getCommunitiesRequest(pages);
+    setCommuList(res.selectedCommunity);
   };
-
   useEffect(() => {
     getRankingCommunity();
     getCommunitiesList();
+    getCurrentUser();
   }, []);
 
   return (
@@ -66,7 +72,11 @@ const CommunityPage = () => {
           <CommuListsBox>
             <ScrollBox>
               {commuList?.map((commu) => (
-                <CommuListCard key={commu.id} commu={commu} />
+                <CommuListCard
+                  key={commu.id}
+                  commu={commu}
+                  currentUser={currentUser}
+                />
               ))}
             </ScrollBox>
           </CommuListsBox>

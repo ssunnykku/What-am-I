@@ -6,30 +6,47 @@ import {
   SearchBox,
 } from '../assets/styles/common/commonComponentStyle';
 import { theme } from '../assets/styles/common/palette';
-import LikeBtn from '../components/common/LikeBtn';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import PaginateButton from '../components/pagination/PaginateButton';
 import CommuWritingModal from '../components/modal/CommuWritingModal';
 import CommuContentsModal from '../components/modal/CommuContentsModal';
-import { getCurrentCommuListRequest } from '../apis/communityFetcher';
-import { CommunityType } from '../types/community/communityType';
+import { getCurrentCommunityRequest } from '../apis/communityFetcher';
+import {
+  CommunityType,
+  CurrentCommuPostsType,
+} from '../types/community/communityType';
+import CommuLikeBtn from '../components/community/CommuLikeBtn';
 
-const LikedCommuPage = (props: CommunityType) => {
+const LikedCommuPage = () => {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [commuPosts, setCommuPosts] = useState<CurrentCommuPostsType[]>([]);
   const [commuInfo, setCommuInfo] = useState<CommunityType>();
+  const [currentUser, setCurrentUser] = useState<string>('');
+
+  // 쿼리 스트링에 값 넣어주기
+  let getParameter = (key: string) => {
+    return new URLSearchParams(location.search).get(key);
+  };
+  const id = getParameter('id');
+  const getCommunityData = async () => {
+    const res = await getCurrentCommunityRequest(`communities/posts/${id}`);
+    setCommuInfo(res);
+  };
+
+  // 커뮤니티 전체 게시글 받아오기
+  const getPosts = async () => {
+    const res = await getCurrentCommunityRequest(
+      `communityPost/${id}?page=${page}`,
+    );
+    setCommuPosts(res.result.selectedCommunityPost);
+    setTotalPages(res.result.communityPostCount);
+  };
 
   useEffect(() => {
-    let getParameter = (key: string) => {
-      return new URLSearchParams(location.search).get(key);
-    };
-    const id = getParameter('id');
-    const getCommunityData = async () => {
-      const res = await getCurrentCommuListRequest(`communities/posts/${id}`);
-      setCommuInfo(res);
-    };
     getCommunityData();
-  }, []);
+    getPosts();
+  }, [page]);
 
   return (
     <BigBox>
@@ -41,7 +58,7 @@ const LikedCommuPage = (props: CommunityType) => {
           <NameBox>
             <CommuName>
               {commuInfo?.name}
-              <EditDelBtn style={{ marginLeft: '10px' }}>수정</EditDelBtn>
+              <EditDelBtn style={{ margin: '0 10px' }}>수정</EditDelBtn>
             </CommuName>
             <CommuIntro>{commuInfo?.introduction}</CommuIntro>
           </NameBox>
@@ -56,17 +73,17 @@ const LikedCommuPage = (props: CommunityType) => {
           </SearchBox>
           <InfoBox>
             <div>
-              <LikeBtn />
-              &nbsp;10
+              <CommuLikeBtn />
             </div>
             <div>
-              <StickyNote2Icon />
-              &nbsp;10
+              <StickyNote2Icon style={{ marginRight: '3px' }} />
             </div>
           </InfoBox>
         </SmallBox>
         <ContentsBox>
-          <CommuContentsModal />
+          {commuPosts?.map((commuPost) => (
+            <CommuContentsModal key={commuPost.id} commuPost={commuPost} />
+          ))}
         </ContentsBox>
         <PaginateButton page={page} setPage={setPage} totalPages={totalPages} />
       </CommunityBox>
@@ -94,7 +111,7 @@ const CommunityBox = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: 30px;
-  box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
   position: relative;
 `;
 
@@ -109,11 +126,11 @@ const IntroBox = styled.div`
 
 const ImageBox = styled.div`
   border: solid 1px black;
-  border-radius: 50%;
+  border-radius: 5px;
   height: 9rem;
-  width: 9rem;
+  width: 10rem;
   margin-right: 15px;
-  margin-left: 5rem;
+  margin-left: 75px;
   position: relative;
   overflow: hidden;
 
@@ -137,7 +154,7 @@ const NameBox = styled.div`
 const CommuName = styled.div`
   display: flex;
   align-items: center;
-  width: 500px;
+  width: 550px;
   height: 3rem;
   font-family: ${font.bold};
   font-size: 22px;
@@ -146,11 +163,12 @@ const CommuName = styled.div`
 
 const CommuIntro = styled.div`
   display: flex;
-  width: 500px;
-  height: 4rem;
+  width: 480px;
+  height: 5rem;
   font-family: ${font.normal};
-  font-size: 17px;
+  font-size: 16.5px;
   margin-top: 5px;
+  line-height: 22px;
 `;
 
 const WritingBtnBox = styled.div`
