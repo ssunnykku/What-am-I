@@ -11,6 +11,8 @@ import sessionMysql from 'express-mysql-session';
 //**Router */
 import { communityRouter } from './src/routes/community.route';
 import { communityPostRouter } from './src/routes/communityPost.route';
+import { communityCommentRouter } from './src/routes/communityComment.route';
+
 import { userRouter } from './src/routes/user.router';
 import { reviewRouter } from './src/routes/review.route';
 import { reviewCommentRouter } from './src/routes/revComment.route';
@@ -70,6 +72,8 @@ app.use(reviewLikeRouter);
 app.use('/communities', communityRouter);
 app.use(myPageRouter);
 app.use(communityLikeRouter);
+app.use(communityCommentRouter);
+
 app.use(errorMiddleware);
 
 app.listen(process.env.SEVER_PORT, () =>
