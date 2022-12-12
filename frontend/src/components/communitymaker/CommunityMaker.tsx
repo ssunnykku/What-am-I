@@ -5,16 +5,13 @@ import { createCommunityRequest } from '../../apis/communityFetcher';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 
-// TODO: 커뮤 이름, 소개글 안 적으면 버튼 비활성화
-// 일단 alert으로 일러주기
-
 const CommunityMaker = () => {
   const [communityImage, setCommunityImage] = useState<File | null>(null);
   const [name, setName] = useState<string>('');
   const [introduction, setIntroduction] = useState<string>('');
   const [preview, setPreview] = useState<string>('');
-
   const imageInputRef = useRef<HTMLInputElement>(null);
+
   const navigate = useNavigate();
 
   // 사진 미리보기
@@ -45,14 +42,14 @@ const CommunityMaker = () => {
   const handleCreateCommuFormClick = async (e: React.FormEvent) => {
     e.preventDefault();
     if (communityImage) {
-      await createCommunityRequest('communities', {
+      const res = await createCommunityRequest({
         name,
         communityImage,
         introduction,
       });
-      navigate('/likedcommunity');
+      navigate(`/likedcommunity?id=${res.id}`);
     } else {
-      alert('커뮤니티 이미지를 넣어 주세요.');
+      alert('커뮤니티 대표 이미지를 넣어 주세요.');
     }
   };
 

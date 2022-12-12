@@ -18,3 +18,18 @@ export interface ReviewType {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface LikePostType {
+  userId: number | string;
+  reviewId: number;
+}
+
+export interface LikeGetType {
+  myLikeInformation: {
+    createdAt: string;
+    id: number;
+    reviewId: string;
+    userId: string;
+  };
+  totalLikes: number;
+}

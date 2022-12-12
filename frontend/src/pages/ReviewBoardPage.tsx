@@ -9,21 +9,40 @@ import ReviewContentsModal from '../components/modal/ReviewContentsModal';
 import usePaginate from '../hooks/usePaginate/usePaginate';
 import { ReviewType } from '../types/reviewboard/reviewType';
 import { getUserData } from '../apis/mypageFetcher';
+import { UserInfoType } from '../types/auth/authType';
 
 const ReviewBoardPage = () => {
   const [pages, setPages] = useState<number>(1);
   const [reviews, setReviews] = useState<ReviewType[]>([]);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentUser, setCurrentUser] = useState<string>('');
+  const [search, setSearch] = useState<string>('');
+  const [userInfo, setUserInfo] = useState<UserInfoType>();
+
   const [isLogin, setIsLogin] = useState<boolean>(false);
 
   const { isFirst, isLast, handleNextBtnClick, handlePrevBtnClick } =
     usePaginate(pages, setPages, totalPages, 1);
 
-  // 현재 로그인 중인 유저 닉네임 받기
+  // 후기 게시판 검색 기능
+  const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setSearch(e.target.value);
+  };
+
+  const onSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (search !== null || search !== '') {
+      const res = await getReviewRequest(`review/search?${search}`);
+      console.log(res);
+    }
+  };
+
+  // 현재 로그인 중인 유저 받기
   const getCurrentUser = async () => {
     const res = await getUserData();
     setCurrentUser(res.userId);
+    setUserInfo(res);
   };
   useEffect(() => {
     getCurrentUser();
@@ -59,20 +78,26 @@ const ReviewBoardPage = () => {
       <BoardContent>
         <SlideLeftBtn disabled={isFirst} onClick={handlePrevBtnClick} />
         <CardBox>
-          {reviews?.map((review, idx) => (
+          {reviews?.map((review) => (
             <ReviewContentsModal
-              key={idx}
+              key={review.id}
               review={review}
               getReviews={getReviews}
               currentUser={currentUser}
+              userInfo={userInfo}
             />
           ))}
         </CardBox>
         <SlideRightBtn disabled={isLast} onClick={handleNextBtnClick} />
       </BoardContent>
-      <SearchBox style={{ marginTop: '7vh' }}>
-        <input></input>
-        <button>검색</button>
+      <SearchBox style={{ marginTop: '7vh' }} onSubmit={(e) => onSearch(e)}>
+        <input
+          type="text"
+          value={search}
+          placeholder="글 내용 검색"
+          onChange={onChangeSearch}
+        ></input>
+        <button type="submit">검색</button>
       </SearchBox>
     </BoardBox>
   );

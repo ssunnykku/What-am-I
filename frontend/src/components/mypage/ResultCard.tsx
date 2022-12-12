@@ -8,6 +8,7 @@ import {
 import { ReviewsProps } from './Result';
 import { deleteUserReview, getUserReview } from '../../apis/mypageFetcher';
 import { useConfirm } from '../../hooks/confirm/useConfirm';
+import { theme } from '../../assets/styles/common/palette';
 
 interface receiveProps {
   value: ReviewsProps;
@@ -60,7 +61,7 @@ const CardContainer = styled.div`
   border-radius: 20px;
   box-shadow: 1px 2px 5px gray;
   padding: 20px;
-  background-color: #fffcf1;
+  background-color: ${theme.lightColor};
   transition: all 0.1s linear;
   font-family: ${font.normal};
 

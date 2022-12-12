@@ -36,21 +36,17 @@ class communityController {
   //전체 커뮤니티 리스트 10개씩
   static async getCommunityList(req, res, next) {
     try {
+      const userId = req.currentUserId;
       const { page } = req.query;
-      const id = 0;
       const defaultPage = page || 1;
-      const communityCount = await communityService.countCommunity();
-
+      const countCommunityPage = await communityService.countCommunity();
       const selectedCommunity = await communityService.selectCommunity(
         defaultPage,
       );
-
       if (!selectedCommunity) {
         throw new Error(selectedCommunity);
       }
-      return res
-        .status(200)
-        .json({ result: { communityCount, selectedCommunity } });
+      return res.status(200).json({ countCommunityPage, selectedCommunity });
     } catch (err) {
       next(err);
     }
@@ -59,7 +55,9 @@ class communityController {
   static async getBestCommunities(req, res, next) {
     try {
       const userId = req.currentUserId;
-      const getLikedCommunities = await communityService.findBestCommunities();
+      const getLikedCommunities = await communityService.findBestCommunities({
+        userId,
+      });
       res.status(200).json(getLikedCommunities);
     } catch (error) {
       next(error);

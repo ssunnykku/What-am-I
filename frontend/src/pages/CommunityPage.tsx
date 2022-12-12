@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import CommuRankingCard from '../components/community/CommuRankingCard';
@@ -14,30 +14,73 @@ import {
   CommunityRankingType,
   CommunityType,
 } from '../types/community/communityType';
-import { Link } from 'react-router-dom';
+import { getUserData } from '../apis/mypageFetcher';
+import { useInView } from 'react-intersection-observer';
 
 const CommunityPage = () => {
   const [rankings, setRankings] = useState<CommunityType[]>([]);
+  const [currentUser, setCurrentUser] = useState<string>('');
   const [commuList, setCommuList] = useState<CommunityType[]>([]);
   const [pages, setPages] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const [ref, inView] = useInView();
+
+  // 무한 스크롤
+  const handleScroll = useCallback(async () => {
+    setLoading(true);
+    await getCommunitiesRequest(pages).then((res) => {
+      setCommuList((prevList) => [...prevList, res]);
+    });
+    setLoading(false);
+  }, [pages]);
+
+  useEffect(() => {
+    handleScroll();
+  }, [handleScroll]);
+
+  useEffect(() => {
+    if (inView && !loading) {
+      setTimeout(() => {
+        setPages((page) => page + 1);
+      }, 1500);
+    }
+  }, [inView]);
+
+  // useEffect(() => {
+  //   if (inView && !nextPage) {
+  //     setPages((prevList) => prevList + 1);
+  //   }
+  // }, [inView, nextPage]);
+
+  // 현재 로그인 중인 유저 닉네임 받기
+  const getCurrentUser = async () => {
+    const res = await getUserData();
+    setCurrentUser(res.userId);
+  };
 
   // 베스트 커뮤니티
   const getRankingCommunity = async () => {
-    const res = await getRankingCommunityRequest('communities/best');
-    const resMap = res.map((res: CommunityRankingType) => res.Community);
-    setRankings(resMap);
+    const res = await getRankingCommunityRequest();
+    const rankingMap = res.map(
+      (ranking: CommunityRankingType) => ranking.Community,
+    );
+    setRankings(rankingMap);
   };
 
   // 전체 커뮤니티 목록
   const getCommunitiesList = async () => {
-    const res = await getCommunitiesRequest(`communities?page=${pages}`);
-
-    setCommuList(res.result.selectedCommunity);
+    const res = await getCommunitiesRequest(pages);
+    setCommuList(res.selectedCommunity);
   };
+
+  // 좋아요 받기
+  // 어떻게 되어야 할까? 일단 좋아요 정보를 받아오고 그 안에 든 유저 아이디와 내 유저 아이디가 같다면 좋아요 버튼이 true 여야 하는 . . . . 그러면 이 불린 값을 프롭스로 보내주면 되잖아
 
   useEffect(() => {
     getRankingCommunity();
     getCommunitiesList();
+    getCurrentUser();
   }, []);
 
   return (
@@ -65,9 +108,25 @@ const CommunityPage = () => {
           </CommuListHeader>
           <CommuListsBox>
             <ScrollBox>
-              {commuList?.map((commu) => (
-                <CommuListCard key={commu.id} commu={commu} />
-              ))}
+              {commuList?.map((commu, idx) =>
+                commuList.length - 1 == idx ? (
+                  <div key={idx} ref={ref}>
+                    <CommuListCard
+                      key={commu.id}
+                      commu={commu}
+                      currentUser={currentUser}
+                    />
+                  </div>
+                ) : (
+                  <div key={idx}>
+                    <CommuListCard
+                      key={commu.id}
+                      commu={commu}
+                      currentUser={currentUser}
+                    />
+                  </div>
+                ),
+              )}
             </ScrollBox>
           </CommuListsBox>
         </ListsBox>

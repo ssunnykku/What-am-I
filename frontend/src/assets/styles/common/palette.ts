@@ -3,4 +3,5 @@ export const theme = {
   pointColor: '#74b9ff',
   backColor: '#f5f5f5',
   boldColor: '#0583b5',
+  lightColor: '#fffcf1',
 };

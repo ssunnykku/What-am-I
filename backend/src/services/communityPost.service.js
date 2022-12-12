@@ -22,15 +22,12 @@ class communityPostService {
       // offset: 10,
       // limit: 2
     });
-    console.log('count:', count);
-    console.log('rows', rows);
 
     const communityPostCount = await CommunityPost.count({
       where: {
         communityId: communityId,
       },
     });
-    console.log('1:', communityPostCount);
 
     if (communityPostCount % COMMUNITYPOST_PER_PAGE === 0) {
       return communityPostCount / COMMUNITYPOST_PER_PAGE;
@@ -47,8 +44,6 @@ class communityPostService {
       offset: (defaultPage - 1) * COMMUNITYPOST_PER_PAGE,
       limit: COMMUNITYPOST_PER_PAGE,
     });
-    console.log('????', selectedCommunityPost);
-
     if (!selectedCommunityPost) {
       throw ApiError.setBadRequest('No community available');
     }

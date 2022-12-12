@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import { EditDelBtn } from '../../assets/styles/common/commonComponentStyle';
-import LikeBtn from '../common/LikeBtn';
 import { ReviewTypeProps } from '../modal/ReviewContentsModal';
 import {
   createReviewCommentRequest,
@@ -17,17 +16,20 @@ import ReviewWritingEditor from '../writingeditor/ReviewWritingEditor';
 import { ReviewCommentType } from '../../types/reviewboard/reviewType';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import { useConfirm } from '../../hooks/confirm/useConfirm';
+import ReviewLikeBtn from '../reviewBoard/ReviewLikeBtn';
+import { UserInfoType } from '../../types/auth/authType';
 
 const ReviewContentsViewer = (props: ReviewTypeProps) => {
   const [isOpen, modalHandler] = useModal();
   const [pages, setPages] = useState<number>(1);
   const [description, setDescription] = useState<string>('');
   const [comments, setComments] = useState<ReviewCommentType[]>([]);
-  const [isReviewer, setIsReviewer] = useState<string>('');
+  const [reviewer, setReviewer] = useState<string>('');
+  const [userInfo, setUserInfo] = useState<UserInfoType>();
   const [date, setDate] = useState(props.review?.createdAt);
   const newDate = date?.split(' ')[0];
+
   const [editing, setEditing] = useState<boolean>(false);
   const [newComments, setNewComments] = useState<string>('');
   const [selectedIdx, setSelectedIdx] = useState<number | boolean>(false);
@@ -44,7 +46,10 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
   // 리뷰 하나 가져오기
   const getOneReview = async () => {
     const res = await getReviewRequest(`review/show/${props.review?.id}`);
-    setIsReviewer(res.userId);
+    setReviewer(res.userId);
+
+    const userInfo = await getReviewRequest(`users/${res.userId}`);
+    setUserInfo(userInfo);
   };
   useEffect(() => {
     getOneReview();
@@ -56,8 +61,10 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
       `reviewComment/${props.review?.id}?page=${pages}`,
     );
     setComments(res.reverse());
-    const result = res.map((res: ReviewCommentType) => res.userId);
   };
+  useEffect(() => {
+    getReviewComments();
+  }, []);
 
   // 리뷰 댓글 쓰기
   const postReviewComments = async (e: React.FormEvent) => {
@@ -73,9 +80,6 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     setComments(res.reverse());
     setDescription('');
   };
-  useEffect(() => {
-    getReviewComments();
-  }, []);
 
   // 리뷰 수정
   const handleEditMyReview = async (e: React.MouseEvent) => {
@@ -115,7 +119,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
   };
 
   const handleCommentEditButton = async (
-    e: React.MouseEvent,
+    e: React.FormEvent,
     comment: ReviewCommentType,
   ) => {
     e.preventDefault();
@@ -153,11 +157,18 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
         />
       </MyModal>
       <ContentsModalWrapper>
-        <AddImage></AddImage>
+        <AddImage>result cards</AddImage>
         <AddWriting>
           <TopDiv>
-            <div className="user-name">유저 프로필 사진 + 닉네임</div>
-            {props.currentUser === isReviewer ? (
+            <div className="user-name">
+              <ProfileBox>
+                <div className="profile">
+                  <img src={userInfo?.profileImg} />
+                </div>
+                <div>{userInfo?.nickname}</div>
+              </ProfileBox>
+            </div>
+            {props.currentUser === reviewer ? (
               <ButtonBox>
                 <EditDelBtn
                   onClick={(e) => {
@@ -221,7 +232,10 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
           </ContentsBox>
           <BottomDiv>
             <div className="like">
-              <LikeBtn />
+              <ReviewLikeBtn
+                review={props.review}
+                currentUser={props.currentUser}
+              />
             </div>
             <div className="date">{newDate}</div>
             <CommentBox>
@@ -273,11 +287,39 @@ const AddWriting = styled.div`
   position: relative;
 
   .user-name {
+    width: 100%;
     height: 4.3rem;
-    line-height: 4.5rem;
     padding-left: 3%;
-    font-size: 15px;
-    font-family: ${font.bold};
+    display: flex;
+    align-items: center;
+  }
+`;
+
+const ProfileBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 80%;
+  height: 3.5rem;
+  line-height: 4.3rem;
+  padding-left: 3%;
+  font-size: 16px;
+  font-family: ${font.bold};
+
+  .profile {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 
@@ -316,6 +358,7 @@ const ButtonBox = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
+  padding-right: 5px;
 `;
 
 const ContentsBox = styled.div`

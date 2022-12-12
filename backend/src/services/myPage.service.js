@@ -1,7 +1,6 @@
 import { Community } from '../models/Community.model';
 import { CommunityLike } from '../models/CommunityLike.model';
 import { CommunityPost } from '../models/CommunityPost.model';
-import { sizePerPage } from '../utils/pagination';
 
 class myPageService {
   static async UserToCommunity({ userId, defaultPage }) {
