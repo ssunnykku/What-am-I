@@ -19,6 +19,10 @@ class CommunityComment extends Sequelize.Model {
           defaultValue: DataTypes.UUIDV4,
           foreignKey: true,
         },
+        communityPostId: {
+          type: DataTypes.INTEGER,
+          foreignKey: true,
+        },
       },
       {
         sequelize,

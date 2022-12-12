@@ -8,12 +8,15 @@ class ReviewComment extends Sequelize.Model {
           type: DataTypes.STRING(500),
           allowNull: false,
         },
-        // reviewId: {
-        //   type: Sequelize.INTEGER,
-        // },
-        // userId: {
-        //   type: DataTypes.STRING(500),
-        // },
+        reviewId: {
+          type: Sequelize.INTEGER,
+          foreignKey: true,
+        },
+        userId: {
+          type: DataTypes.STRING(500),
+          defaultValue: DataTypes.UUIDV4,
+          foreignKey: true,
+        },
       },
       {
         sequelize,

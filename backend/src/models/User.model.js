@@ -7,7 +7,6 @@ class User extends Sequelize.Model {
         id: {
           allowNull: false,
           autoIncrement: true,
-          primaryKey: true,
           type: DataTypes.INTEGER,
         },
         userId: {
@@ -16,6 +15,7 @@ class User extends Sequelize.Model {
           foreignKey: true,
           unique: true,
           allowNull: false,
+          primaryKey: true,
         },
         email: {
           type: DataTypes.STRING(40),
