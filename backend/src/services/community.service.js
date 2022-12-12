@@ -49,7 +49,7 @@ class communityService {
     }
   }
 
-  static async selectCommunity(defaultPage) {
+  static async selectCommunity(defaultPage, userId) {
     const selectedCommunity = await Community.findAll({
       where: { id: { [Op.gt]: 0 } },
       order: [['id', 'DESC']],
@@ -63,7 +63,7 @@ class communityService {
       });
 
       community.dataValues.likeStatus = await CommunityLike.count({
-        where: { userId: community.userId, communityId: community.id },
+        where: { userId: userId, communityId: community.id },
       });
     }
 

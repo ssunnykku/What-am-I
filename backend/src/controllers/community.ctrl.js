@@ -42,6 +42,7 @@ class communityController {
       const countCommunityPage = await communityService.countCommunity();
       const selectedCommunity = await communityService.selectCommunity(
         defaultPage,
+        userId,
       );
       if (!selectedCommunity) {
         throw new Error(selectedCommunity);
