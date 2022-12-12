@@ -13,7 +13,7 @@ import { communityRouter } from './src/routes/community.route';
 import { communityPostRouter } from './src/routes/communityPost.route';
 import { userRouter } from './src/routes/user.router';
 import { reviewRouter } from './src/routes/review.route';
-import { reviewCommentRouter } from './src/routes/revComment.route';
+import { reviewCommentRouter } from './src/routes/reviewComment.route';
 import { reviewLikeRouter } from './src/routes/reviewLike.route.js';
 
 import { myPageRouter } from './src/routes/myPage.route';

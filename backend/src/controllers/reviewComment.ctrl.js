@@ -1,4 +1,4 @@
-import { reviewCommentService } from '../services/revComment.service';
+import { reviewCommentService } from '../services/reviewComment.service';
 // import Joi from 'joi';
 
 class reviewCommentController {
