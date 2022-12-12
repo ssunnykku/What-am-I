@@ -25,11 +25,11 @@ class communityCommentController {
 
   static async showCommunityComments(req, res, next) {
     try {
-      const _communityComment = req.params.communityComment;
+      const _communityPostId = req.params.communityPostId;
 
       const communityComments =
         await communityCommentService.showAllCommunityComments({
-          _communityComment,
+          _communityPostId,
         });
       if (communityComments.errorMessage) {
         throw new Error(communityComments);
