@@ -5,20 +5,20 @@ export interface CreateCommuInitialType {
 }
 
 export interface CreateCurrentCommunityPostType {
-  images: File;
+  images: Array<File>;
   description: string;
 }
 
 export interface CommunityType {
-  id?: number;
-  userId?: string;
-  name?: string;
-  introduction?: string;
+  id: number;
+  userId: string;
+  name: string;
+  introduction: string;
   likeCount: number;
   likeStatus: number | boolean;
-  communityImage?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  communityImage: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface CommunityRankingType {
@@ -51,7 +51,13 @@ export interface CurrentCommuPostsType {
   userId: string;
 }
 
-export interface CommuLikePostType {
-  id?: number;
-  userId: string;
+export interface CommuNewLikeType {
+  countikes: number;
+  newLike: {
+    communityId: number;
+    createdAt: string;
+    id: number;
+    updatedAt: string;
+    userId: string;
+  };
 }

@@ -69,7 +69,7 @@ export const AuthFormButtonContainer = styled.div`
   margin-top: 1rem;
 `;
 
-export const SearchBox = styled.div`
+export const SearchBox = styled.form`
   width: 23rem;
   height: 2rem;
   display: flex;

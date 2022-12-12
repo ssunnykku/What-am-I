@@ -5,41 +5,57 @@ import styled, { keyframes } from 'styled-components';
 import { postCommuLikeRequest } from '../../apis/communityFetcher';
 import { CommunityListsTypeProps } from './CommuListCard';
 
-// 프롭스로 좋아요를 누른 유저와 받은 유저 id를 받아와야 한다.
-// 내가 좋아요를 누른 것과 별개로 좋아요 숫자가 떠 있어야 함.
-
 const CommuLikeBtn = ({ commu, currentUser }: CommunityListsTypeProps) => {
   const [like, setLike] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number>(0);
 
+  const getLikeInfo = async () => {
+    if (commu) {
+      setLikeCount(commu.likeCount);
+      console.log(commu);
+      if (commu.likeStatus == 1) {
+        // console.log('상태가 1인 커뮤', commu);
+        setLike(true);
+      } else if (commu.likeStatus == 0) {
+        setLike(false);
+      }
+    }
+  };
+  useEffect(() => {
+    getLikeInfo();
+  }, []);
+
   const onClickLikeBtn = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    // if (commu?.likeStatus) {
-    //   setLike(true);
-    // } else {
-    //   setLike(false);
-    // }
+    if (commu && currentUser) {
+      const res = await postCommuLikeRequest(`communitieslikes/${commu?.id}`);
 
-    console.log(commu?.likeCount);
-    console.log(commu?.likeStatus);
-
-    // if (commu && currentUser) {
-    //   const res = await postCommuLikeRequest(`communitieslikes/${commu?.id}`, {
-    //     id: commu?.id,
-    //     userId: currentUser,
-    //   });
-    //   console.log(res);
-
-    //   setLikeCount(res.countLikes);
-
-    //   if (!res.deletedLike) {
-    //     setLiked(true);
-    //   } else {
-    //     setLiked(false);
-    //   }
-    // }
+      if (res.newLike) {
+        setLike(true);
+        setLikeCount(likeCount + 1);
+        // commu.likeStatus = 1;
+        // console.log('좋아요', commu);
+      }
+      if (res.deletedLike) {
+        setLike(false);
+        setLikeCount(likeCount - 1);
+        // commu.likeStatus = 0;
+        // console.log('싫어요', commu);
+      }
+    }
   };
+
+  // useEffect(() => {
+  //   if (commu) {
+  //     if (like) {
+  //       commu.likeStatus = 1;
+  //       console.log('좋아요', commu.likeStatus);
+  //     } else {
+  //       commu.likeStatus = 0;
+  //     }
+  //   }
+  // }, [onClickLikeBtn]);
 
   return (
     <LikeBox

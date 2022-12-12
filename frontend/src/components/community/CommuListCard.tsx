@@ -5,6 +5,7 @@ import { theme } from '../../assets/styles/common/palette';
 import { CommunityType } from '../../types/community/communityType';
 import { font } from '../../assets/styles/common/fonts';
 import CommuLikeBtn from './CommuLikeBtn';
+import { useEffect } from 'react';
 
 export interface CommunityListsTypeProps {
   commu?: CommunityType;
@@ -12,6 +13,8 @@ export interface CommunityListsTypeProps {
 }
 
 const CommuListCard = ({ commu, currentUser }: CommunityListsTypeProps) => {
+  useEffect(() => {}, []);
+
   return (
     <ListCardBox>
       <ListImage>

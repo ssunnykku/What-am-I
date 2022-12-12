@@ -1,54 +1,121 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import { CreateCurrentCommunityPostRequest } from '../../apis/communityFetcher';
 import { CurrentCommuPostsTypeProps } from '../modal/CommuContentsModal';
+import { commuInfoTypeProps } from '../modal/CommuWritingModal';
+import { getUserData } from '../../apis/mypageFetcher';
+import { UserInfoType } from '../../types/auth/authType';
 
-const CommuWritingEditor = (props: CurrentCommuPostsTypeProps) => {
+const CommuWritingEditor = (props: commuInfoTypeProps) => {
   const [images, setImages] = useState<File | null>(null);
   const [description, setDescription] = useState<string>('');
   const [preview, setPreview] = useState<string>('');
   const imageInputRef = useRef<HTMLInputElement>(null);
+  const [userInfo, setUserInfo] = useState<UserInfoType>();
+
+  const [postImages, setPostImages] = useState<File[]>([]);
+  const [previewImgs, setPreviewImgs] = useState<string[]>([]);
 
   // 포스팅할 사진 미리보기
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const file = e.target.files[0];
-      setImages(file);
       const reader = new FileReader();
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(e.target.files[0]);
+      setPostImages([...postImages, e.target.files[0]]);
 
       reader.onload = () => {
-        setPreview(reader.result as string);
+        const previewUrl = reader.result as string;
+
+        if (previewUrl) {
+          setPreviewImgs([...previewImgs, previewUrl]);
+        }
       };
     }
+
+    // const fileArr = e.target.files;
+    //   setPostImages(Array.from(fileArr));
+    //   const fileUrls: any = [];
+    //   const fileLength = fileArr?.length > 5 ? 5 : fileArr?.length;
+
+    //   for (let i = 0; i < fileLength; i++) {
+    //     const file = fileArr[i];
+    //     const reader = new FileReader();
+    //     reader.onload = () => {
+    //       fileUrls[i] = reader.result as string;
+    //       setPreviews([...fileUrls]);
+    //     };
+    //     reader.readAsDataURL(file);
+    //   }
+
+    // if (e.target.files) {
+    //   const files = e.target.files;
+    //   let filesUrl = [...postImages];
+
+    //   for (let i = 0; i < files.length; i++) {
+    //     const currentImgUrl = URL.createObjectURL(files[i]);
+    //     filesUrl.push(currentImgUrl);
+
+    //     const reader = new FileReader();
+    //     reader.onload = () => {
+    //     filesUrl[i] = reader.result
+    //     setPostImages([...filesUrl])
+    //   }
+    //   }
+    //   if (filesUrl.length > 5) {
+    //     filesUrl = filesUrl.slice(0, 5);
+    //   }
+    // }
+
+    // if (e.target.files) {
+    //   const file = e.target.files[0];
+    //   setImages(file);
+    //   const reader = new FileReader();
+    //   reader.readAsDataURL(file);
+
+    //   console.log(file);
+
+    //   reader.onload = () => {
+    //     setPreview(reader.result as string);
+    //   };
+    // }
   };
 
   // 미리보기 삭제
   const handleDeletePreviewFile = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (preview) {
-      setPreview('');
+    if (previewImgs) {
+      setPreviewImgs([]);
     }
   };
+
+  const getCurrentUser = async () => {
+    const res = await getUserData();
+    setUserInfo(res);
+  };
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
 
   // 커뮤니티 내에 포스팅
   const handleWritingEditorClick = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(props?.commuPost?.id);
-    if (images) {
-      const res = await CreateCurrentCommunityPostRequest(
-        `communityposts/${props?.commuPost?.id}`,
-        {
-          images,
-          description,
-        },
-      );
-      console.log(res);
-    } else {
-      alert('귀여운 댕댕이 사진을 올려 주세요🐶');
-    }
+
+    console.log(postImages);
+
+    // if (postImages) {
+    //   const res = await CreateCurrentCommunityPostRequest(
+    //     `communityposts/${commuInfo?.id}`,
+    //     {
+    //       images: postImages,
+    //       description,
+    //     },
+    //   );
+    //   console.log(res);
+    // } else {
+    //   alert('귀여운 댕댕이 사진을 올려 주세요🐶');
+    // }
   };
 
   //게시물 수정
@@ -56,19 +123,20 @@ const CommuWritingEditor = (props: CurrentCommuPostsTypeProps) => {
     e.preventDefault();
     console.log('컨텐츠를 수정할 거여요.');
 
-    if (props.modalHandler) {
-      props.modalHandler();
-    }
+    // if (props.modalHandler) {
+    //   props.modalHandler();
+    // }
   };
 
   return (
     <>
       <CreateModalWrapper
-        onSubmit={(e: any) => {
-          props.mode === 'edit'
-            ? handleEditCurrentCommuPost(e)
-            : handleWritingEditorClick(e);
-        }}
+        // onSubmit={(e: any) => {
+        //   props.mode === 'edit'
+        //     ? handleEditCurrentCommuPost(e)
+        //     : handleWritingEditorClick(e);
+        // }}
+        onSubmit={handleWritingEditorClick}
       >
         <ModalHeader>
           게시물 작성하기
@@ -76,7 +144,11 @@ const CommuWritingEditor = (props: CurrentCommuPostsTypeProps) => {
         </ModalHeader>
         <ModalContents>
           <AddImage>
-            <ImagePlace>{preview && <img src={preview} />}</ImagePlace>
+            {previewImgs.map((pre, idx) => (
+              <ImagePlace key={idx}>
+                <img src={pre} alt={`${pre}-${idx}`} />
+              </ImagePlace>
+            ))}
             <InputBox>
               <div className="upload-box">
                 <label htmlFor="file">사진 업로드</label>
@@ -84,6 +156,7 @@ const CommuWritingEditor = (props: CurrentCommuPostsTypeProps) => {
               <input
                 type="file"
                 id="file"
+                multiple
                 ref={imageInputRef}
                 accept="image/*"
                 onChange={handleChangeFile}

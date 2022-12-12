@@ -42,7 +42,7 @@ const CommunityMaker = () => {
   const handleCreateCommuFormClick = async (e: React.FormEvent) => {
     e.preventDefault();
     if (communityImage) {
-      const res = await createCommunityRequest('communities', {
+      const res = await createCommunityRequest({
         name,
         communityImage,
         introduction,
