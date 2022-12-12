@@ -19,14 +19,15 @@ import {
   CurrentCommuPostsType,
 } from '../types/community/communityType';
 import CommuLikeBtn from '../components/community/CommuLikeBtn';
+import { UserInfoType } from '../types/auth/authType';
+import { getUserData } from '../apis/mypageFetcher';
 
 const LikedCommuPage = () => {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [commuPosts, setCommuPosts] = useState<CurrentCommuPostsType[]>([]);
   const [commuInfo, setCommuInfo] = useState<CommunityType>();
-  const [currentUser, setCurrentUser] = useState<string>('');
-
+  const [currentUserInfo, setCurrentUserInfo] = useState<UserInfoType>();
   const [editing, setEditing] = useState<Boolean>(false);
   const [newName, setNewName] = useState<string>('');
   const [newIntroduction, setNewIntroduction] = useState<string>('');
@@ -46,6 +47,12 @@ const LikedCommuPage = () => {
     setCommuInfo(res);
   };
 
+  // 현재 로그인 중인 유저 닉네임 받기
+  const getCurrentUserInfo = async () => {
+    const res = await getUserData();
+    setCurrentUserInfo(res);
+  };
+
   // 커뮤니티 내 전체 게시글 받아오기
   const getPosts = async () => {
     const res = await getCurrentCommunityRequest(
@@ -58,6 +65,7 @@ const LikedCommuPage = () => {
   useEffect(() => {
     getCommunityData();
     getPosts();
+    getCurrentUserInfo();
   }, [page]);
 
   // 커뮤니티 수정
@@ -100,6 +108,7 @@ const LikedCommuPage = () => {
     }
   };
 
+  // 커뮤니티 수정 ...
   const handleCommunityEditButton = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -123,6 +132,7 @@ const LikedCommuPage = () => {
                 이미지 수정
               </label>
               <input
+                hidden
                 ref={editImgRef}
                 type="file"
                 id="img_file"
@@ -158,12 +168,14 @@ const LikedCommuPage = () => {
               ) : (
                 <>
                   <div>{commuInfo?.name}</div>
-                  <EditDelBtn
-                    style={{ margin: '0 10px' }}
-                    onClick={onClickCommuintyEditBtn}
-                  >
-                    수정
-                  </EditDelBtn>
+                  {commuInfo?.userId === currentUserInfo?.userId ? (
+                    <EditDelBtn
+                      style={{ margin: '0 10px' }}
+                      onClick={onClickCommuintyEditBtn}
+                    >
+                      수정
+                    </EditDelBtn>
+                  ) : null}
                 </>
               )}
             </CommuName>
@@ -242,15 +254,6 @@ const IntroBox = styled.div`
   align-items: center;
   margin-top: 25px;
   position: relative;
-
-  input[type='file'] {
-    position: absolute;
-    width: 0;
-    height: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 0;
-  }
 `;
 
 const ImageBox = styled.div`

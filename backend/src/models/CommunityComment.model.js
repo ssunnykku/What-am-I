@@ -4,26 +4,24 @@ class CommunityComment extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        id: {
-          allowNull: false,
-          autoIncrement: true,
-          primaryKey: true,
-          type: Sequelize.INTEGER,
-        },
         description: {
           type: DataTypes.TEXT,
           allowNull: false,
         },
-        userId: {
-          type: DataTypes.UUID,
-          defaultValue: DataTypes.UUIDV4,
-          foreignKey: true,
-        },
+        // userId: {
+        //   type: DataTypes.UUID,
+        //   defaultValue: DataTypes.UUIDV4,
+        //   foreignKey: true,
+        // },
+        // communityPostId: {
+        //   type: DataTypes.INTEGER,
+        //   foreignKey: true,
+        // },
       },
       {
         sequelize,
         tableName: 'communityComments',
-        timestamps: true,
+        timestamps: false,
         charset: 'utf8mb4',
         collate: 'utf8mb4_general_ci',
       },

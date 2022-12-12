@@ -5,16 +5,14 @@ import styled, { keyframes } from 'styled-components';
 import { postCommuLikeRequest } from '../../apis/communityFetcher';
 import { CommunityListsTypeProps } from './CommuListCard';
 
-const CommuLikeBtn = ({ commu, currentUser }: CommunityListsTypeProps) => {
+const CommuLikeBtn = ({ commu }: CommunityListsTypeProps) => {
   const [like, setLike] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number>(0);
 
   const getLikeInfo = async () => {
     if (commu) {
       setLikeCount(commu.likeCount);
-      console.log(commu);
       if (commu.likeStatus == 1) {
-        // console.log('상태가 1인 커뮤', commu);
         setLike(true);
       } else if (commu.likeStatus == 0) {
         setLike(false);
@@ -28,34 +26,17 @@ const CommuLikeBtn = ({ commu, currentUser }: CommunityListsTypeProps) => {
   const onClickLikeBtn = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    if (commu && currentUser) {
-      const res = await postCommuLikeRequest(`communitieslikes/${commu?.id}`);
+    const res = await postCommuLikeRequest(`communitieslikes/${commu?.id}`);
 
-      if (res.newLike) {
-        setLike(true);
-        setLikeCount(likeCount + 1);
-        // commu.likeStatus = 1;
-        // console.log('좋아요', commu);
-      }
-      if (res.deletedLike) {
-        setLike(false);
-        setLikeCount(likeCount - 1);
-        // commu.likeStatus = 0;
-        // console.log('싫어요', commu);
-      }
+    if (res.newLike) {
+      setLike(true);
+      setLikeCount(likeCount + 1);
+    }
+    if (res.deletedLike) {
+      setLike(false);
+      setLikeCount(likeCount - 1);
     }
   };
-
-  // useEffect(() => {
-  //   if (commu) {
-  //     if (like) {
-  //       commu.likeStatus = 1;
-  //       console.log('좋아요', commu.likeStatus);
-  //     } else {
-  //       commu.likeStatus = 0;
-  //     }
-  //   }
-  // }, [onClickLikeBtn]);
 
   return (
     <LikeBox

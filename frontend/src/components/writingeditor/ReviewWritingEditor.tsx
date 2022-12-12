@@ -17,12 +17,12 @@ const ReviewWritingEditor = (props: ReviewTypeProps) => {
 
   const handleUploadResultCard = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
-  const getCurrentUser = async () => {
+  const getCurrentUserInfo = async () => {
     const res = await getUserData();
     setUserInfo(res);
   };
   useEffect(() => {
-    getCurrentUser();
+    getCurrentUserInfo();
   }, []);
 
   const handleWritingEditorClick = async () => {

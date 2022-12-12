@@ -16,21 +16,21 @@ import {
 } from '../types/community/communityType';
 import { getUserData } from '../apis/mypageFetcher';
 import { useInView } from 'react-intersection-observer';
+import { UserInfoType } from '../types/auth/authType';
 
 const CommunityPage = () => {
   const [rankings, setRankings] = useState<CommunityType[]>([]);
-  const [currentUser, setCurrentUser] = useState<string>('');
+  const [currentUserInfo, setCurrentUserInfo] = useState<UserInfoType>();
   const [commuList, setCommuList] = useState<CommunityType[]>([]);
   const [pages, setPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
-
   const [ref, inView] = useInView();
 
-  // 무한 스크롤
+  // TODO: 스피너
   const handleScroll = useCallback(async () => {
     setLoading(true);
     await getCommunitiesRequest(pages).then((res) => {
-      setCommuList((prevList) => [...prevList, res]);
+      setCommuList((prevList) => [...prevList, ...res.selectedCommunity]);
     });
     setLoading(false);
   }, [pages]);
@@ -40,23 +40,18 @@ const CommunityPage = () => {
   }, [handleScroll]);
 
   useEffect(() => {
+    // 데이터 받아오는 거 맞나 잠깐만 setTimeOut 해놓겠습니다.
     if (inView && !loading) {
       setTimeout(() => {
         setPages((page) => page + 1);
-      }, 1500);
+      }, 1000);
     }
   }, [inView]);
-
-  // useEffect(() => {
-  //   if (inView && !nextPage) {
-  //     setPages((prevList) => prevList + 1);
-  //   }
-  // }, [inView, nextPage]);
 
   // 현재 로그인 중인 유저 닉네임 받기
   const getCurrentUser = async () => {
     const res = await getUserData();
-    setCurrentUser(res.userId);
+    setCurrentUserInfo(res);
   };
 
   // 베스트 커뮤니티
@@ -73,9 +68,6 @@ const CommunityPage = () => {
     const res = await getCommunitiesRequest(pages);
     setCommuList(res.selectedCommunity);
   };
-
-  // 좋아요 받기
-  // 어떻게 되어야 할까? 일단 좋아요 정보를 받아오고 그 안에 든 유저 아이디와 내 유저 아이디가 같다면 좋아요 버튼이 true 여야 하는 . . . . 그러면 이 불린 값을 프롭스로 보내주면 되잖아
 
   useEffect(() => {
     getRankingCommunity();
@@ -94,7 +86,11 @@ const CommunityPage = () => {
           <RankingHeader>인기 커뮤니티</RankingHeader>
           <RankingBox>
             {rankings?.map((ranking) => (
-              <CommuRankingCard key={ranking.id} ranking={ranking} />
+              <CommuRankingCard
+                key={ranking.id}
+                ranking={ranking}
+                currentUserInfo={currentUserInfo}
+              />
             ))}
           </RankingBox>
         </PopularCommuBox>
@@ -108,25 +104,18 @@ const CommunityPage = () => {
           </CommuListHeader>
           <CommuListsBox>
             <ScrollBox>
-              {commuList?.map((commu, idx) =>
-                commuList.length - 1 == idx ? (
-                  <div key={idx} ref={ref}>
+              {commuList?.map((commu, idx) => {
+                const observerRef =
+                  commuList.length - 1 === idx ? ref : undefined;
+                return (
+                  <div key={idx} ref={observerRef}>
                     <CommuListCard
-                      key={commu.id}
                       commu={commu}
-                      currentUser={currentUser}
+                      currentUserInfo={currentUserInfo}
                     />
                   </div>
-                ) : (
-                  <div key={idx}>
-                    <CommuListCard
-                      key={commu.id}
-                      commu={commu}
-                      currentUser={currentUser}
-                    />
-                  </div>
-                ),
-              )}
+                );
+              })}
             </ScrollBox>
           </CommuListsBox>
         </ListsBox>
