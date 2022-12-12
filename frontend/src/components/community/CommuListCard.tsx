@@ -5,16 +5,14 @@ import { theme } from '../../assets/styles/common/palette';
 import { CommunityType } from '../../types/community/communityType';
 import { font } from '../../assets/styles/common/fonts';
 import CommuLikeBtn from './CommuLikeBtn';
-import { useEffect } from 'react';
+import { UserInfoType } from '../../types/auth/authType';
 
 export interface CommunityListsTypeProps {
   commu?: CommunityType;
-  currentUser?: string;
+  currentUserInfo?: UserInfoType;
 }
 
-const CommuListCard = ({ commu, currentUser }: CommunityListsTypeProps) => {
-  useEffect(() => {}, []);
-
+const CommuListCard = ({ commu, currentUserInfo }: CommunityListsTypeProps) => {
   return (
     <ListCardBox>
       <ListImage>
@@ -23,7 +21,7 @@ const CommuListCard = ({ commu, currentUser }: CommunityListsTypeProps) => {
       <SmallBox>
         <CommuName>{commu?.name}</CommuName>
         <LikeNum>
-          <CommuLikeBtn commu={commu} currentUser={currentUser} />
+          <CommuLikeBtn commu={commu} currentUserInfo={currentUserInfo} />
         </LikeNum>
       </SmallBox>
       <Link to={`/likedcommunity?id=${commu?.id}`}>

@@ -102,20 +102,17 @@ const CommuWritingEditor = (props: commuInfoTypeProps) => {
   const handleWritingEditorClick = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log(postImages);
-
-    // if (postImages) {
-    //   const res = await CreateCurrentCommunityPostRequest(
-    //     `communityposts/${commuInfo?.id}`,
-    //     {
-    //       images: postImages,
-    //       description,
-    //     },
-    //   );
-    //   console.log(res);
-    // } else {
-    //   alert('귀여운 댕댕이 사진을 올려 주세요🐶');
-    // }
+    if (postImages) {
+      const res = await CreateCurrentCommunityPostRequest(
+        `communitypost/${props.commuInfo?.id}`,
+        {
+          images: postImages,
+          description,
+        },
+      );
+    } else {
+      alert('사진은 필수입니다. 귀여운 댕댕이를 마음껏 보여 주세요!');
+    }
   };
 
   //게시물 수정
@@ -154,6 +151,7 @@ const CommuWritingEditor = (props: commuInfoTypeProps) => {
                 <label htmlFor="file">사진 업로드</label>
               </div>
               <input
+                hidden
                 type="file"
                 id="file"
                 multiple
@@ -276,15 +274,6 @@ const InputBox = styled.div`
     cursor: pointer;
     width: 6rem;
     height: 2rem;
-  }
-
-  input[type='file'] {
-    position: absolute;
-    width: 0;
-    height: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 0;
   }
 
   button {

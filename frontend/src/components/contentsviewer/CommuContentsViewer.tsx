@@ -31,6 +31,10 @@ const CommuContentsViewer = (props: CurrentCommuPostsTypeProps) => {
   const [date, setDate] = useState(props.commuPost?.createdAt);
   const newDate = date?.split(' ')[0];
 
+  useEffect(() => {
+    console.log(props);
+  });
+
   // 포스팅 하나 가져오기 (수정/삭제 가리기)
 
   // 포스팅 수정
@@ -48,11 +52,7 @@ const CommuContentsViewer = (props: CurrentCommuPostsTypeProps) => {
   return (
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
-        <CommuWritingEditor
-          commuPost={props.commuPost}
-          mode="edit"
-          modalHandler={modalHandler}
-        />
+        <CommuWritingEditor />
       </MyModal>
       <ContentsModalWrapper>
         <AddImage>

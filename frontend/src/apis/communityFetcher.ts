@@ -29,7 +29,7 @@ export async function CreateCurrentCommunityPostRequest(
   { images, description }: CreateCurrentCommunityPostType,
 ) {
   const formData = new FormData();
-  formData.append('images', images as Array<File>);
+  formData.append('images', images);
   formData.append('description', description);
 
   const res = await axiosInstance.post(endpoint, formData, {
