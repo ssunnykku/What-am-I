@@ -16,8 +16,11 @@ class CommunityLike extends Sequelize.Model {
           foreignKey: true,
         },
         communityId: {
-          foreignKey: true,
           type: DataTypes.INTEGER,
+          foreignKey: true,
+          validate: {
+            isInt: true,
+          },
         },
       },
       {

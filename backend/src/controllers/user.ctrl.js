@@ -1,7 +1,4 @@
 import { userService } from '../services/user.service.js';
-import jwt from 'jsonwebtoken';
-import passport from 'passport';
-import Joi from 'joi';
 import { registerValidator } from '../middlewares/userValidator';
 
 class userController {
@@ -124,6 +121,14 @@ class userController {
       next(error);
     }
   }
+
+  // static async withdrawal(req, res, next) {
+  //   try {
+  //   } catch (error) {
+
+  //     next(error);
+  //   }
+  // }
 }
 
 export { userController };
