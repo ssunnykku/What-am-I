@@ -1,30 +1,38 @@
-import React, { useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { createReviewRequest } from '../../apis/reviewFetcher';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
-import { ReviewInitialType } from '../../types/reviewboard/reviewType';
-import useModal from '../../hooks/modal/useModal';
 import { ReviewTypeProps } from '../modal/ReviewContentsModal';
 import { editReviewRequest } from '../../apis/reviewFetcher';
+import { getUserData } from '../../apis/mypageFetcher';
+import { UserInfoType } from '../../types/auth/authType';
 
 const ReviewWritingEditor = (props: ReviewTypeProps) => {
   const [images, setImages] = useState<string>('');
   const [description, setDescription] = useState<string>(
-    props.review?.description ? props.review?.description : '',
+    props.review?.description ?? '',
   );
+  const [userInfo, setUserInfo] = useState<UserInfoType>();
 
   const handleUploadResultCard = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
+  const getCurrentUserInfo = async () => {
+    const res = await getUserData();
+    setUserInfo(res);
+  };
+  useEffect(() => {
+    getCurrentUserInfo();
+  }, []);
+
   const handleWritingEditorClick = async () => {
-    const res = await createReviewRequest('review', {
+    await createReviewRequest('review', {
       description,
       images,
     });
-    console.log(res);
   };
 
-  const handleEditMyReview = async (e: React.MouseEvent) => {
+  const handleEditMyReview = async (e: React.FormEvent) => {
     e.preventDefault();
     await editReviewRequest(`review/${props.review?.id}`, description);
 
@@ -34,38 +42,43 @@ const ReviewWritingEditor = (props: ReviewTypeProps) => {
   };
 
   return (
-    <>
-      <CreateModalWrapper
-        onSubmit={(e: any) => {
-          props.mode === 'edit'
-            ? handleEditMyReview(e)
-            : handleWritingEditorClick();
-        }}
-      >
-        <ModalHeader>
-          게시물 작성하기
-          <ModalHeaderBtn disabled={description.length === 0} type="submit">
-            공유하기
-          </ModalHeaderBtn>
-        </ModalHeader>
-        <ModalContents>
-          <AddImage>
-            <div>{images}</div>
-          </AddImage>
-          <AddWriting>
-            <div className="user-name">유저 프로필 사진 + 닉네임</div>
-            <div className="writing">
-              <textarea
-                maxLength={300}
-                placeholder="여러분의 댕댕이가 궁금해요."
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></textarea>
-            </div>
-          </AddWriting>
-        </ModalContents>
-      </CreateModalWrapper>
-    </>
+    <CreateModalWrapper
+      onSubmit={(e: React.FormEvent) => {
+        props.mode === 'edit'
+          ? handleEditMyReview(e)
+          : handleWritingEditorClick();
+      }}
+    >
+      <ModalHeader>
+        게시물 작성하기
+        <ModalHeaderBtn disabled={description.length === 0} type="submit">
+          공유하기
+        </ModalHeaderBtn>
+      </ModalHeader>
+      <ModalContents>
+        <AddImage>
+          <div>{images}</div>
+        </AddImage>
+        <AddWriting>
+          <div className="user-name">
+            <ProfileBox>
+              <div className="profile">
+                <img src={userInfo?.profileImg} />
+              </div>
+              <div>{userInfo?.nickname}</div>
+            </ProfileBox>
+          </div>
+          <div className="writing">
+            <textarea
+              maxLength={300}
+              placeholder="여러분의 댕댕이가 궁금해요."
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            ></textarea>
+          </div>
+        </AddWriting>
+      </ModalContents>
+    </CreateModalWrapper>
   );
 };
 
@@ -129,9 +142,11 @@ const AddWriting = styled.div`
   flex-direction: column;
 
   .user-name {
+    width: 100%;
     height: 4.3rem;
-    line-height: 4.5rem;
     padding-left: 3%;
+    display: flex;
+    align-items: center;
   }
 
   .writing {
@@ -149,5 +164,33 @@ const AddWriting = styled.div`
       line-height: 22px;
       resize: none;
     }
+  }
+`;
+
+const ProfileBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 80%;
+  height: 3.5rem;
+  line-height: 4.3rem;
+  padding-left: 3%;
+  font-size: 16px;
+  font-family: ${font.bold};
+
+  .profile {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;

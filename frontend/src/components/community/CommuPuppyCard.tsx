@@ -1,21 +1,21 @@
 import styled, { keyframes } from 'styled-components';
-import LikeBtn from '../../components/common/LikeBtn';
+import CommuLikeBtn from '../community/CommuLikeBtn';
 
 interface PuppyCardProps {
   onCardModalClickEvent: () => void;
 }
 
-const PuppyCard = ({ onCardModalClickEvent }: PuppyCardProps) => {
+const CommuPuppyCard = ({ onCardModalClickEvent }: PuppyCardProps) => {
   return (
     <PuppyCardBox onClick={onCardModalClickEvent}>
       <div className="like-icon">
-        <LikeBtn />
+        <CommuLikeBtn />
       </div>
     </PuppyCardBox>
   );
 };
 
-export default PuppyCard;
+export default CommuPuppyCard;
 
 const popup = keyframes`
   from {

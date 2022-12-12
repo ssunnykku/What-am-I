@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import CommuRankingCard from '../components/community/CommuRankingCard';
@@ -14,30 +14,65 @@ import {
   CommunityRankingType,
   CommunityType,
 } from '../types/community/communityType';
-import { Link } from 'react-router-dom';
+import { getUserData } from '../apis/mypageFetcher';
+import { useInView } from 'react-intersection-observer';
+import { UserInfoType } from '../types/auth/authType';
 
 const CommunityPage = () => {
   const [rankings, setRankings] = useState<CommunityType[]>([]);
+  const [currentUserInfo, setCurrentUserInfo] = useState<UserInfoType>();
   const [commuList, setCommuList] = useState<CommunityType[]>([]);
   const [pages, setPages] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [ref, inView] = useInView();
+
+  // TODO: 스피너
+  const handleScroll = useCallback(async () => {
+    setLoading(true);
+    await getCommunitiesRequest(pages).then((res) => {
+      setCommuList((prevList) => [...prevList, ...res.selectedCommunity]);
+    });
+    setLoading(false);
+  }, [pages]);
+
+  useEffect(() => {
+    handleScroll();
+  }, [handleScroll]);
+
+  useEffect(() => {
+    // 데이터 받아오는 거 맞나 잠깐만 setTimeOut 해놓겠습니다.
+    if (inView && !loading) {
+      setTimeout(() => {
+        setPages((page) => page + 1);
+      }, 1000);
+    }
+  }, [inView]);
+
+  // 현재 로그인 중인 유저 닉네임 받기
+  const getCurrentUser = async () => {
+    const res = await getUserData();
+    setCurrentUserInfo(res);
+  };
 
   // 베스트 커뮤니티
   const getRankingCommunity = async () => {
-    const res = await getRankingCommunityRequest('communities/best');
-    const resMap = res.map((res: CommunityRankingType) => res.Community);
-    setRankings(resMap);
+    const res = await getRankingCommunityRequest();
+    const rankingMap = res.map(
+      (ranking: CommunityRankingType) => ranking.Community,
+    );
+    setRankings(rankingMap);
   };
 
   // 전체 커뮤니티 목록
   const getCommunitiesList = async () => {
-    const res = await getCommunitiesRequest(`communities?page=${pages}`);
-
-    setCommuList(res.result.selectedCommunity);
+    const res = await getCommunitiesRequest(pages);
+    setCommuList(res.selectedCommunity);
   };
 
   useEffect(() => {
     getRankingCommunity();
     getCommunitiesList();
+    getCurrentUser();
   }, []);
 
   return (
@@ -51,7 +86,11 @@ const CommunityPage = () => {
           <RankingHeader>인기 커뮤니티</RankingHeader>
           <RankingBox>
             {rankings?.map((ranking) => (
-              <CommuRankingCard key={ranking.id} ranking={ranking} />
+              <CommuRankingCard
+                key={ranking.id}
+                ranking={ranking}
+                currentUserInfo={currentUserInfo}
+              />
             ))}
           </RankingBox>
         </PopularCommuBox>
@@ -65,9 +104,18 @@ const CommunityPage = () => {
           </CommuListHeader>
           <CommuListsBox>
             <ScrollBox>
-              {commuList?.map((commu) => (
-                <CommuListCard key={commu.id} commu={commu} />
-              ))}
+              {commuList?.map((commu, idx) => {
+                const observerRef =
+                  commuList.length - 1 === idx ? ref : undefined;
+                return (
+                  <div key={idx} ref={observerRef}>
+                    <CommuListCard
+                      commu={commu}
+                      currentUserInfo={currentUserInfo}
+                    />
+                  </div>
+                );
+              })}
             </ScrollBox>
           </CommuListsBox>
         </ListsBox>

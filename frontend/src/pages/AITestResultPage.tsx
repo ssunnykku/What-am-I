@@ -43,7 +43,7 @@ const ResultBox = styled.div`
   border-radius: 20px;
   font-family: ${font.bold};
   color: ${theme.boldColor};
-  background-color: #fffcf1;
+  background-color: ${theme.lightColor};
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
   display: flex;
   justify-content: center;

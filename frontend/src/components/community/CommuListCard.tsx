@@ -1,31 +1,30 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import { EntryBtn } from '../../assets/styles/common/commonComponentStyle';
 import { theme } from '../../assets/styles/common/palette';
-import LikeBtn from '../common/LikeBtn';
 import { CommunityType } from '../../types/community/communityType';
 import { font } from '../../assets/styles/common/fonts';
+import CommuLikeBtn from './CommuLikeBtn';
+import { UserInfoType } from '../../types/auth/authType';
 
 export interface CommunityListsTypeProps {
-  commu: CommunityType;
+  commu?: CommunityType;
+  currentUserInfo?: UserInfoType;
 }
 
-const CommuListCard = ({ commu }: CommunityListsTypeProps) => {
-  const navigate = useNavigate();
-
+const CommuListCard = ({ commu, currentUserInfo }: CommunityListsTypeProps) => {
   return (
     <ListCardBox>
       <ListImage>
-        <img src={commu.communityImage} />
+        <img src={commu?.communityImage} />
       </ListImage>
       <SmallBox>
-        <CommuName>{commu.name}</CommuName>
+        <CommuName>{commu?.name}</CommuName>
         <LikeNum>
-          <LikeBtn />
+          <CommuLikeBtn commu={commu} currentUserInfo={currentUserInfo} />
         </LikeNum>
       </SmallBox>
-      <Link to={`/likedcommunity?id=${commu.id}`}>
+      <Link to={`/likedcommunity?id=${commu?.id}`}>
         <EntryBtn>입장하기</EntryBtn>
       </Link>
     </ListCardBox>
@@ -39,7 +38,7 @@ const ListCardBox = styled.div`
   height: 9rem;
   min-height: 9rem;
   background-color: ${theme.backColor};
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
   border-radius: 20px;
   margin-top: 20px;
   display: flex;

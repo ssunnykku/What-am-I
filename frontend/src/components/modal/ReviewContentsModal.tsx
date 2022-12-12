@@ -1,11 +1,9 @@
 import useModal from '../../hooks/modal/useModal';
 import MyModal from './MyModal';
-import PuppyCard from '../reviewBoard/PuppyCard';
+import ReviewPuppyCard from '../reviewBoard/ReviewPuppyCard';
 import ReviewContentsViewer from '../contentsviewer/ReviewContentsViewer';
-import {
-  ReviewCommentType,
-  ReviewType,
-} from '../../types/reviewboard/reviewType';
+import { ReviewType } from '../../types/reviewboard/reviewType';
+import { UserInfoType } from '../../types/auth/authType';
 
 export interface ReviewTypeProps {
   userId?: string;
@@ -14,12 +12,14 @@ export interface ReviewTypeProps {
   getReviews?: () => Promise<void>;
   modalHandler?: () => void;
   currentUser?: string;
+  userInfo?: UserInfoType;
 }
 
 const ReviewContentsModal = ({
   review,
   getReviews,
   currentUser,
+  userInfo,
 }: ReviewTypeProps) => {
   const [isOpen, modalHandler] = useModal();
 
@@ -30,9 +30,10 @@ const ReviewContentsModal = ({
           review={review}
           getReviews={getReviews}
           currentUser={currentUser}
+          userInfo={userInfo}
         />
       </MyModal>
-      <PuppyCard onCardModalClickEvent={modalHandler}></PuppyCard>
+      <ReviewPuppyCard onCardModalClickEvent={modalHandler}></ReviewPuppyCard>
     </>
   );
 };
