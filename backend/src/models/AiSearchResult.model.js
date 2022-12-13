@@ -15,11 +15,13 @@ class AiSearchResult extends Sequelize.Model {
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           foreignKey: true,
+          allowNull: true,
         },
-        reviewId: {
-          type: Sequelize.INTEGER,
-          foreignKey: true,
-        },
+        // reviewId: {
+        //   type: Sequelize.INTEGER,
+        //   foreignKey: true,
+        //   allowNull: true,
+        // },
         dogName: {
           type: DataTypes.STRING,
           allowNull: false,
@@ -32,11 +34,6 @@ class AiSearchResult extends Sequelize.Model {
         aiResult: {
           type: DataTypes.STRING,
           allowNull: false,
-          validate: {
-            notNull: {
-              msg: 'Please enter an introduction',
-            },
-          },
         },
         aiImage: {
           type: DataTypes.STRING,
@@ -58,10 +55,10 @@ class AiSearchResult extends Sequelize.Model {
     );
   }
   static associate(db) {
-    db.AiSearchResult.belongsTo(db.Review, {
-      foreignKey: 'reviewId',
-      sourceKey: 'id',
-    });
+    // db.AiSearchResult.belongsTo(db.Review, {
+    //   foreignKey: 'reviewId',
+    //   sourceKey: 'id',
+    // });
     db.AiSearchResult.belongsTo(db.User, {
       foreignKey: 'userId',
       targetKey: 'userId',

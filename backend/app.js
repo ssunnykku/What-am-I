@@ -20,6 +20,7 @@ import { reviewLikeRouter } from './src/routes/reviewLike.route.js';
 
 import { myPageRouter } from './src/routes/myPage.route';
 import { communityLikeRouter } from './src/routes/communityLike.route';
+import { aiSearchResultRouter } from './src/routes/aiSearchResult.route';
 
 //**middleware */
 import errorMiddleware from './src/middlewares/error';
@@ -73,6 +74,7 @@ app.use('/communities', communityRouter);
 app.use(myPageRouter);
 app.use(communityLikeRouter);
 app.use(communityCommentRouter);
+app.use(aiSearchResultRouter);
 
 app.use(errorMiddleware);
 

@@ -47,10 +47,10 @@ class Review extends Sequelize.Model {
       foreignKey: 'reviewId',
       targetKey: 'id',
     });
-    db.Review.hasOne(db.AiSearchResult, {
-      foreignKey: 'reviewId',
-      sourceKey: 'id',
-    });
+    // db.Review.hasOne(db.AiSearchResult, {
+    //   foreignKey: 'reviewId',
+    //   sourceKey: 'id',
+    // });
   }
 }
 
