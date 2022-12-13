@@ -1,13 +1,14 @@
 import styled, { keyframes } from 'styled-components';
 import CommuLikeBtn from '../community/CommuLikeBtn';
+import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 
-interface PuppyCardProps {
-  onCardModalClickEvent: () => void;
-}
-
-const CommuPuppyCard = ({ onCardModalClickEvent }: PuppyCardProps) => {
+const CommuPuppyCard = ({
+  onCardModalClickEvent,
+  commuPost,
+}: CurrentCommuityProps) => {
   return (
     <PuppyCardBox onClick={onCardModalClickEvent}>
+      <img src={commuPost?.images.split(',')[0]} />
       <div className="like-icon">
         <CommuLikeBtn />
       </div>
@@ -34,9 +35,16 @@ const PuppyCardBox = styled.div`
   margin: 10px 10px;
   display: flex;
   justify-content: center;
-
   position: relative;
   overflow: hidden;
+
+  /* img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  } */
+
   .like-icon {
     position: absolute;
     z-index: 2;

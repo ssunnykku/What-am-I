@@ -102,7 +102,7 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
     e.preventDefault();
 
     if (postImages) {
-      const res = await CreateCurrentCommunityPostRequest(
+      await CreateCurrentCommunityPostRequest(
         `communitypost/${props.commuInfo?.id}`,
         {
           images: postImages,

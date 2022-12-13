@@ -37,6 +37,8 @@ const LikedCommuPage = () => {
   const editInputRef = useRef<HTMLInputElement>(null);
   const editTextAreaRef = useRef<HTMLTextAreaElement>(null);
 
+  // const [postImages, setPostImages] = useState<string>('');
+
   // 쿼리 스트링에 값 넣어주기
   let getParameter = (key: string) => {
     return new URLSearchParams(location.search).get(key);
@@ -60,6 +62,11 @@ const LikedCommuPage = () => {
     );
     setCommuPosts(res.result.selectedCommunityPost);
     setTotalPages(res.result.communityPostCount);
+
+    // const postImgMap = res.result.selectedCommunityPost.map(
+    //   (post: any) => post.images.split(',')[0],
+    // );
+    // setPostImages(postImgMap);
   };
 
   useEffect(() => {

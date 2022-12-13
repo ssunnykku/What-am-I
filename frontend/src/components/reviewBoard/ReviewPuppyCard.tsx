@@ -4,6 +4,8 @@ import ReviewLikeBtn from './ReviewLikeBtn';
 interface PuppyCardProps {
   onCardModalClickEvent: () => void;
 }
+// 좋아요를 채워주는 함수 <= 자식 요소에서 프롭스를 건네 주는
+// 좋아요를 누르면 useEffect를 실행하는
 
 const ReviewPuppyCard = ({ onCardModalClickEvent }: PuppyCardProps) => {
   return (

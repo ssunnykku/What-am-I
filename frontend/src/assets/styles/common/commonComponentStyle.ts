@@ -37,9 +37,12 @@ export const CommonMyButton = styled.button`
 
 export const CommonMyInput = styled.input`
   width: 90%;
+  height: 25px;
   padding: 8px 16px;
-  border-radius: 10px;
+  border-radius: 20px;
   outline: none;
+  border: 2px solid black;
+  font-size: 16px;
 `;
 
 export const AuthFormWrapper = styled.form`

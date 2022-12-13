@@ -52,10 +52,7 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const postCurrCommuComments = async (e: React.FormEvent) => {
     e.preventDefault();
     if (props.commuPost) {
-      const res = await postCurrCommuCommentsRequest(
-        props.commuPost?.id,
-        description,
-      );
+      await postCurrCommuCommentsRequest(props.commuPost?.id, description);
 
       const result = await getCurrentCommunityRequest(
         `communityComment/${props.commuPost?.id}`,
@@ -117,7 +114,9 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
       <ContentsModalWrapper>
         <AddImage>
           <ImagePlace>
-            <img />
+            <img
+              src={`${import.meta.env.VITE_PUBLIC_URL}/img/default_image3.png`}
+            />
           </ImagePlace>
         </AddImage>
         <AddWriting>

@@ -15,7 +15,6 @@ const ReviewLikeBtn = ({ review }: ReviewTypeProps) => {
 
       if (review.likeStatus === 1) {
         setLike(true);
-        console.log('상태가 1인 커뮤', review);
       } else if (review.likeStatus === 0) {
         setLike(false);
       }
@@ -28,14 +27,16 @@ const ReviewLikeBtn = ({ review }: ReviewTypeProps) => {
   const onClickLikeBtn = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    const res = await likeRequest(review?.id);
+    if (review) {
+      const res = await likeRequest(review?.id);
 
-    if (res.likeInformation) {
-      setLike(true);
-      setLikeCount(likeCount + 1);
-    } else if (res.myLikedeleted) {
-      setLike(false);
-      setLikeCount(likeCount - 1);
+      if (res.likeInformation) {
+        setLike(true);
+        setLikeCount(likeCount + 1);
+      } else if (res.myLikedeleted) {
+        setLike(false);
+        setLikeCount(likeCount - 1);
+      }
     }
   };
 

@@ -14,6 +14,7 @@ export interface CurrentCommuityProps {
   mode?: string;
   modalHandler?: () => void;
   currentUserInfo?: UserInfoType;
+  onCardModalClickEvent?: () => void;
 }
 
 const CommuContentsModal = ({
@@ -30,7 +31,10 @@ const CommuContentsModal = ({
           currentUserInfo={currentUserInfo}
         />
       </MyModal>
-      <CommuPuppyCard onCardModalClickEvent={modalHandler}></CommuPuppyCard>
+      <CommuPuppyCard
+        commuPost={commuPost}
+        onCardModalClickEvent={modalHandler}
+      ></CommuPuppyCard>
     </>
   );
 };
