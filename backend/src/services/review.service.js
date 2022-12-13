@@ -68,16 +68,29 @@ class reviewService {
     return selectedReviews;
   }
 
-  static async showMyReviews({ userId: UserId }) {
-    const userId = await Review.findAll({
-      where: { userId },
+  static async showMyReviews({ userId }) {
+    console.log(userId);
+    const getMyReviews = await Review.findAll({
+      where: { userId: userId },
+      include: {
+        model: AiSearchResult,
+        attributes: {
+          exclude: [
+            'userId',
+            'id',
+            'dogName',
+            'aiResult',
+            'createdAt',
+            'updatedAt',
+          ],
+        },
+      },
     });
-    if (!userId) {
+    if (!getMyReviews) {
       const errorMessage = '작성하신 글이 없습니다';
       return { errorMessage };
-    } else {
-      return userId;
     }
+    return getMyReviews;
   }
 
   // 한개 게시물 get해서 보기
