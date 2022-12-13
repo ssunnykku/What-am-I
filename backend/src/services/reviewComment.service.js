@@ -40,9 +40,14 @@ class reviewCommentService {
   }
 
   static async showOneReviewComments({ id: id, reviewId: reviewId }) {
-    const _id = await ReviewComment.findOne({
-      where: { id: id, reviewId: reviewId },
-    });
+    // const _id = await ReviewComment.findOne({
+    //   where: { id: id, reviewId: reviewId },
+    // });
+
+    const [_id, metadata] = await sequelize.query(
+      `select RC.id, RC.description, RC.userId, RC.reviewId ,U.userId, U.nickname, U.profileImg from reviewComments as RC  inner join users as U on RC.userId = U.userId where RC.id=${id} and reviewId=${reviewId};`,
+    );
+
     if (!_id) {
       const errorMessage = '댓글이 없습니다';
       return { errorMessage };
