@@ -18,6 +18,10 @@ class communityPostController {
       //     : JSON.parse(imgs)
       //         .images.map((x, i) => JSON.parse(imgs).images[i].location)
       //         .toString();
+      const images = imgs.images.map(
+        (x, i) => JSON.parse(imgs).images[i].location,
+      );
+      // .toString();
       console.log('이게뭐니', req.files);
 
       const { description } = req.body;
