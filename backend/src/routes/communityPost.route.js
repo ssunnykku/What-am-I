@@ -21,6 +21,13 @@ communityPostRouter.get(
   communityPostController.getCommunityPostList,
 );
 
+//해당 커뮤니티의 게시글 한개씩 가지고 오기
+communityPostRouter.get(
+  '/communitypost/one/:communityPostId',
+  loginRequired,
+  communityPostController.getOneCommunityPost,
+);
+
 //내가 쓴 포스팅(글) 수정하기
 communityPostRouter.put(
   '/communitypost/:id',

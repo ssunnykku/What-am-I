@@ -69,6 +69,21 @@ class communityPostController {
     }
   }
 
+  // 커뮤니티글 한개씩
+  static async getOneCommunityPost(req, res, next) {
+    try {
+      const id = req.params.communityPostId;
+      const oneCommunityPost =
+        await communityPostService.selectOneCommunityPost(id);
+      if (oneCommunityPost.errorMessage) {
+        throw new Error(oneCommunityPost);
+      }
+      return res.status(200).json(oneCommunityPost);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   //내가쓴 포스팅(글) 수정
   static async updateCommunityPost(req, res, next) {
     try {
