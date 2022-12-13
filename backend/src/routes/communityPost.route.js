@@ -10,7 +10,7 @@ const upload = uploadImageS3();
 communityPostRouter.post(
   '/communitypost/:communityId',
   loginRequired,
-  upload.fields([{ name: 'images', maxCount: 5 }]),
+  upload.array('images', 5),
   communityPostController.addPost,
 );
 

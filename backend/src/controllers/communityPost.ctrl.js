@@ -11,19 +11,22 @@ class communityPostController {
 
       const communityId = req.params.communityId;
 
-      const imgs = JSON.stringify(req.files);
-      const images =
-        imgs == '{}'
-          ? null
-          : JSON.parse(imgs)
-              .images.map((x, i) => JSON.parse(imgs).images[i].location)
-              .toString();
+      // const imgs = JSON.stringify(req.files);
+      // const images =
+      //   imgs == '{}'
+      //     ? null
+      //     : JSON.parse(imgs)
+      //         .images.map((x, i) => JSON.parse(imgs).images[i].location)
+      //         .toString();
+      console.log('이게뭐니', req.files);
 
-      // const { description } = req.body;
-      const schema = Joi.object().keys({
-        description: Joi.string().min(1).max(200),
-      });
-      const { description } = await schema.validateAsync(req.body);
+      const { description } = req.body;
+      // console.log(req.body);
+      // console.log(req.files);
+      // const schema = Joi.object().keys({
+      //   description: Joi.string().min(1).max(200),
+      // });
+      // const { description } = await schema.validateAsync(req.body);
 
       const newPost = await communityPostService.createPost({
         images,
