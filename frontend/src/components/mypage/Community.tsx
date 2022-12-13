@@ -12,6 +12,7 @@ import {
   CreateBtn,
 } from '../../assets/styles/common/commonComponentStyle';
 import { postCommuLikeRequest } from '../../apis/communityFetcher';
+import { useConfirm } from '../../hooks/confirm/useConfirm';
 
 export interface CommunityProps {
   Community: CommunityProps;
@@ -27,7 +28,6 @@ export interface CommunityProps {
 function Community() {
   const [userLikedList, setUserLikedList] = useState<CommunityProps[]>([]);
 
-  // TODO 아래 코드 response에 커뮤니티 이미지와 커뮤니티 방 이름이 있어야 할 것 같다.
   useEffect(() => {
     async function getData() {
       const response = await getUserLiked();
@@ -41,8 +41,18 @@ function Community() {
     await postCommuLikeRequest(`communitieslikes/${id}`);
     const response = await getUserLiked();
     setUserLikedList(response.rows);
-    window.alert('좋아요를 취소했습니다.');
+    window.alert('좋아요가 취소되었습니다.');
   }
+
+  // TODO useConfirm으로 props전달이 어렵다(삭제를위한id값 전달)
+  // const deleteConfirm = () => (cancelLike(), window.alert('좋아요가 취소되었습니다.'));
+  // const cancelConfirm = () => window.alert('취소했습니다.');
+
+  // const confirmDelete = useConfirm(
+  //   '좋아요를 취소하시겠습니까?',
+  //   deleteConfirm,
+  //   cancelConfirm,
+  // );
 
   return (
     <Div>

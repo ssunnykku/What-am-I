@@ -1,19 +1,11 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getUserReviews } from '../../apis/mypageFetcher';
+import { ReviewType } from '../../types/reviewboard/reviewType';
 import ResultCard from './ResultCard';
 
-export interface ReviewsProps {
-  id: number;
-  description: string;
-  images: string;
-  createdAt?: string;
-  updatedAt?: string;
-  userId?: string;
-}
-
 function Result() {
-  const [reviews, setReviews] = useState<ReviewsProps[]>([]);
+  const [reviews, setReviews] = useState<ReviewType[]>([]);
 
   useEffect(() => {
     async function getReviews() {
@@ -27,8 +19,8 @@ function Result() {
   return (
     <ResultContainer>
       {reviews.length ? (
-        reviews?.map((value: ReviewsProps) => (
-          <ResultCard value={value} key={value.id} />
+        reviews?.map((value: ReviewType) => (
+          <ResultCard value={value} key={value.id} setReviews={setReviews} />
         ))
       ) : (
         <div>내 리뷰가 없습니다</div>

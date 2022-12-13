@@ -5,15 +5,20 @@ import {
   EntryBtn,
   CreateBtn,
 } from '../../assets/styles/common/commonComponentStyle';
-import { ReviewsProps } from './Result';
-import { deleteUserReview, getUserReview } from '../../apis/mypageFetcher';
+import {
+  deleteUserReview,
+  getUserReview,
+  getUserReviews,
+} from '../../apis/mypageFetcher';
 import { useConfirm } from '../../hooks/confirm/useConfirm';
 import { theme } from '../../assets/styles/common/palette';
 import { Modal } from '@mui/material';
 import ReviewContentsViewer from '../contentsviewer/ReviewContentsViewer';
+import { ReviewType } from '../../types/reviewboard/reviewType';
 
 interface receiveProps {
-  value: ReviewsProps;
+  value: ReviewType;
+  setReviews: React.Dispatch<React.SetStateAction<ReviewType[]>>;
 }
 
 function ResultCard(props: receiveProps) {
@@ -27,7 +32,9 @@ function ResultCard(props: receiveProps) {
     const response = await getUserReview(props.value.id);
   }
   async function deleteReview() {
-    const response = await deleteUserReview(props.value.id);
+    await deleteUserReview(props.value.id);
+    const response = await getUserReviews();
+    props.setReviews(response);
   }
 
   const deleteConfirm = () => (deleteReview(), window.alert('삭제했습니다.'));

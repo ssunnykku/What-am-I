@@ -29,8 +29,18 @@ function MyCommunity() {
     await deleteUserCommunites(id);
     const getResponse = await getUserCommunites();
     setCommunityLists(getResponse.rows);
-    window.alert('삭제했습니다.');
+    window.alert('삭제되었습니다.');
   }
+
+  // TODO useConfirm으로 props전달이 어렵다(삭제를위한id값 전달)
+  // const deleteConfirm = () => (deleteConfirm(), window.alert('삭제했습니다.'));
+  // const cancelConfirm = () => window.alert('취소했습니다.');
+
+  // const confirmDelete = useConfirm(
+  //   '삭제하시겠습니까?',
+  //   deleteConfirm,
+  //   cancelConfirm,
+  // );
 
   return (
     <Div>
