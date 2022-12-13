@@ -4,7 +4,7 @@ class aiSearchResultService {
   static async createResult({ dogName, aiResult, aiImage, userId }) {
     const result = await AiSearchResult.create({
       dogName,
-      aiResult,
+      aiResult: '결과값~~',
       aiImage,
       userId,
     });

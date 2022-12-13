@@ -4,6 +4,7 @@ import sequelize from '../config/sequelize';
 
 import { REVIEW_PER_PAGE } from '../utils/Constant';
 import { Sequelize } from 'sequelize';
+import { AiSearchResult } from '../models/AiSearchResult.model.js';
 
 const Op = Sequelize.Op;
 
@@ -33,25 +34,51 @@ class reviewService {
   }
 
   static async selectReviews(defaultpage, _userId) {
-    const selectedReivews = await Review.findAll({
+    const selectedReviews = await Review.findAll({
+      include: {
+        model: AiSearchResult,
+        attributes: {
+          exclude: [
+            'userId',
+            'id',
+            'dogName',
+            'aiResult',
+            'createdAt',
+            'updatedAt',
+          ],
+        },
+      },
       offset: (defaultpage - 1) * REVIEW_PER_PAGE,
       limit: REVIEW_PER_PAGE,
       order: [['id', 'DESC']],
     });
 
-    for (const review of selectedReivews) {
+    for (const review of selectedReviews) {
       review.dataValues.likeCount = await ReviewLike.count({
         where: { reviewId: review.id },
       });
       review.dataValues.likeStatus = await ReviewLike.count({
         where: { userId: _userId, reviewId: review.id },
       });
+      review.aiImage = await AiSearchResult.findOne({
+        where: { userId: _userId, id: review.aiResultId },
+        // attributes: {
+        //   exclude: [
+        //     'userId',
+        //     'id',
+        //     'dogName',
+        //     'aiResult',
+        //     'createdAt',
+        //     'updatedAt',
+        //   ],
+        // },
+      });
+      console.log(review);
     }
 
-    return selectedReivews;
+    return selectedReviews;
   }
 
-  //
   static async showMyReviews({ userId: UserId }) {
     const userId = await Review.findAll({
       where: { UserId },
