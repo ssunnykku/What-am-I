@@ -381,9 +381,10 @@ const InfoBox = styled.div`
 `;
 
 const ContentsBox = styled.div`
-  width: 60rem;
-  display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  margin: 1.5rem;
+  margin: 1rem;
+  width: 47rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 `;

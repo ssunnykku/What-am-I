@@ -38,12 +38,12 @@ const PuppyCardBox = styled.div`
   position: relative;
   overflow: hidden;
 
-  /* img {
+  img {
     position: absolute;
     width: 100%;
     height: 100%;
     object-fit: cover;
-  } */
+  }
 
   .like-icon {
     position: absolute;

@@ -1,6 +1,6 @@
-import { Dna } from 'react-loader-spinner';
+import { Dna, ThreeDots } from 'react-loader-spinner';
 
-const CustomSpinner = () => {
+export const CustomSpinner = () => {
   return (
     <Dna
       visible={true}
@@ -13,4 +13,16 @@ const CustomSpinner = () => {
   );
 };
 
-export default CustomSpinner;
+export const CommuSpinner = () => {
+  return (
+    <ThreeDots
+      height="10"
+      width="40"
+      radius="3"
+      color="#74b9ff"
+      ariaLabel="three-dots-loading"
+      wrapperStyle={{}}
+      visible={true}
+    />
+  );
+};

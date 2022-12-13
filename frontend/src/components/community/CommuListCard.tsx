@@ -38,7 +38,7 @@ const ListCardBox = styled.div`
   background-color: ${theme.backColor};
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
   border-radius: 20px;
-  margin-top: 20px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
 `;

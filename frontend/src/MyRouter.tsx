@@ -4,7 +4,7 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import CustomSpinner from './components/loader/CustomSpinner';
+import { CustomSpinner } from './components/loader/CustomSpinner';
 import NavBar from './components/nav/NavBar';
 
 const MainPage = lazy(() => import('./pages/MainPage'));

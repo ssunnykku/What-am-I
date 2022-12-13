@@ -20,7 +20,15 @@ export interface ReviewType {
   createdAt: string;
   updatedAt: string;
   likeCount: number;
-  likeStatus: number | boolean;
+  likeStatus: number;
+}
+
+export interface OneReviewType {
+  description: string;
+  id: number;
+  nickname: string;
+  profileImg: string;
+  userId: string;
 }
 
 export interface LikeGetType {

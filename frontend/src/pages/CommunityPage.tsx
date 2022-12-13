@@ -17,6 +17,7 @@ import {
 import { getUserData } from '../apis/mypageFetcher';
 import { useInView } from 'react-intersection-observer';
 import { UserInfoType } from '../types/auth/authType';
+import { CommuSpinner } from '../components/loader/CustomSpinner';
 
 const CommunityPage = () => {
   const [rankings, setRankings] = useState<CommunityType[]>([]);
@@ -111,6 +112,9 @@ const CommunityPage = () => {
                   </div>
                 );
               })}
+              <div className="spinner">
+                <CommuSpinner />
+              </div>
             </ScrollBox>
           </CommuListsBox>
         </ListsBox>
@@ -205,6 +209,7 @@ const ScrollBox = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 1rem;
+  padding-top: 20px;
 
   // 스크롤 조절
   overflow-x: hidden;
@@ -212,5 +217,11 @@ const ScrollBox = styled.div`
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
+  }
+
+  .spinner {
+    display: flex;
+    align-items: center;
+    height: 15px;
   }
 `;

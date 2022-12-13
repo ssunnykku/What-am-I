@@ -13,6 +13,7 @@ export interface ReviewTypeProps {
   modalHandler?: () => void;
   currentUser?: string;
   userInfo?: UserInfoType;
+  onCardModalClickEvent?: () => void;
 }
 
 const ReviewContentsModal = ({

@@ -1,17 +1,16 @@
 import styled, { keyframes } from 'styled-components';
+import { ReviewTypeProps } from '../modal/ReviewContentsModal';
 import ReviewLikeBtn from './ReviewLikeBtn';
 
-interface PuppyCardProps {
-  onCardModalClickEvent: () => void;
-}
-// 좋아요를 채워주는 함수 <= 자식 요소에서 프롭스를 건네 주는
-// 좋아요를 누르면 useEffect를 실행하는
-
-const ReviewPuppyCard = ({ onCardModalClickEvent }: PuppyCardProps) => {
+const ReviewPuppyCard = ({
+  onCardModalClickEvent,
+  review,
+}: ReviewTypeProps) => {
   return (
     <PuppyCardBox onClick={onCardModalClickEvent}>
+      <img />
       <div className="like-icon">
-        <ReviewLikeBtn />
+        <ReviewLikeBtn review={review} />
       </div>
     </PuppyCardBox>
   );
@@ -36,9 +35,16 @@ const PuppyCardBox = styled.div`
   margin: 10px 10px;
   display: flex;
   justify-content: center;
-
   position: relative;
   overflow: hidden;
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   .like-icon {
     position: absolute;
     z-index: 2;

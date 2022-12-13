@@ -13,20 +13,22 @@ import {
 import MyModal from '../modal/MyModal';
 import useModal from '../../hooks/modal/useModal';
 import ReviewWritingEditor from '../writingeditor/ReviewWritingEditor';
-import { ReviewCommentType } from '../../types/reviewboard/reviewType';
+import {
+  OneReviewType,
+  ReviewCommentType,
+  ReviewType,
+} from '../../types/reviewboard/reviewType';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useConfirm } from '../../hooks/confirm/useConfirm';
 import ReviewLikeBtn from '../reviewBoard/ReviewLikeBtn';
-import { UserInfoType } from '../../types/auth/authType';
 
 const ReviewContentsViewer = (props: ReviewTypeProps) => {
   const [isOpen, modalHandler] = useModal();
   const [pages, setPages] = useState<number>(1);
   const [description, setDescription] = useState<string>('');
   const [comments, setComments] = useState<ReviewCommentType[]>([]);
-  const [reviewer, setReviewer] = useState<string>('');
-  const [userInfo, setUserInfo] = useState<UserInfoType>();
+  const [reviewer, setReviewer] = useState<OneReviewType>();
   const [date, setDate] = useState(props.review?.createdAt);
   const newDate = date?.split(' ')[0];
   const [editing, setEditing] = useState<boolean>(false);
@@ -45,10 +47,8 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
   // 리뷰 하나 가져오기
   const getOneReview = async () => {
     const res = await getReviewRequest(`review/show/${props.review?.id}`);
-    setReviewer(res.userId);
-
-    const userInfo = await getReviewRequest(`users/${res.userId}`);
-    setUserInfo(userInfo);
+    setReviewer(res);
+    res.map((val: OneReviewType) => setReviewer(val));
   };
 
   // 리뷰 전체 댓글 가져오기
@@ -72,9 +72,9 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     );
 
     const res = await getReviewRequest(
-      `reviewComment/${props.review?.id}?page=${pages}`,
+      `reviewComment/${post.reviewId}/${post.id}`,
     );
-    setComments(res.reverse());
+    setComments([...res, ...comments]);
     setDescription('');
   };
 
@@ -160,12 +160,12 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
             <div className="user-name">
               <ProfileBox>
                 <div className="profile">
-                  <img src={userInfo?.profileImg} />
+                  <img src={reviewer?.profileImg} />
                 </div>
-                <div>{userInfo?.nickname}</div>
+                <div>{reviewer?.nickname}</div>
               </ProfileBox>
             </div>
-            {props.currentUser === reviewer ? (
+            {props.currentUser === reviewer?.userId ? (
               <ButtonBox>
                 <EditDelBtn
                   onClick={(e) => {
@@ -264,7 +264,7 @@ export default ReviewContentsViewer;
 
 const ContentsModalWrapper = styled.form`
   width: 65%;
-  height: 80%;
+  height: 85%;
   max-width: 60rem;
   min-width: 40rem;
   position: fixed;
@@ -286,6 +286,11 @@ const AddWriting = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow: scroll;
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 
   .user-name {
     width: 100%;
@@ -364,7 +369,7 @@ const ButtonBox = styled.div`
 const ContentsBox = styled.div`
   border-top: solid 1px lightgray;
   padding: 3% 2%;
-  height: 65%;
+  height: 68%;
   max-width: 29rem;
   max-height: 35rem;
   font-size: 15px;
@@ -449,6 +454,8 @@ const ContentsBox = styled.div`
 
 const BottomDiv = styled.div`
   border-top: solid 1px lightgray;
+  height: 8rem;
+
   .like {
     float: left;
     margin: 5px 7px;
