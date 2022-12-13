@@ -73,12 +73,13 @@ class reviewService {
     const [reviewId, metadata] = await sequelize.query(
       `select R.id,R.description,R.userId,R.images,U.userId,U.nickname,U.profileImg from reviews as R inner join users as U on R.userId = U.userId where R.id=${id}`,
     );
-    console.log(reviewId);
-    if (!reviewId) {
+    const reviewDetail = reviewId[0];
+    console.log(reviewId[0]);
+    if (!reviewDetail) {
       const errorMessage = '작성하신 글이 없습니다';
       return { errorMessage };
     } else {
-      return reviewId;
+      return reviewDetail;
     }
   }
 
