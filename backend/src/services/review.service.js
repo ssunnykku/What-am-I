@@ -62,18 +62,7 @@ class reviewService {
       });
       review.aiImage = await AiSearchResult.findOne({
         where: { userId: _userId, id: review.aiResultId },
-        // attributes: {
-        //   exclude: [
-        //     'userId',
-        //     'id',
-        //     'dogName',
-        //     'aiResult',
-        //     'createdAt',
-        //     'updatedAt',
-        //   ],
-        // },
       });
-      console.log(review);
     }
 
     return selectedReviews;
@@ -81,7 +70,7 @@ class reviewService {
 
   static async showMyReviews({ userId: UserId }) {
     const userId = await Review.findAll({
-      where: { UserId },
+      where: { userId },
     });
     if (!userId) {
       const errorMessage = '작성하신 글이 없습니다';
@@ -91,22 +80,34 @@ class reviewService {
     }
   }
 
-  //한개 게시물 get해서 보기
-  static async showReview({ _id: id }) {
-    // const reviewId = await Review.findOne({
-    //   where: { id: id },
-    // });
+  // 한개 게시물 get해서 보기
+  static async showReview({ _id }) {
+    const reviewId = await Review.findOne({
+      where: { id: _id },
+      include: {
+        model: AiSearchResult,
+        attributes: {
+          exclude: [
+            'userId',
+            'id',
+            'dogName',
+            'aiResult',
+            'createdAt',
+            'updatedAt',
+          ],
+        },
+      },
+    });
 
-    const [reviewId, metadata] = await sequelize.query(
-      `select R.id,R.description,R.userId,R.images,U.userId,U.nickname,U.profileImg from reviews as R inner join users as U on R.userId = U.userId where R.id=${id}`,
-    );
-    console.log(reviewId);
+    // const [reviewId, metadata] = await sequelize.query(
+    //   `select R.id,R.description,R.userId,R.images,U.userId,U.nickname,U.profileImg from reviews as R inner join users as U on R.userId = U.userId where R.id=${id}`,
+    // );
+
     if (!reviewId) {
       const errorMessage = '작성하신 글이 없습니다';
       return { errorMessage };
-    } else {
-      return reviewId;
     }
+    return reviewId;
   }
 
   static async updateReview({ description, reviewId: id, userId }) {
