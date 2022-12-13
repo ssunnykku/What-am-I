@@ -149,7 +149,7 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
             {comments?.map((comment, idx) => (
               <div key={comment.id} className="user-comments">
                 <div className="profile-image">
-                  <img />
+                  <img src={comment.profileImg} />
                 </div>
                 {selectedIdx === idx && editing ? (
                   <input
@@ -157,11 +157,10 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
                     value={newComment}
                     onChange={onChangeCommentEditInput}
                     autoFocus={true}
-                    onFocus={() => setNewComment(comment.description)}
                   />
                 ) : (
                   <div className="comment">
-                    <span>사용자 닉네임</span>
+                    <span>{comment.nickname}</span>
                     {comment.description}
                   </div>
                 )}
@@ -332,7 +331,7 @@ const ContentsBox = styled.div`
     display: inline-flex;
     justify-content: space-between;
     position: relative;
-    padding: 12px 0;
+    padding: 10px 0;
     width: 100%;
     line-height: 20px;
     font-size: 14px;

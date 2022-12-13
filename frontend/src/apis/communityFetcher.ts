@@ -1,6 +1,7 @@
 import {
   CreateCommuInitialType,
   CreateCurrentCommunityPostType,
+  EditCommuInitialType,
 } from '../types/community/communityType';
 import { axiosInstance } from '../utils/axiosInstance';
 
@@ -23,13 +24,36 @@ export async function createCommunityRequest({
   return res.data;
 }
 
+// 커뮤니티 수정
+export async function editCommunityRequest(
+  endpoint: string,
+  { name, introduction, communityImage }: EditCommuInitialType,
+) {
+  const formData = new FormData();
+  formData.append('name', name);
+  formData.append('introduction', introduction);
+  formData.append('communityImage', communityImage);
+  console.log('커뮤니티 수정', formData);
+
+  const res = await axiosInstance.put(endpoint, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return res.data;
+}
+
 // 커뮤니티 내 게시물 쓰기
 export async function CreateCurrentCommunityPostRequest(
   endpoint: string,
   { images, description }: CreateCurrentCommunityPostType,
 ) {
   const formData = new FormData();
-  formData.append('images', images);
+  for (let i = 0; i < images.length; i++) {
+    formData.append(`images`, images[i]);
+  }
+  // formData.append('images', images);
+  console.log(images);
   formData.append('description', description);
 
   const res = await axiosInstance.post(endpoint, formData, {
@@ -65,24 +89,6 @@ export async function postCurrCommuCommentsRequest(
 ) {
   const res = await axiosInstance.post(`communityComment/${communityPostId}`, {
     description,
-  });
-  return res.data;
-}
-
-// 커뮤니티 수정
-export async function editCommunityRequest(
-  endpoint: string,
-  { name, introduction, communityImage }: CreateCommuInitialType,
-) {
-  const formData = new FormData();
-  formData.append('name', name);
-  formData.append('introduction', introduction);
-  formData.append('communityImage', communityImage);
-
-  const res = await axiosInstance.put(endpoint, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
   });
   return res.data;
 }

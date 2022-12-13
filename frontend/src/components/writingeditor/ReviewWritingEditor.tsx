@@ -126,6 +126,34 @@ const ModalHeaderBtn = styled.button`
   }
 `;
 
+const ProfileBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 80%;
+  height: 3.5rem;
+  line-height: 4.3rem;
+  padding-left: 3%;
+  font-size: 16px;
+  font-family: ${font.bold};
+
+  .profile {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
 const ModalContents = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -164,33 +192,5 @@ const AddWriting = styled.div`
       line-height: 22px;
       resize: none;
     }
-  }
-`;
-
-const ProfileBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 80%;
-  height: 3.5rem;
-  line-height: 4.3rem;
-  padding-left: 3%;
-  font-size: 16px;
-  font-family: ${font.bold};
-
-  .profile {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    margin-right: 10px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
   }
 `;

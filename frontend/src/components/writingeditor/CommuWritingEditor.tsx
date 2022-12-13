@@ -8,8 +8,8 @@ import { getUserData } from '../../apis/mypageFetcher';
 import { UserInfoType } from '../../types/auth/authType';
 
 const CommuWritingEditor = (props: CurrentCommuityProps) => {
-  const [images, setImages] = useState<File | null>(null);
   const [description, setDescription] = useState<string>('');
+  const [images, setImages] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>('');
   const imageInputRef = useRef<HTMLInputElement>(null);
   const [userInfo, setUserInfo] = useState<UserInfoType>();
@@ -17,13 +17,21 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
   const [postImages, setPostImages] = useState<File[]>([]);
   const [previewImgs, setPreviewImgs] = useState<string[]>([]);
 
+  const getCurrentUser = async () => {
+    const res = await getUserData();
+    setUserInfo(res);
+  };
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
   // 포스팅할 사진 미리보기
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       setPostImages([...postImages, e.target.files[0]]);
-
+      console.log(postImages);
       reader.onload = () => {
         const previewUrl = reader.result as string;
 
@@ -89,14 +97,6 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
     }
   };
 
-  const getCurrentUser = async () => {
-    const res = await getUserData();
-    setUserInfo(res);
-  };
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
-
   // 커뮤니티 내에 포스팅
   const handleWritingEditorClick = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -161,7 +161,14 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
             </InputBox>
           </AddImage>
           <AddWriting>
-            <div className="user-name">유저 프로필 사진 + 닉네임</div>
+            <div className="user-name">
+              <ProfileBox>
+                <div className="profile">
+                  <img src={userInfo?.profileImg} />
+                </div>
+                <div>{userInfo?.nickname}</div>
+              </ProfileBox>
+            </div>
             <div className="writing">
               <textarea
                 maxLength={300}
@@ -214,6 +221,33 @@ const ModalHeaderBtn = styled.button`
   width: 6.2rem;
   cursor: pointer;
   color: ${theme.mainColor};
+`;
+
+const ProfileBox = styled.div`
+  display: flex;
+  align-items: center;
+  width: 80%;
+  height: 3.5rem;
+  line-height: 4.3rem;
+  padding-left: 3%;
+  font-size: 16px;
+  font-family: ${font.bold};
+
+  .profile {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const ModalContents = styled.div`

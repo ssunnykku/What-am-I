@@ -108,19 +108,24 @@ const LikedCommuPage = () => {
     }
   };
 
-  // 커뮤니티 수정 ...
+  // 커뮤니티 수정
   const handleCommunityEditButton = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (newCommuImg && commuInfo) {
-      const res = await editCommunityRequest(`communities/posts/${id}`, {
+    if (commuInfo?.communityImage) {
+      await editCommunityRequest(`communities/${id}`, {
         name: newName,
         introduction: newIntroduction,
-        communityImage: newCommuImg,
+        communityImage: newCommuImg ? newCommuImg : commuInfo?.communityImage,
       });
+      setEditing(false);
+
+      const result = await getCurrentCommunityRequest(
+        `communities/posts/${id}`,
+      );
+      setCommuInfo(result);
     }
   };
-
   return (
     <BigBox>
       <CommunityBox>

@@ -5,8 +5,14 @@ export interface CreateCommuInitialType {
 }
 
 export interface CreateCurrentCommunityPostType {
-  images: Array<File>;
+  images: File[];
   description: string;
+}
+
+export interface EditCommuInitialType {
+  name: string;
+  introduction: string;
+  communityImage: File | string;
 }
 
 export interface CommunityType {
@@ -57,6 +63,8 @@ export interface CurrCommuCommentsType {
   description: string;
   communityPostId: number;
   userId: string;
+  nickname: string;
+  profileImg: string;
 }
 
 export interface CommuNewLikeType {

@@ -8,6 +8,8 @@ export interface ReviewCommentType {
   id: number;
   reviewId: number;
   userId: string;
+  nickname: string;
+  profileImg: string;
 }
 
 export interface ReviewType {
@@ -18,7 +20,7 @@ export interface ReviewType {
   createdAt: string;
   updatedAt: string;
   likeCount: number;
-  likeStatus: boolean | number;
+  likeStatus: number | boolean;
 }
 
 export interface LikeGetType {

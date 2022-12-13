@@ -186,7 +186,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
             {comments?.map((comment, idx) => (
               <div key={comment.id} className="user-comments">
                 <div className="profile-image">
-                  <img src={userInfo?.profileImg} />
+                  <img src={comment.profileImg} />
                 </div>
                 {selectedIdx === idx && editing ? (
                   <input
@@ -198,7 +198,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
                   />
                 ) : (
                   <div className="comment">
-                    <span>사용자 닉네임</span>
+                    <span>{comment.nickname}</span>
                     {comment.description}
                   </div>
                 )}
@@ -414,11 +414,10 @@ const ContentsBox = styled.div`
     .comment {
       width: 90%;
       margin-top: 3px;
-      margin-left: 3px;
 
       span {
         font-family: ${font.bold};
-        margin-right: 5px;
+        margin-right: 6px;
       }
     }
 

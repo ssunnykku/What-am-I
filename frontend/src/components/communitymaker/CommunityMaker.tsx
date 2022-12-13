@@ -32,9 +32,6 @@ const CommunityMaker = () => {
     e.preventDefault();
     if (imageInputRef.current) {
       imageInputRef.current.value = '';
-      // setCommunityImage(
-      //   `${import.meta.env.VITE_PUBLIC_URL}/img/default_image2.png`,
-      // );
     }
   };
 
