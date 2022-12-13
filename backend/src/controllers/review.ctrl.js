@@ -5,6 +5,7 @@ class reviewController {
   //모든 글들 다 보기
   static async allReviews(req, res, next) {
     try {
+      const _userId = req.currentUserId;
       // GET /review
       const { page } = req.query;
       // 방어코드
@@ -13,7 +14,10 @@ class reviewController {
       const reviewCount = await reviewService.countReviewpage();
       // console.log(reviewCount);
 
-      const selectedReviews = await reviewService.selectReviews(defaultPage);
+      const selectedReviews = await reviewService.selectReviews(
+        defaultPage,
+        _userId,
+      );
       // console.log();
 
       if (selectedReviews.errorMessage) {

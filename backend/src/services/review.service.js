@@ -7,39 +7,6 @@ import { Sequelize } from 'sequelize';
 const Op = Sequelize.Op;
 
 class reviewService {
-  //모든리뷰 다 가지고 오기
-  static async countReviewpage() {
-    const reviewCount = await Review.count();
-
-    if (reviewCount % REVIEW_PER_PAGE === 0) {
-      return reviewCount / REVIEW_PER_PAGE;
-    } else {
-      return Math.floor(reviewCount / REVIEW_PER_PAGE) + 1;
-    }
-  }
-
-  static async selectReviews(page) {
-    const selectedReivews = await Review.findAll({
-      offset: (page - 1) * REVIEW_PER_PAGE,
-      limit: REVIEW_PER_PAGE,
-      order: [['id', 'DESC']],
-      // offset: 0,
-      // limit: 10,
-    });
-
-    for (const review of selectedReivews) {
-      review.dataValues.likeCount = await ReviewLike.count({
-        where: { reviewId: review.id },
-      });
-
-      review.dataValues.likeStatus = await ReviewLike.count({
-        where: { userId: review.userId, reviewId: review.id },
-      });
-    }
-
-    return selectedReivews;
-  }
-
   //
   static async addReview({ description, images, userId }) {
     // db에 저장
@@ -51,6 +18,36 @@ class reviewService {
     createdNewReview.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
     return createdNewReview;
+  }
+
+  //모든리뷰 다 가지고 오기
+  static async countReviewpage() {
+    const reviewCount = await Review.count();
+
+    if (reviewCount % REVIEW_PER_PAGE === 0) {
+      return reviewCount / REVIEW_PER_PAGE;
+    } else {
+      return Math.floor(reviewCount / REVIEW_PER_PAGE) + 1;
+    }
+  }
+
+  static async selectReviews(defaultpage, _userId) {
+    const selectedReivews = await Review.findAll({
+      offset: (defaultpage - 1) * REVIEW_PER_PAGE,
+      limit: REVIEW_PER_PAGE,
+      order: [['id', 'DESC']],
+    });
+
+    for (const review of selectedReivews) {
+      review.dataValues.likeCount = await ReviewLike.count({
+        where: { reviewId: review.id },
+      });
+      review.dataValues.likeStatus = await ReviewLike.count({
+        where: { userId: _userId, reviewId: review.id },
+      });
+    }
+
+    return selectedReivews;
   }
 
   //
@@ -66,7 +63,7 @@ class reviewService {
     }
   }
 
-  //
+  //한개 게시물 get해서 보기
   static async showReview({ _id: id }) {
     const reviewId = await Review.findOne({
       where: { id: id },

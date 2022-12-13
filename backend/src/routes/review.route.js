@@ -7,7 +7,7 @@ const reviewRouter = Router();
 const upload = uploadImageS3();
 
 //리뷰 전부다 가지고오기
-reviewRouter.get('/reviews', reviewController.allReviews);
+reviewRouter.get('/reviews', loginRequired, reviewController.allReviews);
 
 // 리뷰 작성하기
 reviewRouter.post(
