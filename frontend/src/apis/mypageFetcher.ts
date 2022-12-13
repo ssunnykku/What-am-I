@@ -59,9 +59,15 @@ export async function deleteUserReview(reviewId: number) {
   return response.data;
 }
 
-// 커뮤니티
+// 좋아요 한 커뮤니티
 export async function getUserLiked() {
   const response = await axiosInstance.get(`/mycommunities/liked?page=1`);
+  return response.data;
+}
+
+// 좋아요 한 커뮤니티에서 내가쓴글
+export async function getUserLikedPosts(communityId: number) {
+  const response = await axiosInstance.get(`/mycommunities/${communityId}`);
   return response.data;
 }
 

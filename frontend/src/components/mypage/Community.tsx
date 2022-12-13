@@ -1,18 +1,12 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getUserLiked } from '../../apis/mypageFetcher';
+import { font } from '../../assets/styles/common/fonts';
+import { getUserLiked, getUserLikedPosts } from '../../apis/mypageFetcher';
 import CommunityCard from './CommunityCard';
-import {
-  deleteUserCommunites,
-  getUserCommunites,
-} from '../../apis/mypageFetcher';
-import {
-  EntryBtn,
-  CreateBtn,
-} from '../../assets/styles/common/commonComponentStyle';
-import { postCommuLikeRequest } from '../../apis/communityFetcher';
-import { useConfirm } from '../../hooks/confirm/useConfirm';
+import { EntryBtn } from '../../assets/styles/common/commonComponentStyle';
+import { Modal } from '@mui/material';
+import CommunityMyList from './CommunityMyList';
+const VITE_PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
 
 export interface CommunityProps {
   Community: CommunityProps;
@@ -27,6 +21,11 @@ export interface CommunityProps {
 
 function Community() {
   const [userLikedList, setUserLikedList] = useState<CommunityProps[]>([]);
+  const [communityId, setCommunityId] = useState<number>(0);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     async function getData() {
@@ -37,38 +36,36 @@ function Community() {
     getData();
   }, []);
 
-  async function cancelLike(id: number) {
-    await postCommuLikeRequest(`communitieslikes/${id}`);
-    const response = await getUserLiked();
-    setUserLikedList(response.rows);
-    window.alert('좋아요가 취소되었습니다.');
+  async function getMyPost(id: number) {
+    setOpen(true);
+    setCommunityId(id);
   }
-
-  // TODO useConfirm으로 props전달이 어렵다(삭제를위한id값 전달)
-  // const deleteConfirm = () => (cancelLike(), window.alert('좋아요가 취소되었습니다.'));
-  // const cancelConfirm = () => window.alert('취소했습니다.');
-
-  // const confirmDelete = useConfirm(
-  //   '좋아요를 취소하시겠습니까?',
-  //   deleteConfirm,
-  //   cancelConfirm,
-  // );
 
   return (
     <Div>
-      {userLikedList.length ? (
+      {open ? (
+        <CommunityMyList id={communityId} setOpen={setOpen} />
+      ) : userLikedList.length ? (
         userLikedList.map((value) => (
           <CommunityCard value={value.Community} key={value.Community.id}>
             <ButtonContainer>
-              <EntryBtn>내가 쓴 글</EntryBtn>
-              <CreateBtn onClick={() => cancelLike(value.Community.id)}>
-                좋아요 취소
-              </CreateBtn>
+              <EntryBtn
+                onClick={() =>
+                  (location.href = `${VITE_PUBLIC_URL}likedcommunity?id=${value.Community.id}`)
+                }
+              >
+                입장하기
+              </EntryBtn>
+              <EntryBtn onClick={() => getMyPost(value.Community.id)}>
+                내가 쓴 글
+              </EntryBtn>
             </ButtonContainer>
           </CommunityCard>
         ))
       ) : (
-        <div>내가 좋아요 한 커뮤니티가 없습니다</div>
+        <div style={{ fontFamily: font.bold }}>
+          내가 좋아요 한 커뮤니티가 없습니다
+        </div>
       )}
     </Div>
   );
