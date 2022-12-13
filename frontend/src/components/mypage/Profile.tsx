@@ -62,8 +62,10 @@ function Profile() {
             sx={{ width: 150, height: 150 }}
             src={profileImg}
           />
+          <div className="wrapper">수정</div>
         </label>
         <input
+          hidden
           type="file"
           id="ex_file"
           accept="image/jpg, image/png, image/jpeg"
@@ -146,6 +148,7 @@ const DeleteButton = styled(CreateBtn)`
 
 const ProfileImgContainer = styled.div`
   label {
+    position: relative;
     display: inline-block;
     border-radius: 100%;
     font-size: inherit;
@@ -153,32 +156,20 @@ const ProfileImgContainer = styled.div`
     vertical-align: middle;
     cursor: pointer;
   }
-
-  input[type='file'] {
-    :hover {
-      background-color: black;
-      border-radius: 100%;
-    }
-    position: absolute;
-    width: 0;
-    height: 0;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
+  .wrapper {
+    display: none;
+    color: white;
   }
 
   :hover {
     .wrapper {
+      display: block;
       position: absolute;
       top: 0;
       bottom: 0;
       left: 0;
       right: 0;
-      border-radius: 20px;
-      box-shadow: 1px 2px 5px gray;
-      transition: all 0.02s linear;
+      border-radius: 100%;
       background-color: rgba(0, 0, 0, 0.4);
     }
   }

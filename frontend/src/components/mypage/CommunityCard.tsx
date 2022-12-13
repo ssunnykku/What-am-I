@@ -1,15 +1,11 @@
 import styled, { keyframes } from 'styled-components';
 import { CommunityProps } from './Community';
-import {
-  EntryBtn,
-  CreateBtn,
-} from '../../assets/styles/common/commonComponentStyle';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 
 interface Props {
   value: CommunityProps;
-  mode: string;
+  children: React.ReactNode;
 }
 
 function CommunityCard(props: Props) {
@@ -19,17 +15,7 @@ function CommunityCard(props: Props) {
         <Img alt="room_img" src={props.value.communityImage}></Img>
         <RoomName>{props.value.name}</RoomName>
       </Content>
-      {props.mode == 'MyCommunity' ? (
-        <ButtonContainer>
-          <EntryBtn>수정</EntryBtn>
-          <CreateBtn>삭제</CreateBtn>
-        </ButtonContainer>
-      ) : (
-        <ButtonContainer>
-          <EntryBtn>내가 쓴 글</EntryBtn>
-          <CreateBtn>나가기</CreateBtn>
-        </ButtonContainer>
-      )}
+      {props.children}
     </Card>
   );
 }
@@ -68,18 +54,12 @@ const Content = styled.div`
 const Img = styled.img`
   width: 100px;
   height: 100px;
-  border-radius: 15px;
+  border-radius: 100%;
   object-fit: cover; // 이미지 확대하여 비율유지
 `;
 
 const RoomName = styled.div`
   text-align: center;
   font-family: ${font.bold};
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
 `;
 export default CommunityCard;
