@@ -9,12 +9,12 @@ const Op = Sequelize.Op;
 
 class reviewService {
   //
-  static async addReview({ description, images, userId }) {
+  static async addReview({ description, userId, aiResultId }) {
     // db에 저장
     const createdNewReview = await Review.create({
       description,
-      images,
       userId,
+      aiResultId,
     });
     createdNewReview.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 

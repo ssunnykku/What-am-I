@@ -20,8 +20,9 @@ class Review extends Sequelize.Model {
           defaultValue: DataTypes.UUIDV4,
           foreignKey: true,
         },
-        images: {
-          type: DataTypes.TEXT,
+        aiResultId: {
+          type: Sequelize.INTEGER,
+          foreignKey: true,
           allowNull: true,
         },
       },
@@ -47,10 +48,10 @@ class Review extends Sequelize.Model {
       foreignKey: 'reviewId',
       targetKey: 'id',
     });
-    // db.Review.hasOne(db.AiSearchResult, {
-    //   foreignKey: 'reviewId',
-    //   sourceKey: 'id',
-    // });
+    db.Review.belongsTo(db.AiSearchResult, {
+      foreignKey: 'aiResultId',
+      sourceKey: 'id',
+    });
   }
 }
 
