@@ -6,11 +6,17 @@ import { User } from '../models/User.model';
 class reviewCommentService {
   static async addReviewComment({ description, reviewId, userId }) {
     // db에 저장
-    const createdNewComment = await ReviewComment.create({
+    // const _createdNewComment =
+    await ReviewComment.create({
       description,
       reviewId,
       userId,
     });
+
+    const createdNewComment = await ReviewComment.findOne({
+      where: { description: description, userId: userId, reviewId: reviewId },
+    });
+
     createdNewComment.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
     return createdNewComment;
