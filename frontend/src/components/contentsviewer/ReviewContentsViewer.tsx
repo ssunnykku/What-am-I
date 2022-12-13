@@ -29,7 +29,6 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
   const [userInfo, setUserInfo] = useState<UserInfoType>();
   const [date, setDate] = useState(props.review?.createdAt);
   const newDate = date?.split(' ')[0];
-
   const [editing, setEditing] = useState<boolean>(false);
   const [newComments, setNewComments] = useState<string>('');
   const [selectedIdx, setSelectedIdx] = useState<number | boolean>(false);
@@ -51,9 +50,6 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     const userInfo = await getReviewRequest(`users/${res.userId}`);
     setUserInfo(userInfo);
   };
-  useEffect(() => {
-    getOneReview();
-  }, []);
 
   // 리뷰 전체 댓글 가져오기
   const getReviewComments = async () => {
@@ -63,13 +59,14 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     setComments(res.reverse());
   };
   useEffect(() => {
+    getOneReview();
     getReviewComments();
   }, []);
 
   // 리뷰 댓글 쓰기
   const postReviewComments = async (e: React.FormEvent) => {
     e.preventDefault();
-    await createReviewCommentRequest(
+    const post = await createReviewCommentRequest(
       `reviewComment/${props.review?.id}`,
       description,
     );
@@ -187,7 +184,10 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
           <ContentsBox>
             <div className="user-contents">{props.review?.description}</div>
             {comments?.map((comment, idx) => (
-              <div key={idx} className="user-comments">
+              <div key={comment.id} className="user-comments">
+                <div className="profile-image">
+                  <img src={userInfo?.profileImg} />
+                </div>
                 {selectedIdx === idx && editing ? (
                   <input
                     ref={editInputRef}
@@ -197,7 +197,10 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
                     onFocus={() => setNewComments(comment.description)}
                   />
                 ) : (
-                  <div>{comment.description}</div>
+                  <div className="comment">
+                    <span>사용자 닉네임</span>
+                    {comment.description}
+                  </div>
                 )}
                 {comment.userId === props.currentUser ? (
                   <BtnContainer className="btn-box">
@@ -230,12 +233,10 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
               </div>
             ))}
           </ContentsBox>
+
           <BottomDiv>
             <div className="like">
-              <ReviewLikeBtn
-                review={props.review}
-                currentUser={props.currentUser}
-              />
+              <ReviewLikeBtn review={props.review} />
             </div>
             <div className="date">{newDate}</div>
             <CommentBox>
@@ -288,8 +289,8 @@ const AddWriting = styled.div`
 
   .user-name {
     width: 100%;
-    height: 4.3rem;
-    padding-left: 3%;
+    height: 80px;
+    padding-left: 20px;
     display: flex;
     align-items: center;
   }
@@ -302,15 +303,14 @@ const ProfileBox = styled.div`
   width: 80%;
   height: 3.5rem;
   line-height: 4.3rem;
-  padding-left: 3%;
   font-size: 16px;
   font-family: ${font.bold};
 
   .profile {
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    margin-right: 10px;
+    margin-right: 15px;
     position: relative;
     overflow: hidden;
   }
@@ -389,12 +389,41 @@ const ContentsBox = styled.div`
     display: inline-flex;
     justify-content: space-between;
     position: relative;
-    padding: 5px 0px;
+    margin: 5px 0;
+    padding: 7px 0;
     width: 100%;
     line-height: 20px;
+    font-size: 14px;
+
+    .profile-image {
+      height: 35px;
+      width: 35px;
+      border-radius: 50%;
+      margin: 0 10px;
+      position: relative;
+      overflow: hidden;
+
+      img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .comment {
+      width: 90%;
+      margin-top: 3px;
+      margin-left: 3px;
+
+      span {
+        font-family: ${font.bold};
+        margin-right: 5px;
+      }
+    }
 
     :hover {
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgba(0, 0, 0, 0.1);
     }
 
     :hover .btn-box {
@@ -403,16 +432,18 @@ const ContentsBox = styled.div`
 
     input {
       width: 88%;
-      height: 20px;
+      height: 30px;
       font-size: 15px;
     }
 
     .edit-button {
       font-size: 16px;
-      display: flex;
-      align-items: center;
-      width: 100%;
-      height: 30px;
+      position: absolute;
+      right: 5px;
+      bottom: 10px;
+      width: 35px;
+      background-color: white;
+      border: solid 1px black;
     }
   }
 `;

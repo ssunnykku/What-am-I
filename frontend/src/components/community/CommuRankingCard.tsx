@@ -4,11 +4,9 @@ import { theme } from '../../assets/styles/common/palette';
 import { font } from '../../assets/styles/common/fonts';
 import { CommunityType } from '../../types/community/communityType';
 import CommuLikeBtn from './CommuLikeBtn';
-import { UserInfoType } from '../../types/auth/authType';
 
 export interface CommunityTypeProps {
   ranking: CommunityType;
-  currentUserInfo?: UserInfoType;
 }
 
 const CommuRankingCard = ({ ranking }: CommunityTypeProps) => {

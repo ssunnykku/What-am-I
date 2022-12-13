@@ -214,7 +214,11 @@ const LikedCommuPage = () => {
         </SmallBox>
         <ContentsBox>
           {commuPosts?.map((commuPost) => (
-            <CommuContentsModal key={commuPost.id} commuPost={commuPost} />
+            <CommuContentsModal
+              key={commuPost.id}
+              commuPost={commuPost}
+              currentUserInfo={currentUserInfo}
+            />
           ))}
         </ContentsBox>
         <PaginateButton page={page} setPage={setPage} totalPages={totalPages} />

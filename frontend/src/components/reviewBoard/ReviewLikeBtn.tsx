@@ -3,57 +3,56 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import styled, { keyframes } from 'styled-components';
 import { ReviewTypeProps } from '../modal/ReviewContentsModal';
-import { LikeGetType } from '../../types/reviewboard/reviewType';
 import { likeRequest } from '../../apis/reviewFetcher';
 
-// 프롭스로 좋아요를 누른 유저와 받은 유저 id를 받아와야 한다.
-// 내가 좋아요를 누른 것과 별개로 좋아요 숫자가 떠 있어야 함.
-
-const ReviewLikeBtn = ({ review, currentUser }: ReviewTypeProps) => {
-  const [liked, setLiked] = useState<boolean>(false);
+const ReviewLikeBtn = ({ review }: ReviewTypeProps) => {
+  const [like, setLike] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number>(0);
-  const [dislikeCount, setDislikeCount] = useState<number>(0);
 
-  const onClickLikeBtn = async () => {
-    if (review && currentUser) {
-      const res = await likeRequest(`reviewLike/${review?.id}`, {
-        userId: currentUser,
-        reviewId: review?.id,
-      });
+  const getLikeInfo = () => {
+    if (review) {
+      setLikeCount(review.likeCount);
+      if (review.likeStatus === 1) {
+        setLike(true);
+      } else if (review.likeStatus === 0) {
+        setLike(false);
+      }
+    }
+  };
+  useEffect(() => {
+    getLikeInfo();
+  }, []);
+
+  const onClickLikeBtn = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (review) {
+      const res = await likeRequest(review?.id);
 
       console.log(res);
-      setLikeCount(res.totalLikes);
-      setDislikeCount(res.myLikedeleted_totalLike);
-
-      if (res.totalLikes) {
-        setLiked(true);
+      if (res.myLikeInformation) {
+        setLike(true);
+        setLikeCount(likeCount + 1);
       } else {
-        setLiked(false);
+        setLike(false);
+        setLikeCount(likeCount - 1);
       }
     }
   };
 
   return (
     <LikeBox
-      onClick={() => {
-        onClickLikeBtn();
+      onClick={(e) => {
+        onClickLikeBtn(e);
       }}
     >
-      {liked ? (
-        <>
-          <FavoriteIcon
-            style={{ color: 'red', fontSize: '25px', marginRight: '3px' }}
-          />
-          {likeCount}
-        </>
+      {like ? (
+        <FavoriteIcon
+          style={{ color: 'red', fontSize: '25px', marginRight: '3px' }}
+        />
       ) : (
-        <>
-          <FavoriteBorderIcon
-            style={{ fontSize: '25px', marginRight: '3px' }}
-          />
-          {dislikeCount}
-        </>
+        <FavoriteBorderIcon style={{ fontSize: '25px', marginRight: '3px' }} />
       )}
+      {likeCount}
     </LikeBox>
   );
 };

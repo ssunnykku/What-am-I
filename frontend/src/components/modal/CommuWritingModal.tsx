@@ -2,13 +2,9 @@ import MyModal from './MyModal';
 import useModal from '../../hooks/modal/useModal';
 import { CreateBtn } from '../../assets/styles/common/commonComponentStyle';
 import CommuWritingEditor from '../writingeditor/CommuWritingEditor';
-import { CommunityType } from '../../types/community/communityType';
+import { CurrentCommuityProps } from './CommuContentsModal';
 
-export interface commuInfoTypeProps {
-  commuInfo?: CommunityType;
-}
-
-const CommuWritingModal = ({ commuInfo }: commuInfoTypeProps) => {
+const CommuWritingModal = ({ commuInfo }: CurrentCommuityProps) => {
   const [isOpen, modalHandler] = useModal();
 
   return (

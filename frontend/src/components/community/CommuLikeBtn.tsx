@@ -9,7 +9,7 @@ const CommuLikeBtn = ({ commu }: CommunityListsTypeProps) => {
   const [like, setLike] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number>(0);
 
-  const getLikeInfo = async () => {
+  const getLikeInfo = () => {
     if (commu) {
       setLikeCount(commu.likeCount);
       if (commu.likeStatus == 1) {

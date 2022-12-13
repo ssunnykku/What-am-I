@@ -52,9 +52,20 @@ export async function getCommunitiesRequest(pages: number) {
   return res.data;
 }
 
-// 현재 커뮤니티 게시글 받기
+// 현재 커뮤니티 게시글/댓글 받기
 export async function getCurrentCommunityRequest(endpoint: string) {
   const res = await axiosInstance.get(endpoint);
+  return res.data;
+}
+
+// 현재 커뮤니티 댓글 쓰기
+export async function postCurrCommuCommentsRequest(
+  communityPostId: number,
+  description: string,
+) {
+  const res = await axiosInstance.post(`communityComment/${communityPostId}`, {
+    description,
+  });
   return res.data;
 }
 
@@ -73,6 +84,24 @@ export async function editCommunityRequest(
       'Content-Type': 'multipart/form-data',
     },
   });
+  return res.data;
+}
+
+// 댓글 수정
+export async function editCurrCommuCommentsRequest(
+  communityCommentId: number,
+  description: string,
+) {
+  const res = await axiosInstance.put(
+    `communityComment/${communityCommentId}`,
+    { description },
+  );
+  return res.data;
+}
+
+// 댓글 삭제
+export async function deleteCurrCommuRequest(endpoint: string) {
+  const res = await axiosInstance.delete(endpoint);
   return res.data;
 }
 

@@ -1,7 +1,4 @@
-import {
-  LikePostType,
-  ReviewInitialType,
-} from '../types/reviewboard/reviewType';
+import { ReviewInitialType } from '../types/reviewboard/reviewType';
 import axiosInstance from '../utils/axiosInstance';
 import Storage from '../storage/storage';
 
@@ -79,13 +76,7 @@ export async function deleteReviewRequest(endpoint: string) {
 }
 
 // 좋아요 포스트
-export async function likeRequest(
-  endpoint: string,
-  { userId, reviewId }: LikePostType,
-) {
-  const res = await axiosInstance.post(endpoint, {
-    userId,
-    reviewId,
-  });
+export async function likeRequest(reviewId: number) {
+  const res = await axiosInstance.post(`/reviewLike/${reviewId}`);
   return res.data;
 }

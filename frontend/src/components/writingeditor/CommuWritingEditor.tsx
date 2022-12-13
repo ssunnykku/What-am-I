@@ -3,12 +3,11 @@ import styled from '@emotion/styled';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import { CreateCurrentCommunityPostRequest } from '../../apis/communityFetcher';
-import { CurrentCommuPostsTypeProps } from '../modal/CommuContentsModal';
-import { commuInfoTypeProps } from '../modal/CommuWritingModal';
+import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 import { getUserData } from '../../apis/mypageFetcher';
 import { UserInfoType } from '../../types/auth/authType';
 
-const CommuWritingEditor = (props: commuInfoTypeProps) => {
+const CommuWritingEditor = (props: CurrentCommuityProps) => {
   const [images, setImages] = useState<File | null>(null);
   const [description, setDescription] = useState<string>('');
   const [preview, setPreview] = useState<string>('');
@@ -128,12 +127,11 @@ const CommuWritingEditor = (props: commuInfoTypeProps) => {
   return (
     <>
       <CreateModalWrapper
-        // onSubmit={(e: any) => {
-        //   props.mode === 'edit'
-        //     ? handleEditCurrentCommuPost(e)
-        //     : handleWritingEditorClick(e);
-        // }}
-        onSubmit={handleWritingEditorClick}
+        onSubmit={(e: any) => {
+          props.mode === 'edit'
+            ? handleEditCurrentCommuPost(e)
+            : handleWritingEditorClick(e);
+        }}
       >
         <ModalHeader>
           게시물 작성하기

@@ -17,11 +17,8 @@ export interface ReviewType {
   images: string;
   createdAt: string;
   updatedAt: string;
-}
-
-export interface LikePostType {
-  userId: number | string;
-  reviewId: number;
+  likeCount: number;
+  likeStatus: boolean | number;
 }
 
 export interface LikeGetType {

@@ -20,6 +20,8 @@ import { UserInfoType } from '../types/auth/authType';
 
 const CommunityPage = () => {
   const [rankings, setRankings] = useState<CommunityType[]>([]);
+  const [like, setLike] = useState<CommunityRankingType>();
+
   const [currentUserInfo, setCurrentUserInfo] = useState<UserInfoType>();
   const [commuList, setCommuList] = useState<CommunityType[]>([]);
   const [pages, setPages] = useState<number>(1);
@@ -86,11 +88,7 @@ const CommunityPage = () => {
           <RankingHeader>인기 커뮤니티</RankingHeader>
           <RankingBox>
             {rankings?.map((ranking) => (
-              <CommuRankingCard
-                key={ranking.id}
-                ranking={ranking}
-                currentUserInfo={currentUserInfo}
-              />
+              <CommuRankingCard key={ranking.id} ranking={ranking} />
             ))}
           </RankingBox>
         </PopularCommuBox>
@@ -109,10 +107,7 @@ const CommunityPage = () => {
                   commuList.length - 1 === idx ? ref : undefined;
                 return (
                   <div key={idx} ref={observerRef}>
-                    <CommuListCard
-                      commu={commu}
-                      currentUserInfo={currentUserInfo}
-                    />
+                    <CommuListCard commu={commu} />
                   </div>
                 );
               })}

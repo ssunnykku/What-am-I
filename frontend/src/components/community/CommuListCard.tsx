@@ -5,14 +5,12 @@ import { theme } from '../../assets/styles/common/palette';
 import { CommunityType } from '../../types/community/communityType';
 import { font } from '../../assets/styles/common/fonts';
 import CommuLikeBtn from './CommuLikeBtn';
-import { UserInfoType } from '../../types/auth/authType';
 
 export interface CommunityListsTypeProps {
   commu?: CommunityType;
-  currentUserInfo?: UserInfoType;
 }
 
-const CommuListCard = ({ commu, currentUserInfo }: CommunityListsTypeProps) => {
+const CommuListCard = ({ commu }: CommunityListsTypeProps) => {
   return (
     <ListCardBox>
       <ListImage>
@@ -21,7 +19,7 @@ const CommuListCard = ({ commu, currentUserInfo }: CommunityListsTypeProps) => {
       <SmallBox>
         <CommuName>{commu?.name}</CommuName>
         <LikeNum>
-          <CommuLikeBtn commu={commu} currentUserInfo={currentUserInfo} />
+          <CommuLikeBtn commu={commu} />
         </LikeNum>
       </SmallBox>
       <Link to={`/likedcommunity?id=${commu?.id}`}>
@@ -74,8 +72,8 @@ const SmallBox = styled.div`
 const CommuName = styled.div`
   width: 100%;
   margin-bottom: 0.5rem;
-  font-size: 16px;
-  font-family: ${font.normal};
+  font-size: 17px;
+  font-family: ${font.bold};
 `;
 
 const LikeNum = styled.div`

@@ -2,21 +2,33 @@ import useModal from '../../hooks/modal/useModal';
 import MyModal from './MyModal';
 import CommuPuppyCard from '../community/CommuPuppyCard';
 import CommuContentsViewer from '../contentsviewer/CommuContentsViewer';
-import { CurrentCommuPostsType } from '../../types/community/communityType';
+import {
+  CommunityType,
+  CurrentCommuPostsType,
+} from '../../types/community/communityType';
+import { UserInfoType } from '../../types/auth/authType';
 
-export interface CurrentCommuPostsTypeProps {
+export interface CurrentCommuityProps {
+  commuInfo?: CommunityType;
   commuPost?: CurrentCommuPostsType;
   mode?: string;
   modalHandler?: () => void;
+  currentUserInfo?: UserInfoType;
 }
 
-const CommuContentsModal = ({ commuPost }: CurrentCommuPostsTypeProps) => {
+const CommuContentsModal = ({
+  commuPost,
+  currentUserInfo,
+}: CurrentCommuityProps) => {
   const [isOpen, modalHandler] = useModal();
 
   return (
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
-        <CommuContentsViewer commuPost={commuPost} />
+        <CommuContentsViewer
+          commuPost={commuPost}
+          currentUserInfo={currentUserInfo}
+        />
       </MyModal>
       <CommuPuppyCard onCardModalClickEvent={modalHandler}></CommuPuppyCard>
     </>

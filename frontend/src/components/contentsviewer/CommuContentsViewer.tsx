@@ -3,37 +3,33 @@ import styled from '@emotion/styled';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import { EditDelBtn } from '../../assets/styles/common/commonComponentStyle';
-import { ReviewTypeProps } from '../modal/ReviewContentsModal';
-import {
-  createReviewCommentRequest,
-  deleteReviewRequest,
-  editReviewRequest,
-  getReviewRequest,
-} from '../../apis/reviewFetcher';
 import MyModal from '../modal/MyModal';
 import useModal from '../../hooks/modal/useModal';
-import ReviewWritingEditor from '../writingeditor/ReviewWritingEditor';
-import { ReviewCommentType } from '../../types/reviewboard/reviewType';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import CommuLikeBtn from '../community/CommuLikeBtn';
-import { CurrentCommuPostsTypeProps } from '../modal/CommuContentsModal';
+import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 import CommuWritingEditor from '../writingeditor/CommuWritingEditor';
+import {
+  deleteCurrCommuRequest,
+  editCurrCommuCommentsRequest,
+  getCurrentCommunityRequest,
+  postCurrCommuCommentsRequest,
+} from '../../apis/communityFetcher';
+import { CurrCommuCommentsType } from '../../types/community/communityType';
 
-const CommuContentsViewer = (props: CurrentCommuPostsTypeProps) => {
-  // 그럼 필요한 거 아이디 프롭스로 보내기
-  // 댓글/ 수정/ 삭제
-
+const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const [isOpen, modalHandler] = useModal();
   const [pages, setPages] = useState<number>(1);
   const [description, setDescription] = useState<string>('');
+  const [comments, setComments] = useState<CurrCommuCommentsType[]>([]);
   const [date, setDate] = useState(props.commuPost?.createdAt);
   const newDate = date?.split(' ')[0];
-
-  useEffect(() => {
-    console.log(props);
-  });
+  const [selectedIdx, setSelectedIdx] = useState<number>(0);
+  const [editing, setEditing] = useState<boolean>(false);
+  const [newComment, setNewComment] = useState<string>('');
+  const editInputRef = useRef<HTMLInputElement>(null);
 
   // 포스팅 하나 가져오기 (수정/삭제 가리기)
 
@@ -42,17 +38,81 @@ const CommuContentsViewer = (props: CurrentCommuPostsTypeProps) => {
   //포스팅 삭제
 
   // 포스팅 전체 댓글 가져오기
+  const getCurrCommuComments = async () => {
+    const res = await getCurrentCommunityRequest(
+      `communityComment/${props.commuPost?.id}`,
+    );
+    setComments(res.reverse());
+  };
+  useEffect(() => {
+    getCurrCommuComments();
+  }, []);
 
   // 포스팅 댓글 쓰기
+  const postCurrCommuComments = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (props.commuPost) {
+      const res = await postCurrCommuCommentsRequest(
+        props.commuPost?.id,
+        description,
+      );
+
+      const result = await getCurrentCommunityRequest(
+        `communityComment/${props.commuPost?.id}`,
+      );
+      setComments(result.reverse());
+      setDescription('');
+    }
+  };
 
   // 댓글 수정
+  const onClickCommentEditBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setEditing(true);
+  };
+
+  const onChangeCommentEditInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewComment(e.target.value);
+  };
+
+  const handleCommentEditButton = async (
+    e: React.FormEvent,
+    comment: CurrCommuCommentsType,
+  ) => {
+    e.preventDefault();
+    if (props.commuPost) {
+      await editCurrCommuCommentsRequest(comment.id, newComment);
+      setEditing(false);
+
+      const result = await getCurrentCommunityRequest(
+        `communityComment/${props.commuPost?.id}`,
+      );
+      setComments(result.reverse());
+    }
+  };
 
   // 댓글 삭제
+  const handleDeleteMyComment = async (
+    e: React.MouseEvent,
+    comment: CurrCommuCommentsType,
+  ) => {
+    e.preventDefault();
+    await deleteCurrCommuRequest(`communityComment/${comment.id}`);
+
+    const result = await getCurrentCommunityRequest(
+      `communityComment/${props.commuPost?.id}`,
+    );
+    setComments(result.reverse());
+  };
 
   return (
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
-        <CommuWritingEditor />
+        <CommuWritingEditor
+          commuPost={props.commuPost}
+          mode="edit"
+          modalHandler={modalHandler}
+        />
       </MyModal>
       <ContentsModalWrapper>
         <AddImage>
@@ -62,7 +122,15 @@ const CommuContentsViewer = (props: CurrentCommuPostsTypeProps) => {
         </AddImage>
         <AddWriting>
           <TopDiv>
-            <div className="user-name">유저 프로필 사진 + 닉네임</div>
+            <div className="user-name">
+              <ProfileBox>
+                <div className="profile">
+                  <img src={props.currentUserInfo?.profileImg} />
+                </div>
+                <div>{props.currentUserInfo?.nickname}</div>
+              </ProfileBox>
+            </div>
+
             <ButtonBox>
               <EditDelBtn
                 onClick={(e) => {
@@ -75,17 +143,62 @@ const CommuContentsViewer = (props: CurrentCommuPostsTypeProps) => {
               <EditDelBtn>삭제</EditDelBtn>
             </ButtonBox>
           </TopDiv>
+
           <ContentsBox>
             <div className="user-contents">{props.commuPost?.description}</div>
-            <div className="user-comments">
-              <div></div>
-              <BtnContainer className="btn-box">
-                <button>
-                  <DeleteIcon />
-                </button>
-              </BtnContainer>
-            </div>
+            {comments?.map((comment, idx) => (
+              <div key={comment.id} className="user-comments">
+                <div className="profile-image">
+                  <img />
+                </div>
+                {selectedIdx === idx && editing ? (
+                  <input
+                    ref={editInputRef}
+                    value={newComment}
+                    onChange={onChangeCommentEditInput}
+                    autoFocus={true}
+                    onFocus={() => setNewComment(comment.description)}
+                  />
+                ) : (
+                  <div className="comment">
+                    <span>사용자 닉네임</span>
+                    {comment.description}
+                  </div>
+                )}
+                {props.currentUserInfo?.userId === comment.userId ? (
+                  <BtnContainer className="btn-box">
+                    {selectedIdx === idx && editing ? (
+                      <button
+                        className="edit-button"
+                        onClick={(e) => handleCommentEditButton(e, comment)}
+                      >
+                        edit
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          onClick={(e) => {
+                            onClickCommentEditBtn(e);
+                            setSelectedIdx(idx);
+                          }}
+                        >
+                          <EditIcon />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            handleDeleteMyComment(e, comment);
+                          }}
+                        >
+                          <DeleteIcon />
+                        </button>
+                      </>
+                    )}
+                  </BtnContainer>
+                ) : null}
+              </div>
+            ))}
           </ContentsBox>
+
           <BottomDiv>
             <div className="like">
               <CommuLikeBtn />
@@ -98,7 +211,12 @@ const CommuContentsViewer = (props: CurrentCommuPostsTypeProps) => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
-              <button disabled={description.length === 0}>게시</button>
+              <button
+                disabled={description.length === 0}
+                onClick={postCurrCommuComments}
+              >
+                게시
+              </button>
             </CommentBox>
           </BottomDiv>
         </AddWriting>
@@ -111,8 +229,8 @@ export default CommuContentsViewer;
 
 const ContentsModalWrapper = styled.form`
   width: 70%;
-  height: 80%;
-  max-width: 65rem;
+  height: 85%;
+  max-width: 70rem;
   min-width: 50rem;
   position: fixed;
   top: 50%;
@@ -151,19 +269,48 @@ const AddWriting = styled.div`
   position: relative;
 
   .user-name {
-    height: 4.5rem;
-    line-height: 4.8rem;
-    padding-left: 3%;
+    width: 100%;
+    height: 80px;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+  }
+`;
+
+const ProfileBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 80%;
+  height: 3.5rem;
+  line-height: 4.3rem;
+  font-size: 17px;
+  font-family: ${font.bold};
+
+  .profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 
 const ContentsBox = styled.div`
-  border: solid 1px lightgray;
+  border-top: solid 1px lightgray;
   padding: 3% 2%;
-  height: 70%;
-  max-width: 29rem;
+  height: 65%;
+  max-width: 33rem;
   max-height: 35rem;
-  font-size: 17px;
+  font-size: 15px;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
@@ -185,16 +332,60 @@ const ContentsBox = styled.div`
     display: inline-flex;
     justify-content: space-between;
     position: relative;
-    padding: 5px 0px;
+    padding: 12px 0;
     width: 100%;
     line-height: 20px;
+    font-size: 14px;
+
+    .profile-image {
+      height: 37px;
+      width: 37px;
+      border-radius: 50%;
+      margin: 0 10px;
+      position: relative;
+      overflow: hidden;
+
+      img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .comment {
+      width: 88%;
+      margin-top: 3px;
+      margin-left: 3px;
+
+      span {
+        font-family: ${font.bold};
+        margin-right: 5px;
+      }
+    }
 
     :hover {
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgba(0, 0, 0, 0.1);
     }
 
     :hover .btn-box {
       visibility: visible;
+    }
+
+    input {
+      width: 88%;
+      height: 30px;
+      font-size: 15px;
+    }
+
+    .edit-button {
+      font-size: 16px;
+      position: absolute;
+      right: 5px;
+      bottom: 15px;
+      width: 35px;
+      background-color: white;
+      border: solid 1px black;
     }
   }
 `;
@@ -203,10 +394,9 @@ const BtnContainer = styled.div`
   visibility: hidden;
   display: inline-flex;
   flex-direction: row;
-  /* justify-content: flex-end; */
   position: absolute;
   right: 0;
-  bottom: 2px;
+  bottom: 3px;
 
   button {
     border: 0;
@@ -239,15 +429,17 @@ const ButtonBox = styled.div`
 `;
 
 const BottomDiv = styled.div`
+  border-top: solid 1px lightgray;
+
   .like {
     float: left;
-    margin: 3px 5px;
+    margin: 3px 7px;
     font-size: 1rem;
   }
   .date {
     font-size: 1rem;
     float: right;
-    margin: 1% 2%;
+    margin: 5px 7px;
   }
 `;
 
@@ -264,6 +456,7 @@ const CommentBox = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
   input {
     height: 2.5rem;
     width: 100%;
