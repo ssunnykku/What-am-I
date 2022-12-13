@@ -10,6 +10,11 @@ class aiSearchResultService {
     });
     return result;
   }
+
+  static async getMyResults() {
+    const result = await AiSearchResult.findAll({});
+    return result;
+  }
 }
 
 export { aiSearchResultService };

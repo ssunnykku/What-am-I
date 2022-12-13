@@ -20,6 +20,16 @@ class aiSearchResultController {
       next(error);
     }
   }
+
+  static async myReview(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const getMyImages = await aiSearchResultService.getMyResults();
+      return res.status(200).send(getMyImages);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export { aiSearchResultController };
