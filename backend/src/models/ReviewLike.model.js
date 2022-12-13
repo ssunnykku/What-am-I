@@ -16,13 +16,11 @@ class ReviewLike extends Sequelize.Model {
           foreignKey: true,
         },
         reviewId: {
-          foreignKey: true,
           type: DataTypes.INTEGER,
-        },
-        createdAt: {
-          type: Sequelize.DATE,
-          allowNull: false,
-          defaultValue: Sequelize.NOW,
+          foreignKey: true,
+          validate: {
+            isInt: true,
+          },
         },
       },
       {
@@ -39,11 +37,11 @@ class ReviewLike extends Sequelize.Model {
     db.ReviewLike.belongsTo(db.User, {
       foreignKey: 'userId',
       targetKey: 'userId',
-    });
-    db.ReviewLike.belongsTo(db.Review, {
-      foreignKey: 'reviewId',
-      targetKey: 'id',
-    });
+    }),
+      db.ReviewLike.belongsTo(db.Review, {
+        foreignKey: 'reviewId',
+        targetKey: 'id',
+      });
   }
 }
 

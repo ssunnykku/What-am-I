@@ -9,10 +9,6 @@ class reviewLikeController {
         userId,
         reviewId,
       });
-
-      if (findReviewLike.errorMessage) {
-        throw new Error(findReviewLike);
-      }
       return res.status(201).json(findReviewLike);
     } catch (error) {
       next(error);
