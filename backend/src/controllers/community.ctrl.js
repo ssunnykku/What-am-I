@@ -82,10 +82,10 @@ class communityController {
       const { name, introduction } = req.body;
       const communityId = req.params.communityId;
       const image = req.file;
-      const communityImage = image == undefined ? null : image.location;
+      const updatedImage = image == undefined ? null : image.location;
       const updateCommunity = await communityService.updateCommunity({
         name,
-        communityImage,
+        updatedImage,
         introduction,
         communityId,
         userId,

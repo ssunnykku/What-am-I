@@ -126,34 +126,35 @@ class communityService {
 
   static async updateCommunity({
     name,
-    communityImage,
+    updatedImage,
     introduction,
     communityId,
     userId,
   }) {
     //db검색
-    const updatedResult = await Community.findOne({
+    const findCommunity = await Community.findOne({
       where: { id: communityId, userId: userId },
     });
     // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!updatedResult) {
+    if (!findCommunity) {
       const errorMessage = '등록한 글이 없습니다. 다시 한 번 확인해 주세요.';
       return errorMessage;
     }
-    // db에 저장
-    if (updatedResult) {
-      const updateCommunity = await Community.update(
-        {
-          name,
-          communityImage,
-          introduction,
-        },
-        { where: { id: communityId, userId } },
-      );
-      updateCommunity.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
-      return updateCommunity;
-    }
+    const communityImage =
+      updatedImage == null ? findCommunity.communityImage : updatedImage;
+
+    const updateCommunity = await Community.update(
+      {
+        name,
+        communityImage,
+        introduction,
+      },
+      { where: { id: communityId, userId } },
+    );
+    updateCommunity.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
+
+    return updateCommunity;
   }
 
   static async findCommunity({ communityId, userId }) {
