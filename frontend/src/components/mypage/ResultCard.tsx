@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { font } from '../../assets/styles/common/fonts';
 import {
@@ -9,19 +9,25 @@ import { ReviewsProps } from './Result';
 import { deleteUserReview, getUserReview } from '../../apis/mypageFetcher';
 import { useConfirm } from '../../hooks/confirm/useConfirm';
 import { theme } from '../../assets/styles/common/palette';
+import { Modal } from '@mui/material';
+import ReviewContentsViewer from '../contentsviewer/ReviewContentsViewer';
 
 interface receiveProps {
   value: ReviewsProps;
 }
 
 function ResultCard(props: receiveProps) {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   async function getReview() {
+    setOpen(true);
     const response = await getUserReview(props.value.id);
-    console.log(response);
   }
   async function deleteReview() {
     const response = await deleteUserReview(props.value.id);
-    console.log(response);
   }
 
   const deleteConfirm = () => (deleteReview(), window.alert('삭제했습니다.'));
@@ -46,6 +52,17 @@ function ResultCard(props: receiveProps) {
           </DeleteButton>
         </ButtonContainer>
       </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <ReviewContentsViewer
+          review={props.value}
+          currentUser={props.value.userId}
+        />
+      </Modal>
     </CardContainer>
   );
 }

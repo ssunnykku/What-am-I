@@ -3,11 +3,20 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getUserLiked } from '../../apis/mypageFetcher';
 import CommunityCard from './CommunityCard';
+import {
+  deleteUserCommunites,
+  getUserCommunites,
+} from '../../apis/mypageFetcher';
+import {
+  EntryBtn,
+  CreateBtn,
+} from '../../assets/styles/common/commonComponentStyle';
+import { postCommuLikeRequest } from '../../apis/communityFetcher';
 
 export interface CommunityProps {
+  Community: CommunityProps;
   id: number;
   userId: string;
-  communityId: number;
   createdAt: string;
   updatedAt: string;
   name?: string;
@@ -28,11 +37,25 @@ function Community() {
     getData();
   }, []);
 
+  async function cancelLike(id: number) {
+    await postCommuLikeRequest(`communitieslikes/${id}`);
+    const response = await getUserLiked();
+    setUserLikedList(response.rows);
+    window.alert('좋아요를 취소했습니다.');
+  }
+
   return (
     <Div>
       {userLikedList.length ? (
         userLikedList.map((value) => (
-          <CommunityCard value={value} mode={'Community'} key={value.id} />
+          <CommunityCard value={value.Community} key={value.Community.id}>
+            <ButtonContainer>
+              <EntryBtn>내가 쓴 글</EntryBtn>
+              <CreateBtn onClick={() => cancelLike(value.Community.id)}>
+                좋아요 취소
+              </CreateBtn>
+            </ButtonContainer>
+          </CommunityCard>
         ))
       ) : (
         <div>내가 좋아요 한 커뮤니티가 없습니다</div>
@@ -45,6 +68,12 @@ const Div = styled.div`
   grid-template-rows: repeat(5, 1fr);
   justify-items: center;
   grid-gap: 20px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
 export default Community;

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getUserReviews } from '../../apis/mypageFetcher';
@@ -27,12 +26,13 @@ function Result() {
 
   return (
     <ResultContainer>
-      {reviews?.map((value: ReviewsProps) => (
-        <>
+      {reviews.length ? (
+        reviews?.map((value: ReviewsProps) => (
           <ResultCard value={value} key={value.id} />
-          {console.log(value)}
-        </>
-      ))}
+        ))
+      ) : (
+        <div>내 리뷰가 없습니다</div>
+      )}
     </ResultContainer>
   );
 }

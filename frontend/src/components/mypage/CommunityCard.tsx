@@ -1,48 +1,21 @@
 import styled, { keyframes } from 'styled-components';
 import { CommunityProps } from './Community';
-import {
-  EntryBtn,
-  CreateBtn,
-} from '../../assets/styles/common/commonComponentStyle';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 
 interface Props {
   value: CommunityProps;
-  mode: string;
+  children: React.ReactNode;
 }
 
 function CommunityCard(props: Props) {
-  async function deleteReview() {
-    const response = await deleteUserCommunites(props.value.id);
-    console.log(response);
-  }
-
-  const deleteConfirm = () => (deleteReview(), window.alert('삭제했습니다.'));
-  const cancelConfirm = () => window.alert('취소했습니다.');
-
-  const confirmDelete = useConfirm(
-    '삭제하시겠습니까?',
-    deleteConfirm,
-    cancelConfirm,
-  );
   return (
     <Card>
       <Content>
         <Img alt="room_img" src={props.value.communityImage}></Img>
         <RoomName>{props.value.name}</RoomName>
       </Content>
-      {props.mode == 'MyCommunity' ? (
-        <ButtonContainer>
-          <EntryBtn>수정</EntryBtn>
-          <CreateBtn onClick={confirmDelete}>삭제</CreateBtn>
-        </ButtonContainer>
-      ) : (
-        <ButtonContainer>
-          <EntryBtn>내가 쓴 글</EntryBtn>
-          <CreateBtn>나가기</CreateBtn>
-        </ButtonContainer>
-      )}
+      {props.children}
     </Card>
   );
 }
@@ -88,11 +61,5 @@ const Img = styled.img`
 const RoomName = styled.div`
   text-align: center;
   font-family: ${font.bold};
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
 `;
 export default CommunityCard;

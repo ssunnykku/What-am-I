@@ -7,7 +7,7 @@ import { UserInfoType } from '../../types/auth/authType';
 
 export interface ReviewTypeProps {
   userId?: string;
-  review?: ReviewType;
+  review: ReviewType;
   mode?: string;
   getReviews?: () => Promise<void>;
   modalHandler?: () => void;
