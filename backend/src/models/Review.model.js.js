@@ -51,6 +51,8 @@ class Review extends Sequelize.Model {
     db.Review.belongsTo(db.AiSearchResult, {
       foreignKey: 'aiResultId',
       sourceKey: 'id',
+      onDelete: 'cascade',
+      onUpdate: 'cascade',
     });
   }
 }

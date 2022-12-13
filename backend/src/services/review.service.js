@@ -172,6 +172,19 @@ class reviewService {
 
   static async searchReviews({ search }) {
     const searchResult = await Review.findAndCountAll({
+      include: {
+        model: AiSearchResult,
+        attributes: {
+          exclude: [
+            'userId',
+            'id',
+            'dogName',
+            'aiResult',
+            'createdAt',
+            'updatedAt',
+          ],
+        },
+      },
       where: {
         description: {
           [Op.like]: `%${search}%`,
