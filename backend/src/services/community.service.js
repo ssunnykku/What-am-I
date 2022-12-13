@@ -100,9 +100,16 @@ class communityService {
       ],
     });
     for (const community of bestThree) {
-      community.dataValues.likeStatus = await CommunityLike.count({
-        where: { userId: userId, communityId: community.communityId },
-      });
+      community.dataValues.Community.dataValues.likeStatus =
+        await CommunityLike.count({
+          where: { userId: userId, communityId: community.communityId },
+        });
+      for (const community of bestThree) {
+        community.dataValues.Community.dataValues.countLike =
+          await CommunityLike.count({
+            where: { communityId: community.communityId },
+          });
+      }
     }
 
     return bestThree;
