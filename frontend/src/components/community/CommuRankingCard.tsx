@@ -2,11 +2,13 @@ import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { theme } from '../../assets/styles/common/palette';
 import { font } from '../../assets/styles/common/fonts';
-import LikeBtn from '../common/LikeBtn';
 import { CommunityType } from '../../types/community/communityType';
+import CommuLikeBtn from './CommuLikeBtn';
+import { UserInfoType } from '../../types/auth/authType';
 
 export interface CommunityTypeProps {
   ranking: CommunityType;
+  currentUserInfo?: UserInfoType;
 }
 
 const CommuRankingCard = ({ ranking }: CommunityTypeProps) => {
@@ -21,7 +23,7 @@ const CommuRankingCard = ({ ranking }: CommunityTypeProps) => {
         </CommuImage>
         <CommuName>{ranking.name}</CommuName>
         <div className="like-icon">
-          <LikeBtn />
+          <CommuLikeBtn />
         </div>
       </CommuRankingCardBox>
     </Link>
@@ -48,7 +50,7 @@ const CommuRankingCardBox = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: ${theme.backColor};
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 
   position: relative;
   overflow: hidden;

@@ -4,12 +4,6 @@ class CommunityComment extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        id: {
-          allowNull: false,
-          autoIncrement: true,
-          primaryKey: true,
-          type: Sequelize.INTEGER,
-        },
         description: {
           type: DataTypes.TEXT,
           allowNull: false,
@@ -27,7 +21,7 @@ class CommunityComment extends Sequelize.Model {
       {
         sequelize,
         tableName: 'communityComments',
-        timestamps: true,
+        timestamps: false,
         charset: 'utf8mb4',
         collate: 'utf8mb4_general_ci',
       },

@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import { EditDelBtn } from '../../assets/styles/common/commonComponentStyle';
-import LikeBtn from '../common/LikeBtn';
 import { ReviewTypeProps } from '../modal/ReviewContentsModal';
 import {
   createReviewCommentRequest,
@@ -18,121 +17,49 @@ import { ReviewCommentType } from '../../types/reviewboard/reviewType';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import CommuLikeBtn from '../community/CommuLikeBtn';
+import { CurrentCommuPostsTypeProps } from '../modal/CommuContentsModal';
+import CommuWritingEditor from '../writingeditor/CommuWritingEditor';
 
-const CommuContentsViewer = (props: ReviewTypeProps) => {
+const CommuContentsViewer = (props: CurrentCommuPostsTypeProps) => {
   // 그럼 필요한 거 아이디 프롭스로 보내기
   // 댓글/ 수정/ 삭제
 
   const [isOpen, modalHandler] = useModal();
   const [pages, setPages] = useState<number>(1);
   const [description, setDescription] = useState<string>('');
-  const [comments, setComments] = useState<ReviewCommentType[]>([]);
-  const [date, setDate] = useState(props.review?.createdAt);
+  const [date, setDate] = useState(props.commuPost?.createdAt);
   const newDate = date?.split(' ')[0];
 
-  // 리뷰 전체 댓글 가져오기
-  const getReviewComments = async () => {
-    const res = await getReviewRequest(
-      `reviewComment/${props.review?.id}?page=${pages}`,
-    );
-    setComments(res.reverse());
-  };
-
-  // 리뷰 댓글 쓰기
-  const postReviewComments = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await createReviewCommentRequest(
-      `reviewComment/${props.review?.id}`,
-      description,
-    );
-
-    const res = await getReviewRequest(
-      `reviewComment/${props.review?.id}?page=${pages}`,
-    );
-    setComments(res.reverse());
-    setDescription('');
-  };
-
   useEffect(() => {
-    getReviewComments();
-  }, []);
+    console.log(props);
+  });
 
-  // 리뷰 수정
-  const handleEditMyReview = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    const res = await editReviewRequest(
-      `review/${props.review?.id}`,
-      description,
-    );
-  };
+  // 포스팅 하나 가져오기 (수정/삭제 가리기)
 
-  useEffect(() => {
-    if (props.getReviews) {
-      props.getReviews();
-    }
-  }, [isOpen]);
+  // 포스팅 수정
 
-  // 리뷰 삭제
-  const handleDeleteMyReview = async () => {
-    await deleteReviewRequest(`review/${props.review?.id}`);
-    // navigate('/reviewboard');
+  //포스팅 삭제
 
-    // if (confirm('작성하신 리뷰를 삭제하시겠습니까?') === true) {
-    //   await deleteReviewRequest(`review/${review.reviewId}`);
-    //   navigate('/reviewboard');
-    // }
-  };
+  // 포스팅 전체 댓글 가져오기
+
+  // 포스팅 댓글 쓰기
 
   // 댓글 수정
-  const handleCommentEditButton = async (
-    e: React.MouseEvent,
-    comment: ReviewCommentType,
-  ) => {
-    e.preventDefault();
-    const res = await editReviewRequest(
-      `reviewComment/${comment.id}`,
-      description,
-    );
-    if (res.description === '') {
-      console.log('hello');
-      console.log(comment.description);
-      // setComments(comment.description);
-    }
-
-    // console.log(res);
-
-    const result = await getReviewRequest(
-      `reviewComment/${props.review?.id}?page=${pages}`,
-    );
-    setComments(result.reverse());
-  };
 
   // 댓글 삭제
-  const handleDeleteMyComment = async (
-    e: React.MouseEvent,
-    comment: ReviewCommentType,
-  ) => {
-    e.preventDefault();
-    await deleteReviewRequest(`reviewComment/${comment.id}
-    `);
-
-    const result = await getReviewRequest(
-      `reviewComment/${props.review?.id}?page=${pages}`,
-    );
-    setComments(result.reverse());
-  };
 
   return (
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
-        <ReviewWritingEditor
-          review={props.review}
-          mode="edit"
-          modalHandler={modalHandler}
-        />
+        <CommuWritingEditor />
       </MyModal>
       <ContentsModalWrapper>
-        <AddImage></AddImage>
+        <AddImage>
+          <ImagePlace>
+            <img />
+          </ImagePlace>
+        </AddImage>
         <AddWriting>
           <TopDiv>
             <div className="user-name">유저 프로필 사진 + 닉네임</div>
@@ -141,32 +68,27 @@ const CommuContentsViewer = (props: ReviewTypeProps) => {
                 onClick={(e) => {
                   e.preventDefault();
                   modalHandler();
-                  handleEditMyReview;
                 }}
               >
                 수정
               </EditDelBtn>
-              <EditDelBtn onClick={handleDeleteMyReview}>삭제</EditDelBtn>
+              <EditDelBtn>삭제</EditDelBtn>
             </ButtonBox>
           </TopDiv>
           <ContentsBox>
-            <div className="user-contents">{props.review?.description}</div>
-            {comments?.map((comment) => (
-              <div key={comment.id} className="user-comments">
-                <input />
-                <div>{comment.description}</div>
-                {/* <div>{comment.description}</div> */}
-                <BtnContainer className="btn-box">
-                  <button onClick={(e) => handleDeleteMyComment(e, comment)}>
-                    <DeleteIcon />
-                  </button>
-                </BtnContainer>
-              </div>
-            ))}
+            <div className="user-contents">{props.commuPost?.description}</div>
+            <div className="user-comments">
+              <div></div>
+              <BtnContainer className="btn-box">
+                <button>
+                  <DeleteIcon />
+                </button>
+              </BtnContainer>
+            </div>
           </ContentsBox>
           <BottomDiv>
             <div className="like">
-              <LikeBtn />
+              <CommuLikeBtn />
             </div>
             <div className="date">{newDate}</div>
             <CommentBox>
@@ -176,12 +98,7 @@ const CommuContentsViewer = (props: ReviewTypeProps) => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
-              <button
-                onClick={postReviewComments}
-                disabled={description.length === 0}
-              >
-                게시
-              </button>
+              <button disabled={description.length === 0}>게시</button>
             </CommentBox>
           </BottomDiv>
         </AddWriting>
@@ -193,23 +110,39 @@ const CommuContentsViewer = (props: ReviewTypeProps) => {
 export default CommuContentsViewer;
 
 const ContentsModalWrapper = styled.form`
-  width: 65%;
+  width: 70%;
   height: 80%;
-  max-width: 60rem;
-  min-width: 40rem;
+  max-width: 65rem;
+  min-width: 50rem;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.2fr 1fr;
   border-radius: 10px;
   font-family: ${font.normal};
 `;
 
 const AddImage = styled.div`
   border-right: solid 1px lightgray;
+  display: flex;
+  align-items: center;
+`;
+
+const ImagePlace = styled.div`
+  width: 100%;
+  height: 85%;
+  position: relative;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const AddWriting = styled.div`
@@ -245,6 +178,7 @@ const ContentsBox = styled.div`
     padding-bottom: 10px;
     margin-bottom: 5px;
     line-height: 22px;
+    white-space: pre-wrap;
   }
 
   .user-comments {
@@ -301,6 +235,7 @@ const ButtonBox = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
+  padding-right: 5px;
 `;
 
 const BottomDiv = styled.div`

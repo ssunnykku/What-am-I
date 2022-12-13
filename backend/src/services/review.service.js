@@ -1,4 +1,6 @@
 import { Review } from '../models/Review.model.js';
+import { ReviewLike } from '../models/ReviewLike.model';
+
 import { REVIEW_PER_PAGE } from '../utils/Constant';
 import { Sequelize } from 'sequelize';
 
@@ -9,10 +11,6 @@ class reviewService {
   static async countReviewpage() {
     const reviewCount = await Review.count();
 
-    // const reviewId = await Review.findAll({
-    //   where: { id: { [Op.gt]: 0 } },
-    //   order: [['id', 'DESC']],
-    // });
     if (reviewCount % REVIEW_PER_PAGE === 0) {
       return reviewCount / REVIEW_PER_PAGE;
     } else {
@@ -29,8 +27,14 @@ class reviewService {
       // limit: 10,
     });
 
-    if (!selectedReivews) {
-      throw ApiError.setBadRequest('No reivew available');
+    for (const review of selectedReivews) {
+      review.dataValues.likeCount = await ReviewLike.count({
+        where: { reviewId: review.id },
+      });
+
+      review.dataValues.likeStatus = await ReviewLike.count({
+        where: { userId: review.userId, reviewId: review.id },
+      });
     }
 
     return selectedReivews;

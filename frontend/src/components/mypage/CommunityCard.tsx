@@ -5,6 +5,7 @@ import {
   CreateBtn,
 } from '../../assets/styles/common/commonComponentStyle';
 import { font } from '../../assets/styles/common/fonts';
+import { theme } from '../../assets/styles/common/palette';
 
 interface Props {
   value: CommunityProps;
@@ -49,7 +50,7 @@ const Card = styled.div`
   box-shadow: 1px 2px 5px gray;
   border-radius: 20px;
   padding: 20px;
-  background-color: #fffcf1;
+  background-color: ${theme.lightColor};
   :hover {
     animation-duration: 0.4s;
     animation-timing-function: ease-in-out;

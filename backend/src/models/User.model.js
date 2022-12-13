@@ -72,10 +72,6 @@ class User extends Sequelize.Model {
         foreignKey: 'userId',
         sourceKey: 'userId',
       }),
-      db.User.hasMany(db.CommunityComment, {
-        foreignKey: 'userId',
-        sourceKey: 'userId',
-      }),
       db.User.hasMany(db.CommunityLike, {
         foreignKey: 'userId',
         sourceKey: 'userId',
@@ -89,6 +85,10 @@ class User extends Sequelize.Model {
         sourceKey: 'userId',
       });
     db.User.hasMany(db.ReviewLike, {
+      foreignKey: 'userId',
+      sourceKey: 'userId',
+    });
+    db.User.hasMany(db.CommunityComment, {
       foreignKey: 'userId',
       sourceKey: 'userId',
     });

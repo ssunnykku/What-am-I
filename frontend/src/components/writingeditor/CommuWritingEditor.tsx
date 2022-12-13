@@ -1,42 +1,139 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
-import { createReviewRequest } from '../../apis/reviewFetcher';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
-import { ReviewTypeProps } from '../modal/ReviewContentsModal';
-import { editReviewRequest } from '../../apis/reviewFetcher';
+import { CreateCurrentCommunityPostRequest } from '../../apis/communityFetcher';
+import { CurrentCommuPostsTypeProps } from '../modal/CommuContentsModal';
+import { commuInfoTypeProps } from '../modal/CommuWritingModal';
+import { getUserData } from '../../apis/mypageFetcher';
+import { UserInfoType } from '../../types/auth/authType';
 
-const CommuWritingEditor = (props: ReviewTypeProps) => {
-  const [images, setImages] = useState<string>('');
-  const [description, setDescription] = useState<string>(
-    props.review?.description ? props.review?.description : '',
-  );
+const CommuWritingEditor = (props: commuInfoTypeProps) => {
+  const [images, setImages] = useState<File | null>(null);
+  const [description, setDescription] = useState<string>('');
+  const [preview, setPreview] = useState<string>('');
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const [userInfo, setUserInfo] = useState<UserInfoType>();
 
-  const handleWritingEditorClick = async () => {
-    const res = await createReviewRequest('review', {
-      description,
-      images,
-    });
-    console.log(res);
+  const [postImages, setPostImages] = useState<File[]>([]);
+  const [previewImgs, setPreviewImgs] = useState<string[]>([]);
+
+  // 포스팅할 사진 미리보기
+  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      setPostImages([...postImages, e.target.files[0]]);
+
+      reader.onload = () => {
+        const previewUrl = reader.result as string;
+
+        if (previewUrl) {
+          setPreviewImgs([...previewImgs, previewUrl]);
+        }
+      };
+    }
+
+    // const fileArr = e.target.files;
+    //   setPostImages(Array.from(fileArr));
+    //   const fileUrls: any = [];
+    //   const fileLength = fileArr?.length > 5 ? 5 : fileArr?.length;
+
+    //   for (let i = 0; i < fileLength; i++) {
+    //     const file = fileArr[i];
+    //     const reader = new FileReader();
+    //     reader.onload = () => {
+    //       fileUrls[i] = reader.result as string;
+    //       setPreviews([...fileUrls]);
+    //     };
+    //     reader.readAsDataURL(file);
+    //   }
+
+    // if (e.target.files) {
+    //   const files = e.target.files;
+    //   let filesUrl = [...postImages];
+
+    //   for (let i = 0; i < files.length; i++) {
+    //     const currentImgUrl = URL.createObjectURL(files[i]);
+    //     filesUrl.push(currentImgUrl);
+
+    //     const reader = new FileReader();
+    //     reader.onload = () => {
+    //     filesUrl[i] = reader.result
+    //     setPostImages([...filesUrl])
+    //   }
+    //   }
+    //   if (filesUrl.length > 5) {
+    //     filesUrl = filesUrl.slice(0, 5);
+    //   }
+    // }
+
+    // if (e.target.files) {
+    //   const file = e.target.files[0];
+    //   setImages(file);
+    //   const reader = new FileReader();
+    //   reader.readAsDataURL(file);
+
+    //   console.log(file);
+
+    //   reader.onload = () => {
+    //     setPreview(reader.result as string);
+    //   };
+    // }
   };
 
-  const handleEditMyReview = async (e: React.MouseEvent) => {
+  // 미리보기 삭제
+  const handleDeletePreviewFile = (e: React.MouseEvent) => {
     e.preventDefault();
-    await editReviewRequest(`review/${props.review?.id}`, description);
-
-    if (props.modalHandler) {
-      props.modalHandler();
+    if (previewImgs) {
+      setPreviewImgs([]);
     }
+  };
+
+  const getCurrentUser = async () => {
+    const res = await getUserData();
+    setUserInfo(res);
+  };
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
+  // 커뮤니티 내에 포스팅
+  const handleWritingEditorClick = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (postImages) {
+      const res = await CreateCurrentCommunityPostRequest(
+        `communitypost/${props.commuInfo?.id}`,
+        {
+          images: postImages,
+          description,
+        },
+      );
+    } else {
+      alert('사진은 필수입니다. 귀여운 댕댕이를 마음껏 보여 주세요!');
+    }
+  };
+
+  //게시물 수정
+  const handleEditCurrentCommuPost = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('컨텐츠를 수정할 거여요.');
+
+    // if (props.modalHandler) {
+    //   props.modalHandler();
+    // }
   };
 
   return (
     <>
       <CreateModalWrapper
-        onSubmit={(e: any) => {
-          props.mode === 'edit'
-            ? handleEditMyReview(e)
-            : handleWritingEditorClick();
-        }}
+        // onSubmit={(e: any) => {
+        //   props.mode === 'edit'
+        //     ? handleEditCurrentCommuPost(e)
+        //     : handleWritingEditorClick(e);
+        // }}
+        onSubmit={handleWritingEditorClick}
       >
         <ModalHeader>
           게시물 작성하기
@@ -44,7 +141,26 @@ const CommuWritingEditor = (props: ReviewTypeProps) => {
         </ModalHeader>
         <ModalContents>
           <AddImage>
-            <div>{images}</div>
+            {previewImgs.map((pre, idx) => (
+              <ImagePlace key={idx}>
+                <img src={pre} alt={`${pre}-${idx}`} />
+              </ImagePlace>
+            ))}
+            <InputBox>
+              <div className="upload-box">
+                <label htmlFor="file">사진 업로드</label>
+              </div>
+              <input
+                hidden
+                type="file"
+                id="file"
+                multiple
+                ref={imageInputRef}
+                accept="image/*"
+                onChange={handleChangeFile}
+              />
+              <button onClick={handleDeletePreviewFile}>삭제</button>
+            </InputBox>
           </AddImage>
           <AddWriting>
             <div className="user-name">유저 프로필 사진 + 닉네임</div>
@@ -69,7 +185,7 @@ const CreateModalWrapper = styled.form`
   width: 55%;
   height: 80%;
   max-width: 47rem;
-  min-width: 30rem;
+  min-width: 35rem;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -105,12 +221,74 @@ const ModalHeaderBtn = styled.button`
 const ModalContents = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  font-family: ${font.normal};
-  font-size: 16px;
+  font-family: ${font.bold};
+  font-size: 15px;
 `;
 
 const AddImage = styled.div`
   border-right: solid 1px lightgray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const ImagePlace = styled.div`
+  border-top: solid 1px lightgray;
+  border-bottom: solid 1px lightgray;
+  width: 100%;
+  height: 70%;
+  position: relative;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+const InputBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+
+  .upload-box {
+    border: solid 1px ${theme.boldColor};
+    background-color: ${theme.lightColor};
+    color: ${theme.boldColor};
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 15px;
+    font-family: ${font.normal};
+    border-radius: 10px;
+    margin-left: 5px;
+    :hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  label {
+    cursor: pointer;
+    width: 6rem;
+    height: 2rem;
+  }
+
+  button {
+    background-color: ${theme.backColor};
+    border: solid 1px ${theme.boldColor};
+    color: ${theme.boldColor};
+    font-family: ${font.normal};
+    cursor: pointer;
+    border-radius: 10px;
+    margin-left: 5px;
+
+    :hover {
+      transform: translateY(-2px);
+    }
+  }
 `;
 
 const AddWriting = styled.div`
@@ -133,11 +311,10 @@ const AddWriting = styled.div`
       height: 98%;
       border: none;
       outline: none;
-      font-size: 16px;
+      font-size: 15px;
       font-family: ${font.normal};
       line-height: 22px;
       resize: none;
-      white-space: pre-wrap;
     }
   }
 `;
