@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { font } from '../../assets/styles/common/fonts';
 import {
   deleteUserCommunites,
   getUserCommunites,
@@ -50,9 +50,7 @@ function MyCommunity() {
             <ButtonContainer>
               <EntryBtn
                 onClick={() =>
-                  location.replace(
-                    `${VITE_PUBLIC_URL}likedcommunity?id=${value.id}`,
-                  )
+                  (location.href = `${VITE_PUBLIC_URL}likedcommunity?id=${value.id}`)
                 }
               >
                 입장하기
@@ -64,7 +62,9 @@ function MyCommunity() {
           </CommunityCard>
         ))
       ) : (
-        <div>내가 생성한 커뮤니티가 없습니다</div>
+        <div style={{ fontFamily: font.bold }}>
+          내가 생성한 커뮤니티가 없습니다
+        </div>
       )}
     </Div>
   );

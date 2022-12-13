@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Avatar, Modal } from '@mui/material';
-
+import { font } from '../../assets/styles/common/fonts';
 import {
   CommonMyInput,
   EntryBtn,
@@ -59,10 +59,12 @@ function Profile() {
         <label htmlFor="ex_file">
           <Avatar
             className="btnStart"
-            sx={{ width: 150, height: 150 }}
+            sx={{ width: 250, height: 250 }}
             src={profileImg}
           />
-          <div className="wrapper">수정</div>
+          <div className="wrapper">
+            <EditText>수정</EditText>
+          </div>
         </label>
         <input
           hidden
@@ -74,7 +76,7 @@ function Profile() {
       </ProfileImgContainer>
 
       <InputContainer>
-        닉네임
+        <div style={{ fontFamily: font.bold }}>닉네임</div>
         <CommonMyInput
           value={nickname}
           onChange={(e) => setNickname(e.target.value)}
@@ -175,6 +177,12 @@ const ProfileImgContainer = styled.div`
   }
 `;
 
+const EditText = styled.div`
+  margin-top: 210px;
+  font-size: 20px;
+  font-family: ${font.bold};
+`;
+
 const ModalContainer = styled.div`
   position: absolute;
   top: 50%;
@@ -187,7 +195,8 @@ const ModalContainer = styled.div`
   width: 300px;
   height: 150px;
   padding: 20px 100px;
-  border: 1px solid #000;
+  border: none;
+  border-radius: 20px;
   background-color: white;
 `;
 

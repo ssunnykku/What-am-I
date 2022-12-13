@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { font } from '../../assets/styles/common/fonts';
 import { getUserReviews } from '../../apis/mypageFetcher';
 import { ReviewType } from '../../types/reviewboard/reviewType';
 import ResultCard from './ResultCard';
@@ -17,15 +18,24 @@ function Result() {
   }, []);
 
   return (
-    <ResultContainer>
+    <div>
       {reviews.length ? (
-        reviews?.map((value: ReviewType) => (
-          <ResultCard value={value} key={value.id} setReviews={setReviews} />
-        ))
+        <ResultContainer>
+          {reviews?.map((value: ReviewType) => (
+            <ResultCard value={value} key={value.id} setReviews={setReviews} />
+          ))}
+        </ResultContainer>
       ) : (
-        <div>내 리뷰가 없습니다</div>
+        <div
+          style={{
+            textAlign: 'center',
+            fontFamily: font.bold,
+          }}
+        >
+          내 리뷰가 없습니다
+        </div>
       )}
-    </ResultContainer>
+    </div>
   );
 }
 
