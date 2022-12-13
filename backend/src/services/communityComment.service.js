@@ -1,4 +1,5 @@
 import { CommunityComment } from '../models/CommunityComment.model';
+import sequelize from '../config/sequelize';
 
 class communityCommentService {
   static async addCommunityComment({ description, communityPostId, userId }) {
@@ -14,9 +15,13 @@ class communityCommentService {
   }
 
   static async showAllCommunityComments({ _communityPostId: communityPostId }) {
-    const _communityPostId = await CommunityComment.findAll({
-      where: { communityPostId },
-    });
+    const [_communityPostId, metadata] = await sequelize.query(
+      `select CC.id,CC.description,CC.userId,CC.communityPostId,U.userId,U.nickname,U.profileImg from communityComments as CC  inner join users as U on CC.userId = U.userId where communityPostId=${communityPostId}`,
+    );
+
+    // const _communityPostId = await CommunityComment.findAll({
+    //   where: { communityPostId },
+    // });
     if (!_communityPostId) {
       const errorMessage = '댓글이 없습니다';
       return { errorMessage };

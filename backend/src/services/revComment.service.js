@@ -1,4 +1,7 @@
+import { Sequelize } from 'sequelize';
+import sequelize from '../config/sequelize';
 import { ReviewComment } from '../models/ReviewComment.model';
+import { User } from '../models/User.model';
 
 class reviewCommentService {
   static async addReviewComment({ description, reviewId, userId }) {
@@ -14,9 +17,20 @@ class reviewCommentService {
   }
 
   static async showAllReviewComments({ _reviewId: reviewId }) {
-    const _reviewId = await ReviewComment.findAll({
-      where: { reviewId },
-    });
+    const [_reviewId, metadata] = await sequelize.query(
+      `select RC.id,RC.description,RC.userId,RC.reviewId,U.userId,U.nickname,U.profileImg from reviewComments as RC  inner join users as U on RC.userId = U.userId where reviewId=${reviewId}`,
+    );
+    // 아래는 왜 안될까? userId가 안가져와짐.
+    // const _reviewId = await ReviewComment.findAll({
+    //   where: { reviewId },
+    //   include: [
+    //     {
+    //       model: User,
+    //       // attributes: ['nickname', 'profileImg'],
+    //     },
+    //   ],
+    // });
+
     if (!_reviewId) {
       const errorMessage = '댓글이 없습니다';
       return { errorMessage };

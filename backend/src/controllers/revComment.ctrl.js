@@ -30,6 +30,7 @@ class reviewCommentController {
       const reviewComments = await reviewCommentService.showAllReviewComments({
         _reviewId,
       });
+
       if (reviewComments.errorMessage) {
         throw new Error(reviewComments);
       }
