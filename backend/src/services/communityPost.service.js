@@ -4,11 +4,19 @@ import { COMMUNITYPOST_PER_PAGE } from '../utils/Constant';
 
 class communityPostService {
   static async createPost({ userId, communityId, images, description }) {
-    const createPost = await CommunityPost.create({
+    await CommunityPost.create({
       images,
       description,
       userId,
       communityId,
+    });
+
+    const createPost = await CommunityPost.findOne({
+      where: {
+        description: description,
+        userId: userId,
+        communityId: communityId,
+      },
     });
 
     return createPost;
