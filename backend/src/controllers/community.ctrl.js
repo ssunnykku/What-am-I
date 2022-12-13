@@ -78,9 +78,11 @@ class communityController {
   static async updateCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
+
       const { name, introduction } = req.body;
       const communityId = req.params.communityId;
-      const communityImage = req.file.location;
+      const image = req.file;
+      const communityImage = image == undefined ? null : image.location;
       const updateCommunity = await communityService.updateCommunity({
         name,
         communityImage,

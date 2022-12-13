@@ -52,7 +52,7 @@ class userService {
 
     const secretKey = process.env.JWT_SECRET || 'secret-key';
     const token = jwt.sign({ userId: user.userId }, secretKey, {
-      expiresIn: '7d',
+      expiresIn: process.env.JWT_EXPIRES,
     });
 
     const userId = user.userId;
@@ -69,7 +69,10 @@ class userService {
   }
 
   static async users() {
-    const users = await User.findAll({ attributes: { exclude: ['password'] } });
+    const users = await User.findAll({
+      where: { deletedAt: null },
+      attributes: { exclude: ['password'] },
+    });
     return users;
   }
 
@@ -90,7 +93,7 @@ class userService {
     const user = await User.findOne({ where: { userId: userId } });
 
     if (!user) {
-      const errorMessage = `Cannot find information`;
+      const errorMessage = `Cannot find user information`;
       return { errorMessage };
     }
     const correctPasswordHash = user.password;
@@ -143,6 +146,21 @@ class userService {
       attributes: { exclude: ['password'] },
     });
     return user;
+  }
+
+  static async withdrawalUser({ userId }) {
+    const user = await User.findOne({
+      where: { userId: userId },
+    });
+
+    if (!user) {
+      const errorMessage = `Cannot find user information`;
+      return { errorMessage };
+    }
+    const withdrawalUser = await User.destroy({
+      where: { userId: user.userId },
+    });
+    return withdrawalUser;
   }
 }
 export { userService };

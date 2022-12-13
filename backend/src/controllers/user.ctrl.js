@@ -39,9 +39,7 @@ class userController {
   static async userList(req, res, next) {
     try {
       const users = await userService.users();
-      // if (users.errorMessage) {
-      //   throw new Error(users.errorMessage);
-      // }
+
       return res.status(200).send(users);
     } catch (error) {
       next(error);
@@ -114,7 +112,7 @@ class userController {
 
   static async select(req, res, next) {
     try {
-      const userId = req.params.userId;
+      const userId = req.currentUserId;
       const findUser = await userService.findUserId({ userId });
       return res.status(200).send(findUser);
     } catch (error) {
@@ -122,13 +120,20 @@ class userController {
     }
   }
 
-  // static async withdrawal(req, res, next) {
-  //   try {
-  //   } catch (error) {
-
-  //     next(error);
-  //   }
-  // }
+  static async withdrawal(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const findUser = await userService.withdrawalUser({ userId });
+      if (findUser.errorMessage) {
+        throw new Error(findUser.errorMessage);
+      }
+      return res
+        .status(200)
+        .send({ success: true, message: '탈퇴가 완료되었습니다.' });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export { userController };

@@ -18,6 +18,6 @@ userRouter.patch(
   userController.setImage,
 );
 userRouter.get('/users/:userId', loginRequired, userController.select);
-// userRouter.delete('/users', loginRequired, userController.withdrawal);
+userRouter.delete('/users', loginRequired, userController.withdrawal);
 
 export { userRouter };
