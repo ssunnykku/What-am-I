@@ -144,11 +144,16 @@ class communityService {
     const communityImage =
       updatedImage == null ? findCommunity.communityImage : updatedImage;
 
+    const updatedName = undefined ? findCommunity.name : name;
+    const updatedIntroduction = undefined
+      ? findCommunity.introduction
+      : introduction;
+
     const updateCommunity = await Community.update(
       {
-        name,
+        name: updatedName,
         communityImage,
-        introduction,
+        introduction: updatedIntroduction,
       },
       { where: { id: communityId, userId } },
     );

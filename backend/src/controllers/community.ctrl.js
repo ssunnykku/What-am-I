@@ -80,6 +80,7 @@ class communityController {
       const userId = req.currentUserId;
 
       const { name, introduction } = req.body;
+
       const communityId = req.params.communityId;
       const image = req.file;
       const updatedImage = image == undefined ? null : image.location;
