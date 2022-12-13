@@ -52,7 +52,6 @@ export async function CreateCurrentCommunityPostRequest(
   for (let i = 0; i < images.length; i++) {
     formData.append(`images`, images[i]);
   }
-  // formData.append('images', images);
   console.log(images);
   formData.append('description', description);
 

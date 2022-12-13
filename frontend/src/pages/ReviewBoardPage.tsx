@@ -64,7 +64,7 @@ const ReviewBoardPage = () => {
 
     setReviews(res.result.selectedReviews);
     setTotalPages(res.result.reviewCount);
-    console.log(res.result);
+    console.log(res.result.selectedReviews);
   };
   useEffect(() => {
     getReviews();
