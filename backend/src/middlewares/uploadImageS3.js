@@ -19,7 +19,6 @@ function uploadImageS3() {
     acl: 'public-read',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key(req, file, cb) {
-      console.log('multer', file);
       cb(null, `${Date.now()}_${path.basename(file.originalname)}`); // original 폴더안에다 파일을 저장
     },
   });

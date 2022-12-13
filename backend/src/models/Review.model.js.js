@@ -39,7 +39,6 @@ class Review extends Sequelize.Model {
       foreignKey: 'userId',
       targetKey: 'userId',
     });
-
     db.Review.hasMany(db.ReviewComment, {
       foreignKey: 'reviewId',
       targetKey: 'id',
@@ -47,6 +46,10 @@ class Review extends Sequelize.Model {
     db.Review.hasMany(db.ReviewLike, {
       foreignKey: 'reviewId',
       targetKey: 'id',
+    });
+    db.Review.hasOne(db.AiSearchResult, {
+      foreignKey: 'reviewId',
+      sourceKey: 'id',
     });
   }
 }
