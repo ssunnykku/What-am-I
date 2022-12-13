@@ -8,21 +8,19 @@ class communityPostController {
   static async addPost(req, res, next) {
     try {
       const userId = req.currentUserId;
-
+      console.log(userId);
       const communityId = req.params.communityId;
 
-      // const imgs = JSON.stringify(req.files);
+      // const imgs = req.files;
       // const images =
       //   imgs == '{}'
       //     ? null
       //     : JSON.parse(imgs)
       //         .images.map((x, i) => JSON.parse(imgs).images[i].location)
       //         .toString();
-      const images = imgs.images.map(
-        (x, i) => JSON.parse(imgs).images[i].location,
-      );
+      const images = req.files.map((img) => img.location).toString();
       // .toString();
-      console.log('이게뭐니', req.files);
+      // console.log('이게뭐니', req.files);
 
       const { description } = req.body;
       // console.log(req.body);
