@@ -13,4 +13,10 @@ aiSearchResultRouter.post(
   aiSearchResultController.addImage,
 );
 
+aiSearchResultRouter.get(
+  '/airesult',
+  loginRequired,
+  aiSearchResultController.myReview,
+);
+
 export { aiSearchResultRouter };

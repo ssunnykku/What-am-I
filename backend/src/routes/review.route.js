@@ -13,7 +13,7 @@ reviewRouter.get('/reviews', loginRequired, reviewController.allReviews);
 reviewRouter.post(
   '/review',
   loginRequired,
-  // upload.single('images'),
+  upload.single('images'),
   reviewController.register,
 );
 
