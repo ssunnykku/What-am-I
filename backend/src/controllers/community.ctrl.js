@@ -64,7 +64,7 @@ class communityController {
       next(error);
     }
   }
-  // 이거야
+
   static async getCommunitiesAndPosts(req, res, next) {
     try {
       const userId = req.currentUserId;

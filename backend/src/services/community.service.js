@@ -115,7 +115,6 @@ class communityService {
     return bestThree;
   }
 
-  // 이거?
   static async findAllCommunities() {
     const findAll = await Community.findAndCountAll({
       include: { model: CommunityPost },
@@ -135,7 +134,7 @@ class communityService {
     const findCommunity = await Community.findOne({
       where: { id: communityId, userId: userId },
     });
-    // db에서 찾지 못한 경우, 에러 메시지 반환
+
     if (!findCommunity) {
       const errorMessage = '등록한 글이 없습니다. 다시 한 번 확인해 주세요.';
       return errorMessage;
