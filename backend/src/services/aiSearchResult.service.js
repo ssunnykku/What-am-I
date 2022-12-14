@@ -1,7 +1,7 @@
 import { AiSearchResult } from '../models/AiSearchResult.model';
 
 class aiSearchResultService {
-  static async createResult({ dogName, aiResult, aiImage, userId }) {
+  static async createResult({ dogName, userId, aiResult, aiImage }) {
     const result = await AiSearchResult.create({
       dogName,
       aiResult: '결과값~~',

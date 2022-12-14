@@ -88,7 +88,7 @@ class userController {
   static async setImage(req, res, next) {
     try {
       const userId = req.params.userId;
-      const profileImg = req.file.location;
+      const profileImg = req.file.transforms[0].location;
       if (req.file === undefined) {
         res
           .status(400)

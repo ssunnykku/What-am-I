@@ -27,17 +27,18 @@ function uploadImageS3() {
   const storage = multerS3({
     s3: new AWS.S3(),
     bucket: 'team08images',
+    acl: 'public-read',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     shouldTransform: true,
-    acl: 'public-read',
     transforms: [
       {
         id: 'resized',
         key: function (req, file, cb) {
-          cb(null, Date.now().toString());
+          const extension = path.extname(file.originalname);
+          cb(null, Date.now().toString() + extension);
         },
         transform: function (req, file, cd) {
-          cd(null, sharp().resize({ width: 640 })); //이미지를 width: 640으로 리사이징
+          cd(null, sharp().resize({ width: 640 })); //이미지 리사이징
         },
       },
     ],

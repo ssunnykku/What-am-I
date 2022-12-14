@@ -10,15 +10,9 @@ class communityPostController {
       const userId = req.currentUserId;
       const communityId = req.params.communityId;
 
-      // const imgs = req.files;
-      // const images =
-      //   imgs == '{}'
-      //     ? null
-      //     : JSON.parse(imgs)
-      //         .images.map((x, i) => JSON.parse(imgs).images[i].location)
-      //         .toString();
-
-      const images = req.files.map((img) => img.location).toString();
+      const images = req.files
+        .map((img) => img.transforms[0].location)
+        .toString();
       // .toString();
       // console.log('이게뭐니', req.files);
 
