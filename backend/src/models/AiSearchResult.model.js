@@ -17,11 +17,6 @@ class AiSearchResult extends Sequelize.Model {
           foreignKey: true,
           allowNull: true,
         },
-        // reviewId: {
-        //   type: Sequelize.INTEGER,
-        //   foreignKey: true,
-        //   allowNull: true,
-        // },
         dogName: {
           type: DataTypes.STRING,
           allowNull: false,
@@ -55,10 +50,10 @@ class AiSearchResult extends Sequelize.Model {
     );
   }
   static associate(db) {
-    // db.AiSearchResult.belongsTo(db.Review, {
-    //   foreignKey: 'reviewId',
-    //   sourceKey: 'id',
-    // });
+    db.AiSearchResult.hasOne(db.Review, {
+      foreignKey: 'aiResultId',
+      sourceKey: 'id',
+    });
     db.AiSearchResult.belongsTo(db.User, {
       foreignKey: 'userId',
       targetKey: 'userId',

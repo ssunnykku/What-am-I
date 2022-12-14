@@ -4,17 +4,18 @@ import sequelize from '../config/sequelize';
 
 import { REVIEW_PER_PAGE } from '../utils/Constant';
 import { Sequelize } from 'sequelize';
+import { AiSearchResult } from '../models/AiSearchResult.model.js';
 
 const Op = Sequelize.Op;
 
 class reviewService {
   //
-  static async addReview({ description, images, userId }) {
+  static async addReview({ description, userId, aiResultId }) {
     // db에 저장
     const createdNewReview = await Review.create({
       description,
-      images,
       userId,
+      aiResultId,
     });
     createdNewReview.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
@@ -33,54 +34,93 @@ class reviewService {
   }
 
   static async selectReviews(defaultpage, _userId) {
-    const selectedReivews = await Review.findAll({
+    const selectedReviews = await Review.findAll({
+      include: {
+        model: AiSearchResult,
+        attributes: {
+          exclude: [
+            'userId',
+            'id',
+            'dogName',
+            'aiResult',
+            'createdAt',
+            'updatedAt',
+          ],
+        },
+      },
       offset: (defaultpage - 1) * REVIEW_PER_PAGE,
       limit: REVIEW_PER_PAGE,
       order: [['id', 'DESC']],
     });
 
-    for (const review of selectedReivews) {
+    for (const review of selectedReviews) {
       review.dataValues.likeCount = await ReviewLike.count({
         where: { reviewId: review.id },
       });
       review.dataValues.likeStatus = await ReviewLike.count({
         where: { userId: _userId, reviewId: review.id },
       });
+      review.aiImage = await AiSearchResult.findOne({
+        where: { userId: _userId, id: review.aiResultId },
+      });
     }
 
-    return selectedReivews;
+    return selectedReviews;
   }
 
-  //
-  static async showMyReviews({ userId: UserId }) {
-    const userId = await Review.findAll({
-      where: { UserId },
+  static async showMyReviews({ userId }) {
+    console.log(userId);
+    const getMyReviews = await Review.findAll({
+      where: { userId: userId },
+      include: {
+        model: AiSearchResult,
+        attributes: {
+          exclude: [
+            'userId',
+            'id',
+            'dogName',
+            'aiResult',
+            'createdAt',
+            'updatedAt',
+          ],
+        },
+      },
     });
-    if (!userId) {
+    if (!getMyReviews) {
       const errorMessage = '작성하신 글이 없습니다';
       return { errorMessage };
-    } else {
-      return userId;
     }
+    return getMyReviews;
   }
 
-  //한개 게시물 get해서 보기
-  static async showReview({ _id: id }) {
-    // const reviewId = await Review.findOne({
-    //   where: { id: id },
-    // });
+  // 한개 게시물 get해서 보기
+  static async showReview({ _id }) {
+    const reviewId = await Review.findOne({
+      where: { id: _id },
+      include: {
+        model: AiSearchResult,
+        attributes: {
+          exclude: [
+            'userId',
+            'id',
+            'dogName',
+            'aiResult',
+            'createdAt',
+            'updatedAt',
+          ],
+        },
+      },
+    });
 
-    const [reviewId, metadata] = await sequelize.query(
-      `select R.id,R.description,R.userId,R.images,U.userId,U.nickname,U.profileImg from reviews as R inner join users as U on R.userId = U.userId where R.id=${id}`,
-    );
-    const reviewDetail = reviewId[0];
-    console.log(reviewId[0]);
-    if (!reviewDetail) {
+    // const [reviewId, metadata] = await sequelize.query(
+    //   `select R.id,R.description,R.userId,R.images,U.userId,U.nickname,U.profileImg from reviews as R inner join users as U on R.userId = U.userId where R.id=${id}`,
+    // );
+
+    if (!reviewId) {
       const errorMessage = '작성하신 글이 없습니다';
       return { errorMessage };
-    } else {
-      return reviewDetail;
     }
+    return reviewId;
   }
 
   static async updateReview({ description, reviewId: id, userId }) {
@@ -132,6 +172,19 @@ class reviewService {
 
   static async searchReviews({ search }) {
     const searchResult = await Review.findAndCountAll({
+      include: {
+        model: AiSearchResult,
+        attributes: {
+          exclude: [
+            'userId',
+            'id',
+            'dogName',
+            'aiResult',
+            'createdAt',
+            'updatedAt',
+          ],
+        },
+      },
       where: {
         description: {
           [Op.like]: `%${search}%`,
