@@ -9,8 +9,13 @@ import { AiSearchResult } from '../models/AiSearchResult.model.js';
 const Op = Sequelize.Op;
 
 class reviewService {
-  //
   static async addReview({ description, userId, aiResultId }) {
+    const findReview = await Review.findOne({ where: { userId, aiResultId } });
+
+    if (findReview) {
+      const errorMessage = '이미 후기가 작성된 결과입니다.';
+      return errorMessage;
+    }
     // db에 저장
     const createdNewReview = await Review.create({
       description,

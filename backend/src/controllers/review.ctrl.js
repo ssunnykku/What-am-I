@@ -34,7 +34,6 @@ class reviewController {
     try {
       const aiResultId = req.params.aiResultId;
       const userId = req.currentUserId;
-      // const userId = testId;
 
       const { description } = req.body;
 
