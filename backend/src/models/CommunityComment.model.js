@@ -34,7 +34,7 @@ class CommunityComment extends Sequelize.Model {
     }),
       db.CommunityComment.belongsTo(db.User, {
         foreignKey: 'userId',
-        sourceKey: 'userId',
+        targetKey: 'userId',
       });
   }
 }

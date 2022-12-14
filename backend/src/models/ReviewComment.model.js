@@ -9,11 +9,11 @@ class ReviewComment extends Sequelize.Model {
           allowNull: false,
         },
         reviewId: {
-          type: Sequelize.INTEGER,
+          type: DataTypes.INTEGER,
           foreignKey: true,
         },
         userId: {
-          type: DataTypes.STRING(500),
+          type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           foreignKey: true,
         },
@@ -36,7 +36,7 @@ class ReviewComment extends Sequelize.Model {
   static associate(db) {
     db.ReviewComment.belongsTo(db.User, {
       foreignKey: 'userId',
-      sourceKey: 'userId',
+      targetKey: 'userId',
     });
   }
 }
