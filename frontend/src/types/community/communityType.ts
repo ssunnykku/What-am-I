@@ -56,6 +56,8 @@ export interface CurrentCommuPostsType {
   images: string;
   updatedAt: string;
   userId: string;
+  nickname: string;
+  profileImg: string;
 }
 
 export interface CurrCommuCommentsType {

@@ -1,27 +1,36 @@
 import { CommunityPost } from '../models/CommunityPost.model';
 import ApiError from '../utils/ApiError';
 import { COMMUNITYPOST_PER_PAGE } from '../utils/Constant';
+import sequelize from '../config/sequelize';
 
 class communityPostService {
   static async createPost({ userId, communityId, images, description }) {
-    const createPost = await CommunityPost.create({
+    await CommunityPost.create({
       images,
       description,
       userId,
       communityId,
     });
 
+    const createPost = await CommunityPost.findOne({
+      where: {
+        description: description,
+        userId: userId,
+        communityId: communityId,
+      },
+    });
+
     return createPost;
   }
 
   static async communityPostCount(communityId) {
-    const { count, rows } = await CommunityPost.findAndCountAll({
-      where: {
-        communityId: { communityId },
-      },
-      // offset: 10,
-      // limit: 2
-    });
+    // const { count, rows } = await CommunityPost.findAndCountAll({
+    //   where: {
+    //     communityId: { communityId },
+    //   },
+    //   // offset: 10,
+    //   // limit: 2
+    // });
 
     const communityPostCount = await CommunityPost.count({
       where: {
@@ -49,6 +58,23 @@ class communityPostService {
     }
 
     return selectedCommunityPost;
+  }
+
+  //커뮤니티 안에있는 한개의 글 가지고 오기
+
+  static async selectOneCommunityPost(id) {
+    // const _selectedCommunityPost = await CommunityPost.findOne({
+    //   where: { id: id },
+    // });
+
+    const [selectedCommunityPost, metadata] = await sequelize.query(
+      `select CP.id, CP.images, CP.description, CP.communityId ,U.userId, U.nickname, U.profileImg from communityPosts as CP  inner join users as U on CP.userId = U.userId where CP.id=${id}`,
+    );
+    if (!selectedCommunityPost) {
+      throw ApiError.setBadRequest('No community available');
+    }
+
+    return selectedCommunityPost[0];
   }
 
   static async updateCommunityPost({ images, description, id, userId }) {

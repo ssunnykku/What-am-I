@@ -2,10 +2,17 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
-import { CreateCurrentCommunityPostRequest } from '../../apis/communityFetcher';
+import {
+  CreateCurrentCommunityPostRequest,
+  getCurrentCommunityRequest,
+} from '../../apis/communityFetcher';
 import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 import { getUserData } from '../../apis/mypageFetcher';
 import { UserInfoType } from '../../types/auth/authType';
+import { useNavigate } from 'react-router-dom';
+
+// 포스팅이 진짜로 삭제가 안 됨 삭제 버튼 구현
+// 공유하기 누르면 바로 바닥 페이지로 가게끔
 
 const CommuWritingEditor = (props: CurrentCommuityProps) => {
   const [description, setDescription] = useState<string>('');
@@ -16,6 +23,7 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
 
   const [postImages, setPostImages] = useState<File[]>([]);
   const [previewImgs, setPreviewImgs] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   const getCurrentUser = async () => {
     const res = await getUserData();
@@ -100,15 +108,18 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
   // 커뮤니티 내에 포스팅
   const handleWritingEditorClick = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (postImages) {
-      await CreateCurrentCommunityPostRequest(
+      const res = await CreateCurrentCommunityPostRequest(
         `communitypost/${props.commuInfo?.id}`,
         {
           images: postImages,
           description,
         },
       );
+      const result = await getCurrentCommunityRequest(
+        `communityPost/${props.commuInfo?.id}?page=${1}`,
+      );
+      location.reload();
     } else {
       alert('사진은 필수입니다. 귀여운 댕댕이를 마음껏 보여 주세요!');
     }

@@ -8,7 +8,6 @@ class communityPostController {
   static async addPost(req, res, next) {
     try {
       const userId = req.currentUserId;
-      console.log(userId);
       const communityId = req.params.communityId;
 
       // const imgs = req.files;
@@ -18,6 +17,7 @@ class communityPostController {
       //     : JSON.parse(imgs)
       //         .images.map((x, i) => JSON.parse(imgs).images[i].location)
       //         .toString();
+
       const images = req.files.map((img) => img.location).toString();
       // .toString();
       // console.log('이게뭐니', req.files);
@@ -64,6 +64,21 @@ class communityPostController {
       return res
         .status(200)
         .json({ result: { communityPostCount, selectedCommunityPost } });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  // 커뮤니티글 한개씩
+  static async getOneCommunityPost(req, res, next) {
+    try {
+      const id = req.params.communityPostId;
+      const oneCommunityPost =
+        await communityPostService.selectOneCommunityPost(id);
+      if (oneCommunityPost.errorMessage) {
+        throw new Error(oneCommunityPost);
+      }
+      return res.status(200).json(oneCommunityPost);
     } catch (err) {
       next(err);
     }

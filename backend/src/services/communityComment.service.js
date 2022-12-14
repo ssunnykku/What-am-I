@@ -34,9 +34,13 @@ class communityCommentService {
     id: id,
     communityPostId: communityPostId,
   }) {
-    const _id = await CommunityComment.findOne({
-      where: { id: id, communityPostId: communityPostId },
-    });
+    const [_id, metadata] = await sequelize.query(
+      `select CC.id, CC.description, CC.userId, CC.communityPostId ,U.userId, U.nickname, U.profileImg from communityComments as CC  inner join users as U on CC.userId = U.userId where CC.id=${id} and communityPostId=${communityPostId};`,
+    );
+
+    // const _id = await CommunityComment.findOne({
+    //   where: { id: id, communityPostId: communityPostId },
+    // });
     if (!_id) {
       const errorMessage = '댓글이 없습니다';
       return { errorMessage };

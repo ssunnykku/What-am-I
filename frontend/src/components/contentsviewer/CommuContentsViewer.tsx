@@ -12,12 +12,20 @@ import CommuLikeBtn from '../community/CommuLikeBtn';
 import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 import CommuWritingEditor from '../writingeditor/CommuWritingEditor';
 import {
+  deleteCommuPostRequest,
   deleteCurrCommuRequest,
+  editCommuPostRequest,
   editCurrCommuCommentsRequest,
   getCurrentCommunityRequest,
   postCurrCommuCommentsRequest,
 } from '../../apis/communityFetcher';
-import { CurrCommuCommentsType } from '../../types/community/communityType';
+import {
+  CurrCommuCommentsType,
+  CurrentCommuPostsType,
+} from '../../types/community/communityType';
+import { useConfirm } from '../../hooks/confirm/useConfirm';
+
+const VITE_PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
 
 const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const [isOpen, modalHandler] = useModal();
@@ -29,13 +37,51 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
   const [editing, setEditing] = useState<boolean>(false);
   const [newComment, setNewComment] = useState<string>('');
+  const [postInfo, setPostInfo] = useState<CurrentCommuPostsType>();
+  const [postImg, setPostImg] = useState<string>('');
   const editInputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    getOneCommuPost();
+    getCurrCommuComments();
+  }, []);
+
   // 포스팅 하나 가져오기 (수정/삭제 가리기)
+  const getOneCommuPost = async () => {
+    const res = await getCurrentCommunityRequest(
+      `communitypost/one/${props.commuPost?.id}`,
+    );
+    setPostInfo(res);
+    console.log(res.images.split(' '));
+  };
 
   // 포스팅 수정
+  const handleEditMyCommuPost = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(props.commuPost?.images.split(','));
+    // if (props.commuPost) {
+    //   await editCommuPostRequest(props.commuPost?.id, description);
+    // }
+  };
 
   //포스팅 삭제
+  const handleDeleteMyCommuPost = async () => {
+    if (props.commuPost) {
+      await deleteCommuPostRequest(props.commuPost?.id);
+    }
+  };
+  const deleteConfirm = () => (
+    handleDeleteMyCommuPost(),
+    window.alert('삭제했습니다.'),
+    (location.href = `${VITE_PUBLIC_URL}likedcommunity?id=${props.commuPost?.id}`)
+  );
+  const cancelConfirm = () => window.alert('취소했습니다.');
+
+  const confirmDelete = useConfirm(
+    '삭제하시겠습니까?',
+    deleteConfirm,
+    cancelConfirm,
+  );
 
   // 포스팅 전체 댓글 가져오기
   const getCurrCommuComments = async () => {
@@ -44,9 +90,6 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
     );
     setComments(res.reverse());
   };
-  useEffect(() => {
-    getCurrCommuComments();
-  }, []);
 
   // 포스팅 댓글 쓰기
   const postCurrCommuComments = async (e: React.FormEvent) => {
@@ -114,9 +157,7 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
       <ContentsModalWrapper>
         <AddImage>
           <ImagePlace>
-            <img
-              src={`${import.meta.env.VITE_PUBLIC_URL}/img/default_image3.png`}
-            />
+            <img src={postInfo?.images.split(' ')} />
           </ImagePlace>
         </AddImage>
         <AddWriting>
@@ -124,9 +165,9 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
             <div className="user-name">
               <ProfileBox>
                 <div className="profile">
-                  <img src={props.currentUserInfo?.profileImg} />
+                  <img src={postInfo?.profileImg} />
                 </div>
-                <div>{props.currentUserInfo?.nickname}</div>
+                <div>{postInfo?.nickname}</div>
               </ProfileBox>
             </div>
 
@@ -134,12 +175,13 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
               <EditDelBtn
                 onClick={(e) => {
                   e.preventDefault();
-                  modalHandler();
+                  // modalHandler();
+                  handleEditMyCommuPost(e);
                 }}
               >
                 수정
               </EditDelBtn>
-              <EditDelBtn>삭제</EditDelBtn>
+              <EditDelBtn onClick={confirmDelete}>삭제</EditDelBtn>
             </ButtonBox>
           </TopDiv>
 
@@ -265,6 +307,11 @@ const AddWriting = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow: scroll;
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 
   .user-name {
     width: 100%;

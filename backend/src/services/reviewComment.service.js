@@ -6,11 +6,17 @@ import { User } from '../models/User.model';
 class reviewCommentService {
   static async addReviewComment({ description, reviewId, userId }) {
     // db에 저장
-    const createdNewComment = await ReviewComment.create({
+    // const _createdNewComment =
+    await ReviewComment.create({
       description,
       reviewId,
       userId,
     });
+
+    const createdNewComment = await ReviewComment.findOne({
+      where: { description: description, userId: userId, reviewId: reviewId },
+    });
+
     createdNewComment.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
     return createdNewComment;
@@ -40,9 +46,14 @@ class reviewCommentService {
   }
 
   static async showOneReviewComments({ id: id, reviewId: reviewId }) {
-    const _id = await ReviewComment.findOne({
-      where: { id: id, reviewId: reviewId },
-    });
+    // const _id = await ReviewComment.findOne({
+    //   where: { id: id, reviewId: reviewId },
+    // });
+
+    const [_id, metadata] = await sequelize.query(
+      `select RC.id, RC.description, RC.userId, RC.reviewId ,U.userId, U.nickname, U.profileImg from reviewComments as RC  inner join users as U on RC.userId = U.userId where RC.id=${id} and reviewId=${reviewId};`,
+    );
+
     if (!_id) {
       const errorMessage = '댓글이 없습니다';
       return { errorMessage };

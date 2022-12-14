@@ -5,6 +5,7 @@ import { User } from './User.model';
 import { Session } from './Session.model';
 import { Review } from './Review.model.js';
 import { ReviewComment } from './ReviewComment.model.js';
+import { AiSearchResult } from './AiSearchResult.model';
 
 import { ReviewLike } from './ReviewLike.model';
 import { Community } from './Community.model';
@@ -25,6 +26,7 @@ db.Community = Community;
 db.CommunityPost = CommunityPost;
 db.CommunityComment = CommunityComment;
 db.CommunityLike = CommunityLike;
+db.AiSearchResult = AiSearchResult;
 
 User.init(sequelize);
 Session.init(sequelize);
@@ -35,6 +37,7 @@ Community.init(sequelize);
 CommunityPost.init(sequelize);
 CommunityComment.init(sequelize);
 CommunityLike.init(sequelize);
+AiSearchResult.init(sequelize);
 
 Community.associate(db);
 CommunityPost.associate(db);
@@ -44,5 +47,6 @@ CommunityLike.associate(db);
 Review.associate(db);
 ReviewComment.associate(db);
 ReviewLike.associate(db);
+AiSearchResult.associate(db);
 
 export { db };

@@ -52,7 +52,7 @@ export async function CreateCurrentCommunityPostRequest(
   for (let i = 0; i < images.length; i++) {
     formData.append(`images`, images[i]);
   }
-  console.log(images);
+  // console.log(images);
   formData.append('description', description);
 
   const res = await axiosInstance.post(endpoint, formData, {
@@ -89,6 +89,20 @@ export async function postCurrCommuCommentsRequest(
   const res = await axiosInstance.post(`communityComment/${communityPostId}`, {
     description,
   });
+  return res.data;
+}
+
+// 포스팅 수정
+export async function editCommuPostRequest(id: number, description: string) {
+  const res = await axiosInstance.put(`communitypost/${id}`, {
+    description: description,
+  });
+  return res.data;
+}
+
+// 포스팅 삭제
+export async function deleteCommuPostRequest(id: number) {
+  const res = await axiosInstance.delete(`communitypost/${id}`);
   return res.data;
 }
 

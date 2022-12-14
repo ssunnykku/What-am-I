@@ -50,28 +50,15 @@ export async function getReviewRequest(endpoint: string) {
 
 // 리뷰 수정
 export async function editReviewRequest(endpoint: string, description: string) {
-  const res = await axiosInstance.put(
-    endpoint,
-    {
-      description: description,
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${Storage.getTokenItem()}`,
-      },
-    },
-  );
+  const res = await axiosInstance.put(endpoint, {
+    description: description,
+  });
   return res.data;
 }
 
 // 리뷰 삭제
 export async function deleteReviewRequest(endpoint: string) {
-  const res = await axiosInstance.delete(endpoint, {
-    headers: {
-      Authorization: `Bearer ${Storage.getTokenItem()}`,
-    },
-  });
+  const res = await axiosInstance.delete(endpoint);
   return res.data;
 }
 
