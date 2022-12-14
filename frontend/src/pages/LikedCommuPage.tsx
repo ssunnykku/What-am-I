@@ -58,6 +58,7 @@ const LikedCommuPage = () => {
     const res = await getCurrentCommunityRequest(
       `communityPost/${id}?page=${page}`,
     );
+    console.log(res);
     setCommuPosts(res.result.selectedCommunityPost);
     setTotalPages(res.result.communityPostCount);
 

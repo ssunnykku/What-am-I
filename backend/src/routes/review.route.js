@@ -4,16 +4,14 @@ import { loginRequired } from '../middlewares/loginRequired.js';
 import { uploadImageS3 } from '../middlewares/uploadImageS3';
 
 const reviewRouter = Router();
-const upload = uploadImageS3();
 
 //리뷰 전부다 가지고오기
 reviewRouter.get('/reviews', loginRequired, reviewController.allReviews);
 
 // 리뷰 작성하기
 reviewRouter.post(
-  '/review',
+  '/review/:aiResultId',
   loginRequired,
-  upload.single('images'),
   reviewController.register,
 );
 

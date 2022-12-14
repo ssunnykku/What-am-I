@@ -47,7 +47,8 @@ const PaginateBox = styled.div`
   height: 2rem;
   width: 35rem;
   margin-top: 0.7rem;
-  position: absolute;
+  padding: 30px;
+  position: relative;
   bottom: 2.5%;
   display: flex;
   justify-content: center;
@@ -58,6 +59,7 @@ const PaginateNav = styled.nav`
   justify-content: center;
   height: 3rem;
   width: 30rem;
+  align-items: center;
 `;
 
 const PaginateBtn = styled.button`
