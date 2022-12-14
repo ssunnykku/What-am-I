@@ -21,7 +21,7 @@ export interface CommunityType {
   name: string;
   introduction: string;
   likeCount: number;
-  likeStatus: number | boolean;
+  likeStatus: number;
   communityImage: string;
   createdAt: string;
   updatedAt: string;

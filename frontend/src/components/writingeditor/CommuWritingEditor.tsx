@@ -4,26 +4,24 @@ import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import {
   CreateCurrentCommunityPostRequest,
+  editCommuPostRequest,
   getCurrentCommunityRequest,
 } from '../../apis/communityFetcher';
 import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 import { getUserData } from '../../apis/mypageFetcher';
 import { UserInfoType } from '../../types/auth/authType';
-import { useNavigate } from 'react-router-dom';
 
 // 포스팅이 진짜로 삭제가 안 됨 삭제 버튼 구현
 // 공유하기 누르면 바로 바닥 페이지로 가게끔
 
 const CommuWritingEditor = (props: CurrentCommuityProps) => {
-  const [description, setDescription] = useState<string>('');
-  const [images, setImages] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string>('');
+  const [description, setDescription] = useState<string>(
+    props.commuPost?.description ?? '',
+  );
   const imageInputRef = useRef<HTMLInputElement>(null);
   const [userInfo, setUserInfo] = useState<UserInfoType>();
-
   const [postImages, setPostImages] = useState<File[]>([]);
   const [previewImgs, setPreviewImgs] = useState<string[]>([]);
-  const navigate = useNavigate();
 
   const getCurrentUser = async () => {
     const res = await getUserData();
@@ -39,7 +37,7 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
       const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       setPostImages([...postImages, e.target.files[0]]);
-      console.log(postImages);
+
       reader.onload = () => {
         const previewUrl = reader.result as string;
 
@@ -48,75 +46,30 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
         }
       };
     }
-
-    // const fileArr = e.target.files;
-    //   setPostImages(Array.from(fileArr));
-    //   const fileUrls: any = [];
-    //   const fileLength = fileArr?.length > 5 ? 5 : fileArr?.length;
-
-    //   for (let i = 0; i < fileLength; i++) {
-    //     const file = fileArr[i];
-    //     const reader = new FileReader();
-    //     reader.onload = () => {
-    //       fileUrls[i] = reader.result as string;
-    //       setPreviews([...fileUrls]);
-    //     };
-    //     reader.readAsDataURL(file);
-    //   }
-
-    // if (e.target.files) {
-    //   const files = e.target.files;
-    //   let filesUrl = [...postImages];
-
-    //   for (let i = 0; i < files.length; i++) {
-    //     const currentImgUrl = URL.createObjectURL(files[i]);
-    //     filesUrl.push(currentImgUrl);
-
-    //     const reader = new FileReader();
-    //     reader.onload = () => {
-    //     filesUrl[i] = reader.result
-    //     setPostImages([...filesUrl])
-    //   }
-    //   }
-    //   if (filesUrl.length > 5) {
-    //     filesUrl = filesUrl.slice(0, 5);
-    //   }
-    // }
-
-    // if (e.target.files) {
-    //   const file = e.target.files[0];
-    //   setImages(file);
-    //   const reader = new FileReader();
-    //   reader.readAsDataURL(file);
-
-    //   console.log(file);
-
-    //   reader.onload = () => {
-    //     setPreview(reader.result as string);
-    //   };
-    // }
   };
 
   // 미리보기 삭제
   const handleDeletePreviewFile = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (previewImgs) {
+    if (imageInputRef.current) {
+      imageInputRef.current.value = '';
       setPreviewImgs([]);
+      setPostImages([]);
     }
   };
 
   // 커뮤니티 내에 포스팅
   const handleWritingEditorClick = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (postImages) {
-      const res = await CreateCurrentCommunityPostRequest(
+    if (postImages.length !== 0) {
+      await CreateCurrentCommunityPostRequest(
         `communitypost/${props.commuInfo?.id}`,
         {
           images: postImages,
           description,
         },
       );
-      const result = await getCurrentCommunityRequest(
+      await getCurrentCommunityRequest(
         `communityPost/${props.commuInfo?.id}?page=${1}`,
       );
       location.reload();
@@ -128,11 +81,16 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
   //게시물 수정
   const handleEditCurrentCommuPost = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('컨텐츠를 수정할 거여요.');
+    if (props.commuPost) {
+      await editCommuPostRequest(
+        `communitypost/${props.commuPost?.id}`,
+        description,
+      );
+    }
 
-    // if (props.modalHandler) {
-    //   props.modalHandler();
-    // }
+    if (props.modalHandler) {
+      props.modalHandler();
+    }
   };
 
   return (
@@ -146,7 +104,9 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
       >
         <ModalHeader>
           게시물 작성하기
-          <ModalHeaderBtn type="submit">공유하기</ModalHeaderBtn>
+          <ModalHeaderBtn disabled={description.length === 0} type="submit">
+            공유하기
+          </ModalHeaderBtn>
         </ModalHeader>
         <ModalContents>
           <AddImage>
@@ -155,21 +115,27 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
                 <img src={pre} alt={`${pre}-${idx}`} />
               </ImagePlace>
             ))}
-            <InputBox>
-              <div className="upload-box">
-                <label htmlFor="file">사진 업로드</label>
+            {props.mode !== 'edit' ? (
+              <InputBox>
+                <div className="upload-box">
+                  <label htmlFor="img-file">사진 업로드</label>
+                </div>
+                <input
+                  hidden
+                  type="file"
+                  id="img-file"
+                  multiple
+                  ref={imageInputRef}
+                  accept="image/*"
+                  onChange={handleChangeFile}
+                />
+                <button onClick={handleDeletePreviewFile}>삭제</button>
+              </InputBox>
+            ) : (
+              <div>
+                <img src={props.commuPost?.images.split(',')[0]} />
               </div>
-              <input
-                hidden
-                type="file"
-                id="file"
-                multiple
-                ref={imageInputRef}
-                accept="image/*"
-                onChange={handleChangeFile}
-              />
-              <button onClick={handleDeletePreviewFile}>삭제</button>
-            </InputBox>
+            )}
           </AddImage>
           <AddWriting>
             <div className="user-name">
@@ -232,6 +198,50 @@ const ModalHeaderBtn = styled.button`
   width: 6.2rem;
   cursor: pointer;
   color: ${theme.mainColor};
+
+  &[disabled] {
+    background: rgba(0, 0, 0, 0.1);
+    cursor: revert;
+  }
+`;
+
+const ModalContents = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-family: ${font.bold};
+  font-size: 15px;
+`;
+
+const AddImage = styled.div`
+  border-right: solid 1px lightgray;
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 90%;
+    object-fit: cover;
+  }
+`;
+
+const ImagePlace = styled.div`
+  border-top: solid 1px lightgray;
+  border-bottom: solid 1px lightgray;
+  width: 100%;
+  height: 70%;
+  position: relative;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const ProfileBox = styled.div`
@@ -252,36 +262,6 @@ const ProfileBox = styled.div`
     position: relative;
     overflow: hidden;
   }
-
-  img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-const ModalContents = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  font-family: ${font.bold};
-  font-size: 15px;
-`;
-
-const AddImage = styled.div`
-  border-right: solid 1px lightgray;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const ImagePlace = styled.div`
-  border-top: solid 1px lightgray;
-  border-bottom: solid 1px lightgray;
-  width: 100%;
-  height: 70%;
-  position: relative;
-  overflow: hidden;
 
   img {
     position: absolute;
@@ -342,6 +322,8 @@ const AddWriting = styled.div`
     height: 4.3rem;
     line-height: 4.5rem;
     padding-left: 3%;
+    display: flex;
+    align-items: center;
   }
 
   .writing {

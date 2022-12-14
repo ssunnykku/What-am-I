@@ -1,24 +1,24 @@
 {
-    "data": [
-        {
-            "id": 1,
-            "img": "/img/pepsi.jpg",
-            "name": "펩시"
-        },
-        {
-            "id": 2,
-            "img": "/img/potato.png",
-            "name": "감자"
-        },
-        {
-            "id": 3,
-            "img": "/img/강아지1.jpg",
-            "name": "댕댕이"
-        },
-        {
-            "id": 4,
-            "img": "/img/cogi.jpg",
-            "name": "식빵"
-        }
-    ]
+  "data": [
+    {
+      "id": 1,
+      "img": "/img/pepsi.jpg",
+      "name": "펩시"
+    },
+    {
+      "id": 2,
+      "img": "/img/potato.png",
+      "name": "감자"
+    },
+    {
+      "id": 3,
+      "img": "/img/강아지1.jpg",
+      "name": "댕댕이"
+    },
+    {
+      "id": 4,
+      "img": "/img/cogi.jpg",
+      "name": "식빵"
+    }
+  ]
 }

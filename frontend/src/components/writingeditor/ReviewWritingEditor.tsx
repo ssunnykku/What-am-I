@@ -25,6 +25,7 @@ const ReviewWritingEditor = (props: ReviewTypeProps) => {
     getCurrentUserInfo();
   }, []);
 
+  // 후기 포스팅
   const handleWritingEditorClick = async () => {
     await createReviewRequest('review', {
       description,

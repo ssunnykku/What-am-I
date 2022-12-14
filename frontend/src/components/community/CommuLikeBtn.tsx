@@ -2,19 +2,33 @@ import { useState, useEffect } from 'react';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import styled, { keyframes } from 'styled-components';
-import { postCommuLikeRequest } from '../../apis/communityFetcher';
-import { CommunityListsTypeProps } from './CommuListCard';
+import {
+  getCurrentCommunityRequest,
+  postCommuLikeRequest,
+} from '../../apis/communityFetcher';
+import { CommunityTypeProps } from './CommuRankingCard';
+import { CommunityType } from '../../types/community/communityType';
 
-const CommuLikeBtn = ({ commu }: CommunityListsTypeProps) => {
+const CommuLikeBtn = ({ id }: CommunityTypeProps) => {
   const [like, setLike] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number>(0);
+  const [info, setInfo] = useState<CommunityType>();
+
+  const getCurrCommu = async () => {
+    const res = await getCurrentCommunityRequest(`communities/posts/${id}`);
+    setInfo(res);
+    console.log(res);
+  };
+  useEffect(() => {
+    getCurrCommu();
+  }, []);
 
   const getLikeInfo = () => {
-    if (commu) {
-      setLikeCount(commu.likeCount);
-      if (commu.likeStatus == 1) {
+    if (info) {
+      setLikeCount(info.likeCount);
+      if (info.likeStatus === 1) {
         setLike(true);
-      } else if (commu.likeStatus == 0) {
+      } else if (info.likeStatus === 0) {
         setLike(false);
       }
     }
@@ -26,7 +40,7 @@ const CommuLikeBtn = ({ commu }: CommunityListsTypeProps) => {
   const onClickLikeBtn = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    const res = await postCommuLikeRequest(`communitieslikes/${commu?.id}`);
+    const res = await postCommuLikeRequest(`communitieslikes/${info?.id}`);
 
     if (res.newLike) {
       setLike(true);
