@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { font } from '../../assets/styles/common/fonts';
 import {
@@ -11,23 +11,29 @@ import {
   EntryBtn,
   CreateBtn,
 } from '../../assets/styles/common/commonComponentStyle';
+import PaginateButton from '../pagination/PaginateButton';
 const VITE_PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
 
 function MyCommunity() {
   const [communityLists, setCommunityLists] = useState<CommunityProps[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   useEffect(() => {
     async function getData() {
-      const response = await getUserCommunites();
+      const response = await getUserCommunites(page);
       setCommunityLists(response.rows);
+      setTotalPages(Math.ceil(response.count / 10));
+      console.log(Math.ceil(response.count / 10));
       console.log(response.rows);
     }
     getData();
-  }, []);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [page]);
 
   async function deleteConfirm(id: number) {
     await deleteUserCommunites(id);
-    const getResponse = await getUserCommunites();
+    const getResponse = await getUserCommunites(page);
     setCommunityLists(getResponse.rows);
     window.alert('삭제되었습니다.');
   }
@@ -66,6 +72,7 @@ function MyCommunity() {
           내가 생성한 커뮤니티가 없습니다
         </div>
       )}
+      <PaginateButton page={page} setPage={setPage} totalPages={totalPages} />
     </Div>
   );
 }
