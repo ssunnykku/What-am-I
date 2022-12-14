@@ -28,7 +28,11 @@ const useAuthRegister = () => {
         checkPassword,
       );
       if (res) {
-        window.location.replace('/login'), window.alert('회원가입 되었습니다.');
+        res === 'Successfully create a user account'
+          ? (window.location.replace('/login'),
+            window.alert('회원가입 되었습니다.'))
+          : window.alert(res);
+        console.log(res);
       }
     },
     [],
