@@ -23,7 +23,7 @@ class aiSearchResultController {
   static async myReview(req, res, next) {
     try {
       const userId = req.currentUserId;
-      const getMyImages = await aiSearchResultService.getMyResults();
+      const getMyImages = await aiSearchResultService.getMyResults(userId);
       return res.status(200).send(getMyImages);
     } catch (error) {
       next(error);

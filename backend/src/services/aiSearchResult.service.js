@@ -11,8 +11,8 @@ class aiSearchResultService {
     return result;
   }
 
-  static async getMyResults() {
-    const result = await AiSearchResult.findAll({});
+  static async getMyResults(userId) {
+    const result = await AiSearchResult.findAll({ where: { userId: userId } });
     return result;
   }
 }
