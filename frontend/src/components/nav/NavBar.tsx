@@ -5,6 +5,7 @@ import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import useDetectClose from '../../hooks/dropdown/useDetectClose';
 import Storage from '../../storage/storage';
+const VITE_PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
 
 interface DropdownCssProps {
   isDropped: boolean;
@@ -15,6 +16,7 @@ function NavBar() {
 
   function onLogout() {
     Storage.clearItemAll();
+    location.href = `${VITE_PUBLIC_URL}`;
   }
 
   return (
