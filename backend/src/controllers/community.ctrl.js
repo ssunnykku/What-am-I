@@ -6,8 +6,8 @@ class communityController {
       const userId = req.currentUserId;
       const { name, introduction } = req.body;
       const image = req.file;
-
-      const communityImage = image == undefined ? null : image.location;
+      const communityImage =
+        image == undefined ? null : image.transforms[0].location;
       const newCommunity = await communityService.createCommunity(
         name,
         introduction,
