@@ -30,6 +30,9 @@ const GlobalStyle = createGlobalStyle`
         input {
             font-family: 'ONE-Mobile-Regular';
         }
+        input[type=password] {
+            font-family: sans-serif;
+        }
     }
 `;
 
