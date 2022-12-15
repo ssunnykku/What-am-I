@@ -53,6 +53,12 @@ class CommunityPost extends Sequelize.Model {
         sourceKey: 'id',
         onDelete: 'cascade',
         onUpdate: 'cascade',
+      }),
+      db.CommunityPost.hasMany(db.CommunityPostLike, {
+        foreignKey: 'communityPostId',
+        sourceKey: 'id',
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
       });
   }
 }

@@ -95,6 +95,10 @@ class User extends Sequelize.Model {
       db.User.hasMany(db.AiSearchResult, {
         foreignKey: 'userId',
         sourceKey: 'userId',
+      }),
+      db.User.hasMany(db.CommunityPostLike, {
+        foreignKey: 'userId',
+        sourceKey: 'userId',
       });
   }
 }

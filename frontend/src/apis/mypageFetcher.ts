@@ -8,7 +8,6 @@ export const getUserData = async () => {
   return response.data;
 };
 // 유져 이미지 수정
-// TODO 폼데이터 이미지는 어떤 타입을 명시해줘야되는거지?
 export async function EditUserImg(profileImg: File) {
   const formData = new FormData();
   formData.append('profileImg', profileImg);
@@ -33,9 +32,13 @@ export async function EditUserData(nickname: string, password: string) {
       password,
     },
   );
-  console.log(response);
   return response;
 }
+// 유저 삭제
+export const deleteUserData = async () => {
+  const response = await axiosInstance.delete(`/users`);
+  return response.data;
+};
 
 // 리뷰
 // 사용자 리뷰 가져오기

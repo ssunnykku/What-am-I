@@ -12,10 +12,11 @@ import {
   CreateBtn,
 } from '../../assets/styles/common/commonComponentStyle';
 import PaginateButton from '../pagination/PaginateButton';
+import { CommunityType } from '../../types/community/communityType';
 const VITE_PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
 
 function MyCommunity() {
-  const [communityLists, setCommunityLists] = useState<CommunityProps[]>([]);
+  const [communityLists, setCommunityLists] = useState<CommunityType[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
 

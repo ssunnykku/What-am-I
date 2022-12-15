@@ -5,21 +5,27 @@ import { getUserLikedPosts } from '../../apis/mypageFetcher';
 import { EntryBtn } from '../../assets/styles/common/commonComponentStyle';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
-import { CurrentCommuPostsType } from '../../types/community/communityType';
+import {
+  CommunityType,
+  CurrentCommuPostsType,
+} from '../../types/community/communityType';
 import CommuContentsModal from '../modal/CommuContentsModal';
+import { CommunityProps } from './Community';
 
 interface ReceiveProps {
-  id: number;
+  commuInfo?: CommunityType;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function CommunityMyList({ id, setOpen }: ReceiveProps) {
+function CommunityMyList({ commuInfo, setOpen }: ReceiveProps) {
   const [userPosts, setUserPosts] = useState<CurrentCommuPostsType[]>([]);
 
   useEffect(() => {
     async function getLikedPosts() {
-      const response = await getUserLikedPosts(id);
-      setUserPosts(response);
+      if (commuInfo) {
+        const response = await getUserLikedPosts(commuInfo.id);
+        setUserPosts(response);
+      }
     }
     getLikedPosts();
   }, []);
@@ -32,7 +38,11 @@ function CommunityMyList({ id, setOpen }: ReceiveProps) {
       {userPosts.length ? (
         <CardContainer>
           {userPosts.map((value) => (
-            <CommuContentsModal commuPost={value} key={value.id} />
+            <CommuContentsModal
+              commuInfo={commuInfo}
+              commuPost={value}
+              key={value.id}
+            />
           ))}
         </CardContainer>
       ) : (

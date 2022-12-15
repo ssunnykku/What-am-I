@@ -27,9 +27,9 @@ const useAuthLogin = () => {
         Storage.setUserIdItem(res.data.userId);
         Storage.setNicknameItem(res.data.nickname);
         window.location.replace('/');
-      } catch (e) {
+      } catch (e: any) {
         console.log(e);
-        window.alert('아이디 비밀번호를 확인해주세요');
+        window.alert(e.response.data.message);
       }
     },
     [],
