@@ -29,7 +29,7 @@ const CommunityPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [ref, inView] = useInView();
 
-  // TODO: 스피너
+  // 무한 스크롤
   const handleScroll = useCallback(async () => {
     setLoading(true);
     await getCommunitiesRequest(pages).then((res) => {
@@ -43,7 +43,6 @@ const CommunityPage = () => {
   }, [handleScroll]);
 
   useEffect(() => {
-    // 데이터 받아오는 거 맞나 잠깐만 setTimeOut 해놓겠습니다.
     if (inView && !loading) {
       setTimeout(() => {
         setPages((page) => page + 1);
@@ -89,7 +88,7 @@ const CommunityPage = () => {
           <RankingHeader>인기 커뮤니티</RankingHeader>
           <RankingBox>
             {rankings?.map((ranking) => (
-              <CommuRankingCard key={ranking.id} ranking={ranking} />
+              <CommuRankingCard key={ranking.id} info={ranking} />
             ))}
           </RankingBox>
         </PopularCommuBox>
@@ -108,7 +107,7 @@ const CommunityPage = () => {
                   commuList.length - 1 === idx ? ref : undefined;
                 return (
                   <div key={idx} ref={observerRef}>
-                    <CommuListCard commu={commu} />
+                    <CommuListCard info={commu} />
                   </div>
                 );
               })}

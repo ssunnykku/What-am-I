@@ -1,10 +1,23 @@
 import styled, { keyframes } from 'styled-components';
 import { theme } from '../assets/styles/common/palette';
 import { font } from '../assets/styles/common/fonts';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { getPuppyData } from '../apis/mypageFetcher';
 
 const AITestResultPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const profileImg = location.state.profileImg;
+
+  useEffect(() => {
+    async function getData() {
+      const response = await getPuppyData(profileImg);
+      console.log(response);
+    }
+    getData();
+  }, []);
   return (
     <ResultBox>
       <div style={{ letterSpacing: '1px', fontSize: '27px' }}>

@@ -5,7 +5,8 @@ export const authLoginRequest = async (email: string, password: string) => {
     email,
     password,
   });
-  return res.data;
+  console.log(res);
+  return res;
 };
 
 export const authRegisterRequest = async (

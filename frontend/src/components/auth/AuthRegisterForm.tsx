@@ -28,10 +28,10 @@ const AuthRegisterForm = ({
             required: true,
             pattern: /^\S+@\S+$/i,
           })}
-          placeholder="Please enter your email"
+          placeholder="이메일"
         />
         {errors.email && (
-          <CommonErrorText>Please check your email</CommonErrorText>
+          <CommonErrorText>이메일을 확인해주세요</CommonErrorText>
         )}
       </AuthFormInputContainer>
       <AuthFormInputContainer>
@@ -41,10 +41,10 @@ const AuthRegisterForm = ({
             minLength: 3,
             maxLength: 8,
           })}
-          placeholder="Please enter your nicnkame"
+          placeholder="닉네임(최소 3글자, 최대 8글자)"
         />
         {errors.nickname && (
-          <CommonErrorText>Please check your nicnkame</CommonErrorText>
+          <CommonErrorText>닉네임을 확인해주세요</CommonErrorText>
         )}
       </AuthFormInputContainer>
       <AuthFormInputContainer>
@@ -56,10 +56,10 @@ const AuthRegisterForm = ({
             pattern: /^.(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,
           })}
           type="password"
-          placeholder="Please enter your password"
+          placeholder="비밀번호"
         />
         {errors.password && (
-          <CommonErrorText>Please check your password</CommonErrorText>
+          <CommonErrorText>숫자,영문자,특수문자 조합 8-15자</CommonErrorText>
         )}
       </AuthFormInputContainer>
       <AuthFormInputContainer>
@@ -71,10 +71,10 @@ const AuthRegisterForm = ({
             pattern: /^.(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,
           })}
           type="password"
-          placeholder="Please enter your password"
+          placeholder="비밀번호 확인"
         />
         {errors.password !== errors.checkPassword && (
-          <CommonErrorText>Please check your password</CommonErrorText>
+          <CommonErrorText>비밀번호가 일치하지 않습니다</CommonErrorText>
         )}
       </AuthFormInputContainer>
       <AuthFormButtonContainer>

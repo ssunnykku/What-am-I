@@ -52,7 +52,6 @@ export async function CreateCurrentCommunityPostRequest(
   for (let i = 0; i < images.length; i++) {
     formData.append(`images`, images[i]);
   }
-  // console.log(images);
   formData.append('description', description);
 
   const res = await axiosInstance.post(endpoint, formData, {
@@ -93,9 +92,12 @@ export async function postCurrCommuCommentsRequest(
 }
 
 // 포스팅 수정
-export async function editCommuPostRequest(id: number, description: string) {
-  const res = await axiosInstance.put(`communitypost/${id}`, {
-    description: description,
+export async function editCommuPostRequest(
+  endpoint: string,
+  description: string,
+) {
+  const res = await axiosInstance.put(endpoint, {
+    description,
   });
   return res.data;
 }

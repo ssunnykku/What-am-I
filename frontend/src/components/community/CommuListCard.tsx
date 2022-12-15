@@ -2,27 +2,23 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { EntryBtn } from '../../assets/styles/common/commonComponentStyle';
 import { theme } from '../../assets/styles/common/palette';
-import { CommunityType } from '../../types/community/communityType';
 import { font } from '../../assets/styles/common/fonts';
 import CommuLikeBtn from './CommuLikeBtn';
+import { CommunityTypeProps } from './CommuRankingCard';
 
-export interface CommunityListsTypeProps {
-  commu?: CommunityType;
-}
-
-const CommuListCard = ({ commu }: CommunityListsTypeProps) => {
+const CommuListCard = ({ info }: CommunityTypeProps) => {
   return (
     <ListCardBox>
       <ListImage>
-        <img src={commu?.communityImage} />
+        <img src={info?.communityImage} />
       </ListImage>
       <SmallBox>
-        <CommuName>{commu?.name}</CommuName>
+        <CommuName>{info?.name}</CommuName>
         <LikeNum>
-          <CommuLikeBtn commu={commu} />
+          <CommuLikeBtn id={info?.id} />
         </LikeNum>
       </SmallBox>
-      <Link to={`/likedcommunity?id=${commu?.id}`}>
+      <Link to={`/likedcommunity?id=${info?.id}`}>
         <EntryBtn>입장하기</EntryBtn>
       </Link>
     </ListCardBox>

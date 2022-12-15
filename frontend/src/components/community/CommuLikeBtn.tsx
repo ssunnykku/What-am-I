@@ -2,31 +2,52 @@ import { useState, useEffect } from 'react';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import styled, { keyframes } from 'styled-components';
-import { postCommuLikeRequest } from '../../apis/communityFetcher';
-import { CommunityListsTypeProps } from './CommuListCard';
+import {
+  getCurrentCommunityRequest,
+  postCommuLikeRequest,
+} from '../../apis/communityFetcher';
+import { CommunityTypeProps } from './CommuRankingCard';
+import { CommunityType } from '../../types/community/communityType';
 
-const CommuLikeBtn = ({ commu }: CommunityListsTypeProps) => {
+const CommuLikeBtn = ({ id }: CommunityTypeProps) => {
   const [like, setLike] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number>(0);
+  const [likeInfo, setLikeInfo] = useState<CommunityType>();
 
-  const getLikeInfo = () => {
-    if (commu) {
-      setLikeCount(commu.likeCount);
-      if (commu.likeStatus == 1) {
-        setLike(true);
-      } else if (commu.likeStatus == 0) {
-        setLike(false);
-      }
+  const getCurrCommu = async () => {
+    const res = await getCurrentCommunityRequest(`communities/posts/${id}`);
+    setLikeInfo(res);
+    setLikeCount(res.likeCount);
+    console.log(res.likeStatus);
+
+    if (res.likStatus === 1) {
+      setLike(true);
+    } else if (res.likeStatus === 0) {
+      setLike(false);
     }
   };
   useEffect(() => {
-    getLikeInfo();
+    getCurrCommu();
   }, []);
+
+  // const getLikeInfo = () => {
+  //   if (info) {
+  //     setLikeCount(info.likeCount);
+  //     if (info.likeStatus === 1) {
+  //       setLike(true);
+  //     } else if (info.likeStatus === 0) {
+  //       setLike(false);
+  //     }
+  //   }
+  // };
+  // useEffect(() => {
+  //   getLikeInfo();
+  // }, []);
 
   const onClickLikeBtn = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    const res = await postCommuLikeRequest(`communitieslikes/${commu?.id}`);
+    const res = await postCommuLikeRequest(`communitieslikes/${likeInfo?.id}`);
 
     if (res.newLike) {
       setLike(true);
