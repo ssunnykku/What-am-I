@@ -96,7 +96,7 @@ export default ReviewWritingEditor;
 const CreateModalWrapper = styled.form`
   width: 55%;
   height: 80%;
-  max-width: 47rem;
+  max-width: 48rem;
   min-width: 30rem;
   position: fixed;
   top: 50%;

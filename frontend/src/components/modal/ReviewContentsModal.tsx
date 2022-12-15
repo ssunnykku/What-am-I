@@ -34,7 +34,10 @@ const ReviewContentsModal = ({
           userInfo={userInfo}
         />
       </MyModal>
-      <ReviewPuppyCard onCardModalClickEvent={modalHandler}></ReviewPuppyCard>
+      <ReviewPuppyCard
+        review={review}
+        onCardModalClickEvent={modalHandler}
+      ></ReviewPuppyCard>
     </>
   );
 };
