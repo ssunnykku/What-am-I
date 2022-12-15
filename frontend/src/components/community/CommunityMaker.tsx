@@ -32,6 +32,7 @@ const CommunityMaker = () => {
     e.preventDefault();
     if (imageInputRef.current) {
       imageInputRef.current.value = '';
+      setPreview('');
     }
   };
 

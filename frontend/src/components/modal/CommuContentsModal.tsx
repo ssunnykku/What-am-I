@@ -1,12 +1,13 @@
 import useModal from '../../hooks/modal/useModal';
 import MyModal from './MyModal';
 import CommuPuppyCard from '../community/CommuPuppyCard';
-import CommuContentsViewer from '../contentsviewer/CommuContentsViewer';
+import CommuContentsViewer from '../community/CommuContentsViewer';
 import {
   CommunityType,
   CurrentCommuPostsType,
 } from '../../types/community/communityType';
 import { UserInfoType } from '../../types/auth/authType';
+import { useEffect } from 'react';
 
 export interface CurrentCommuityProps {
   commuInfo?: CommunityType;
@@ -19,16 +20,22 @@ export interface CurrentCommuityProps {
 }
 
 const CommuContentsModal = ({
+  commuInfo,
   commuPost,
   currentUserInfo,
   getPosts,
 }: CurrentCommuityProps) => {
   const [isOpen, modalHandler] = useModal();
 
+  useEffect(() => {
+    console.log(commuInfo);
+  }, []);
+
   return (
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
         <CommuContentsViewer
+          commuInfo={commuInfo}
           getPosts={getPosts}
           commuPost={commuPost}
           currentUserInfo={currentUserInfo}

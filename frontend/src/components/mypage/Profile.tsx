@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Avatar, Modal } from '@mui/material';
 import { font } from '../../assets/styles/common/fonts';
@@ -6,20 +6,22 @@ import {
   CommonMyInput,
   EntryBtn,
   CreateBtn,
-  CommonMyButton,
 } from '../../assets/styles/common/commonComponentStyle';
 import {
+  deleteUserData,
   EditUserData,
   EditUserImg,
   getUserData,
 } from '../../apis/mypageFetcher';
 import Storage from '../../storage/storage';
+const VITE_PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
 
 function Profile() {
   const [open, setOpen] = useState(false);
   const [profileImg, setProfileImg] = useState<string>('/');
   const [nickname, setNickname] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [mode, setMode] = useState<string>('');
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -37,16 +39,27 @@ function Profile() {
   async function EditImg(e: any) {
     setProfileImg(URL.createObjectURL(e.target.files[0]));
     const response = await EditUserImg(e.target.files[0]);
-    console.log(response);
+    if (response.success) {
+      window.alert(response.message);
+    } else if (!response.success) {
+      window.alert(response.message);
+    }
   }
 
   async function EditData(e: any) {
     e.preventDefault();
     try {
-      const response = await EditUserData(nickname, password);
-      window.alert('성공적으로 수정되었습니다.');
-      Storage.setNicknameItem(response.data.nickname);
-      location.reload();
+      if (mode === 'edit') {
+        const response = await EditUserData(nickname, password);
+        window.alert('성공적으로 수정되었습니다.');
+        Storage.setNicknameItem(response.data.nickname);
+        location.reload();
+      } else {
+        const response = await deleteUserData();
+        window.alert('정상적으로 탈퇴되었습니다.');
+        Storage.clearItemAll();
+        location.href = `${VITE_PUBLIC_URL}`;
+      }
     } catch (e) {
       console.log(e);
       window.alert('비밀번호를 확인해주세요.');
@@ -83,9 +96,12 @@ function Profile() {
         ></CommonMyInput>
       </InputContainer>
       <ButtonContainer>
-        <EditButton onClick={handleOpen}>수정</EditButton>
-        {/* <EditButton onClick={EditData}>수정</EditButton> */}
-        <DeleteButton>회원 탈퇴</DeleteButton>
+        <EditButton onClick={() => (setMode('edit'), handleOpen())}>
+          수정
+        </EditButton>
+        <DeleteButton onClick={() => (setMode('delete'), handleOpen())}>
+          회원 탈퇴
+        </DeleteButton>
       </ButtonContainer>
       <Modal
         open={open}
@@ -103,7 +119,7 @@ function Profile() {
               onChange={(e) => setPassword(e.target.value)}
             ></CommonMyInput>
             <EditButton style={{ width: '100px' }} type="submit">
-              수정
+              {mode === 'edit' ? <>수정</> : <>삭제</>}
             </EditButton>
           </FormWrapper>
         </ModalContainer>

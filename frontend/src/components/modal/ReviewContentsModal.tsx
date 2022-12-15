@@ -1,7 +1,7 @@
 import useModal from '../../hooks/modal/useModal';
 import MyModal from './MyModal';
 import ReviewPuppyCard from '../reviewBoard/ReviewPuppyCard';
-import ReviewContentsViewer from '../contentsviewer/ReviewContentsViewer';
+import ReviewContentsViewer from '../reviewBoard/ReviewContentsViewer';
 import { ReviewType } from '../../types/reviewboard/reviewType';
 import { UserInfoType } from '../../types/auth/authType';
 

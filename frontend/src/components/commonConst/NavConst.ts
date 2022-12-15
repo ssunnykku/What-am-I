@@ -1,6 +1,6 @@
 export const menus = [
   {
-    title: 'DNA검사',
+    title: 'AI 종 분석',
     path: '/dna',
     id: 'dna',
   },

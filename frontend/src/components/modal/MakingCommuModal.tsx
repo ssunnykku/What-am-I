@@ -1,7 +1,7 @@
 import MyModal from './MyModal';
 import useModal from '../../hooks/modal/useModal';
 import { CreateBtn } from '../../assets/styles/common/commonComponentStyle';
-import CommunityMaker from '../communitymaker/CommunityMaker';
+import CommunityMaker from '../community/CommunityMaker';
 
 const MakingCommuModal = () => {
   const [isOpen, modalHandler] = useModal();

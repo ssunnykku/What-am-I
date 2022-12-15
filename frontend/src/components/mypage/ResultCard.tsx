@@ -13,7 +13,7 @@ import {
 import { useConfirm } from '../../hooks/confirm/useConfirm';
 import { theme } from '../../assets/styles/common/palette';
 import { Modal } from '@mui/material';
-import ReviewContentsViewer from '../contentsviewer/ReviewContentsViewer';
+import ReviewContentsViewer from '../reviewBoard/ReviewContentsViewer';
 import { ReviewType } from '../../types/reviewboard/reviewType';
 
 interface receiveProps {
