@@ -17,6 +17,7 @@ const ReviewBoardPage = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentUser, setCurrentUser] = useState<string>('');
   const [userInfo, setUserInfo] = useState<UserInfoType>();
+
   const [reviewPost, setReviewPost] = useState<ReviewPostType>();
 
   const [search, setSearch] = useState<string>('');
@@ -44,9 +45,8 @@ const ReviewBoardPage = () => {
     const res = await getReviewRequest(`reviews?page=${pages}`);
     setReviews(res.result.selectedReviews);
     setTotalPages(res.result.reviewCount);
-    // const resMap = res.result.selectedReviews.map(
-    //   (res: any) => res.AiSearchResult,
-    // );
+
+    const resMap = res.result.selectedReviews.map((res: ReviewType) => res.id);
   };
   useEffect(() => {
     getReviews();

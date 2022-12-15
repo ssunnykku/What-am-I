@@ -49,7 +49,7 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
       `communitypost/one/${props.commuPost?.id}`,
     );
     setPostInfo(res);
-    setPostImgs(res.images.split('8팀최고'));
+    setPostImgs(res.images.split('8팀최고,'));
   };
   useEffect(() => {
     getOneCommuPost();

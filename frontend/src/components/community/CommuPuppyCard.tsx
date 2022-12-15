@@ -8,7 +8,7 @@ const CommuPuppyCard = ({
 }: CurrentCommuityProps) => {
   return (
     <PuppyCardBox onClick={onCardModalClickEvent}>
-      <img src={commuPost?.images.split('8팀최고')[0]} />
+      <img src={commuPost?.images.split('8팀최고,')[0]} />
       <div className="like-icon">
         <CommuLikeBtn />
       </div>

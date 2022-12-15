@@ -45,7 +45,7 @@ const CommunityPage = () => {
     if (inView && !loading) {
       setTimeout(() => {
         setPages((page) => page + 1);
-      }, 1000);
+      }, 1500);
     }
   }, [inView]);
 
@@ -114,9 +114,7 @@ const CommunityPage = () => {
                   </div>
                 );
               })}
-              <div className="spinner">
-                <CommuSpinner />
-              </div>
+              <div className="spinner">{loading ? <CommuSpinner /> : null}</div>
             </ScrollBox>
           </CommuListsBox>
         </ListsBox>

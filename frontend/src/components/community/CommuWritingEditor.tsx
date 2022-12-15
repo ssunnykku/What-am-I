@@ -130,7 +130,7 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
               </InputBox>
             ) : (
               <div>
-                <img src={props.commuPost?.images.split('8팀최고')[0]} />
+                <img src={props.commuPost?.images.split('8팀최고,')[0]} />
               </div>
             )}
           </AddImage>
