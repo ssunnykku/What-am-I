@@ -22,10 +22,7 @@ import {
   CurrCommuCommentsType,
   CurrentCommuPostsType,
 } from '../../types/community/communityType';
-import { useConfirm } from '../../hooks/confirm/useConfirm';
 import ImgCarousel from './Carousel';
-
-const VITE_PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
 
 const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const [isOpen, modalHandler] = useModal();
@@ -49,7 +46,7 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
       `communitypost/one/${props.commuPost?.id}`,
     );
     setPostInfo(res);
-    setPostImgs(res.images.split('8팀최고'));
+    setPostImgs(res.images.split('최고'));
   };
   useEffect(() => {
     getOneCommuPost();

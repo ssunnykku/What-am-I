@@ -8,7 +8,7 @@ const ReviewPuppyCard = ({
 }: ReviewTypeProps) => {
   return (
     <PuppyCardBox onClick={onCardModalClickEvent}>
-      <img />
+      <img src={review?.AiSearchResult.aiImage} />
       <div className="like-icon">
         <ReviewLikeBtn review={review} />
       </div>

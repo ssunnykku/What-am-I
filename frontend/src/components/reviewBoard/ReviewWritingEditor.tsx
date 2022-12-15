@@ -14,7 +14,6 @@ const ReviewWritingEditor = (props: ReviewTypeProps) => {
     props.review?.description ?? '',
   );
   const [userInfo, setUserInfo] = useState<UserInfoType>();
-  const [info, setInfo] = useState<ReviewType>();
 
   const handleUploadResultCard = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
@@ -24,20 +23,22 @@ const ReviewWritingEditor = (props: ReviewTypeProps) => {
   };
   useEffect(() => {
     getCurrentUserInfo();
-    setInfo(props.review);
+    console.log(props.review);
   }, []);
 
   // 후기 포스팅
   const handleWritingEditorClick = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(info);
-
-    // const res = await createReviewRequest(
-    //   `review/${props.reviewInfo?.aiResultId}`,
-    //   {
-    //     description,
-    //   },
-    // );
+    if (props.review === undefined) return;
+    if (props.review) {
+      const res = await createReviewRequest(
+        `review/${props.review?.aiResultId}`,
+        {
+          description,
+        },
+      );
+      console.log(res);
+    }
   };
 
   // 수정하기 버튼
@@ -96,7 +97,7 @@ export default ReviewWritingEditor;
 const CreateModalWrapper = styled.form`
   width: 55%;
   height: 80%;
-  max-width: 47rem;
+  max-width: 48rem;
   min-width: 30rem;
   position: fixed;
   top: 50%;

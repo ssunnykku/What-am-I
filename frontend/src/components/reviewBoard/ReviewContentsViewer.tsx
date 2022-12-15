@@ -16,6 +16,7 @@ import ReviewWritingEditor from './ReviewWritingEditor';
 import {
   OneReviewType,
   ReviewCommentType,
+  ReviewType,
 } from '../../types/reviewboard/reviewType';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -34,6 +35,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
   const [newComments, setNewComments] = useState<string>('');
   const [selectedIdx, setSelectedIdx] = useState<number | boolean>(false);
   const editInputRef = useRef<HTMLInputElement>(null);
+  const [reviewInfo, setReviewInfo] = useState<ReviewType>();
 
   useEffect(() => {
     if (editing) {
@@ -47,7 +49,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
   const getOneReview = async () => {
     const res = await getReviewRequest(`review/show/${props.review?.id}`);
     setReviewer(res);
-    // res.map((val: OneReviewType) => setReviewer(val));
+    setReviewInfo(res);
   };
 
   // 리뷰 전체 댓글 가져오기
@@ -147,13 +149,18 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
         <ReviewWritingEditor
-          review={props.review}
+          review={reviewInfo}
           mode="edit"
           modalHandler={modalHandler}
         />
       </MyModal>
       <ContentsModalWrapper>
-        <AddImage>result cards</AddImage>
+        <AddImage>
+          <div className="result-card-box">
+            <img src={props.review?.AiSearchResult.aiImage} />
+            <div className="result-desc">AI 종 분석 결과</div>
+          </div>
+        </AddImage>
         <AddWriting>
           <TopDiv>
             <div className="user-name">
@@ -263,7 +270,7 @@ export default ReviewContentsViewer;
 const ContentsModalWrapper = styled.form`
   width: 65%;
   height: 85%;
-  max-width: 60rem;
+  max-width: 58rem;
   min-width: 40rem;
   position: fixed;
   top: 50%;
@@ -271,13 +278,38 @@ const ContentsModalWrapper = styled.form`
   transform: translate(-50%, -50%);
   background-color: white;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.1fr 1fr;
   border-radius: 10px;
   font-family: ${font.normal};
 `;
 
 const AddImage = styled.div`
   border-right: solid 1px lightgray;
+  display: flex;
+  align-items: center;
+
+  .result-card-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 85%;
+
+    img {
+      width: 100%;
+      height: 70%;
+      object-fit: cover;
+    }
+
+    .result-desc {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 25%;
+      border-bottom: solid 1px lightgray;
+    }
+  }
 `;
 
 const AddWriting = styled.div`
@@ -393,7 +425,7 @@ const ContentsBox = styled.div`
     justify-content: space-between;
     position: relative;
     margin: 5px 0;
-    padding: 7px 0;
+    padding: 5px 0;
     width: 100%;
     line-height: 20px;
     font-size: 14px;
