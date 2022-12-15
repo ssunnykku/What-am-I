@@ -2,9 +2,10 @@ import styled, { keyframes } from 'styled-components';
 import { CommunityProps } from './Community';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
+import { CommunityType } from '../../types/community/communityType';
 
 interface Props {
-  value: CommunityProps;
+  value: CommunityType;
   children: React.ReactNode;
 }
 
