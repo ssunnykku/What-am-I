@@ -15,7 +15,7 @@ aiSearchResultRouter.post(
 
 aiSearchResultRouter.post(
   '/v1/predict',
-  upload.single('image'),
+  upload.single('url'),
   aiSearchResultController.addImage2,
 );
 
