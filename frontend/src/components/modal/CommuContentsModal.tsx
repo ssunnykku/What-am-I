@@ -12,6 +12,7 @@ export interface CurrentCommuityProps {
   commuInfo?: CommunityType;
   commuPost?: CurrentCommuPostsType;
   mode?: string;
+  getPosts?: () => Promise<void>;
   modalHandler?: () => void;
   currentUserInfo?: UserInfoType;
   onCardModalClickEvent?: () => void;
@@ -20,6 +21,7 @@ export interface CurrentCommuityProps {
 const CommuContentsModal = ({
   commuPost,
   currentUserInfo,
+  getPosts,
 }: CurrentCommuityProps) => {
   const [isOpen, modalHandler] = useModal();
 
@@ -27,6 +29,7 @@ const CommuContentsModal = ({
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
         <CommuContentsViewer
+          getPosts={getPosts}
           commuPost={commuPost}
           currentUserInfo={currentUserInfo}
         />

@@ -7,7 +7,6 @@ import MyModal from '../modal/MyModal';
 import useModal from '../../hooks/modal/useModal';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import CommuLikeBtn from '../community/CommuLikeBtn';
 import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 import CommuWritingEditor from '../writingeditor/CommuWritingEditor';
@@ -24,6 +23,7 @@ import {
   CurrentCommuPostsType,
 } from '../../types/community/communityType';
 import { useConfirm } from '../../hooks/confirm/useConfirm';
+import ImgCarousel from '../community/Carousel';
 
 const VITE_PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
 
@@ -38,31 +38,45 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const [editing, setEditing] = useState<boolean>(false);
   const [newComment, setNewComment] = useState<string>('');
   const [postInfo, setPostInfo] = useState<CurrentCommuPostsType>();
-  const [postImg, setPostImg] = useState<string>('');
+
   const editInputRef = useRef<HTMLInputElement>(null);
+
+  const [postImgs, setPostImgs] = useState<string[]>([]);
 
   useEffect(() => {
     getOneCommuPost();
     getCurrCommuComments();
+    getOnePostImg();
   }, []);
 
-  // 포스팅 하나 가져오기 (수정/삭제 가리기)
+  // 포스팅 하나 가져오기
   const getOneCommuPost = async () => {
     const res = await getCurrentCommunityRequest(
       `communitypost/one/${props.commuPost?.id}`,
     );
     setPostInfo(res);
-    console.log(res.images.split(' '));
+    setPostImgs(res.images.split(','));
+  };
+
+  const getOnePostImg = () => {
+    console.log(postImgs);
   };
 
   // 포스팅 수정
   const handleEditMyCommuPost = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(props.commuPost?.images.split(','));
-    // if (props.commuPost) {
-    //   await editCommuPostRequest(props.commuPost?.id, description);
-    // }
+    if (props.commuPost) {
+      await editCommuPostRequest(
+        `communitypost/${props.commuPost?.id}`,
+        description,
+      );
+    }
   };
+  useEffect(() => {
+    if (props.getPosts) {
+      props.getPosts();
+    }
+  }, [isOpen]);
 
   //포스팅 삭제
   const handleDeleteMyCommuPost = async () => {
@@ -95,12 +109,15 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const postCurrCommuComments = async (e: React.FormEvent) => {
     e.preventDefault();
     if (props.commuPost) {
-      await postCurrCommuCommentsRequest(props.commuPost?.id, description);
+      const res = await postCurrCommuCommentsRequest(
+        props.commuPost?.id,
+        description,
+      );
 
       const result = await getCurrentCommunityRequest(
-        `communityComment/${props.commuPost?.id}`,
+        `communityComment/${res.communityPostId}/${res.id}`,
       );
-      setComments(result.reverse());
+      setComments([...result, ...comments]);
       setDescription('');
     }
   };
@@ -157,7 +174,10 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
       <ContentsModalWrapper>
         <AddImage>
           <ImagePlace>
-            <img src={postInfo?.images.split(' ')} />
+            {/* {postImgs.map((img, idx) => (
+              <img src={img} key={idx} />
+            ))} */}
+            <ImgCarousel postImgs={postImgs} />
           </ImagePlace>
         </AddImage>
         <AddWriting>
@@ -170,19 +190,20 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
                 <div>{postInfo?.nickname}</div>
               </ProfileBox>
             </div>
-
-            <ButtonBox>
-              <EditDelBtn
-                onClick={(e) => {
-                  e.preventDefault();
-                  // modalHandler();
-                  handleEditMyCommuPost(e);
-                }}
-              >
-                수정
-              </EditDelBtn>
-              <EditDelBtn onClick={confirmDelete}>삭제</EditDelBtn>
-            </ButtonBox>
+            {props.currentUserInfo?.userId === postInfo?.userId ? (
+              <ButtonBox>
+                <EditDelBtn
+                  onClick={(e) => {
+                    e.preventDefault();
+                    modalHandler();
+                    handleEditMyCommuPost(e);
+                  }}
+                >
+                  수정
+                </EditDelBtn>
+                <EditDelBtn onClick={confirmDelete}>삭제</EditDelBtn>
+              </ButtonBox>
+            ) : null}
           </TopDiv>
 
           <ContentsBox>
@@ -198,6 +219,7 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
                     value={newComment}
                     onChange={onChangeCommentEditInput}
                     autoFocus={true}
+                    onFocus={() => setNewComment(comment.description)}
                   />
                 ) : (
                   <div className="comment">
@@ -268,9 +290,9 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
 export default CommuContentsViewer;
 
 const ContentsModalWrapper = styled.form`
-  width: 70%;
+  width: 75%;
   height: 85%;
-  max-width: 70rem;
+  max-width: 75rem;
   min-width: 50rem;
   position: fixed;
   top: 50%;
@@ -292,8 +314,11 @@ const AddImage = styled.div`
 const ImagePlace = styled.div`
   width: 100%;
   height: 85%;
+  max-height: 50rem;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
   img {
     position: absolute;

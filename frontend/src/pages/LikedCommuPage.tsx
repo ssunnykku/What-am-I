@@ -37,8 +37,6 @@ const LikedCommuPage = () => {
   const editInputRef = useRef<HTMLInputElement>(null);
   const editTextAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  // const [postImages, setPostImages] = useState<string>('');
-
   // 쿼리 스트링에 값 넣어주기
   let getParameter = (key: string) => {
     return new URLSearchParams(location.search).get(key);
@@ -116,7 +114,7 @@ const LikedCommuPage = () => {
     }
   };
 
-  // 커뮤니티 수정
+  // 커뮤니티 수정 버튼 함수
   const handleCommunityEditButton = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -231,6 +229,7 @@ const LikedCommuPage = () => {
               key={commuPost.id}
               commuPost={commuPost}
               currentUserInfo={currentUserInfo}
+              getPosts={getPosts}
             />
           ))}
         </ContentsBox>
