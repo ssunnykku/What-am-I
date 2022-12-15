@@ -2,24 +2,11 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { EntryBtn } from '../../assets/styles/common/commonComponentStyle';
 import { theme } from '../../assets/styles/common/palette';
-import { CommunityType } from '../../types/community/communityType';
 import { font } from '../../assets/styles/common/fonts';
 import CommuLikeBtn from './CommuLikeBtn';
 import { CommunityTypeProps } from './CommuRankingCard';
-import { useEffect, useState } from 'react';
-import { getCurrentCommunityRequest } from '../../apis/communityFetcher';
 
-const CommuListCard = ({ id }: CommunityTypeProps) => {
-  const [info, setInfo] = useState<CommunityType>();
-
-  const getCurrCommu = async () => {
-    const res = await getCurrentCommunityRequest(`communities/posts/${id}`);
-    setInfo(res);
-    console.log(res);
-  };
-  useEffect(() => {
-    getCurrCommu();
-  }, []);
+const CommuListCard = ({ info }: CommunityTypeProps) => {
   return (
     <ListCardBox>
       <ListImage>
@@ -28,7 +15,7 @@ const CommuListCard = ({ id }: CommunityTypeProps) => {
       <SmallBox>
         <CommuName>{info?.name}</CommuName>
         <LikeNum>
-          <CommuLikeBtn id={id} />
+          <CommuLikeBtn id={info?.id} />
         </LikeNum>
       </SmallBox>
       <Link to={`/likedcommunity?id=${info?.id}`}>
