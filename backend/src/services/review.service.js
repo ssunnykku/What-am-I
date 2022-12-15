@@ -5,12 +5,14 @@ import sequelize from '../config/sequelize';
 import { REVIEW_PER_PAGE } from '../utils/Constant';
 import { Sequelize } from 'sequelize';
 import { AiSearchResult } from '../models/AiSearchResult.model.js';
-
+import { User } from '../models/User.model';
 const Op = Sequelize.Op;
 
 class reviewService {
   static async addReview({ description, userId, aiResultId }) {
-    const findReview = await Review.findOne({ where: { userId, aiResultId } });
+    const findReview = await Review.findOne({
+      where: { userId, aiResultId },
+    });
 
     if (findReview) {
       const errorMessage = '이미 후기가 작성된 결과입니다.';
@@ -100,32 +102,30 @@ class reviewService {
 
   // 한개 게시물 get해서 보기
   static async showReview({ _id }) {
-    const reviewId = await Review.findOne({
-      where: { id: _id },
-      include: {
-        model: AiSearchResult,
-        attributes: {
-          exclude: [
-            'userId',
-            'id',
-            'dogName',
-            'aiResult',
-            'createdAt',
-            'updatedAt',
-          ],
+    const review = await Review.findOne({
+      include: [
+        {
+          model: User,
+          right: true,
+          attributes: ['nickname', 'profileImg'],
         },
-      },
+        {
+          model: AiSearchResult,
+          attributes: ['aiImage'],
+        },
+      ],
+      where: { id: _id },
     });
 
     // const [reviewId, metadata] = await sequelize.query(
     //   `select R.id,R.description,R.userId,R.images,U.userId,U.nickname,U.profileImg from reviews as R inner join users as U on R.userId = U.userId where R.id=${id}`,
     // );
 
-    if (!reviewId) {
+    if (!review) {
       const errorMessage = '작성하신 글이 없습니다';
       return { errorMessage };
     }
-    return reviewId;
+    return review;
   }
 
   static async updateReview({ description, reviewId: id, userId }) {

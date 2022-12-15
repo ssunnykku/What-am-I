@@ -17,7 +17,6 @@ class Review extends Sequelize.Model {
         },
         userId: {
           type: DataTypes.UUID,
-          defaultValue: DataTypes.UUIDV4,
           foreignKey: true,
         },
         aiResultId: {
@@ -50,9 +49,7 @@ class Review extends Sequelize.Model {
     });
     db.Review.belongsTo(db.AiSearchResult, {
       foreignKey: 'aiResultId',
-      sourceKey: 'id',
-      onDelete: 'cascade',
-      onUpdate: 'cascade',
+      targetKey: 'id',
     });
   }
 }

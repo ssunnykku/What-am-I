@@ -52,7 +52,7 @@ class AiSearchResult extends Sequelize.Model {
   static associate(db) {
     db.AiSearchResult.hasOne(db.Review, {
       foreignKey: 'aiResultId',
-      sourceKey: 'id',
+      targetKey: 'id',
     });
     db.AiSearchResult.belongsTo(db.User, {
       foreignKey: 'userId',

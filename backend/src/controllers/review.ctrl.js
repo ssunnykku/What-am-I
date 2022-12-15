@@ -62,7 +62,7 @@ class reviewController {
       if (myReviews.errorMessage) {
         throw new Error(myReviews);
       }
-      return res.status(200).json(myReviews);
+      return res.status(200).send(myReviews);
     } catch (error) {
       return next(error);
     }
@@ -73,15 +73,15 @@ class reviewController {
     try {
       const _id = req.params.reviewId;
 
-      const comments = await reviewService.showReview({
+      const getOne = await reviewService.showReview({
         _id,
       });
-      if (comments.errorMessage) {
-        throw new Error(comments);
+      if (getOne.errorMessage) {
+        throw new Error(getOne);
       }
-      return res.status(200).json(comments);
+      return res.status(200).json(getOne);
     } catch (error) {
-      return next(error);
+      next(error);
     }
   }
 

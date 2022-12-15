@@ -4,18 +4,18 @@ class User extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        id: {
-          allowNull: false,
-          autoIncrement: true,
-          type: DataTypes.INTEGER,
-          primaryKey: true,
-        },
+        // id: {
+        //   allowNull: false,
+        //   autoIncrement: true,
+        //   type: DataTypes.INTEGER,
+        //   primaryKey: true,
+        // },
         userId: {
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
-          foreignKey: true,
           unique: true,
           allowNull: false,
+          primaryKey: true,
         },
         email: {
           type: DataTypes.STRING(40),
