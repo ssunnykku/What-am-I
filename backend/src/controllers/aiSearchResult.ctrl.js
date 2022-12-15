@@ -7,7 +7,8 @@ class aiSearchResultController {
       const userId = req.currentUserId || null;
       const { dogName } = req.body;
       const image = req.file;
-      const aiImage = image == undefined ? null : image.transforms[0].location;
+      // const aiImage = image == undefined ? null : image.transforms[0].location;
+      const aiImage = image == undefined ? null : image.location;
 
       const searchResult = await aiSearchResultService.createResult({
         dogName,
