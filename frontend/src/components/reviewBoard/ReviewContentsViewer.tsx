@@ -35,7 +35,6 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
   const [newComments, setNewComments] = useState<string>('');
   const [selectedIdx, setSelectedIdx] = useState<number | boolean>(false);
   const editInputRef = useRef<HTMLInputElement>(null);
-  const [reviewInfo, setReviewInfo] = useState<ReviewType>();
 
   useEffect(() => {
     if (editing) {
@@ -49,7 +48,6 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
   const getOneReview = async () => {
     const res = await getReviewRequest(`review/show/${props.review?.id}`);
     setReviewer(res);
-    setReviewInfo(res);
   };
 
   // 리뷰 전체 댓글 가져오기
@@ -149,7 +147,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
         <ReviewWritingEditor
-          review={reviewInfo}
+          review={props.review}
           mode="edit"
           modalHandler={modalHandler}
         />

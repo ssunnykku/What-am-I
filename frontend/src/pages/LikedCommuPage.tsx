@@ -60,11 +60,6 @@ const LikedCommuPage = () => {
     );
     setCommuPosts(res.result.selectedCommunityPost);
     setTotalPages(res.result.communityPostCount);
-
-    // const postImgMap = res.result.selectedCommunityPost.map(
-    //   (post: any) => post.images.split('8팀최고')[0],
-    // );
-    // setPostImages(postImgMap);
   };
 
   useEffect(() => {

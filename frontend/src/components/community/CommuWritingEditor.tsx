@@ -107,6 +107,11 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
         </ModalHeader>
         <ModalContents>
           <AddImage>
+            {props.mode !== 'edit' ? (
+              <span>사진은 최대 다섯 장까지 올릴 수 있습니다.</span>
+            ) : (
+              ''
+            )}
             {previewImgs.map((pre, idx) => (
               <ImagePlace key={idx}>
                 <img src={pre} alt={`${pre}-${idx}`} />
@@ -213,7 +218,7 @@ const AddImage = styled.div`
   border-right: solid 1px lightgray;
   display: flex;
   flex-direction: column;
-
+  font-family: ${font.normal};
   position: relative;
   overflow: hidden;
 
@@ -227,7 +232,7 @@ const AddImage = styled.div`
 
 const ImagePlace = styled.div`
   border-top: solid 1px lightgray;
-  border-bottom: solid 1px lightgray;
+  /* border-bottom: solid 1px lightgray; */
   width: 100%;
   height: 70%;
   position: relative;

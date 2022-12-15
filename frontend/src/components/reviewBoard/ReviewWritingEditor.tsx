@@ -26,19 +26,18 @@ const ReviewWritingEditor = (props: ReviewTypeProps) => {
     console.log(props.review);
   }, []);
 
-  // 후기 포스팅
+  // 리뷰 포스팅
   const handleWritingEditorClick = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (props.review === undefined) return;
-    if (props.review) {
-      const res = await createReviewRequest(
-        `review/${props.review?.aiResultId}`,
-        {
-          description,
-        },
-      );
-      console.log(res);
-    }
+    console.log(props.review?.aiResultId);
+
+    // const res = await createReviewRequest(
+    //   `review/${props.review?.aiResultId}`,
+    //   {
+    //     description,
+    //   },
+    // );
+    // console.log(res);
   };
 
   // 수정하기 버튼
