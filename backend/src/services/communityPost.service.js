@@ -5,19 +5,11 @@ import sequelize from '../config/sequelize';
 
 class communityPostService {
   static async createPost({ userId, communityId, images, description }) {
-    await CommunityPost.create({
+    const createPost = await CommunityPost.create({
       images,
       description,
       userId,
       communityId,
-    });
-
-    const createPost = await CommunityPost.findOne({
-      where: {
-        description: description,
-        userId: userId,
-        communityId: communityId,
-      },
     });
 
     return createPost;
