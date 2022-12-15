@@ -7,10 +7,11 @@ import { EntryBtn } from '../../assets/styles/common/commonComponentStyle';
 import { Modal } from '@mui/material';
 import CommunityMyList from './CommunityMyList';
 import PaginateButton from '../pagination/PaginateButton';
+import { CommunityType } from '../../types/community/communityType';
 const VITE_PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
 
 export interface CommunityProps {
-  Community: CommunityProps;
+  Community: CommunityType;
   id: number;
   userId: string;
   createdAt: string;
@@ -22,7 +23,7 @@ export interface CommunityProps {
 
 function Community() {
   const [userLikedList, setUserLikedList] = useState<CommunityProps[]>([]);
-  const [communityId, setCommunityId] = useState<number>(0);
+  const [communityInfo, setCommunityInfo] = useState<CommunityType>();
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -41,15 +42,15 @@ function Community() {
   }, [page]);
   useEffect(() => console.log(page), [page]);
 
-  async function getMyPost(id: number) {
-    setOpen(true);
-    setCommunityId(id);
+  async function getMyPost(value: CommunityProps) {
+    handleOpen();
+    setCommunityInfo(value.Community);
   }
 
   return (
     <Div>
       {open ? (
-        <CommunityMyList id={communityId} setOpen={setOpen} />
+        <CommunityMyList commuInfo={communityInfo} setOpen={setOpen} />
       ) : userLikedList.length ? (
         userLikedList.map((value) => (
           <CommunityCard value={value.Community} key={value.Community.id}>
@@ -61,9 +62,7 @@ function Community() {
               >
                 입장하기
               </EntryBtn>
-              <EntryBtn onClick={() => getMyPost(value.Community.id)}>
-                내가 쓴 글
-              </EntryBtn>
+              <EntryBtn onClick={() => getMyPost(value)}>내가 쓴 글</EntryBtn>
             </ButtonContainer>
           </CommunityCard>
         ))
