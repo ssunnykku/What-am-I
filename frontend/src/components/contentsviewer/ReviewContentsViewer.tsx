@@ -48,6 +48,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     const res = await getReviewRequest(`review/show/${props.review?.id}`);
     setReviewer(res);
     // res.map((val: OneReviewType) => setReviewer(val));
+    // console.log(res);
   };
 
   // 리뷰 전체 댓글 가져오기
@@ -426,7 +427,7 @@ const ContentsBox = styled.div`
     }
 
     :hover {
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: rgba(0, 0, 0, 0.06);
     }
 
     :hover .btn-box {

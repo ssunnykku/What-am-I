@@ -46,7 +46,6 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
   useEffect(() => {
     getOneCommuPost();
     getCurrCommuComments();
-    getOnePostImg();
   }, []);
 
   // 포스팅 하나 가져오기
@@ -56,10 +55,6 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
     );
     setPostInfo(res);
     setPostImgs(res.images.split(','));
-  };
-
-  const getOnePostImg = () => {
-    console.log(postImgs);
   };
 
   // 포스팅 수정

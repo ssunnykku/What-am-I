@@ -30,13 +30,3 @@ export interface OneReviewType {
   profileImg: string;
   userId: string;
 }
-
-export interface LikeGetType {
-  myLikeInformation: {
-    createdAt: string;
-    id: number;
-    reviewId: string;
-    userId: string;
-  };
-  totalLikes: number;
-}

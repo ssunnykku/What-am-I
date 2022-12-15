@@ -16,9 +16,9 @@ const ReviewBoardPage = () => {
   const [reviews, setReviews] = useState<ReviewType[]>([]);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentUser, setCurrentUser] = useState<string>('');
-  const [search, setSearch] = useState<string>('');
   const [userInfo, setUserInfo] = useState<UserInfoType>();
 
+  const [search, setSearch] = useState<string>('');
   const [isLogin, setIsLogin] = useState<boolean>(false);
 
   const { isFirst, isLast, handleNextBtnClick, handlePrevBtnClick } =
@@ -34,7 +34,6 @@ const ReviewBoardPage = () => {
     e.preventDefault();
     if (search !== null || search !== '') {
       const res = await getReviewRequest(`review/search?${search}`);
-      console.log(res);
     }
   };
 
@@ -63,7 +62,6 @@ const ReviewBoardPage = () => {
     const res = await getReviewRequest(`reviews?page=${pages}`);
 
     setReviews(res.result.selectedReviews);
-    console.log(res);
     setTotalPages(res.result.reviewCount);
   };
   useEffect(() => {

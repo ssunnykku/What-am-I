@@ -22,7 +22,7 @@ const CommuRankingCard = ({ info }: CommunityTypeProps) => {
         </CommuImage>
         <CommuName>{info?.name}</CommuName>
         <div className="like-icon">
-          <CommuLikeBtn />
+          <CommuLikeBtn id={info?.id} />
         </div>
       </CommuRankingCardBox>
     </Link>

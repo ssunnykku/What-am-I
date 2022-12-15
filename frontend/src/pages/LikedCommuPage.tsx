@@ -47,7 +47,7 @@ const LikedCommuPage = () => {
     setCommuInfo(res);
   };
 
-  // 현재 로그인 중인 유저 닉네임 받기
+  // 현재 로그인 중인 유저 정보 받기
   const getCurrentUserInfo = async () => {
     const res = await getUserData();
     setCurrentUserInfo(res);
@@ -58,7 +58,6 @@ const LikedCommuPage = () => {
     const res = await getCurrentCommunityRequest(
       `communityPost/${id}?page=${page}`,
     );
-    console.log(res);
     setCommuPosts(res.result.selectedCommunityPost);
     setTotalPages(res.result.communityPostCount);
 
@@ -216,7 +215,7 @@ const LikedCommuPage = () => {
           </SearchBox>
           <InfoBox>
             <div>
-              <CommuLikeBtn />
+              <CommuLikeBtn id={commuInfo?.id} />
             </div>
             <div>
               <StickyNote2Icon style={{ marginRight: '3px' }} />

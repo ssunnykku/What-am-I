@@ -107,7 +107,7 @@ const CommunityPage = () => {
                   commuList.length - 1 === idx ? ref : undefined;
                 return (
                   <div key={idx} ref={observerRef}>
-                    <CommuListCard id={commu.id} />
+                    <CommuListCard info={commu} />
                   </div>
                 );
               })}
