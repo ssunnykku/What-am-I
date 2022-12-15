@@ -4,18 +4,18 @@ class User extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        // id: {
-        //   allowNull: false,
-        //   autoIncrement: true,
-        //   type: DataTypes.INTEGER,
-        //   primaryKey: true,
-        // },
+        id: {
+          allowNull: false,
+          autoIncrement: true,
+          type: DataTypes.INTEGER,
+          primaryKey: true,
+        },
         userId: {
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           unique: true,
           allowNull: false,
-          primaryKey: true,
+          // primaryKey: true,
         },
         email: {
           type: DataTypes.STRING(40),
@@ -93,6 +93,10 @@ class User extends Sequelize.Model {
         sourceKey: 'userId',
       }),
       db.User.hasMany(db.AiSearchResult, {
+        foreignKey: 'userId',
+        sourceKey: 'userId',
+      }),
+      db.User.hasMany(db.CommunityPostLike, {
         foreignKey: 'userId',
         sourceKey: 'userId',
       });
