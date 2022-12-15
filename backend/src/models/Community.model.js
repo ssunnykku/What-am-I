@@ -38,12 +38,7 @@ class Community extends Sequelize.Model {
           type: DataTypes.STRING,
           // defaultValue:
           //   'https://scontent.cdnsnapwidget.com/vp/4aefafd3bee59d1d0fa2b29a59fc2bc5/5D7701C4/t51.2885-15/sh0.08/e35/s640x640/47690229_1430752333723397_2893005724802088960_n.jpg',
-          allowNull: false,
-          validate: {
-            notNull: {
-              msg: 'Please enter images',
-            },
-          },
+          allowNull: true,
         },
       },
       {

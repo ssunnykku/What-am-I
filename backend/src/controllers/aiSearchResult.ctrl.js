@@ -1,13 +1,13 @@
 import { aiSearchResultService } from '../services/aiSearchResult.service';
 
 class aiSearchResultController {
+  // 1. ai 분석 요청하기 (사진 업로드)
   static async addImage(req, res, next) {
     try {
-      const userId = req.currentUserId;
+      const userId = req.currentUserId || null;
       const { dogName } = req.body;
       const image = req.file;
-
-      const aiImage = image == undefined ? null : image.location;
+      const aiImage = image == undefined ? null : image.transforms[0].location;
 
       const searchResult = await aiSearchResultService.createResult({
         dogName,
@@ -19,7 +19,7 @@ class aiSearchResultController {
       next(error);
     }
   }
-
+  //  2. 내가 남긴 리뷰 리스트 가져오기
   static async myReview(req, res, next) {
     try {
       const userId = req.currentUserId;
