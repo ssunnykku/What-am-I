@@ -20,6 +20,32 @@ class aiSearchResultController {
       next(error);
     }
   }
+
+  static async addImage2(req, res, next) {
+    try {
+      const image = req.file;
+      // const aiImage = image == undefined ? null : image.transforms[0].location;
+      const uploadImage = image == undefined ? null : image.location;
+
+      // const searchResult = await aiSearchResultService.createResult2({
+      //   uploadImage,
+      // });
+      return res.status(200).json({ url: uploadImage });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // static async myReview2(req, res, next) {
+  //   try {
+  //     const userId = req.currentUserId;
+  //     const getMyImages = await aiSearchResultService.getMyResults(userId);
+  //     return res.status(200).send(getMyImages);
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
+
   //  2. 내가 남긴 리뷰 리스트 가져오기
   static async myReview(req, res, next) {
     try {

@@ -13,6 +13,14 @@ aiSearchResultRouter.post(
   aiSearchResultController.addImage,
 );
 
+aiSearchResultRouter.post(
+  '/v1/predict',
+  upload.single('image'),
+  aiSearchResultController.addImage2,
+);
+
+// aiSearchResultRouter.get('/', aiSearchResultController.myReview);
+
 // 2. 내가 남긴 리뷰 리스트 가져오기
 aiSearchResultRouter.get(
   '/airesult',

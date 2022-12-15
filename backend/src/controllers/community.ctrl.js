@@ -1,6 +1,7 @@
 import { communityService } from '../services/community.service';
 
 class communityController {
+  // 1. 커뮤니티 만들기
   static async addCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
@@ -20,6 +21,7 @@ class communityController {
       next(error);
     }
   }
+  // 2. 커뮤니티 1개 가져오기
   static async getOne(req, res, next) {
     try {
       const userId = req.currentUserId;
@@ -34,7 +36,7 @@ class communityController {
     }
   }
 
-  //전체 커뮤니티 리스트 10개씩
+  // 3. 전체 커뮤니티 리스트 10개씩
   static async getCommunityList(req, res, next) {
     try {
       const userId = req.currentUserId;
@@ -54,6 +56,7 @@ class communityController {
     }
   }
 
+  // 4. 인기 커뮤니티 3개 가져오기
   static async getBestCommunities(req, res, next) {
     try {
       const userId = req.currentUserId;
@@ -65,7 +68,7 @@ class communityController {
       next(error);
     }
   }
-
+  // 5. 전체 커뮤니티와 커뮤니티 별 게시물들 보여주기
   static async getCommunitiesAndPosts(req, res, next) {
     try {
       const userId = req.currentUserId;
@@ -75,13 +78,11 @@ class communityController {
       next(error);
     }
   }
-
+  // 6. 커뮤니티 수정
   static async updateCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
-
       const { name, introduction } = req.body;
-
       const communityId = req.params.communityId;
       const image = req.file;
       const updatedImage = image == undefined ? null : image.location;
@@ -106,7 +107,7 @@ class communityController {
       return next(error);
     }
   }
-
+  // 7. 커뮤니티 삭제
   static async deleteCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
@@ -125,7 +126,7 @@ class communityController {
       return next(error);
     }
   }
-
+  // 8. 커뮤니티 검색기능
   static async getFoundCommunities(req, res, next) {
     try {
       const userId = req.currentUserId;

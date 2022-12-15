@@ -10,6 +10,12 @@ class aiSearchResultService {
     });
     return result;
   }
+  // static async createResult2({ uploadImage }) {
+  //   const result = await AiSearchResult.create({
+  //     uploadImage,
+  //   });
+  //   return result;
+  // }
 
   static async getMyResults(userId) {
     const result = await AiSearchResult.findAll({ where: { userId: userId } });
