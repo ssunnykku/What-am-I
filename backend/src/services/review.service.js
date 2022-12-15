@@ -18,6 +18,16 @@ class reviewService {
       const errorMessage = '이미 후기가 작성된 결과입니다.';
       return errorMessage;
     }
+
+    // const findResult = await AiSearchResult.findOne({
+    //   where: { userId: userId, id: aiResultId },
+    // });
+
+    // if (!findResult) {
+    //   const errorMessage = '다른 회원의 조회 결과입니다.';
+    //   return errorMessage;
+    // }
+
     // db에 저장
     const createdNewReview = await Review.create({
       description,
