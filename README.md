@@ -55,18 +55,27 @@ AWS S3
 [![Watch the video](https://kdt-gitlab.elice.io/ai_track/class05/ai_project/team08/team08-project/uploads/b3b2369cfe9153272141b8441a272a49/%EA%B7%B8%EB%A6%BC1.png)](https://youtu.be/UsKXQdNAMw8)
 
 <br>
+<br>
 
 회원가입 및 회원정보 수정
+<br>
+
 ![image](https://kdt-gitlab.elice.io/ai_track/class05/ai_project/team08/team08-project/uploads/14f75f9d0c6ef5000737c5085e601c18/KakaoTalk_20221215_153249555_01.gif)
+<br>
 
 <br>
 
 나정보에서 내가 속한 커뮤니티 및 나의 글을 모아볼 수 있음
+<br>
+
 ![image](https://kdt-gitlab.elice.io/ai_track/class05/ai_project/team08/team08-project/uploads/3a6dc6f4af33ac4f8b529c4b3a4050c8/KakaoTalk_20221215_153249555_02.gif)
 
 <br>
+<br>
 
 커뮤니티 검색 및 좋아요 기능
+<br>
+
 ![image](https://kdt-gitlab.elice.io/ai_track/class05/ai_project/team08/team08-project/uploads/9d09e32637108eb9eb9b7aec2d795c27/KakaoTalk_20221215_153249555.gif)
 
 <br>
