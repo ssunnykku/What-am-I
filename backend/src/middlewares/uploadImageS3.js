@@ -17,7 +17,7 @@ function uploadImageS3() {
   const storage = multerS3({
     // 저장 위치
     s3: new AWS.S3(),
-    bucket: 'team08images',
+    bucket: process.env.S3_BUCKET,
     acl: 'public-read',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key(req, file, cb) {
