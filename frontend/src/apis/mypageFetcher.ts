@@ -33,9 +33,13 @@ export async function EditUserData(nickname: string, password: string) {
       password,
     },
   );
-  console.log(response);
   return response;
 }
+// 유저 삭제
+export const deleteUserData = async () => {
+  const response = await axiosInstance.delete(`/users`);
+  return response.data;
+};
 
 // 리뷰
 // 사용자 리뷰 가져오기
