@@ -62,7 +62,7 @@ const LikedCommuPage = () => {
     setTotalPages(res.result.communityPostCount);
 
     // const postImgMap = res.result.selectedCommunityPost.map(
-    //   (post: any) => post.images.split(',')[0],
+    //   (post: any) => post.images.split('8팀최고')[0],
     // );
     // setPostImages(postImgMap);
   };
@@ -226,6 +226,7 @@ const LikedCommuPage = () => {
           {commuPosts?.map((commuPost) => (
             <CommuContentsModal
               key={commuPost.id}
+              commuInfo={commuInfo}
               commuPost={commuPost}
               currentUserInfo={currentUserInfo}
               getPosts={getPosts}

@@ -1,6 +1,6 @@
 export interface ReviewInitialType {
   description: string;
-  images: string;
+  // images: string;
 }
 
 export interface ReviewCommentType {
@@ -13,20 +13,34 @@ export interface ReviewCommentType {
 }
 
 export interface ReviewType {
+  aiResultId: number;
   id: number;
   description: string;
   userId: string;
-  images: string;
   createdAt: string;
   updatedAt: string;
   likeCount: number;
   likeStatus: number;
 }
 
+export interface ReviewPostType {
+  id: number;
+  description: string;
+  userId: string;
+  aiResultId: number | string;
+  updatedAt: string;
+  createdAt: string;
+}
+
 export interface OneReviewType {
+  AiSearchResult: {
+    aiImage: string;
+  };
+  User: {
+    nickname: string;
+    profileImg: string;
+  };
   description: string;
   id: number;
-  nickname: string;
-  profileImg: string;
   userId: string;
 }

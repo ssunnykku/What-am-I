@@ -3,7 +3,6 @@ import { theme } from '../assets/styles/common/palette';
 import { font } from '../assets/styles/common/fonts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import axios from 'axios';
 import { getPuppyData } from '../apis/mypageFetcher';
 
 const AITestResultPage = () => {
@@ -28,8 +27,8 @@ const AITestResultPage = () => {
             "이름"의 견종 분석 결과
             <ResultText></ResultText>
             <div>로 확인되었습니다.</div>
-            <ShareBtn onClick={() => navigate('/reviewboard')}>
-              다른 강아지 구경가기
+            <ShareBtn onClick={() => navigate('/login')}>
+              로그인 하고 댕댕이들 보러 가기
             </ShareBtn>
           </PuppyResult>
         </ResultDescBox>
@@ -95,7 +94,7 @@ const ResultText = styled.div`
 
 const ShareBtn = styled.button`
   height: 4rem;
-  width: 20rem;
+  width: 21rem;
   margin-top: 15px;
   font-family: ${font.bold};
   border-radius: 10px;

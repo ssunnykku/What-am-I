@@ -48,7 +48,6 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     const res = await getReviewRequest(`review/show/${props.review?.id}`);
     setReviewer(res);
     // res.map((val: OneReviewType) => setReviewer(val));
-    // console.log(res);
   };
 
   // 리뷰 전체 댓글 가져오기
@@ -78,11 +77,11 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     setDescription('');
   };
 
-  // 리뷰 수정
-  const handleEditMyReview = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    await editReviewRequest(`review/${props.review?.id}`, description);
-  };
+  // 수정한 리뷰 가져오기
+  // const handleEditMyReview = async (e: React.MouseEvent) => {
+  //   e.preventDefault();
+  //   await editReviewRequest(`review/${props.review?.id}`, description);
+  // };
   useEffect(() => {
     if (props.getReviews) {
       props.getReviews();
@@ -160,9 +159,9 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
             <div className="user-name">
               <ProfileBox>
                 <div className="profile">
-                  <img src={reviewer?.profileImg} />
+                  <img src={reviewer?.User.profileImg} />
                 </div>
-                <div>{reviewer?.nickname}</div>
+                <div>{reviewer?.User.nickname}</div>
               </ProfileBox>
             </div>
             {props.currentUser === reviewer?.userId ? (
@@ -171,7 +170,6 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
                   onClick={(e) => {
                     e.preventDefault();
                     modalHandler();
-                    handleEditMyReview;
                   }}
                 >
                   수정

@@ -5,7 +5,7 @@ import Storage from '../storage/storage';
 // 리뷰 게시판 글쓰기
 export async function createReviewRequest(
   endpoint: string,
-  { description, images }: ReviewInitialType,
+  { description }: ReviewInitialType,
 ) {
   // const formData = new FormData();
   // formData.append('description', description);
@@ -14,7 +14,6 @@ export async function createReviewRequest(
 
   const res = await axiosInstance.post(endpoint, {
     description: description,
-    images: images,
   });
 
   // const res = await axiosInstance.post(endpoint, {

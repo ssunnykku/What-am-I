@@ -43,30 +43,21 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
 
   const [postImgs, setPostImgs] = useState<string[]>([]);
 
-  useEffect(() => {
-    getOneCommuPost();
-    getCurrCommuComments();
-  }, []);
-
   // 포스팅 하나 가져오기
   const getOneCommuPost = async () => {
     const res = await getCurrentCommunityRequest(
       `communitypost/one/${props.commuPost?.id}`,
     );
     setPostInfo(res);
-    setPostImgs(res.images.split(','));
+    setPostImgs(res.images.split('8팀최고'));
   };
+  useEffect(() => {
+    getOneCommuPost();
+    getCurrCommuComments();
+    console.log(props.commuInfo);
+  }, []);
 
-  // 포스팅 수정
-  const handleEditMyCommuPost = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (props.commuPost) {
-      await editCommuPostRequest(
-        `communitypost/${props.commuPost?.id}`,
-        description,
-      );
-    }
-  };
+  // 수정된 게시물 가져오기
   useEffect(() => {
     if (props.getPosts) {
       props.getPosts();
@@ -82,7 +73,7 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const deleteConfirm = () => (
     handleDeleteMyCommuPost(),
     window.alert('삭제했습니다.'),
-    (location.href = `${VITE_PUBLIC_URL}likedcommunity?id=${props.commuPost?.id}`)
+    (location.href = `${VITE_PUBLIC_URL}likedcommunity?id=${props.commuInfo?.id}`)
   );
   const cancelConfirm = () => window.alert('취소했습니다.');
 
@@ -169,9 +160,6 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
       <ContentsModalWrapper>
         <AddImage>
           <ImagePlace>
-            {/* {postImgs.map((img, idx) => (
-              <img src={img} key={idx} />
-            ))} */}
             <ImgCarousel postImgs={postImgs} />
           </ImagePlace>
         </AddImage>
@@ -191,7 +179,6 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
                   onClick={(e) => {
                     e.preventDefault();
                     modalHandler();
-                    handleEditMyCommuPost(e);
                   }}
                 >
                   수정
@@ -309,7 +296,7 @@ const AddImage = styled.div`
 const ImagePlace = styled.div`
   width: 100%;
   height: 85%;
-  max-height: 50rem;
+  max-height: 45rem;
   position: relative;
   overflow: hidden;
   display: flex;

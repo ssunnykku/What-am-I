@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import { SearchBox } from '../assets/styles/common/commonComponentStyle';
-import ReviewCreateModal from '../components/modal/ReviewWritingModal';
+import ReviewWritingModal from '../components/modal/ReviewWritingModal';
 import { theme } from '../assets/styles/common/palette';
 import { useEffect, useState } from 'react';
 import { getReviewRequest } from '../apis/reviewFetcher';
 import ReviewContentsModal from '../components/modal/ReviewContentsModal';
 import usePaginate from '../hooks/usePaginate/usePaginate';
-import { ReviewType } from '../types/reviewboard/reviewType';
+import { ReviewPostType, ReviewType } from '../types/reviewboard/reviewType';
 import { getUserData } from '../apis/mypageFetcher';
 import { UserInfoType } from '../types/auth/authType';
 
@@ -17,14 +17,43 @@ const ReviewBoardPage = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentUser, setCurrentUser] = useState<string>('');
   const [userInfo, setUserInfo] = useState<UserInfoType>();
+  const [reviewPost, setReviewPost] = useState<ReviewPostType>();
 
   const [search, setSearch] = useState<string>('');
-  const [isLogin, setIsLogin] = useState<boolean>(false);
 
   const { isFirst, isLast, handleNextBtnClick, handlePrevBtnClick } =
     usePaginate(pages, setPages, totalPages, 1);
 
-  // 후기 게시판 검색 기능
+  // 현재 로그인 정보 받기
+  const getCurrentUser = async () => {
+    try {
+      const res = await getUserData();
+      setCurrentUser(res.userId);
+      setUserInfo(res);
+    } catch (err) {
+      alert('로그인이 필요한 서비스입니다. 로그인하러 가볼까요?');
+      document.location.href = '/login';
+    }
+  };
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
+  // 전체 리뷰 받기
+  const getReviews = async () => {
+    const res = await getReviewRequest(`reviews?page=${pages}`);
+
+    setReviews(res.result.selectedReviews);
+    setTotalPages(res.result.reviewCount);
+    // const resMap = res.result.selectedReviews.map(
+    //   (res: any) => res.AiSearchResult,
+    // );
+  };
+  useEffect(() => {
+    getReviews();
+  }, [handleNextBtnClick, handlePrevBtnClick]);
+
+  // 리뷰 검색 기능 --- 추가 작업 필요 --- 완성 ㄴㄴㄴ
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setSearch(e.target.value);
@@ -34,45 +63,15 @@ const ReviewBoardPage = () => {
     e.preventDefault();
     if (search !== null || search !== '') {
       const res = await getReviewRequest(`review/search?${search}`);
+      console.log(res);
     }
   };
-
-  // 현재 로그인 중인 유저 받기
-  const getCurrentUser = async () => {
-    const res = await getUserData();
-    setCurrentUser(res.userId);
-    setUserInfo(res);
-  };
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
-
-  // 로그인 상태인지 아닌지 체크
-  // const checkLogin = () => {
-  //   if (currentUser !== '') {
-  //     setIsLogin(true);
-  //   }
-  // };
-  // useEffect(() => {
-  //   checkLogin();
-  // }, [currentUser]);
-
-  // 리뷰 게시판 전체 리뷰 받기
-  const getReviews = async () => {
-    const res = await getReviewRequest(`reviews?page=${pages}`);
-
-    setReviews(res.result.selectedReviews);
-    setTotalPages(res.result.reviewCount);
-  };
-  useEffect(() => {
-    getReviews();
-  }, [handleNextBtnClick, handlePrevBtnClick]);
 
   return (
     <BoardBox>
       <BoardHeader>
         사람들과 AI 분석 결과를 공유해보세요.
-        <ReviewCreateModal />
+        <ReviewWritingModal />
       </BoardHeader>
       <BoardContent>
         <SlideLeftBtn disabled={isFirst} onClick={handlePrevBtnClick} />
@@ -95,7 +94,7 @@ const ReviewBoardPage = () => {
           value={search}
           placeholder="글 내용 검색"
           onChange={onChangeSearch}
-        ></input>
+        />
         <button type="submit">검색</button>
       </SearchBox>
     </BoardBox>

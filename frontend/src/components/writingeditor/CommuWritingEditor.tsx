@@ -11,9 +11,6 @@ import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 import { getUserData } from '../../apis/mypageFetcher';
 import { UserInfoType } from '../../types/auth/authType';
 
-// 포스팅이 진짜로 삭제가 안 됨 삭제 버튼 구현
-// 공유하기 누르면 바로 바닥 페이지로 가게끔
-
 const CommuWritingEditor = (props: CurrentCommuityProps) => {
   const [description, setDescription] = useState<string>(
     props.commuPost?.description ?? '',
@@ -133,7 +130,7 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
               </InputBox>
             ) : (
               <div>
-                <img src={props.commuPost?.images.split(',')[0]} />
+                <img src={props.commuPost?.images.split('8팀최고')[0]} />
               </div>
             )}
           </AddImage>

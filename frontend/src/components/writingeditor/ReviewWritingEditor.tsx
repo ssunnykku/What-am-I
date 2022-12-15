@@ -9,7 +9,6 @@ import { getUserData } from '../../apis/mypageFetcher';
 import { UserInfoType } from '../../types/auth/authType';
 
 const ReviewWritingEditor = (props: ReviewTypeProps) => {
-  const [images, setImages] = useState<string>('');
   const [description, setDescription] = useState<string>(
     props.review?.description ?? '',
   );
@@ -26,13 +25,19 @@ const ReviewWritingEditor = (props: ReviewTypeProps) => {
   }, []);
 
   // 후기 포스팅
-  const handleWritingEditorClick = async () => {
-    await createReviewRequest('review', {
-      description,
-      images,
-    });
+  const handleWritingEditorClick = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(props.review);
+
+    // const res = await createReviewRequest(
+    //   `review/${props.reviewInfo?.aiResultId}`,
+    //   {
+    //     description,
+    //   },
+    // );
   };
 
+  // 수정하기 버튼
   const handleEditMyReview = async (e: React.FormEvent) => {
     e.preventDefault();
     await editReviewRequest(`review/${props.review?.id}`, description);
@@ -47,7 +52,7 @@ const ReviewWritingEditor = (props: ReviewTypeProps) => {
       onSubmit={(e: React.FormEvent) => {
         props.mode === 'edit'
           ? handleEditMyReview(e)
-          : handleWritingEditorClick();
+          : handleWritingEditorClick(e);
       }}
     >
       <ModalHeader>
@@ -58,7 +63,7 @@ const ReviewWritingEditor = (props: ReviewTypeProps) => {
       </ModalHeader>
       <ModalContents>
         <AddImage>
-          <div>{images}</div>
+          <div> ~ 결과 카드 ~ </div>
         </AddImage>
         <AddWriting>
           <div className="user-name">
@@ -129,14 +134,12 @@ const ModalHeaderBtn = styled.button`
 
 const ProfileBox = styled.div`
   display: flex;
-  flex-direction: row;
   align-items: center;
   width: 80%;
   height: 3.5rem;
-  line-height: 4.3rem;
-  padding-left: 3%;
   font-size: 16px;
   font-family: ${font.bold};
+  padding-left: 5px;
 
   .profile {
     width: 45px;

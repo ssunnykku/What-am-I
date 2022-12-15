@@ -7,6 +7,7 @@ import {
   CurrentCommuPostsType,
 } from '../../types/community/communityType';
 import { UserInfoType } from '../../types/auth/authType';
+import { useEffect } from 'react';
 
 export interface CurrentCommuityProps {
   commuInfo?: CommunityType;
@@ -19,16 +20,22 @@ export interface CurrentCommuityProps {
 }
 
 const CommuContentsModal = ({
+  commuInfo,
   commuPost,
   currentUserInfo,
   getPosts,
 }: CurrentCommuityProps) => {
   const [isOpen, modalHandler] = useModal();
 
+  useEffect(() => {
+    console.log(commuInfo);
+  }, []);
+
   return (
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
         <CommuContentsViewer
+          commuInfo={commuInfo}
           getPosts={getPosts}
           commuPost={commuPost}
           currentUserInfo={currentUserInfo}

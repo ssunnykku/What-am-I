@@ -23,7 +23,6 @@ const CommunityPage = () => {
   const [rankings, setRankings] = useState<CommunityType[]>([]);
   const [like, setLike] = useState<CommunityRankingType>();
 
-  const [currentUserInfo, setCurrentUserInfo] = useState<UserInfoType>();
   const [commuList, setCommuList] = useState<CommunityType[]>([]);
   const [pages, setPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
@@ -50,10 +49,14 @@ const CommunityPage = () => {
     }
   }, [inView]);
 
-  // 현재 로그인 중인 유저 닉네임 받기
+  // 로그인 여부
   const getCurrentUser = async () => {
-    const res = await getUserData();
-    setCurrentUserInfo(res);
+    try {
+      await getUserData();
+    } catch (err) {
+      alert('로그인이 필요한 서비스입니다. 로그인하러 가볼까요?');
+      document.location.href = '/login';
+    }
   };
 
   // 베스트 커뮤니티
@@ -72,9 +75,9 @@ const CommunityPage = () => {
   };
 
   useEffect(() => {
+    getCurrentUser();
     getRankingCommunity();
     getCommunitiesList();
-    getCurrentUser();
   }, []);
 
   return (

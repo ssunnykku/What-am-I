@@ -22,7 +22,7 @@ function MainPage() {
             있는 공간도 있으니 마음껏 즐겨 보세요!
           </div>
           <LetterBtn onClick={() => navigate('/dna')}>
-            AI 분석하러 가기
+            견종 분석하러 가기
           </LetterBtn>
         </MainLetterBox>
       </MainContent>

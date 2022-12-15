@@ -29,6 +29,7 @@ const PaginateButton = ({ page, setPage, totalPages }: PaginateButtonProps) => {
             key={page}
             onClick={() => handlePageBtnClick(page === null ? 1 : page)}
             className={page === idx ? 'color-btn' : ''}
+            // aria-current={page === idx ? 'page' : undefined}
           >
             {page}
           </PaginateBtn>
