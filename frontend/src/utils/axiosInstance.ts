@@ -31,7 +31,7 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     // server error
-    throw new Error(error);
+    throw error;
   },
 );
 

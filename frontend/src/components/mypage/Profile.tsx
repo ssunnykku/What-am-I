@@ -39,7 +39,11 @@ function Profile() {
   async function EditImg(e: any) {
     setProfileImg(URL.createObjectURL(e.target.files[0]));
     const response = await EditUserImg(e.target.files[0]);
-    console.log(response);
+    if (response.success) {
+      window.alert(response.message);
+    } else if (!response.success) {
+      window.alert(response.message);
+    }
   }
 
   async function EditData(e: any) {
