@@ -3,142 +3,147 @@ import styled from '@emotion/styled';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import { EditDelBtn } from '../../assets/styles/common/commonComponentStyle';
-import { ReviewTypeProps } from '../modal/ReviewContentsModal';
-import {
-  createReviewCommentRequest,
-  deleteReviewRequest,
-  editReviewRequest,
-  getReviewRequest,
-} from '../../apis/reviewFetcher';
 import MyModal from '../modal/MyModal';
 import useModal from '../../hooks/modal/useModal';
-import ReviewWritingEditor from '../writingeditor/ReviewWritingEditor';
-import {
-  OneReviewType,
-  ReviewCommentType,
-} from '../../types/reviewboard/reviewType';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import CommuLikeBtn from './CommuLikeBtn';
+import { CurrentCommuityProps } from '../modal/CommuContentsModal';
+import CommuWritingEditor from './CommuWritingEditor';
+import {
+  deleteCommuPostRequest,
+  deleteCurrCommuRequest,
+  editCommuPostRequest,
+  editCurrCommuCommentsRequest,
+  getCurrentCommunityRequest,
+  postCurrCommuCommentsRequest,
+} from '../../apis/communityFetcher';
+import {
+  CurrCommuCommentsType,
+  CurrentCommuPostsType,
+} from '../../types/community/communityType';
 import { useConfirm } from '../../hooks/confirm/useConfirm';
-import ReviewLikeBtn from '../reviewBoard/ReviewLikeBtn';
+import ImgCarousel from './Carousel';
 
-const ReviewContentsViewer = (props: ReviewTypeProps) => {
+const VITE_PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
+
+const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const [isOpen, modalHandler] = useModal();
   const [pages, setPages] = useState<number>(1);
   const [description, setDescription] = useState<string>('');
-  const [comments, setComments] = useState<ReviewCommentType[]>([]);
-  const [reviewer, setReviewer] = useState<OneReviewType>();
-  const [date, setDate] = useState(props.review?.createdAt);
+  const [comments, setComments] = useState<CurrCommuCommentsType[]>([]);
+  const [date, setDate] = useState(props.commuPost?.createdAt);
   const newDate = date?.split(' ')[0];
+  const [selectedIdx, setSelectedIdx] = useState<number>(0);
   const [editing, setEditing] = useState<boolean>(false);
-  const [newComments, setNewComments] = useState<string>('');
-  const [selectedIdx, setSelectedIdx] = useState<number | boolean>(false);
+  const [newComment, setNewComment] = useState<string>('');
+  const [postInfo, setPostInfo] = useState<CurrentCommuPostsType>();
+
   const editInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (editing) {
-      if (editInputRef.current) {
-        editInputRef.current.focus();
-      }
-    }
-  }, [editing]);
+  const [postImgs, setPostImgs] = useState<string[]>([]);
 
-  // 리뷰 하나 가져오기
-  const getOneReview = async () => {
-    const res = await getReviewRequest(`review/show/${props.review?.id}`);
-    setReviewer(res);
-    // res.map((val: OneReviewType) => setReviewer(val));
-  };
-
-  // 리뷰 전체 댓글 가져오기
-  const getReviewComments = async () => {
-    const res = await getReviewRequest(
-      `reviewComment/${props.review?.id}?page=${pages}`,
+  // 포스팅 하나 가져오기
+  const getOneCommuPost = async () => {
+    const res = await getCurrentCommunityRequest(
+      `communitypost/one/${props.commuPost?.id}`,
     );
-    setComments(res.reverse());
+    setPostInfo(res);
+    setPostImgs(res.images.split('8팀최고'));
   };
   useEffect(() => {
-    getOneReview();
-    getReviewComments();
+    getOneCommuPost();
+    getCurrCommuComments();
+    console.log(props.commuInfo);
   }, []);
 
-  // 리뷰 댓글 쓰기
-  const postReviewComments = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const post = await createReviewCommentRequest(
-      `reviewComment/${props.review?.id}`,
-      description,
-    );
-
-    const res = await getReviewRequest(
-      `reviewComment/${post.reviewId}/${post.id}`,
-    );
-    setComments([...res, ...comments]);
-    setDescription('');
-  };
-
-  // 수정한 리뷰 가져오기
-  // const handleEditMyReview = async (e: React.MouseEvent) => {
-  //   e.preventDefault();
-  //   await editReviewRequest(`review/${props.review?.id}`, description);
-  // };
+  // 수정된 게시물 가져오기
   useEffect(() => {
-    if (props.getReviews) {
-      props.getReviews();
+    if (props.getPosts) {
+      props.getPosts();
     }
   }, [isOpen]);
 
-  // 리뷰 삭제
-  const handleDeleteMyReview = async () => {
-    await deleteReviewRequest(`review/${props.review?.id}`);
+  //포스팅 삭제
+  const handleDeleteMyCommuPost = async () => {
+    if (props.commuPost) {
+      await deleteCommuPostRequest(props.commuPost?.id);
+      location.reload();
+    }
   };
 
-  const deleteConfirm = () => (
-    handleDeleteMyReview(), window.alert('삭제했습니다.')
-  );
-  const cancelConfirm = () => window.alert('취소했습니다.');
+  const deletePost = (e: any) => {
+    if (window.confirm('게시글을 삭제하시겠습니까?')) {
+      e.preventDefault();
+      handleDeleteMyCommuPost();
+      return window.alert('삭제했습니다.');
+    } else {
+      e.preventDefault();
+      return window.alert('취소했습니다.');
+    }
+  };
 
-  const confirmDelete = useConfirm(
-    '삭제하시겠습니까?',
-    deleteConfirm,
-    cancelConfirm,
-  );
+  // 포스팅 전체 댓글 가져오기
+  const getCurrCommuComments = async () => {
+    const res = await getCurrentCommunityRequest(
+      `communityComment/${props.commuPost?.id}`,
+    );
+    setComments(res.reverse());
+  };
+
+  // 포스팅 댓글 쓰기
+  const postCurrCommuComments = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (props.commuPost) {
+      const res = await postCurrCommuCommentsRequest(
+        props.commuPost?.id,
+        description,
+      );
+
+      const result = await getCurrentCommunityRequest(
+        `communityComment/${res.communityPostId}/${res.id}`,
+      );
+      setComments([...result, ...comments]);
+      setDescription('');
+    }
+  };
 
   // 댓글 수정
-  const onClickCommentEditButton = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onClickCommentEditBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setEditing(true);
   };
 
   const onChangeCommentEditInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewComments(e.target.value);
+    setNewComment(e.target.value);
   };
 
   const handleCommentEditButton = async (
     e: React.FormEvent,
-    comment: ReviewCommentType,
+    comment: CurrCommuCommentsType,
   ) => {
     e.preventDefault();
-    await editReviewRequest(`reviewComment/${comment.id}`, newComments);
-    setEditing(false);
+    if (props.commuPost) {
+      await editCurrCommuCommentsRequest(comment.id, newComment);
+      setEditing(false);
 
-    const result = await getReviewRequest(
-      `reviewComment/${props.review?.id}?page=${pages}`,
-    );
-    setComments(result.reverse());
+      const result = await getCurrentCommunityRequest(
+        `communityComment/${props.commuPost?.id}`,
+      );
+      setComments(result.reverse());
+    }
   };
 
   // 댓글 삭제
   const handleDeleteMyComment = async (
     e: React.MouseEvent,
-    comment: ReviewCommentType,
+    comment: CurrCommuCommentsType,
   ) => {
     e.preventDefault();
-    await deleteReviewRequest(`reviewComment/${comment.id}
-    `);
+    await deleteCurrCommuRequest(`communityComment/${comment.id}`);
 
-    const result = await getReviewRequest(
-      `reviewComment/${props.review?.id}?page=${pages}`,
+    const result = await getCurrentCommunityRequest(
+      `communityComment/${props.commuPost?.id}`,
     );
     setComments(result.reverse());
   };
@@ -146,25 +151,29 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
   return (
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
-        <ReviewWritingEditor
-          review={props.review}
+        <CommuWritingEditor
+          commuPost={props.commuPost}
           mode="edit"
           modalHandler={modalHandler}
         />
       </MyModal>
       <ContentsModalWrapper>
-        <AddImage>result cards</AddImage>
+        <AddImage>
+          <ImagePlace>
+            <ImgCarousel postImgs={postImgs} />
+          </ImagePlace>
+        </AddImage>
         <AddWriting>
           <TopDiv>
             <div className="user-name">
               <ProfileBox>
                 <div className="profile">
-                  <img src={reviewer?.User.profileImg} />
+                  <img src={postInfo?.profileImg} />
                 </div>
-                <div>{reviewer?.User.nickname}</div>
+                <div>{postInfo?.nickname}</div>
               </ProfileBox>
             </div>
-            {props.currentUser === reviewer?.userId ? (
+            {props.currentUserInfo?.userId === postInfo?.userId ? (
               <ButtonBox>
                 <EditDelBtn
                   onClick={(e) => {
@@ -174,13 +183,15 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
                 >
                   수정
                 </EditDelBtn>
-                <EditDelBtn onClick={confirmDelete}>삭제</EditDelBtn>
+                <EditDelBtn onClick={(e: any) => deletePost(e)}>
+                  삭제
+                </EditDelBtn>
               </ButtonBox>
             ) : null}
           </TopDiv>
 
           <ContentsBox>
-            <div className="user-contents">{props.review?.description}</div>
+            <div className="user-contents">{props.commuPost?.description}</div>
             {comments?.map((comment, idx) => (
               <div key={comment.id} className="user-comments">
                 <div className="profile-image">
@@ -189,10 +200,10 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
                 {selectedIdx === idx && editing ? (
                   <input
                     ref={editInputRef}
-                    value={newComments}
+                    value={newComment}
                     onChange={onChangeCommentEditInput}
                     autoFocus={true}
-                    onFocus={() => setNewComments(comment.description)}
+                    onFocus={() => setNewComment(comment.description)}
                   />
                 ) : (
                   <div className="comment">
@@ -200,7 +211,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
                     {comment.description}
                   </div>
                 )}
-                {comment.userId === props.currentUser ? (
+                {props.currentUserInfo?.userId === comment.userId ? (
                   <BtnContainer className="btn-box">
                     {selectedIdx === idx && editing ? (
                       <button
@@ -213,14 +224,16 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
                       <>
                         <button
                           onClick={(e) => {
-                            onClickCommentEditButton(e);
+                            onClickCommentEditBtn(e);
                             setSelectedIdx(idx);
                           }}
                         >
                           <EditIcon />
                         </button>
                         <button
-                          onClick={(e) => handleDeleteMyComment(e, comment)}
+                          onClick={(e) => {
+                            handleDeleteMyComment(e, comment);
+                          }}
                         >
                           <DeleteIcon />
                         </button>
@@ -234,7 +247,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
 
           <BottomDiv>
             <div className="like">
-              <ReviewLikeBtn review={props.review} />
+              <CommuLikeBtn />
             </div>
             <div className="date">{newDate}</div>
             <CommentBox>
@@ -245,8 +258,8 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
                 onChange={(e) => setDescription(e.target.value)}
               />
               <button
-                onClick={postReviewComments}
                 disabled={description.length === 0}
+                onClick={postCurrCommuComments}
               >
                 게시
               </button>
@@ -258,26 +271,45 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
   );
 };
 
-export default ReviewContentsViewer;
+export default CommuContentsViewer;
 
 const ContentsModalWrapper = styled.form`
-  width: 65%;
+  width: 75%;
   height: 85%;
-  max-width: 60rem;
-  min-width: 40rem;
+  max-width: 75rem;
+  min-width: 50rem;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.2fr 1fr;
   border-radius: 10px;
   font-family: ${font.normal};
 `;
 
 const AddImage = styled.div`
   border-right: solid 1px lightgray;
+  display: flex;
+  align-items: center;
+`;
+
+const ImagePlace = styled.div`
+  width: 100%;
+  height: 85%;
+  max-height: 45rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const AddWriting = styled.div`
@@ -306,7 +338,7 @@ const ProfileBox = styled.div`
   width: 80%;
   height: 3.5rem;
   line-height: 4.3rem;
-  font-size: 16px;
+  font-size: 17px;
   font-family: ${font.bold};
 
   .profile {
@@ -323,6 +355,92 @@ const ProfileBox = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+`;
+
+const ContentsBox = styled.div`
+  border-top: solid 1px lightgray;
+  padding: 3% 2%;
+  height: 65%;
+  max-width: 33rem;
+  max-height: 35rem;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  .user-contents {
+    border-bottom: solid 1px lightgray;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+    line-height: 22px;
+    white-space: pre-wrap;
+  }
+
+  .user-comments {
+    display: inline-flex;
+    justify-content: space-between;
+    position: relative;
+    padding: 10px 0;
+    width: 100%;
+    line-height: 20px;
+    font-size: 14px;
+
+    .profile-image {
+      height: 37px;
+      width: 37px;
+      border-radius: 50%;
+      margin: 0 10px;
+      position: relative;
+      overflow: hidden;
+
+      img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .comment {
+      width: 88%;
+      margin-top: 3px;
+      margin-left: 3px;
+
+      span {
+        font-family: ${font.bold};
+        margin-right: 5px;
+      }
+    }
+
+    :hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    :hover .btn-box {
+      visibility: visible;
+    }
+
+    input {
+      width: 88%;
+      height: 30px;
+      font-size: 15px;
+    }
+
+    .edit-button {
+      font-size: 16px;
+      position: absolute;
+      right: 5px;
+      bottom: 15px;
+      width: 35px;
+      background-color: white;
+      border: solid 1px black;
+    }
   }
 `;
 
@@ -364,99 +482,12 @@ const ButtonBox = styled.div`
   padding-right: 5px;
 `;
 
-const ContentsBox = styled.div`
-  border-top: solid 1px lightgray;
-  padding: 3% 2%;
-  height: 68%;
-  max-width: 29rem;
-  max-height: 35rem;
-  font-size: 15px;
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-  -ms-overflow-style: none;
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-
-  .user-contents {
-    border-bottom: solid 1px lightgray;
-    padding-bottom: 10px;
-    margin-bottom: 5px;
-    line-height: 22px;
-    white-space: pre-wrap;
-  }
-
-  .user-comments {
-    display: inline-flex;
-    justify-content: space-between;
-    position: relative;
-    margin: 5px 0;
-    padding: 7px 0;
-    width: 100%;
-    line-height: 20px;
-    font-size: 14px;
-
-    .profile-image {
-      height: 35px;
-      width: 35px;
-      border-radius: 50%;
-      margin: 0 10px;
-      position: relative;
-      overflow: hidden;
-
-      img {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-
-    .comment {
-      width: 90%;
-      margin-top: 3px;
-
-      span {
-        font-family: ${font.bold};
-        margin-right: 6px;
-      }
-    }
-
-    :hover {
-      background-color: rgba(0, 0, 0, 0.06);
-    }
-
-    :hover .btn-box {
-      visibility: visible;
-    }
-
-    input {
-      width: 88%;
-      height: 30px;
-      font-size: 15px;
-    }
-
-    .edit-button {
-      font-size: 16px;
-      position: absolute;
-      right: 5px;
-      bottom: 10px;
-      width: 35px;
-      background-color: white;
-      border: solid 1px black;
-    }
-  }
-`;
-
 const BottomDiv = styled.div`
   border-top: solid 1px lightgray;
-  height: 8rem;
 
   .like {
     float: left;
-    margin: 5px 7px;
+    margin: 3px 7px;
     font-size: 1rem;
   }
   .date {

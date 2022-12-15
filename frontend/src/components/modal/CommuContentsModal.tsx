@@ -1,7 +1,7 @@
 import useModal from '../../hooks/modal/useModal';
 import MyModal from './MyModal';
 import CommuPuppyCard from '../community/CommuPuppyCard';
-import CommuContentsViewer from '../contentsviewer/CommuContentsViewer';
+import CommuContentsViewer from '../community/CommuContentsViewer';
 import {
   CommunityType,
   CurrentCommuPostsType,

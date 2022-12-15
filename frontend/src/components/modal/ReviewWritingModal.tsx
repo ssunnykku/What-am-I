@@ -1,7 +1,7 @@
 import MyModal from './MyModal';
 import useModal from '../../hooks/modal/useModal';
 import { CreateBtn } from '../../assets/styles/common/commonComponentStyle';
-import ReviewWritingEditor from '../writingeditor/ReviewWritingEditor';
+import ReviewWritingEditor from '../reviewBoard/ReviewWritingEditor';
 
 const ReviewWritingModal = () => {
   const [isOpen, modalHandler] = useModal();
