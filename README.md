@@ -2,29 +2,32 @@
 
 https://kdt-gitlab.elice.io/ai_track/class05/ai_project/team08/team08-project
 
+<br>
+
 ## 메인 기능
 
 AI 견종 분석 서비스를 통해서 나의 반려견에 대한 정보를 파악할수 있게 합니다.
 <br> 사용자들이 커뮤니티를 형성하여 소통할 수 있는 공간을 제공합니다.
+<br>
+<br>
 
 ## 기술스택
 
-<br><br>
+<br>
 
 ### 프론트엔드
 
-<img src="https://img.shields.io/badge/react-61DAFB?style=flat&logo=react&logoColor=black"/> <img src="https://img.shields.io/badge/typescript-3178C6?style=flat&logo=typescript&logoColor=black"/></br>
+<img src="https://img.shields.io/badge/react-61DAFB?style=flat&logo=react&logoColor=black"/> <img src="https://img.shields.io/badge/typescript-3178C6?style=flat&logo=typescript&logoColor=black"/> <img src="https://img.shields.io/badge/styled-components-DB7093?style=flat&logo=styled-components&logoColor=black"/><br>
 React
 컴포넌트 기반이므로 UI 재사용성이 높고, 공통적으로 익숙한 기술 스택이면서 커뮤니티가 활성화되어 있기 때문에 러닝 커브가 적었음
 
-<img src="https://img.shields.io/badge/styled-components-DB7093?style=flat&logo=styled-components&logoColor=black"/>
 Typescript
 타입을 명시해주어 코드의 의도를 명확히 할 수 있으므로, 잠재적인 오류를 방지할 수 있고 협업에 용이함
 <br><br><br><br>
 
 ### 백엔드
 
-<img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=black"/> <img src="https://img.shields.io/badge/Express-c2c2c2?style=flat&logo=Express&logoColor=black"/>
+<img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=black"/> <img src="https://img.shields.io/badge/Express-c2c2c2?style=flat&logo=Express&logoColor=black"/> <img src="https://img.shields.io/badge/Amazon S3-569A31?style=flat&logo=Amazon S3&logoColor=black"/>
 <br>
 Node.js & Express 코드의 양을 줄여 주고, 추후에 유지 보수에 용이
 
@@ -37,22 +40,38 @@ AWS S3
 
 ### AI
 
-- <img src="https://img.shields.io/badge/Flask-FDA061?style=flat&logo=Flask&logoColor=black"/>
-- <img src="https://img.shields.io/badge/%F0%9F%A4%97-Huggingface-yellow"/> <img src="https://img.shields.io/badge/Pytorch-EE4C2C?style=flat&logo=Pytorch&logoColor=black"/>
-- <img src="https://img.shields.io/badge/-TextRank-green">
+<img src="https://img.shields.io/badge/Flask-FDA061?style=flat&logo=Flask&logoColor=black"/> <img src="https://img.shields.io/badge/%F0%9F%A4%97-Huggingface-yellow"/> <img src="https://img.shields.io/badge/Pytorch-EE4C2C?style=flat&logo=Pytorch&logoColor=black"/> <img src="https://img.shields.io/badge/-TextRank-green">
+<br>
+<br>
 
 ## 와이어프레임
 
 [와이어프레임]https://www.erdcloud.com/d/PeTYQmfQNitEZeTta
 
-<!--
-![image](https://user-images.githubusercontent.com/89979344/179338664-348564c0-676e-4df1-81ec-711c5c6cc9a2.png) -->
-
-<!-- ## 📍 기능 구조 -->
-<!-- 여기는 참고 -->
-<!-- ![image](https://user-images.githubusercontent.com/89979344/180356283-235c4243-7174-456c-a898-986647f1e116.png) -->
+<br><br>
 
 ## 기능 소개
+
+[![Watch the video](https://kdt-gitlab.elice.io/ai_track/class05/ai_project/team08/team08-project/uploads/b3b2369cfe9153272141b8441a272a49/%EA%B7%B8%EB%A6%BC1.png)](https://youtu.be/UsKXQdNAMw8)
+
+<br>
+
+회원가입 및 회원정보 수정
+![image](https://kdt-gitlab.elice.io/ai_track/class05/ai_project/team08/team08-project/uploads/14f75f9d0c6ef5000737c5085e601c18/KakaoTalk_20221215_153249555_01.gif)
+
+<br>
+
+나정보에서 내가 속한 커뮤니티 및 나의 글을 모아볼 수 있음
+![image](https://kdt-gitlab.elice.io/ai_track/class05/ai_project/team08/team08-project/uploads/3a6dc6f4af33ac4f8b529c4b3a4050c8/KakaoTalk_20221215_153249555_02.gif)
+
+<br>
+
+커뮤니티 검색 및 좋아요 기능
+![image](https://kdt-gitlab.elice.io/ai_track/class05/ai_project/team08/team08-project/uploads/9d09e32637108eb9eb9b7aec2d795c27/KakaoTalk_20221215_153249555.gif)
+
+<br>
+
+<br>
 
 #
 
