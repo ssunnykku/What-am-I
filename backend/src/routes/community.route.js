@@ -21,37 +21,43 @@ communityRouter.get(
   communityController.getOne,
 );
 
-//전체 커뮤니티 리스트 10개씩
+// 3. 전체 커뮤니티 리스트 10개씩
 communityRouter.get(
   '/communities',
   loginRequired,
   communityController.getCommunityList,
 );
 
+// 4. 인기 커뮤니티 3개
 communityRouter.get(
   '/communities/best',
   loginRequired,
   communityController.getBestCommunities,
 );
 
+// 5. 전체 커뮤니티와 커뮤니티 별 게시물들(내림차순)
 communityRouter.get(
   '/communities/posts',
   loginRequired,
   communityController.getCommunitiesAndPosts,
 );
 
+// 6. 커뮤니티 수정
 communityRouter.put(
   '/communities/:communityId',
   loginRequired,
   upload.single('communityImage'),
   communityController.updateCommunity,
 );
+
+// 7. 커뮤니티 삭제
 communityRouter.delete(
   '/communities/:communityId',
   loginRequired,
   communityController.deleteCommunity,
 );
 
+// 8. 검색기능
 communityRouter.get(
   '/communities/search',
   loginRequired,
