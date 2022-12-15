@@ -7,46 +7,50 @@ const communityRouter = Router();
 const upload = uploadImageS3();
 
 communityRouter.post(
-  '/',
+  '/communities',
   loginRequired,
   upload.single('communityImage'),
   communityController.addCommunity,
 );
 
 communityRouter.get(
-  '/posts/:communityId',
+  '/communities/posts/:communityId',
   loginRequired,
   communityController.getOne,
 );
 
-communityRouter.get('/', loginRequired, communityController.getCommunityList);
+communityRouter.get(
+  '/communities/',
+  loginRequired,
+  communityController.getCommunityList,
+);
 
 communityRouter.get(
-  '/best',
+  '/communities/best',
   loginRequired,
   communityController.getBestCommunities,
 );
 
 communityRouter.get(
-  '/posts',
+  '/communities/posts',
   loginRequired,
   communityController.getCommunitiesAndPosts,
 );
 
 communityRouter.put(
-  '/:communityId',
+  '/communities/:communityId',
   loginRequired,
   upload.single('communityImage'),
   communityController.updateCommunity,
 );
 communityRouter.delete(
-  '/:communityId',
+  '/communities/:communityId',
   loginRequired,
   communityController.deleteCommunity,
 );
 
 communityRouter.get(
-  '/search',
+  '/communities/search',
   loginRequired,
   communityController.getFoundCommunities,
 );

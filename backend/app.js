@@ -70,7 +70,7 @@ app.use(reviewRouter);
 app.use(reviewCommentRouter);
 app.use(reviewLikeRouter);
 
-app.use('/communities', communityRouter);
+app.use(communityRouter);
 app.use(myPageRouter);
 app.use(communityLikeRouter);
 app.use(communityCommentRouter);
