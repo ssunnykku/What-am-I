@@ -6,6 +6,7 @@ import { uploadImageS3 } from '../middlewares/uploadImageS3';
 const communityRouter = Router();
 const upload = uploadImageS3();
 
+// 1. 커뮤니티 만들기
 communityRouter.post(
   '/communities',
   loginRequired,
@@ -13,14 +14,16 @@ communityRouter.post(
   communityController.addCommunity,
 );
 
+// 2. 커뮤니티 1개
 communityRouter.get(
   '/communities/posts/:communityId',
   loginRequired,
   communityController.getOne,
 );
 
+//전체 커뮤니티 리스트 10개씩
 communityRouter.get(
-  '/communities/',
+  '/communities',
   loginRequired,
   communityController.getCommunityList,
 );
