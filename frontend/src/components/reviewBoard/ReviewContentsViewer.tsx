@@ -16,6 +16,7 @@ import ReviewWritingEditor from './ReviewWritingEditor';
 import {
   OneReviewType,
   ReviewCommentType,
+  ReviewType,
 } from '../../types/reviewboard/reviewType';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -34,6 +35,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
   const [newComments, setNewComments] = useState<string>('');
   const [selectedIdx, setSelectedIdx] = useState<number | boolean>(false);
   const editInputRef = useRef<HTMLInputElement>(null);
+  const [reviewInfo, setReviewInfo] = useState<ReviewType>();
 
   useEffect(() => {
     if (editing) {
@@ -47,7 +49,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
   const getOneReview = async () => {
     const res = await getReviewRequest(`review/show/${props.review?.id}`);
     setReviewer(res);
-    // res.map((val: OneReviewType) => setReviewer(val));
+    setReviewInfo(res);
   };
 
   // 리뷰 전체 댓글 가져오기
@@ -147,7 +149,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
         <ReviewWritingEditor
-          review={props.review}
+          review={reviewInfo}
           mode="edit"
           modalHandler={modalHandler}
         />

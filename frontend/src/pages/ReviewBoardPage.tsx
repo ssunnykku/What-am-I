@@ -46,7 +46,7 @@ const ReviewBoardPage = () => {
     setReviews(res.result.selectedReviews);
     setTotalPages(res.result.reviewCount);
 
-    const resMap = res.result.selectedReviews.map((res: ReviewType) => res.id);
+    // const resMap = res.result.selectedReviews.map((res: ReviewType) => res.id);
   };
   useEffect(() => {
     getReviews();

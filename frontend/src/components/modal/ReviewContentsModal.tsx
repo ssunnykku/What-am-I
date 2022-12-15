@@ -4,6 +4,7 @@ import ReviewPuppyCard from '../reviewBoard/ReviewPuppyCard';
 import ReviewContentsViewer from '../reviewBoard/ReviewContentsViewer';
 import { ReviewType } from '../../types/reviewboard/reviewType';
 import { UserInfoType } from '../../types/auth/authType';
+import { useEffect } from 'react';
 
 export interface ReviewTypeProps {
   userId?: string;
