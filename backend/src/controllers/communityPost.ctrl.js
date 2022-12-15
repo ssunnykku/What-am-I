@@ -12,11 +12,12 @@ class communityPostController {
 
       const getImages = req.files;
 
-      let images = '';
+      let postedImages = '';
 
       for (const image of getImages) {
-        images += `${image.location.toString()}최고`.toString();
+        postedImages += `${image.location.toString()}최고`;
       }
+      const images = postedImages.slice(0, -2);
 
       const { description } = req.body;
       const newPost = await communityPostService.createPost({
