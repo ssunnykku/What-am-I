@@ -82,3 +82,15 @@ export async function deleteUserCommunites(communityId: number) {
   const response = await axiosInstance.delete(`/communities/${communityId}`);
   return response.data;
 }
+
+// 강아지 종 분석
+export async function getPuppyData(imgURL: string) {
+  const response = await axiosInstance.put(
+    `http://34.64.115.97:3001/v1/predict`,
+    {
+      url: imgURL,
+    },
+  );
+  console.log(response);
+  return response;
+}
