@@ -2,10 +2,11 @@ import styled, { keyframes } from 'styled-components';
 import { theme } from '../assets/styles/common/palette';
 import { font } from '../assets/styles/common/fonts';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { getPuppyData } from '../apis/mypageFetcher';
+import { useEffect, useState } from 'react';
+import { getPuppyData, getUserData } from '../apis/mypageFetcher';
 
 const AITestResultPage = () => {
+  const [currUser, setCurrUser] = useState<string>('');
   const navigate = useNavigate();
   const location = useLocation();
   const profileImg = location.state.profileImg;
@@ -15,7 +16,12 @@ const AITestResultPage = () => {
       const response = await getPuppyData(profileImg);
       console.log(response);
     }
+    async function getCurrUser() {
+      const res = await getUserData();
+      setCurrUser(res.userId);
+    }
     getData();
+    getCurrUser();
   }, []);
   return (
     <ResultBox>
@@ -27,9 +33,15 @@ const AITestResultPage = () => {
             "이름"의 견종 분석 결과
             <ResultText></ResultText>
             <div>로 확인되었습니다.</div>
-            <ShareBtn onClick={() => navigate('/login')}>
-              로그인 하고 댕댕이들 보러 가기
-            </ShareBtn>
+            {!currUser ? (
+              <ShareBtn onClick={() => navigate('/login')}>
+                로그인 하고 댕댕이 보러 가기
+              </ShareBtn>
+            ) : (
+              <ShareBtn onClick={() => navigate('/reviewboard')}>
+                더 많은 댕댕이 보러 가기
+              </ShareBtn>
+            )}
           </PuppyResult>
         </ResultDescBox>
       </div>
@@ -94,7 +106,7 @@ const ResultText = styled.div`
 
 const ShareBtn = styled.button`
   height: 4rem;
-  width: 21rem;
+  width: 20rem;
   margin-top: 15px;
   font-family: ${font.bold};
   border-radius: 10px;
