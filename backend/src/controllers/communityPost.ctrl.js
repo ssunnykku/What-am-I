@@ -11,7 +11,7 @@ class communityPostController {
       const communityId = req.params.communityId;
 
       const images = req.files
-        .map((img) => img.transforms[0].location)
+        .map((img) => `${img.transforms[0].location}8팀최고`)
         .toString();
 
       const { description } = req.body;
