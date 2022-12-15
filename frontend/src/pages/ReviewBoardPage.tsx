@@ -42,7 +42,6 @@ const ReviewBoardPage = () => {
   // 전체 리뷰 받기
   const getReviews = async () => {
     const res = await getReviewRequest(`reviews?page=${pages}`);
-
     setReviews(res.result.selectedReviews);
     setTotalPages(res.result.reviewCount);
     // const resMap = res.result.selectedReviews.map(

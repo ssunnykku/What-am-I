@@ -13,6 +13,9 @@ export interface ReviewCommentType {
 }
 
 export interface ReviewType {
+  AiSearchResult: {
+    aiImage: string;
+  };
   aiResultId: number;
   id: number;
   description: string;

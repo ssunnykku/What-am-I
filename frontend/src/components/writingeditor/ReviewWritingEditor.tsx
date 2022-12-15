@@ -7,12 +7,14 @@ import { ReviewTypeProps } from '../modal/ReviewContentsModal';
 import { editReviewRequest } from '../../apis/reviewFetcher';
 import { getUserData } from '../../apis/mypageFetcher';
 import { UserInfoType } from '../../types/auth/authType';
+import { ReviewType } from '../../types/reviewboard/reviewType';
 
 const ReviewWritingEditor = (props: ReviewTypeProps) => {
   const [description, setDescription] = useState<string>(
     props.review?.description ?? '',
   );
   const [userInfo, setUserInfo] = useState<UserInfoType>();
+  const [info, setInfo] = useState<ReviewType>();
 
   const handleUploadResultCard = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
@@ -22,12 +24,13 @@ const ReviewWritingEditor = (props: ReviewTypeProps) => {
   };
   useEffect(() => {
     getCurrentUserInfo();
+    setInfo(props.review);
   }, []);
 
   // 후기 포스팅
   const handleWritingEditorClick = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(props.review);
+    console.log(info);
 
     // const res = await createReviewRequest(
     //   `review/${props.reviewInfo?.aiResultId}`,

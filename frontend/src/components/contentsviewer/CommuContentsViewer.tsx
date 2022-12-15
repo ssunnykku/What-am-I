@@ -68,20 +68,20 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const handleDeleteMyCommuPost = async () => {
     if (props.commuPost) {
       await deleteCommuPostRequest(props.commuPost?.id);
+      location.reload();
     }
   };
-  const deleteConfirm = () => (
-    handleDeleteMyCommuPost(),
-    window.alert('삭제했습니다.'),
-    (location.href = `${VITE_PUBLIC_URL}likedcommunity?id=${props.commuInfo?.id}`)
-  );
-  const cancelConfirm = () => window.alert('취소했습니다.');
 
-  const confirmDelete = useConfirm(
-    '삭제하시겠습니까?',
-    deleteConfirm,
-    cancelConfirm,
-  );
+  const deletePost = (e: any) => {
+    if (window.confirm('게시글을 삭제하시겠습니까?')) {
+      e.preventDefault();
+      handleDeleteMyCommuPost();
+      return window.alert('삭제했습니다.');
+    } else {
+      e.preventDefault();
+      return window.alert('취소했습니다.');
+    }
+  };
 
   // 포스팅 전체 댓글 가져오기
   const getCurrCommuComments = async () => {
@@ -183,7 +183,9 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
                 >
                   수정
                 </EditDelBtn>
-                <EditDelBtn onClick={confirmDelete}>삭제</EditDelBtn>
+                <EditDelBtn onClick={(e: any) => deletePost(e)}>
+                  삭제
+                </EditDelBtn>
               </ButtonBox>
             ) : null}
           </TopDiv>
