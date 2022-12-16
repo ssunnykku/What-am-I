@@ -47,6 +47,7 @@ const AILoadingPage = () => {
 export default AILoadingPage;
 
 const Div = styled.div`
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
