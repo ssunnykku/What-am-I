@@ -8,6 +8,8 @@ const Op = Sequelize.Op;
 class aiSearchResultService {
   // 1. ai 분석 요청하기 (사진 업로드)
   static async createResult({ aiImage, dogName, userId, predictions }) {
+    // const t = await db.sequelize.transaction();
+
     try {
       const info = await AiSearchResult.create(
         {
@@ -17,7 +19,7 @@ class aiSearchResultService {
         },
         // { transaction: t },
       );
-      // console.log('1', info);
+      console.log('1', info);
       const findInfo = await AiSearchResult.findOne({
         where: { userId, aiImage },
       });
@@ -25,7 +27,7 @@ class aiSearchResultService {
       // throw Error('에러발생');
 
       const predictResult = [];
-      for await (const result of predictions) {
+      for (const result of predictions) {
         const searchResult = await Prediction.create(
           {
             aiResultId: findInfo.id,
@@ -38,7 +40,7 @@ class aiSearchResultService {
         );
         predictResult.push(searchResult);
       }
-
+      // console.log('2', predictResult);
       await Promise.all(predictResult); //비동기
       // await t.commit();
       return predictResult;

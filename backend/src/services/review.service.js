@@ -49,7 +49,6 @@ class reviewService {
         attributes: {
           exclude: ['userId', 'id', 'dogName'],
         },
-        right: true,
       },
       offset: (defaultpage - 1) * REVIEW_PER_PAGE,
       limit: REVIEW_PER_PAGE,
