@@ -5,17 +5,10 @@ import {
   EntryBtn,
   CreateBtn,
 } from '../../assets/styles/common/commonComponentStyle';
-import {
-  deleteUserReview,
-  getPuppyData,
-  getUserReview,
-  getUserReviews,
-} from '../../apis/mypageFetcher';
-import { useConfirm } from '../../hooks/confirm/useConfirm';
+import { getPuppyData } from '../../apis/mypageFetcher';
 import { theme } from '../../assets/styles/common/palette';
-import { Modal } from '@mui/material';
-import ReviewContentsViewer from '../reviewBoard/ReviewContentsViewer';
-import { ReviewType } from '../../types/reviewboard/reviewType';
+import { AIresultType, ReviewType } from '../../types/reviewboard/reviewType';
+import { deleteReviewRequest } from '../../apis/reviewFetcher';
 
 export interface receiveProps {
   id: number;
@@ -24,64 +17,31 @@ export interface receiveProps {
 }
 
 function TestResultCard(props: receiveProps) {
-  const [open, setOpen] = useState(false);
-  const [puppy, setPuppy] = useState<any>();
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [puppy, setPuppy] = useState<AIresultType>();
 
   useEffect(() => {
     async function getReview() {
       const response = await getPuppyData(props.id);
       setPuppy(response);
-      console.log(response);
     }
     getReview();
   }, []);
 
-  // async function getReview() {
-  //   setOpen(true);
-  //   const response = await getUserReview(props.value.id);
-  // }
-  async function deleteReview() {
-    await deleteUserReview(props.id);
-    const response = await getUserReviews();
-    // props.setReviews(response);
-  }
-
-  const deleteConfirm = () => (deleteReview(), window.alert('삭제했습니다.'));
-  const cancelConfirm = () => window.alert('취소했습니다.');
-
-  const confirmDelete = useConfirm(
-    '삭제하시겠습니까?',
-    deleteConfirm,
-    cancelConfirm,
-  );
+  const deleteMyResultCard = async () => {
+    await deleteReviewRequest(`airesult/${props.id}`);
+    location.reload();
+  };
   return (
-    <CardContainer>
+    <CardContainer onClick={props.onCardModalClickEvent}>
       <Img src={puppy?.aiImage} alt="dog_img"></Img>
       <Name>{puppy?.dogName}</Name>
       <div className="wrapper">
         <ButtonContainer id="ButtonContainer">
-          {/* <DetailButton color="#000000" onClick={getReview}>
-            상세
-          </DetailButton> */}
-          <DeleteButton color="#ff0000" onClick={confirmDelete}>
+          <DeleteButton color="#ff0000" onClick={deleteMyResultCard}>
             삭제
           </DeleteButton>
         </ButtonContainer>
       </div>
-      {/* <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <ReviewContentsViewer
-          review={props.value}
-          currentUser={props.value.userId}
-        />
-      </Modal> */}
     </CardContainer>
   );
 }

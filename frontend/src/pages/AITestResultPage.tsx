@@ -10,15 +10,14 @@ const AITestResultPage = () => {
   const [result, setResult] = useState<any[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
+  const resultData = location.state.result;
   const aiImage = location.state.aiImage;
   const dogName = location.state.dogName;
 
   useEffect(() => {
     async function getData() {
-      const response = await postPuppyData(dogName, aiImage);
-      setResult(response.data);
+      setResult(resultData);
     }
-
     getData();
   }, []);
   return (
@@ -32,12 +31,12 @@ const AITestResultPage = () => {
           <PuppyResult>
             {`${dogName}의 견종 분석 결과`}
             <ResultText>
-              {result.map((value) => (
+              {/* {result.map((value) => (
                 <Breed key={value.id}>
                   <BreedText>{value.label}</BreedText>
                   <BreedText>{(value.score * 100).toFixed(1)}%</BreedText>
                 </Breed>
-              ))}
+              ))} */}
             </ResultText>
             <div>로 확인되었습니다.</div>
             {!Storage.getUserIdItem() ? (
