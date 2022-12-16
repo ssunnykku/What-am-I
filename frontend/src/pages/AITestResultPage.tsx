@@ -18,7 +18,6 @@ const AITestResultPage = () => {
       console.log(response);
 
       const resMap = response.data.map((res: any) => res.label);
-      console.log(resMap);
     }
 
     getData();
