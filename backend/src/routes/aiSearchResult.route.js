@@ -13,7 +13,7 @@ aiSearchResultRouter.post(
   aiSearchResultController.addImage,
 );
 
-// 2. 내가 남긴 리뷰 리스트 가져오기
+//  2. Ai 분석 결과 가져오기
 aiSearchResultRouter.get(
   '/airesult',
   loginRequired,

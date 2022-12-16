@@ -37,11 +37,12 @@ class aiSearchResultController {
     }
   }
 
-  //  2. 내가 남긴 리뷰 리스트 가져오기
+  //  2. Ai 분석 결과 가져오기
   static async myReview(req, res, next) {
     try {
       const userId = req.currentUserId;
       const getMyImages = await aiSearchResultService.getMyResults(userId);
+
       return res.status(200).send(getMyImages);
     } catch (error) {
       next(error);

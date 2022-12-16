@@ -17,19 +17,23 @@ class aiSearchResultService {
       );
 
       const findInfo = await AiSearchResult.findOne({
-        where: { userId, dogName },
+        where: { userId, aiImage },
       });
+
       // console.log(findInfo);
       // throw Error('에러발생');
       const predictResult = [];
       for await (const result of predictions) {
-        const a = await Prediction.create({
-          aiResultId: findInfo.id,
-          predictId: result.id,
-          label: result.label,
-          score: result.score,
-          rank: result.rank,
-        });
+        const a = await Prediction.create(
+          {
+            aiResultId: findInfo.id,
+            predictId: result.id,
+            label: result.label,
+            score: result.score,
+            rank: result.rank,
+          },
+          // { transaction: t },
+        );
         predictResult.push(a);
       }
 
@@ -49,9 +53,11 @@ class aiSearchResultService {
       include: [
         {
           model: Prediction,
+          right: true,
         },
       ],
     });
+    // console.log(result);
     return result;
   }
 }
