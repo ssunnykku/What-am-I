@@ -6,21 +6,17 @@ import { font } from '../assets/styles/common/fonts';
 import { theme } from '../assets/styles/common/palette';
 
 const AITestPage = () => {
-  const [communityImage, setCommunityImage] = useState<File | null>(null);
-  const [imgName, setImgName] = useState<string>('');
+  const [dogName, setDogName] = useState<string>('');
   const [preview, setPreview] = useState<string>('');
-  const [profileImg, setProfileImg] = useState<string>('/');
+  const [aiImage, setAiImage] = useState<string>('/');
 
   const imageInputRef = useRef<HTMLInputElement>(null);
-
-  const navigate = useNavigate();
 
   const handleChangeFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length !== 0) {
       const response = await EditUserImg(e.target.files[0]);
-      setProfileImg(response.profileImg);
+      setAiImage(response.aiImage);
       const file = e.target.files[0];
-      setCommunityImage(file);
       const reader = new FileReader();
       reader.readAsDataURL(file);
 
@@ -29,15 +25,9 @@ const AITestPage = () => {
       };
     }
     if (imageInputRef.current) {
-      setImgName(imageInputRef.current.value);
+      setDogName(imageInputRef.current.value);
     }
   };
-
-  async function EditImg(e: any) {
-    setProfileImg(URL.createObjectURL(e.target.files[0]));
-    const response = await EditUserImg(e.target.files[0]);
-    console.log(response);
-  }
 
   return (
     <AiTestBox>
@@ -56,7 +46,7 @@ const AITestPage = () => {
               </div>
               <input
                 className="upload-name"
-                placeholder={imgName ? imgName : '임펩시 사진'}
+                placeholder={dogName ? dogName : '임펩시 사진'}
               />
               <input
                 type="file"
@@ -70,7 +60,10 @@ const AITestPage = () => {
               </div>
               <input type="text" className="puppy-name" placeholder="임펩시" />
             </div>
-            <Link to={'/dnaresult'} state={{ profileImg: profileImg }}>
+            <Link
+              to={'/dnaresult'}
+              state={{ dogName: dogName, aiImage: aiImage }}
+            >
               <TestBtn>AI로 종 분석하기</TestBtn>
             </Link>
           </InputBox>

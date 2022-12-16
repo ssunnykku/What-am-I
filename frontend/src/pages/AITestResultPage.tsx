@@ -3,17 +3,22 @@ import { theme } from '../assets/styles/common/palette';
 import { font } from '../assets/styles/common/fonts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getPuppyData, getUserData } from '../apis/mypageFetcher';
+import {
+  getPuppyData,
+  getUserData,
+  postPuppyData,
+} from '../apis/mypageFetcher';
 
 const AITestResultPage = () => {
   const [currUser, setCurrUser] = useState<string>('');
   const navigate = useNavigate();
   const location = useLocation();
-  const profileImg = location.state.profileImg;
+  const aiImage = location.state.aiImage;
+  const dogName = location.state.dogName;
 
   useEffect(() => {
     async function getData() {
-      const response = await getPuppyData(profileImg);
+      const response = await postPuppyData(dogName, aiImage);
       console.log(response);
     }
     async function getCurrUser() {
