@@ -1,11 +1,15 @@
 import styled, { keyframes } from 'styled-components';
 import { ReviewTypeProps } from '../modal/ReviewContentsModal';
 import ReviewLikeBtn from './ReviewLikeBtn';
+import { useEffect } from 'react';
 
 const ReviewPuppyCard = ({
   onCardModalClickEvent,
   review,
 }: ReviewTypeProps) => {
+  useEffect(() => {
+    console.log(review);
+  }, []);
   return (
     <PuppyCardBox onClick={onCardModalClickEvent}>
       <img src={review?.AiSearchResult.aiImage} />

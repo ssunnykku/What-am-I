@@ -60,7 +60,6 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
   useEffect(() => {
     getOneReview();
     getReviewComments();
-    console.log(props.review);
   }, []);
 
   // 리뷰 댓글 쓰기

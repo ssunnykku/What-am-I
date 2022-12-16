@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { createReviewRequest } from '../../apis/reviewFetcher';
+import {
+  createReviewRequest,
+  getReviewRequest,
+} from '../../apis/reviewFetcher';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
-import { ReviewTypeProps } from '../modal/ReviewContentsModal';
 import { editReviewRequest } from '../../apis/reviewFetcher';
 import { getUserData } from '../../apis/mypageFetcher';
 import { UserInfoType } from '../../types/auth/authType';
 import { ReviewType } from '../../types/reviewboard/reviewType';
+import { useNavigate } from 'react-router-dom';
 
 interface ReviewReceiveProps {
   id?: number;
@@ -21,14 +24,18 @@ const ReviewWritingEditor = (props: ReviewReceiveProps) => {
     props.review?.description ?? '',
   );
   const [userInfo, setUserInfo] = useState<UserInfoType>();
+  const [puppyImage, setPuppyImage] = useState<string>('');
+  const navigate = useNavigate();
 
   const getCurrentUserInfo = async () => {
     const res = await getUserData();
     setUserInfo(res);
+
+    const result = await getReviewRequest(`airesult/${props.id}`);
+    setPuppyImage(result.aiImage);
   };
   useEffect(() => {
     getCurrentUserInfo();
-    console.log('리뷰', props.review);
   }, []);
 
   // 리뷰 포스팅
@@ -37,7 +44,7 @@ const ReviewWritingEditor = (props: ReviewReceiveProps) => {
     const res = await createReviewRequest(`review/${props.id}`, {
       description,
     });
-    console.log(res);
+    navigate('/reviewboard');
   };
 
   // 수정하기 버튼
@@ -66,7 +73,9 @@ const ReviewWritingEditor = (props: ReviewReceiveProps) => {
       </ModalHeader>
       <ModalContents>
         <AddImage>
-          <div> 여기에 리뷰 사진 넣어주고~ </div>
+          <div>
+            <img src={puppyImage} />
+          </div>
         </AddImage>
         <AddWriting>
           <div className="user-name">
@@ -170,10 +179,14 @@ const ModalContents = styled.div`
 
 const AddImage = styled.div`
   border-right: solid 1px lightgray;
-  -ms-overflow-style: none;
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    display: none;
+  position: relative;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    object-fit: cover;
   }
 `;
 

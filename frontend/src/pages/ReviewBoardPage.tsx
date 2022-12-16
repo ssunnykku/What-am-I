@@ -46,8 +46,7 @@ const ReviewBoardPage = () => {
   };
 
   const getAiTestResult = async () => {
-    const res = await getPuppiesData();
-    console.log(typeof res);
+    await getPuppiesData();
   };
   useEffect(() => {
     getCurrentUser();
@@ -59,6 +58,7 @@ const ReviewBoardPage = () => {
     const res = await getReviewRequest(`reviews?page=${pages}`);
     setReviews(res.result.selectedReviews);
     setTotalPages(res.result.reviewCount);
+    console.log(res);
   };
   useEffect(() => {
     getReviews();
