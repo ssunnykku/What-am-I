@@ -13,7 +13,7 @@ aiSearchResultRouter.post(
   aiSearchResultController.addImage,
 );
 
-//  2. Ai 분석 결과 가져오기
+// 2. Ai 분석 결과 가져오기 (user별)
 aiSearchResultRouter.get(
   '/airesult',
   loginRequired,

@@ -36,16 +36,15 @@ class aiSearchResultService {
 
   //  2. Ai 분석 결과 가져오기
   static async getMyResults(userId, defaultPage) {
-    const result = await AiSearchResult.findAll({
+    const result = await AiSearchResult.findAndCountAll({
       where: { userId: userId },
-      include: [
-        {
-          model: Prediction,
-          right: true,
-        },
-      ],
-      // limit: 10,
-      // offset: (defaultPage - 1) * 10,
+      limit: 10,
+      offset: (defaultPage - 1) * 10,
+      include: {
+        model: Prediction,
+        right: true,
+      },
+      order: [['id', 'DESC']],
     });
     return result;
   }
