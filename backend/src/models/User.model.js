@@ -100,10 +100,6 @@ class User extends Sequelize.Model {
         foreignKey: 'userId',
         sourceKey: 'userId',
       });
-    db.User.hasMany(db.Prediction, {
-      foreignKey: 'userId',
-      sourceKey: 'userId',
-    });
   }
 }
 

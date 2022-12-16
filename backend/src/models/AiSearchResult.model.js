@@ -58,10 +58,6 @@ class AiSearchResult extends Sequelize.Model {
       foreignKey: 'userId',
       targetKey: 'userId',
     });
-    db.AiSearchResult.hasMany(db.Prediction, {
-      foreignKey: 'aiResultId',
-      targetKey: 'id',
-    });
   }
 }
 
