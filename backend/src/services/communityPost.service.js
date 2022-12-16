@@ -2,6 +2,7 @@ import { CommunityPost } from '../models/CommunityPost.model';
 import ApiError from '../utils/ApiError';
 import { COMMUNITYPOST_PER_PAGE } from '../utils/Constant';
 import sequelize from '../config/sequelize';
+import { CommunityPostLike } from '../models/CommunityPostLike.model';
 
 class communityPostService {
   static async createPost({ userId, communityId, images, description }) {
@@ -13,6 +14,20 @@ class communityPostService {
     });
 
     return createPost;
+  }
+
+  static async countAllPosts(communityId) {
+    const communityPostCount = await CommunityPost.count({
+      where: {
+        communityId: communityId,
+      },
+    });
+
+    if (!communityPostCount) {
+      return 0;
+    } else {
+      return communityPostCount;
+    }
   }
 
   static async communityPostCount(communityId) {
@@ -37,7 +52,7 @@ class communityPostService {
     }
   }
 
-  static async selectCommunityPost(defaultPage, communityId) {
+  static async selectCommunityPost(defaultPage, communityId, userId) {
     const selectedCommunityPost = await CommunityPost.findAll({
       where: { communityId: communityId },
       order: [['id', 'DESC']],
@@ -48,9 +63,23 @@ class communityPostService {
     if (!selectedCommunityPost) {
       throw ApiError.setBadRequest('No community available');
     }
+    for (const communityPost of selectedCommunityPost) {
+      communityPost.dataValues.likeCount = await CommunityPostLike.count({
+        where: { communityPostId: communityPost.id },
+      });
+      communityPost.dataValues.likeStatus = await CommunityPostLike.count({
+        where: {
+          userId: userId,
+          communityPostId: communityPost.id,
+        },
+      });
+    }
 
     return selectedCommunityPost;
   }
+
+  //   return selectedCommunityPost;
+  // }
 
   //커뮤니티 안에있는 한개의 글 가지고 오기
 
