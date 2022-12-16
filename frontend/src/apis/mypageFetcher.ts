@@ -94,7 +94,9 @@ export async function postPuppyData(dogName: string, aiImage: string) {
   formData.append('dogName', dogName);
 
   const response = await axiosInstance.post(
-    `/aisearch/${Storage.getUserIdItem()}`,
+    `/aisearch/${
+      Storage.getUserIdItem() ? Storage.getUserIdItem() : 'notUser/test'
+    }`,
     formData,
     {
       headers: {
