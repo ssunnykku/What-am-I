@@ -26,27 +26,23 @@ class AiSearchResult extends Sequelize.Model {
             },
           },
         },
-        aiResult: {
-          type: DataTypes.JSON,
-          allowNull: false,
-          notNull: {
-            msg: 'please upload a image',
-          },
-        },
-        aiImage: {
-          type: DataTypes.STRING,
-          allowNull: false,
-          validate: {
-            notNull: {
-              msg: 'Please enter images',
-            },
-          },
-        },
+        // predictId: {
+        //   type: DataTypes.INTEGER,
+        // },
+        // label: {
+        //   type: DataTypes.STRING,
+        // },
+        // score: {
+        //   type: DataTypes.STRING,
+        // },
+        // rank: {
+        //   type: DataTypes.INTEGER,
+        // },
       },
       {
         sequelize,
         tableName: 'aiSearchResults',
-        timestamps: true,
+        timestamps: false,
         charset: 'utf8mb4',
         collate: 'utf8mb4_general_ci',
       },
@@ -60,6 +56,10 @@ class AiSearchResult extends Sequelize.Model {
     db.AiSearchResult.belongsTo(db.User, {
       foreignKey: 'userId',
       targetKey: 'userId',
+    });
+    db.AiSearchResult.hasMany(db.Prediction, {
+      foreignKey: 'aiResultId',
+      targetKey: 'id',
     });
   }
 }

@@ -10,9 +10,18 @@ const data = [
 
 const map = data.map((a, i) => {
   a.rank = i;
-  console.log(a);
 });
+// console.log(data);
 
+const map2 = data.map((a) => {
+  console.log(a.id);
+  console.log(a.label);
+  console.log(a.score);
+  console.log(a.rank);
+});
+// for (const predict of data) {
+// }
+// console.log(data[0].id);
 // const obj = {
 //   name: 'hanjung',
 //   male: true,
