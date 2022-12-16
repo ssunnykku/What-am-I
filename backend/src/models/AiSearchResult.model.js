@@ -29,6 +29,9 @@ class AiSearchResult extends Sequelize.Model {
         aiResult: {
           type: DataTypes.JSON,
           allowNull: false,
+          notNull: {
+            msg: 'please upload a image',
+          },
         },
         aiImage: {
           type: DataTypes.STRING,

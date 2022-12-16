@@ -5,7 +5,8 @@ class aiSearchResultController {
   // 1. ai 분석 요청하기 (사진 업로드)
   static async addImage(req, res, next) {
     try {
-      const userId = req.currentUserId || null;
+      const userId = req.params.userId == ':userId' ? null : req.params.userId;
+
       const { dogName } = req.body;
       const image = req.file;
       const aiImage = image == undefined ? null : image.location;

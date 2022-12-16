@@ -42,9 +42,12 @@ class communityPostController {
       const { page } = req.query;
       const defaultPage = page || 1;
       const communityId = req.params.communityId;
-      // const id = req.params.communityId;
 
       const countCommunityLike = await communityService.getCommunityLike({
+        communityId,
+        userId,
+      });
+      const myCommunityLikeStatus = await communityService.getCommunityStatus({
         communityId,
         userId,
       });
@@ -68,6 +71,8 @@ class communityPostController {
       }
       return res.status(200).json({
         countCommunityLike,
+        myCommunityLikeStatus,
+
         countAllPosts,
         communityPostCount,
         selectedCommunityPost,
