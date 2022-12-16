@@ -10,22 +10,23 @@ class aiSearchResultController {
       const { dogName } = req.body;
       const image = req.file;
       const aiImage = image == undefined ? null : image.location;
-      let prediction = null;
+      let predictions = null;
 
       // ai 분석 post
       const predictResponse = await axios
         .post(`${process.env.RESPONSE_POST_URL}/v1/predict`, {
           url: aiImage,
         })
-        .then((res) => {
-          prediction = JSON.stringify(res.data);
-        });
+        .then((res) => (predictions = res.data));
+      const data = predictions.map((predict, index) => {
+        predict.rank = index;
+      });
 
       const searchResult = await aiSearchResultService.createResult({
         dogName,
         aiImage,
         userId,
-        prediction,
+        predictions,
       });
       return res.status(201).send(searchResult);
     } catch (error) {
