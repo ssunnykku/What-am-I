@@ -20,7 +20,6 @@ class communityService {
 
   static async getCommunityLike({ communityId: id, userId }) {
     const getCommunity = await Community.findOne({ where: { id } });
-    console.log('???', id);
     if (!getCommunity) {
       const errorMessage = `Cannot find id = ${id} community`;
       return errorMessage;
@@ -28,15 +27,29 @@ class communityService {
     getCommunity.dataValues.likeCount = await CommunityLike.count({
       where: { communityId: id },
     });
+
+    const likeCount = getCommunity.dataValues.likeCount;
+
+    return likeCount;
+  }
+
+  static async getCommunityStatus({ communityId: id, userId }) {
+    const getCommunity = await Community.findOne({ where: { id } });
+    if (!getCommunity) {
+      const errorMessage = `Cannot find id = ${id} community`;
+      return errorMessage;
+    }
     getCommunity.dataValues.likeStatus = await CommunityLike.count({
       where: {
         userId: userId,
         communityId: id,
       },
     });
-    return getCommunity;
+
+    const likeStatus = getCommunity.dataValues.likeStatus;
+
+    return likeStatus;
   }
-  // getCommunity.likeCount, getCommunity.likeStatus;
 
   static async getOneCommunity({ id, userId }) {
     const getCommunity = await Community.findOne({ where: { id } });
