@@ -6,6 +6,7 @@ import { REVIEW_PER_PAGE } from '../utils/Constant';
 import { Sequelize } from 'sequelize';
 import { AiSearchResult } from '../models/AiSearchResult.model.js';
 import { User } from '../models/User.model';
+
 const Op = Sequelize.Op;
 
 class reviewService {
@@ -46,8 +47,9 @@ class reviewService {
       include: {
         model: AiSearchResult,
         attributes: {
-          exclude: ['userId', 'id', 'dogName', 'aiResult'],
+          exclude: ['userId', 'id', 'dogName'],
         },
+        right: true,
       },
       offset: (defaultpage - 1) * REVIEW_PER_PAGE,
       limit: REVIEW_PER_PAGE,
@@ -76,7 +78,7 @@ class reviewService {
       include: {
         model: AiSearchResult,
         attributes: {
-          exclude: ['userId', 'id', 'dogName', 'aiResult'],
+          exclude: ['userId', 'id', 'dogName'],
         },
       },
     });
@@ -163,14 +165,7 @@ class reviewService {
       include: {
         model: AiSearchResult,
         attributes: {
-          exclude: [
-            'userId',
-            'id',
-            'dogName',
-            'aiResult',
-            'createdAt',
-            'updatedAt',
-          ],
+          exclude: ['userId', 'id', 'dogName'],
         },
       },
       where: {
