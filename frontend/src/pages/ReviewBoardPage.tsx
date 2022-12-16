@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
-import { SearchBox } from '../assets/styles/common/commonComponentStyle';
+import {
+  CreateBtn,
+  SearchBox,
+} from '../assets/styles/common/commonComponentStyle';
 import ReviewWritingModal from '../components/modal/ReviewWritingModal';
 import { theme } from '../assets/styles/common/palette';
 import { useEffect, useState } from 'react';
@@ -12,9 +15,9 @@ import {
   ReviewPostType,
   ReviewType,
 } from '../types/reviewboard/reviewType';
-import { getPuppyData, getUserData } from '../apis/mypageFetcher';
+import { getPuppiesData, getUserData } from '../apis/mypageFetcher';
 import { UserInfoType } from '../types/auth/authType';
-import Storage from '../storage/storage';
+import { useNavigate } from 'react-router-dom';
 
 const ReviewBoardPage = () => {
   const [pages, setPages] = useState<number>(1);
@@ -25,6 +28,7 @@ const ReviewBoardPage = () => {
   const [aiResult, setAiResult] = useState<AIresultType>();
 
   const [search, setSearch] = useState<string>('');
+  const navigate = useNavigate();
 
   const { isFirst, isLast, handleNextBtnClick, handlePrevBtnClick } =
     usePaginate(pages, setPages, totalPages, 1);
@@ -42,7 +46,7 @@ const ReviewBoardPage = () => {
   };
 
   const getAiTestResult = async () => {
-    const res = await getPuppyData();
+    const res = await getPuppiesData();
     console.log(typeof res);
   };
   useEffect(() => {
@@ -78,7 +82,7 @@ const ReviewBoardPage = () => {
     <BoardBox>
       <BoardHeader>
         사람들과 AI 분석 결과를 공유해보세요.
-        <ReviewWritingModal />
+        <CreateBtn onClick={() => navigate('/airesult')}> 글쓰기 </CreateBtn>
       </BoardHeader>
       <BoardContent>
         <SlideLeftBtn disabled={isFirst} onClick={handlePrevBtnClick} />

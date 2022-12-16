@@ -105,9 +105,15 @@ export async function postPuppyData(dogName: string, aiImage: string) {
   return response;
 }
 
-// 종 분석 결과
-export async function getPuppyData() {
+// 모든 종 분석 결과
+export async function getPuppiesData() {
   const response = await axiosInstance.get(`/airesult`);
   console.log(response);
   return response;
+}
+
+// 종 분석 결과
+export async function getPuppyData(id: number) {
+  const response = await axiosInstance.get(`/airesult/${id}`);
+  return response.data;
 }
