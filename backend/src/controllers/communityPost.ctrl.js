@@ -35,6 +35,8 @@ class communityPostController {
   //전체 커뮤니티글 리스트 10개씩
   static async getCommunityPostList(req, res, next) {
     try {
+      const userId = req.currentUserId;
+
       const { page } = req.query;
       const defaultPage = page || 1;
       const communityId = req.params.communityId;
@@ -47,6 +49,7 @@ class communityPostController {
         await communityPostService.selectCommunityPost(
           defaultPage,
           communityId,
+          userId,
         );
       if (selectedCommunityPost.errorMessage) {
         throw new Error(selectedCommunityPost);
@@ -79,7 +82,6 @@ class communityPostController {
     try {
       // const userId = testId;
       const userId = req.currentUserId;
-      console.log(userId);
       const id = req.params.id;
       const { images, description } = req.body;
 
