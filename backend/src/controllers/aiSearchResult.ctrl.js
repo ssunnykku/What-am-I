@@ -45,6 +45,21 @@ class aiSearchResultController {
       next(error);
     }
   }
+  // 3. 선택한 한 개 값에 대한 Ai 분석 결과 가져오기
+  static async myResult(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const id = req.params.id;
+      const getOneResult = await aiSearchResultService.findOneResult(
+        userId,
+        id,
+      );
+
+      return res.status(200).send(getOneResult);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export { aiSearchResultController };

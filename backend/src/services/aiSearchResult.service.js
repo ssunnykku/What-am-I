@@ -43,7 +43,19 @@ class aiSearchResultService {
         },
       ],
     });
-    // console.log(result);
+    return result;
+  }
+
+  static async findOneResult(userId, id) {
+    const result = await AiSearchResult.findOne({
+      where: { userId, id },
+      include: [
+        {
+          model: Prediction,
+          right: true,
+        },
+      ],
+    });
     return result;
   }
 }

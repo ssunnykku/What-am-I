@@ -20,4 +20,11 @@ aiSearchResultRouter.get(
   aiSearchResultController.myReview,
 );
 
+// 3. 선택한 한 개 값에 대한 Ai 분석 결과 가져오기, id: AiSearchResult.model의 id 값
+aiSearchResultRouter.get(
+  '/airesult/:id',
+  loginRequired,
+  aiSearchResultController.myResult,
+);
+
 export { aiSearchResultRouter };
