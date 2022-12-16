@@ -60,7 +60,6 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
   useEffect(() => {
     getOneReview();
     getReviewComments();
-    console.log(props.review);
   }, []);
 
   // 리뷰 댓글 쓰기
@@ -151,7 +150,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
       <ContentsModalWrapper>
         <AddImage>
           <div className="result-card-box">
-            {/* <img src={props.review?.AiSearchResult.aiImage} /> */}
+            <img src={props.review?.AiSearchResult.aiImage} />
             <div className="result-desc">AI 종 분석 결과</div>
           </div>
         </AddImage>

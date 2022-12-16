@@ -40,7 +40,6 @@ const CommuLikeBtn = ({ listInfo }: CommunityTypeProps) => {
     if (res.newLike) {
       setLike(true);
       setLikeCount(likeCount + 1);
-      console.log(likeCount as number);
     }
     if (res.deletedLike) {
       setLike(false);

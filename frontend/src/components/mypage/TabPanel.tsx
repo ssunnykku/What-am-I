@@ -16,7 +16,7 @@ export default function TabPanel({ value, setValue }: TabPanelProps) {
   return (
     <Tabs value={value} onChange={handleChange} centered>
       <Tab value={PAGEVALUE.PROFILE} label="프로필" />
-      <Tab value={PAGEVALUE.RESULT} label="분석결과" />
+      <Tab value={PAGEVALUE.RESULT} label="내 후기" />
       <Tab value={PAGEVALUE.COMMUNITY} label="커뮤니티" />
       <Tab value={PAGEVALUE.MYCOMMUNITY} label="내가 만든 커뮤니티" />
     </Tabs>

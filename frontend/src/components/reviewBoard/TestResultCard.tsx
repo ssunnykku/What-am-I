@@ -116,6 +116,7 @@ const DetailButton = styled(EntryBtn)`
 const DeleteButton = styled(CreateBtn)`
   margin-left: 0px;
   width: 100px;
+  z-index: 10000;
 `;
 
 export default TestResultCard;
