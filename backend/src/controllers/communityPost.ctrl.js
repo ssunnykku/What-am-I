@@ -1,4 +1,6 @@
 import { communityPostService } from '../services/communityPost.service';
+import { communityService } from '../services/community.service';
+
 import { Sequelize } from 'sequelize';
 import Joi from 'joi';
 
@@ -40,6 +42,12 @@ class communityPostController {
       const { page } = req.query;
       const defaultPage = page || 1;
       const communityId = req.params.communityId;
+      // const id = req.params.communityId;
+
+      const countCommunityLike = await communityService.getCommunityLike({
+        communityId,
+        userId,
+      });
 
       const countAllPosts = await communityPostService.countAllPosts(
         communityId,
@@ -58,9 +66,12 @@ class communityPostController {
       if (selectedCommunityPost.errorMessage) {
         throw new Error(selectedCommunityPost);
       }
-      return res
-        .status(200)
-        .json({ countAllPosts, communityPostCount, selectedCommunityPost });
+      return res.status(200).json({
+        countCommunityLike,
+        countAllPosts,
+        communityPostCount,
+        selectedCommunityPost,
+      });
     } catch (err) {
       next(err);
     }
