@@ -14,15 +14,12 @@ import {
   CommunityRankingType,
   CommunityType,
 } from '../types/community/communityType';
-import { getUserData } from '../apis/mypageFetcher';
 import { useInView } from 'react-intersection-observer';
-import { UserInfoType } from '../types/auth/authType';
 import { CommuSpinner } from '../components/loader/CustomSpinner';
+import Storage from '../storage/storage';
 
 const CommunityPage = () => {
   const [rankings, setRankings] = useState<CommunityType[]>([]);
-  const [like, setLike] = useState<CommunityRankingType>();
-
   const [commuList, setCommuList] = useState<CommunityType[]>([]);
   const [pages, setPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
@@ -50,14 +47,10 @@ const CommunityPage = () => {
   }, [inView]);
 
   // 로그인 여부
-  const getCurrentUser = async () => {
-    try {
-      await getUserData();
-    } catch (err) {
-      alert('로그인이 필요한 서비스입니다. 로그인하러 가볼까요?');
-      document.location.href = '/login';
-    }
-  };
+  if (!Storage.getUserIdItem()) {
+    alert('로그인이 필요한 서비스입니다. 로그인하러 가볼까요?');
+    document.location.href = '/login';
+  }
 
   // 베스트 커뮤니티
   const getRankingCommunity = async () => {
@@ -72,10 +65,10 @@ const CommunityPage = () => {
   const getCommunitiesList = async () => {
     const res = await getCommunitiesRequest(pages);
     setCommuList(res.selectedCommunity);
+    console.log(res);
   };
 
   useEffect(() => {
-    getCurrentUser();
     getRankingCommunity();
     getCommunitiesList();
   }, []);
@@ -91,7 +84,7 @@ const CommunityPage = () => {
           <RankingHeader>인기 커뮤니티</RankingHeader>
           <RankingBox>
             {rankings?.map((ranking) => (
-              <CommuRankingCard key={ranking.id} info={ranking} />
+              <CommuRankingCard key={ranking.id} listInfo={ranking} />
             ))}
           </RankingBox>
         </PopularCommuBox>
@@ -110,7 +103,7 @@ const CommunityPage = () => {
                   commuList.length - 1 === idx ? ref : undefined;
                 return (
                   <div key={idx} ref={observerRef}>
-                    <CommuListCard info={commu} />
+                    <CommuListCard listInfo={commu} />
                   </div>
                 );
               })}

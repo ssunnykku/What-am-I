@@ -24,13 +24,13 @@ const PaginateButton = ({ page, setPage, totalPages }: PaginateButtonProps) => {
         <PaginateBtn disabled={isFirst} onClick={handlePrevBtnClick}>
           &lt;
         </PaginateBtn>
-        {pages.map((value, idx) => (
+        {pages.map((p) => (
           <PaginateBtn
-            key={value}
-            onClick={() => handlePageBtnClick(value === null ? 1 : value)}
-            className={page === idx + 1 ? 'color-btn' : ''}
+            key={p}
+            onClick={() => handlePageBtnClick(p === null ? 1 : p)}
+            // className={page === idx + 1 ? 'color-btn' : ''}
           >
-            {page}
+            {p}
           </PaginateBtn>
         ))}
         <PaginateBtn disabled={isLast} onClick={handleNextBtnClick}>

@@ -16,6 +16,7 @@ import {
 } from '../apis/communityFetcher';
 import {
   CommunityType,
+  CommuNumType,
   CurrentCommuPostsType,
 } from '../types/community/communityType';
 import CommuLikeBtn from '../components/community/CommuLikeBtn';
@@ -27,6 +28,7 @@ const LikedCommuPage = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [commuPosts, setCommuPosts] = useState<CurrentCommuPostsType[]>([]);
   const [commuInfo, setCommuInfo] = useState<CommunityType>();
+  const [postCount, setPostCount] = useState<CommuNumType>();
   const [currentUserInfo, setCurrentUserInfo] = useState<UserInfoType>();
   const [editing, setEditing] = useState<Boolean>(false);
   const [newName, setNewName] = useState<string>('');
@@ -58,8 +60,9 @@ const LikedCommuPage = () => {
     const res = await getCurrentCommunityRequest(
       `communityPost/${id}?page=${page}`,
     );
-    setCommuPosts(res.result.selectedCommunityPost);
-    setTotalPages(res.result.communityPostCount);
+    setCommuPosts(res.selectedCommunityPost);
+    setTotalPages(res.communityPostCount);
+    setPostCount(res);
   };
 
   useEffect(() => {
@@ -210,10 +213,12 @@ const LikedCommuPage = () => {
           </SearchBox>
           <InfoBox>
             <div>
-              <CommuLikeBtn id={commuInfo?.id} />
+              <CommuLikeBtn listInfo={commuInfo} />
+              {postCount?.countCommunityLike}
             </div>
             <div>
               <StickyNote2Icon style={{ marginRight: '3px' }} />
+              {postCount?.communityPostCount}
             </div>
           </InfoBox>
         </SmallBox>
@@ -367,6 +372,7 @@ const InfoBox = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+
   div {
     margin-left: 10px;
     font-size: 1rem;

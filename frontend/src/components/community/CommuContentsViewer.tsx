@@ -13,7 +13,6 @@ import CommuWritingEditor from './CommuWritingEditor';
 import {
   deleteCommuPostRequest,
   deleteCurrCommuRequest,
-  editCommuPostRequest,
   editCurrCommuCommentsRequest,
   getCurrentCommunityRequest,
   postCurrCommuCommentsRequest,
@@ -23,6 +22,7 @@ import {
   CurrentCommuPostsType,
 } from '../../types/community/communityType';
 import ImgCarousel from './Carousel';
+import CommuPostingLikeBtn from './CommuPostingLikeBtn';
 
 const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const [isOpen, modalHandler] = useModal();
@@ -51,7 +51,6 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
   useEffect(() => {
     getOneCommuPost();
     getCurrCommuComments();
-    console.log(props.commuInfo);
   }, []);
 
   // 수정된 게시물 가져오기
@@ -244,7 +243,7 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
 
           <BottomDiv>
             <div className="like">
-              <CommuLikeBtn />
+              <CommuPostingLikeBtn commuPost={props.commuPost} />
             </div>
             <div className="date">{newDate}</div>
             <CommentBox>

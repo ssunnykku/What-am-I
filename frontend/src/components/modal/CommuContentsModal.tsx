@@ -27,10 +27,6 @@ const CommuContentsModal = ({
 }: CurrentCommuityProps) => {
   const [isOpen, modalHandler] = useModal();
 
-  useEffect(() => {
-    console.log(commuInfo);
-  }, []);
-
   return (
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>

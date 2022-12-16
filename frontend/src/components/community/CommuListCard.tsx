@@ -6,19 +6,19 @@ import { font } from '../../assets/styles/common/fonts';
 import CommuLikeBtn from './CommuLikeBtn';
 import { CommunityTypeProps } from './CommuRankingCard';
 
-const CommuListCard = ({ info }: CommunityTypeProps) => {
+const CommuListCard = ({ listInfo }: CommunityTypeProps) => {
   return (
     <ListCardBox>
       <ListImage>
-        <img src={info?.communityImage} />
+        <img src={listInfo?.communityImage} />
       </ListImage>
       <SmallBox>
-        <CommuName>{info?.name}</CommuName>
+        <CommuName>{listInfo?.name}</CommuName>
         <LikeNum>
-          <CommuLikeBtn id={info?.id} />
+          <CommuLikeBtn listInfo={listInfo} />
         </LikeNum>
       </SmallBox>
-      <Link to={`/likedcommunity?id=${info?.id}`}>
+      <Link to={`/likedcommunity?id=${listInfo?.id}`}>
         <EntryBtn>입장하기</EntryBtn>
       </Link>
     </ListCardBox>
