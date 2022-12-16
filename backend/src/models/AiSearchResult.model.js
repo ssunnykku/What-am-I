@@ -25,18 +25,9 @@ class AiSearchResult extends Sequelize.Model {
             },
           },
         },
-        // predictId: {
-        //   type: DataTypes.INTEGER,
-        // },
-        // label: {
-        //   type: DataTypes.STRING,
-        // },
-        // score: {
-        //   type: DataTypes.STRING,
-        // },
-        // rank: {
-        //   type: DataTypes.INTEGER,
-        // },
+        aiImage: {
+          type: DataTypes.STRING,
+        },
       },
       {
         sequelize,

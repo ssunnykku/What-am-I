@@ -3,7 +3,7 @@ import { Prediction } from '../models/Prediction.model';
 import { db } from '../models/index';
 
 class aiSearchResultService {
-  static async createResult({ dogName, userId, predictions }) {
+  static async createResult({ aiImage, dogName, userId, predictions }) {
     // const t = await db.sequelize.transaction();
 
     try {
@@ -11,6 +11,7 @@ class aiSearchResultService {
         {
           userId,
           dogName,
+          aiImage,
         },
         // { transaction: t },
       );

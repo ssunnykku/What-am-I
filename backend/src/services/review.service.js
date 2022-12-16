@@ -55,14 +55,7 @@ class reviewService {
       include: {
         model: AiSearchResult,
         attributes: {
-          exclude: [
-            'userId',
-            'id',
-            'dogName',
-            'aiResult',
-            'createdAt',
-            'updatedAt',
-          ],
+          exclude: ['userId', 'id', 'dogName', 'aiResult'],
         },
       },
       offset: (defaultpage - 1) * REVIEW_PER_PAGE,
@@ -92,14 +85,7 @@ class reviewService {
       include: {
         model: AiSearchResult,
         attributes: {
-          exclude: [
-            'userId',
-            'id',
-            'dogName',
-            'aiResult',
-            'createdAt',
-            'updatedAt',
-          ],
+          exclude: ['userId', 'id', 'dogName', 'aiResult'],
         },
       },
     });
