@@ -40,7 +40,6 @@ CommunityPost.init(sequelize);
 CommunityComment.init(sequelize);
 CommunityLike.init(sequelize);
 CommunityPostLike.init(sequelize);
-
 AiSearchResult.init(sequelize);
 
 Community.associate(db);
