@@ -1,5 +1,4 @@
 import { AiSearchResult } from '../models/AiSearchResult.model';
-import { Prediction } from '../models/Prediction.model';
 
 class aiSearchResultService {
   static async createResult({ dogName, userId, prediction, aiImage }) {
