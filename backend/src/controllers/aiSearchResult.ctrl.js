@@ -5,8 +5,8 @@ class aiSearchResultController {
   // 1. ai 분석 요청하기 (사진 업로드)
   static async addImage(req, res, next) {
     try {
-      const userId = req.params.userId == ':userId' ? null : req.params.userId;
-
+      // const userId = req.params.userId == ':userId' ? null : req.params.userId;
+      const userId = req.params.userId;
       const { dogName } = req.body;
       const image = req.file;
       const aiImage = image == undefined ? null : image.location;
@@ -29,6 +29,30 @@ class aiSearchResultController {
         predictions,
       });
       return res.status(201).send(searchResult);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async searchImage(req, res, next) {
+    try {
+      const { dogName } = req.body;
+      const image = req.file;
+      const aiImage = image == undefined ? null : image.location;
+
+      let result = null;
+
+      // ai 분석 post
+      const justSearch = await axios
+        .post(`${process.env.RESPONSE_POST_URL}/v1/predict`, {
+          url: aiImage,
+        })
+        .then((res) => (result = res.data));
+      const data = result.map((predict, index) => {
+        predict.rank = index;
+      });
+
+      return res.status(200).send({ dogName, result });
     } catch (error) {
       next(error);
     }

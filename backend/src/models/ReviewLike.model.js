@@ -12,7 +12,6 @@ class ReviewLike extends Sequelize.Model {
         },
         userId: {
           type: DataTypes.UUID,
-          defaultValue: DataTypes.UUIDV4,
           foreignKey: true,
         },
         reviewId: {

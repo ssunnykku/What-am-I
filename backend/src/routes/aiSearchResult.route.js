@@ -6,11 +6,18 @@ import { uploadImageS3 } from '../middlewares/uploadImageS3';
 const aiSearchResultRouter = Router();
 const upload = uploadImageS3();
 
-// 1. ai 분석 요청하기 (사진 업로드) 비회원도 이용 가능
+// 1. ai 분석 요청하기 (사진 업로드)
 aiSearchResultRouter.post(
   '/aisearch/:userId',
   upload.single('aiImage'),
   aiSearchResultController.addImage,
+);
+
+// 비회원일경우
+aiSearchResultRouter.post(
+  '/aisearch/notuser/test',
+  upload.single('aiImage'),
+  aiSearchResultController.searchImage,
 );
 
 // 2. Ai 분석 결과 가져오기 (user별)
