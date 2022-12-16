@@ -37,8 +37,13 @@ class aiSearchResultController {
   //  2. Ai 분석 결과 가져오기
   static async myReview(req, res, next) {
     try {
+      const { page } = req.query;
+      const defaultPage = page || 1;
       const userId = req.currentUserId;
-      const getMyImages = await aiSearchResultService.getMyResults(userId);
+      const getMyImages = await aiSearchResultService.getMyResults(
+        userId,
+        defaultPage,
+      );
 
       return res.status(200).send(getMyImages);
     } catch (error) {
@@ -54,6 +59,23 @@ class aiSearchResultController {
         userId,
         id,
       );
+
+      return res.status(200).send(getOneResult);
+    } catch (error) {
+      next(error);
+    }
+  }
+  // 4. 결과 삭제
+  static async selectOneResult(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+
+      const id = req.params.id;
+
+      const getOneResult = await aiSearchResultService.getOne({ userId, id });
+      if (getOneResult.errorMessage) {
+        throw new Error(getOneResult, errorMessage);
+      }
 
       return res.status(200).send(getOneResult);
     } catch (error) {

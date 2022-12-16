@@ -43,6 +43,7 @@ class CommunityPost extends Sequelize.Model {
     db.CommunityPost.belongsTo(db.Community, {
       foreignKey: 'communityId',
       targetKey: 'id',
+      onDelete: 'CASCADE',
     }),
       db.CommunityPost.belongsTo(db.User, {
         foreignKey: 'userId',
@@ -51,14 +52,10 @@ class CommunityPost extends Sequelize.Model {
       db.CommunityPost.hasMany(db.CommunityComment, {
         foreignKey: 'communityPostId',
         sourceKey: 'id',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
       }),
       db.CommunityPost.hasMany(db.CommunityPostLike, {
         foreignKey: 'communityPostId',
         sourceKey: 'id',
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
       });
   }
 }

@@ -50,6 +50,7 @@ class Review extends Sequelize.Model {
     db.Review.belongsTo(db.AiSearchResult, {
       foreignKey: 'aiResultId',
       targetKey: 'id',
+      onDelete: 'CASCADE',
     });
   }
 }

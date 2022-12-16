@@ -19,15 +19,6 @@ class reviewService {
       return errorMessage;
     }
 
-    // const findResult = await AiSearchResult.findOne({
-    //   where: { userId: userId, id: aiResultId },
-    // });
-
-    // if (!findResult) {
-    //   const errorMessage = '다른 회원의 조회 결과입니다.';
-    //   return errorMessage;
-    // }
-
     // db에 저장
     const createdNewReview = await Review.create({
       description,
@@ -112,10 +103,6 @@ class reviewService {
       ],
       where: { id: _id },
     });
-
-    // const [reviewId, metadata] = await sequelize.query(
-    //   `select R.id,R.description,R.userId,R.images,U.userId,U.nickname,U.profileImg from reviews as R inner join users as U on R.userId = U.userId where R.id=${id}`,
-    // );
 
     if (!review) {
       const errorMessage = '작성하신 글이 없습니다';

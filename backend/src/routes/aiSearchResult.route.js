@@ -27,4 +27,11 @@ aiSearchResultRouter.get(
   aiSearchResultController.myResult,
 );
 
+// 4. 결과 삭제
+aiSearchResultRouter.delete(
+  '/airesult/:id',
+  loginRequired,
+  aiSearchResultController.selectOneResult,
+);
+
 export { aiSearchResultRouter };

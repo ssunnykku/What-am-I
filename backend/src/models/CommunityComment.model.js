@@ -31,6 +31,7 @@ class CommunityComment extends Sequelize.Model {
     db.CommunityComment.belongsTo(db.CommunityPost, {
       foreignKey: 'communityPostId',
       sourceKey: 'id',
+      onDelete: 'CASCADE',
     }),
       db.CommunityComment.belongsTo(db.User, {
         foreignKey: 'userId',

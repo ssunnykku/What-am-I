@@ -31,6 +31,7 @@ class ReviewComment extends Sequelize.Model {
     db.ReviewComment.belongsTo(db.Review, {
       foreignKey: 'reviewId',
       sourceKey: 'id',
+      onDelete: 'CASCADE',
     });
   }
   static associate(db) {
