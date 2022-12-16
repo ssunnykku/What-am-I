@@ -29,7 +29,7 @@ const AITestResultPage = () => {
         AI 견종 분석 결과
         <ResultDescBox>
           <PuppyImg>
-            <img src={aiImage} />
+            <img src={URL.createObjectURL(aiImage)} />
           </PuppyImg>
           <PuppyResult>
             {`${dogName}의 견종 분석 결과`}
