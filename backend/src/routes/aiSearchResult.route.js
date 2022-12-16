@@ -8,7 +8,7 @@ const upload = uploadImageS3();
 
 // 1. ai 분석 요청하기 (사진 업로드) 비회원도 이용 가능
 aiSearchResultRouter.post(
-  '/aisearch',
+  '/aisearch/:userId',
   upload.single('aiImage'),
   aiSearchResultController.addImage,
 );
