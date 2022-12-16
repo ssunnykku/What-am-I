@@ -274,6 +274,7 @@ const ContentsModalWrapper = styled.form`
   height: 85%;
   max-width: 75rem;
   min-width: 50rem;
+  min-height: 45rem;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -294,6 +295,7 @@ const AddImage = styled.div`
 const ImagePlace = styled.div`
   width: 100%;
   height: 85%;
+  min-height: 35rem;
   max-height: 45rem;
   position: relative;
   overflow: hidden;

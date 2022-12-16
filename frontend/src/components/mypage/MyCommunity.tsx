@@ -25,8 +25,6 @@ function MyCommunity() {
       const response = await getUserCommunites(page);
       setCommunityLists(response.rows);
       setTotalPages(Math.ceil(response.count / 10));
-      console.log(Math.ceil(response.count / 10));
-      console.log(response.rows);
     }
     getData();
     window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -15,7 +15,7 @@ const AIResultCardPage = () => {
   const getAiTestResult = async () => {
     const res = await getPuppiesData();
     setData(res.data.rows);
-    setTotalPages(Math.ceil(res.data.count / 10));
+    setTotalPages(Math.ceil(res.data.rows.length / 10));
   };
   useEffect(() => {
     getAiTestResult();
@@ -23,11 +23,12 @@ const AIResultCardPage = () => {
   return (
     <>
       <BigBox>
-        <header>AI 종 분석 결과</header>
+        <header>AI 종 분석 결과 : 카드를 눌러 글을 작성해 보세요.</header>
         <ResultCardBox>
-          {data.map((value) => (
-            <ReviewWritingModal id={value.id} key={value.id} />
-          ))}
+          {data &&
+            data.map((value) => (
+              <ReviewWritingModal id={value.id} key={value.id} />
+            ))}
         </ResultCardBox>
         <PaginateButton page={page} setPage={setPage} totalPages={totalPages} />
       </BigBox>
@@ -47,7 +48,7 @@ const BigBox = styled.div`
   header {
     font-family: ${font.bold};
     color: ${theme.mainColor};
-    font-size: 20px;
+    font-size: 19px;
     margin-top: 3rem;
   }
 `;

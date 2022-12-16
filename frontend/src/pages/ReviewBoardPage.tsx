@@ -91,15 +91,16 @@ const ReviewBoardPage = () => {
 
         <CardBox>
           <div className="card-box">
-            {reviews?.map((review) => (
-              <ReviewContentsModal
-                key={review.id}
-                review={review}
-                getReviews={getReviews}
-                currentUser={currentUser}
-                userInfo={userInfo}
-              />
-            ))}
+            {reviews &&
+              reviews?.map((review) => (
+                <ReviewContentsModal
+                  key={review.id}
+                  review={review}
+                  getReviews={getReviews}
+                  currentUser={currentUser}
+                  userInfo={userInfo}
+                />
+              ))}
           </div>
         </CardBox>
 

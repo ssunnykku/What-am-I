@@ -14,6 +14,7 @@ import MyModal from '../modal/MyModal';
 import useModal from '../../hooks/modal/useModal';
 import ReviewWritingEditor from './ReviewWritingEditor';
 import {
+  AITestType,
   OneReviewType,
   ReviewCommentType,
   ReviewType,
@@ -22,6 +23,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useConfirm } from '../../hooks/confirm/useConfirm';
 import ReviewLikeBtn from './ReviewLikeBtn';
+import { getPuppyData } from '../../apis/mypageFetcher';
 
 const ReviewContentsViewer = (props: ReviewTypeProps) => {
   const [isOpen, modalHandler] = useModal();
@@ -34,6 +36,7 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
   const [editing, setEditing] = useState<boolean>(false);
   const [newComments, setNewComments] = useState<string>('');
   const [selectedIdx, setSelectedIdx] = useState<number | boolean>(false);
+  const [result, setResult] = useState<AITestType[]>([]);
   const editInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -57,9 +60,17 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     );
     setComments(res.reverse());
   };
+
+  const getAiResultData = async () => {
+    if (props.review) {
+      const res = await getPuppyData(props.review?.id);
+      setResult(res.Predictions);
+    }
+  };
   useEffect(() => {
     getOneReview();
     getReviewComments();
+    getAiResultData();
   }, []);
 
   // 리뷰 댓글 쓰기
@@ -151,7 +162,17 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
         <AddImage>
           <div className="result-card-box">
             <img src={props.review?.AiSearchResult.aiImage} />
-            <div className="result-desc">AI 종 분석 결과</div>
+            <div className="result-desc">
+              <ResultText>
+                {result &&
+                  result.map((value) => (
+                    <Breed key={value.id}>
+                      <BreedText>{value.label}</BreedText>
+                      <BreedText>{(value.score * 100).toFixed(1)}%</BreedText>
+                    </Breed>
+                  ))}
+              </ResultText>
+            </div>
           </div>
         </AddImage>
         <AddWriting>
@@ -265,6 +286,7 @@ const ContentsModalWrapper = styled.form`
   height: 85%;
   max-width: 58rem;
   min-width: 40rem;
+  min-height: 30rem;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -303,6 +325,25 @@ const AddImage = styled.div`
       border-bottom: solid 1px lightgray;
     }
   }
+`;
+
+const ResultText = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 10px;
+  height: 8rem;
+  width: 20rem;
+`;
+
+const Breed = styled.div`
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  place-items: center;
+`;
+
+const BreedText = styled.div`
+  font-size: 16px;
 `;
 
 const AddWriting = styled.div`

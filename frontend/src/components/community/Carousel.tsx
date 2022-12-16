@@ -12,6 +12,7 @@ function ImgCarousel({ postImgs }: postImgsProps) {
       height="800px"
       stopAutoPlayOnHover={false}
       animation="slide"
+      navButtonsAlwaysVisible={true}
     >
       {postImgs.map((img, idx) => (
         <ImgItems key={idx} img={img} />

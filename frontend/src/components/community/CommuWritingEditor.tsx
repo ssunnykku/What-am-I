@@ -112,11 +112,12 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
             ) : (
               ''
             )}
-            {previewImgs.map((pre, idx) => (
-              <ImagePlace key={idx}>
-                <img src={pre} alt={`${pre}-${idx}`} />
-              </ImagePlace>
-            ))}
+            {previewImgs &&
+              previewImgs.map((pre, idx) => (
+                <ImagePlace key={idx}>
+                  <img src={pre} alt={`${pre}-${idx}`} />
+                </ImagePlace>
+              ))}
             {props.mode !== 'edit' ? (
               <InputBox>
                 <div className="upload-box">
@@ -170,6 +171,7 @@ const CreateModalWrapper = styled.form`
   height: 80%;
   max-width: 47rem;
   min-width: 35rem;
+  min-height: 20rem;
   position: fixed;
   top: 50%;
   left: 50%;

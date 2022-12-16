@@ -33,7 +33,6 @@ export async function editCommunityRequest(
   formData.append('name', name);
   formData.append('introduction', introduction);
   formData.append('communityImage', communityImage);
-  console.log('커뮤니티 수정', formData);
 
   const res = await axiosInstance.put(endpoint, formData, {
     headers: {

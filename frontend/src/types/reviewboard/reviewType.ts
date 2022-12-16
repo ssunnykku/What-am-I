@@ -48,6 +48,14 @@ export interface OneReviewType {
   userId: string;
 }
 
+export interface AITestType {
+  aiResultId: number;
+  id: number;
+  label: string;
+  rank: number;
+  score: number;
+}
+
 export interface AIresultType {
   Predictions: {
     aiResultId: number;

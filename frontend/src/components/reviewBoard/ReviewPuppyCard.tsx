@@ -7,9 +7,6 @@ const ReviewPuppyCard = ({
   onCardModalClickEvent,
   review,
 }: ReviewTypeProps) => {
-  useEffect(() => {
-    console.log(review);
-  }, []);
   return (
     <PuppyCardBox onClick={onCardModalClickEvent}>
       <img src={review?.AiSearchResult.aiImage} />

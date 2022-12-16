@@ -12,7 +12,6 @@ function Result() {
     async function getReviews() {
       const response = await getUserReviews();
       setReviews(response);
-      console.log(response);
     }
     getReviews();
   }, []);
