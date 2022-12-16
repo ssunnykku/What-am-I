@@ -47,3 +47,12 @@ export interface OneReviewType {
   id: number;
   userId: string;
 }
+
+export interface AIresultType {
+  aiResultId: number;
+  id: number;
+  label: string;
+  rank: number;
+  score: number;
+  userId: string;
+}
