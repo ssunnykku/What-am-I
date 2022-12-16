@@ -1,5 +1,4 @@
 import { reviewService } from '../services/review.service';
-// import Joi from 'joi';
 
 class reviewController {
   //모든 글들 다 보기
@@ -12,13 +11,11 @@ class reviewController {
       const defaultPage = page || 1;
 
       const reviewCount = await reviewService.countReviewpage();
-      // console.log(reviewCount);
 
       const selectedReviews = await reviewService.selectReviews(
         defaultPage,
         _userId,
       );
-      // console.log();
 
       if (selectedReviews.errorMessage) {
         throw new Error(selectedReviews);
