@@ -1,4 +1,5 @@
 import { aiSearchResultService } from '../services/aiSearchResult.service';
+import axios from 'axios';
 
 class aiSearchResultController {
   // 1. ai 분석 요청하기 (사진 업로드)
@@ -9,28 +10,23 @@ class aiSearchResultController {
       const image = req.file;
       // const aiImage = image == undefined ? null : image.transforms[0].location;
       const aiImage = image == undefined ? null : image.location;
+      let prediction = null;
+      const predictResponse = await axios
+        .post(`${process.env.RESPONSE_POST_URL}/v1/predict`, {
+          url: aiImage,
+        })
+        .then((res) => {
+          prediction = res.data[0].label;
+          console.log(res.data);
+        });
 
       const searchResult = await aiSearchResultService.createResult({
         dogName,
         aiImage,
         userId,
+        prediction,
       });
       return res.status(201).send(searchResult);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  static async addImage2(req, res, next) {
-    try {
-      const image = req.file;
-      // const aiImage = image == undefined ? null : image.transforms[0].location;
-      const uploadImage = image == undefined ? null : image.location;
-
-      // const searchResult = await aiSearchResultService.createResult2({
-      //   uploadImage,
-      // });
-      return res.status(200).json({ url: uploadImage });
     } catch (error) {
       next(error);
     }
