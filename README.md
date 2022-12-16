@@ -86,12 +86,15 @@ AWS S3
 <br>
 
 <br>
+커뮤니티에 글을 남겨 소통하기
+
+![image](https://kdt-gitlab.elice.io/ai_track/class05/ai_project/team08/team08-project//uploads/197204a6fe0f67262ada578e895f4f39/KakaoTalk_20221217_050315347.gif)
 
 #
 
 ### 메인 페이지
 
-- 회원가입 없이 강아지의 견종을 분석해보는 서비스를 이용할 수 있음
+- 강아지의 견종을 분석을 할 수 있는 페이지로 갈 수 있도록 함
 
 ### 로그인 페이지
 
