@@ -8,24 +8,14 @@ import { theme } from '../assets/styles/common/palette';
 const AITestPage = () => {
   const [dogName, setDogName] = useState<string>('');
   const [preview, setPreview] = useState<string>('');
-  const [aiImage, setAiImage] = useState<string>('/');
+  const [aiImage, setAiImage] = useState<File>();
 
   const imageInputRef = useRef<HTMLInputElement>(null);
 
   const handleChangeFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length !== 0) {
-      const response = await EditUserImg(e.target.files[0]);
-      setAiImage(response.aiImage);
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        setPreview(reader.result as string);
-      };
-    }
-    if (imageInputRef.current) {
-      setDogName(imageInputRef.current.value);
+      setPreview(URL.createObjectURL(e.target.files[0]));
+      setAiImage(e.target.files[0]);
     }
   };
 
@@ -44,10 +34,10 @@ const AITestPage = () => {
               <div className="upload-box">
                 <label htmlFor="file">사진 업로드</label>
               </div>
-              <input
+              {/* <input
                 className="upload-name"
                 placeholder={dogName ? dogName : '임펩시 사진'}
-              />
+              /> */}
               <input
                 type="file"
                 id="file"
@@ -58,7 +48,12 @@ const AITestPage = () => {
               <div style={{ marginTop: '15px', fontSize: '18px' }}>
                 강아지 이름
               </div>
-              <input type="text" className="puppy-name" placeholder="임펩시" />
+              <input
+                type="text"
+                className="puppy-name"
+                placeholder="임펩시"
+                onChange={(e: any) => setDogName(e.target.value)}
+              />
             </div>
             <Link
               to={'/dnaresult'}

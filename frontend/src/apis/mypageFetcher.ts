@@ -89,14 +89,24 @@ export async function deleteUserCommunites(communityId: number) {
 // 강아지 종 분석
 // 종 분석 이미지 업로드
 export async function postPuppyData(dogName: string, aiImage: string) {
-  const response = await axiosInstance.post(`/aisearch`, {
-    dogName,
-    aiImage,
-  });
+  const formData = new FormData();
+  formData.append('aiImage', aiImage);
+  formData.append('dogName', dogName);
+
+  const response = await axiosInstance.post(
+    `/aisearch/${Storage.getUserIdItem()}`,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    },
+  );
   console.log(response);
   return response;
 }
-// 종 분석 이미지 업로드
+
+// 종 분석 결과
 export async function getPuppyData() {
   const response = await axiosInstance.get(`/airesult`);
   console.log(response);
