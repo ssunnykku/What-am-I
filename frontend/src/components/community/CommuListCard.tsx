@@ -40,7 +40,7 @@ const ListCardBox = styled.div`
 `;
 
 const ListImage = styled.div`
-  width: 7.5rem;
+  width: 7rem;
   height: 7rem;
   border: solid 1px gray;
   margin-left: 40px;

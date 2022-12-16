@@ -49,7 +49,7 @@ const PaginateBox = styled.div`
   position: relative;
   bottom: 2.5%;
   display: flex;
-  margin-top: 5px;
+  margin-top: 10px;
   justify-content: center;
 `;
 

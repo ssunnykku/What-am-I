@@ -165,11 +165,10 @@ const ListsBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 5rem;
 `;
 
 const CommuListHeader = styled.div`
-  width: 50rem;
+  width: 47rem;
   height: 2rem;
   line-height: 2rem;
   text-align: center;
@@ -183,7 +182,7 @@ const CommuListHeader = styled.div`
 
 const CommuListsBox = styled.div`
   height: 100%;
-  width: 51rem;
+  width: 50rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -195,8 +194,8 @@ const CommuListsBox = styled.div`
 const ScrollBox = styled.div`
   border: solid 2px ${theme.mainColor};
   border-radius: 10px;
-  width: 51rem;
-  height: 36rem;
+  width: 47rem;
+  height: 32rem;
   display: flex;
   flex-direction: column;
   align-items: center;
