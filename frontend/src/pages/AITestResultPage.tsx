@@ -3,25 +3,22 @@ import { theme } from '../assets/styles/common/palette';
 import { font } from '../assets/styles/common/fonts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getPuppyData, getUserData } from '../apis/mypageFetcher';
+import { getPuppyData, postPuppyData } from '../apis/mypageFetcher';
+import Storage from '../storage/storage';
 
 const AITestResultPage = () => {
-  const [currUser, setCurrUser] = useState<string>('');
   const navigate = useNavigate();
   const location = useLocation();
-  const profileImg = location.state.profileImg;
+  const aiImage = location.state.aiImage;
+  const dogName = location.state.dogName;
 
   useEffect(() => {
     async function getData() {
-      const response = await getPuppyData(profileImg);
+      const response = await postPuppyData(dogName, aiImage);
       console.log(response);
     }
-    async function getCurrUser() {
-      const res = await getUserData();
-      setCurrUser(res.userId);
-    }
+
     getData();
-    getCurrUser();
   }, []);
   return (
     <ResultBox>
@@ -30,10 +27,10 @@ const AITestResultPage = () => {
         <ResultDescBox>
           <PuppyImg></PuppyImg>
           <PuppyResult>
-            "이름"의 견종 분석 결과
+            {`${dogName}의 견종 분석 결과`}
             <ResultText></ResultText>
             <div>로 확인되었습니다.</div>
-            {!currUser ? (
+            {!Storage.getUserIdItem() ? (
               <ShareBtn onClick={() => navigate('/login')}>
                 로그인 하고 댕댕이 보러 가기
               </ShareBtn>
