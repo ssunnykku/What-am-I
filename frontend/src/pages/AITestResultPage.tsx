@@ -7,6 +7,7 @@ import { getPuppyData, postPuppyData } from '../apis/mypageFetcher';
 import Storage from '../storage/storage';
 
 const AITestResultPage = () => {
+  const [result, setResult] = useState<any[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
   const aiImage = location.state.aiImage;
@@ -15,10 +16,7 @@ const AITestResultPage = () => {
   useEffect(() => {
     async function getData() {
       const response = await postPuppyData(dogName, aiImage);
-      console.log(response);
-
-      const resMap = response.data.map((res: any) => res.label);
-      console.log(resMap);
+      setResult(response.data);
     }
 
     getData();
@@ -33,7 +31,14 @@ const AITestResultPage = () => {
           </PuppyImg>
           <PuppyResult>
             {`${dogName}의 견종 분석 결과`}
-            <ResultText></ResultText>
+            <ResultText>
+              {result.map((value) => (
+                <Breed key={value.id}>
+                  <BreedText>{value.label}</BreedText>
+                  <BreedText>{(value.score * 100).toFixed(1)}%</BreedText>
+                </Breed>
+              ))}
+            </ResultText>
             <div>로 확인되었습니다.</div>
             {!Storage.getUserIdItem() ? (
               <ShareBtn onClick={() => navigate('/login')}>
@@ -88,7 +93,7 @@ const ResultDescBox = styled.div`
 
 const PuppyImg = styled.div`
   border: solid 1px ${theme.boldColor};
-  width: 100%;
+  width: 90%;
   height: 24rem;
   display: flex;
   position: relative;
@@ -112,15 +117,29 @@ const PuppyResult = styled.div`
 `;
 
 const ResultText = styled.div`
-  height: 14rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 10px;
+  height: 9rem;
   width: 20rem;
   border: solid 1px;
+  padding: 5px;
+`;
+
+const Breed = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+`;
+
+const BreedText = styled.div`
+  font-size: 16px;
 `;
 
 const ShareBtn = styled.button`
   height: 4rem;
   width: 20rem;
-  margin-top: 15px;
+  margin-top: 60px;
   font-family: ${font.bold};
   border-radius: 10px;
   border: solid 1px ${theme.boldColor};

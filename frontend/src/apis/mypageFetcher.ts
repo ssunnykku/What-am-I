@@ -102,7 +102,6 @@ export async function postPuppyData(dogName: string, aiImage: string) {
       },
     },
   );
-  console.log(response);
   return response;
 }
 
