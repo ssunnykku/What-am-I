@@ -3,7 +3,7 @@ import { theme } from '../assets/styles/common/palette';
 import { font } from '../assets/styles/common/fonts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getPuppyData, postPuppyData } from '../apis/mypageFetcher';
+import { getPuppiesData, postPuppyData } from '../apis/mypageFetcher';
 import Storage from '../storage/storage';
 
 const AITestResultPage = () => {

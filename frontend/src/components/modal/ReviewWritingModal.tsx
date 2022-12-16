@@ -1,10 +1,9 @@
 import MyModal from './MyModal';
 import useModal from '../../hooks/modal/useModal';
-import { CreateBtn } from '../../assets/styles/common/commonComponentStyle';
 import ReviewWritingEditor from '../reviewBoard/ReviewWritingEditor';
-import { ReviewTypeProps } from './ReviewContentsModal';
+import TestResultCard, { receiveProps } from '../reviewBoard/TestResultCard';
 
-const ReviewWritingModal = () => {
+const ReviewWritingModal = ({ id, setReviews }: receiveProps) => {
   const [isOpen, modalHandler] = useModal();
 
   return (
@@ -12,7 +11,11 @@ const ReviewWritingModal = () => {
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
         <ReviewWritingEditor />
       </MyModal>
-      <CreateBtn onClick={modalHandler}> 글쓰기 </CreateBtn>
+      <TestResultCard
+        setReviews={setReviews}
+        id={id}
+        onCardModalClickEvent={modalHandler}
+      ></TestResultCard>
     </>
   );
 };

@@ -49,10 +49,15 @@ export interface OneReviewType {
 }
 
 export interface AIresultType {
-  aiResultId: number;
+  Predictions: {
+    aiResultId: number;
+    id: number;
+    label: string;
+    rank: number;
+    score: number;
+  };
+  aiImage: string;
+  dogName: string;
   id: number;
-  label: string;
-  rank: number;
-  score: number;
   userId: string;
 }
