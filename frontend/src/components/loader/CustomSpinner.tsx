@@ -1,4 +1,5 @@
 import { Dna, ThreeDots } from 'react-loader-spinner';
+import styled from 'styled-components';
 
 export const CustomSpinner = () => {
   return (

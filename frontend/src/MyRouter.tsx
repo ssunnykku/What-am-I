@@ -16,7 +16,8 @@ const Login = lazy(() => import('./pages/LoginPage'));
 const Register = lazy(() => import('./pages/RegisterPage'));
 const MyPage = lazy(() => import('./pages/MyPage'));
 const LikedCommunity = lazy(() => import('./pages/LikedCommuPage'));
-const AIResultCard = lazy(() => import('./pages/AIResultPage'));
+const AIResultCard = lazy(() => import('./pages/AIResultCardPage'));
+const AILoading = lazy(() => import('./pages/AILoadingPage'));
 
 const MyRouter = () => {
   return (
@@ -33,7 +34,8 @@ const MyRouter = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/likedcommunity" element={<LikedCommunity />} />
-          <Route path="/airesult" element={<AIResultCard />} />
+          <Route path="/airesultcard" element={<AIResultCard />} />
+          <Route path="/ailoading" element={<AILoading />} />
         </Routes>
       </BrowserRouter>
     </Suspense>
