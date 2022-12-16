@@ -7,8 +7,12 @@ import { useEffect, useState } from 'react';
 import { getReviewRequest } from '../apis/reviewFetcher';
 import ReviewContentsModal from '../components/modal/ReviewContentsModal';
 import usePaginate from '../hooks/usePaginate/usePaginate';
-import { ReviewPostType, ReviewType } from '../types/reviewboard/reviewType';
-import { getUserData } from '../apis/mypageFetcher';
+import {
+  AIresultType,
+  ReviewPostType,
+  ReviewType,
+} from '../types/reviewboard/reviewType';
+import { getPuppyData, getUserData } from '../apis/mypageFetcher';
 import { UserInfoType } from '../types/auth/authType';
 import Storage from '../storage/storage';
 
@@ -18,8 +22,7 @@ const ReviewBoardPage = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentUser, setCurrentUser] = useState<string>('');
   const [userInfo, setUserInfo] = useState<UserInfoType>();
-
-  const [reviewPost, setReviewPost] = useState<ReviewPostType>();
+  const [aiResult, setAiResult] = useState<AIresultType>();
 
   const [search, setSearch] = useState<string>('');
 
@@ -37,8 +40,14 @@ const ReviewBoardPage = () => {
       document.location.href = '/login';
     }
   };
+
+  const getAiTestResult = async () => {
+    const res = await getPuppyData();
+    console.log(typeof res);
+  };
   useEffect(() => {
     getCurrentUser();
+    getAiTestResult();
   }, []);
 
   // 전체 리뷰 받기
@@ -46,10 +55,6 @@ const ReviewBoardPage = () => {
     const res = await getReviewRequest(`reviews?page=${pages}`);
     setReviews(res.result.selectedReviews);
     setTotalPages(res.result.reviewCount);
-
-    for (let i = 0; i < res.result.selectedReviews.length; i++) {
-      setReviewPost(res.result.selectedReviews[i]);
-    }
   };
   useEffect(() => {
     getReviews();
@@ -73,7 +78,7 @@ const ReviewBoardPage = () => {
     <BoardBox>
       <BoardHeader>
         사람들과 AI 분석 결과를 공유해보세요.
-        <ReviewWritingModal reviewPost={reviewPost} />
+        <ReviewWritingModal />
       </BoardHeader>
       <BoardContent>
         <SlideLeftBtn disabled={isFirst} onClick={handlePrevBtnClick} />
