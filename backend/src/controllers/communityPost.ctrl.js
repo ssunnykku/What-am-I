@@ -41,6 +41,10 @@ class communityPostController {
       const defaultPage = page || 1;
       const communityId = req.params.communityId;
 
+      const countAllPosts = await communityPostService.countAllPosts(
+        communityId,
+      );
+
       const communityPostCount = await communityPostService.communityPostCount(
         communityId,
       );
@@ -56,7 +60,7 @@ class communityPostController {
       }
       return res
         .status(200)
-        .json({ result: { communityPostCount, selectedCommunityPost } });
+        .json({ countAllPosts, communityPostCount, selectedCommunityPost });
     } catch (err) {
       next(err);
     }

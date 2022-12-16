@@ -16,6 +16,20 @@ class communityPostService {
     return createPost;
   }
 
+  static async countAllPosts(communityId) {
+    const communityPostCount = await CommunityPost.count({
+      where: {
+        communityId: communityId,
+      },
+    });
+
+    if (!communityPostCount) {
+      return 0;
+    } else {
+      return communityPostCount;
+    }
+  }
+
   static async communityPostCount(communityId) {
     // const { count, rows } = await CommunityPost.findAndCountAll({
     //   where: {
