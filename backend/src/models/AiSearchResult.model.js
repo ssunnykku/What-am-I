@@ -13,7 +13,6 @@ class AiSearchResult extends Sequelize.Model {
         },
         userId: {
           type: DataTypes.UUID,
-          defaultValue: DataTypes.UUIDV4,
           foreignKey: true,
           allowNull: true,
         },

@@ -34,10 +34,10 @@ class Prediction extends Sequelize.Model {
     );
   }
   static associate(db) {
-    db.Prediction.belongsTo(db.User, {
-      foreignKey: 'userId',
-      targetKey: 'userId',
-    });
+    // db.Prediction.belongsTo(db.User, {
+    //   foreignKey: 'userId',
+    //   targetKey: 'userId',
+    // });
     db.Prediction.belongsTo(db.AiSearchResult, {
       foreignKey: 'aiResultId',
       targetKey: 'id',

@@ -13,11 +13,14 @@ class aiSearchResultController {
       let predictions = null;
 
       // ai 분석 post
+      const start = Date.now();
       const predictResponse = await axios
         .post(`${process.env.RESPONSE_POST_URL}/v1/predict`, {
           url: aiImage,
         })
         .then((res) => (predictions = res.data));
+      const end = Date.now();
+      console.log('실행시간', (end - start) / 1000);
       const data = predictions.map((predict, index) => {
         predict.rank = index;
       });
