@@ -7,14 +7,15 @@ import PaginateButton from '../components/pagination/PaginateButton';
 import { font } from '../assets/styles/common/fonts';
 import { theme } from '../assets/styles/common/palette';
 
-const AIResultPage = () => {
+const AIResultCardPage = () => {
   const [data, setData] = useState<AIresultType[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
 
   const getAiTestResult = async () => {
     const res = await getPuppiesData();
-    setData(res.data);
+    setData(res.data.rows);
+    setTotalPages(Math.ceil(res.data.count / 10));
   };
   useEffect(() => {
     getAiTestResult();
@@ -34,11 +35,11 @@ const AIResultPage = () => {
   );
 };
 
-export default AIResultPage;
+export default AIResultCardPage;
 
 const BigBox = styled.div`
   width: 100%;
-  height: 80vh;
+  height: 85vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,7 +47,8 @@ const BigBox = styled.div`
   header {
     font-family: ${font.bold};
     color: ${theme.mainColor};
-    font-size: 25px;
+    font-size: 20px;
+    margin-top: 3rem;
   }
 `;
 
@@ -54,8 +56,9 @@ const ResultCardBox = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  width: 80rem;
-  height: 40rem;
+  width: 78rem;
+  height: 37rem;
   place-items: center;
-  border: solid 1px purple;
+  margin-top: 15px;
+  margin-bottom: 20px;
 `;

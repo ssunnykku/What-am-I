@@ -82,7 +82,10 @@ const ReviewBoardPage = () => {
     <BoardBox>
       <BoardHeader>
         사람들과 AI 분석 결과를 공유해보세요.
-        <CreateBtn onClick={() => navigate('/airesult')}> 글쓰기 </CreateBtn>
+        <CreateBtn onClick={() => navigate('/airesultcard')}>
+          {' '}
+          글쓰기{' '}
+        </CreateBtn>
       </BoardHeader>
       <BoardContent>
         <SlideLeftBtn disabled={isFirst} onClick={handlePrevBtnClick} />

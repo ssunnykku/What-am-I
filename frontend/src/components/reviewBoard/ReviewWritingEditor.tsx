@@ -7,14 +7,20 @@ import { ReviewTypeProps } from '../modal/ReviewContentsModal';
 import { editReviewRequest } from '../../apis/reviewFetcher';
 import { getUserData } from '../../apis/mypageFetcher';
 import { UserInfoType } from '../../types/auth/authType';
+import { ReviewType } from '../../types/reviewboard/reviewType';
 
-const ReviewWritingEditor = (props: ReviewTypeProps) => {
+interface ReviewReceiveProps {
+  id?: number;
+  review?: ReviewType;
+  mode?: string;
+  modalHandler?: () => void;
+}
+
+const ReviewWritingEditor = (props: ReviewReceiveProps) => {
   const [description, setDescription] = useState<string>(
     props.review?.description ?? '',
   );
   const [userInfo, setUserInfo] = useState<UserInfoType>();
-
-  const handleUploadResultCard = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
   const getCurrentUserInfo = async () => {
     const res = await getUserData();
@@ -22,17 +28,16 @@ const ReviewWritingEditor = (props: ReviewTypeProps) => {
   };
   useEffect(() => {
     getCurrentUserInfo();
+    console.log('리뷰', props.review);
   }, []);
 
   // 리뷰 포스팅
   const handleWritingEditorClick = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await createReviewRequest(
-      `review/${props.review?.aiResultId}`,
-      {
-        description,
-      },
-    );
+    const res = await createReviewRequest(`review/${props.id}`, {
+      description,
+    });
+    console.log(res);
   };
 
   // 수정하기 버튼
@@ -61,7 +66,7 @@ const ReviewWritingEditor = (props: ReviewTypeProps) => {
       </ModalHeader>
       <ModalContents>
         <AddImage>
-          <div> ~ 결과 카드 ~ </div>
+          <div> 여기에 리뷰 사진 넣어주고~ </div>
         </AddImage>
         <AddWriting>
           <div className="user-name">

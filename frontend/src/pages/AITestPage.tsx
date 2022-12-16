@@ -52,7 +52,7 @@ const AITestPage = () => {
               />
             </div>
             <Link
-              to={'/dnaresult'}
+              to={'/ailoading'}
               state={{ dogName: dogName, aiImage: aiImage }}
             >
               <TestBtn>AI로 종 분석하기</TestBtn>

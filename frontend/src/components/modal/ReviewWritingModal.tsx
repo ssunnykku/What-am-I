@@ -9,7 +9,7 @@ const ReviewWritingModal = ({ id, setReviews }: receiveProps) => {
   return (
     <>
       <MyModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
-        <ReviewWritingEditor />
+        <ReviewWritingEditor id={id} />
       </MyModal>
       <TestResultCard
         setReviews={setReviews}
