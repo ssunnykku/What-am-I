@@ -13,11 +13,11 @@ aiSearchResultRouter.post(
   aiSearchResultController.addImage,
 );
 
-aiSearchResultRouter.post(
-  '/v1/predict',
-  upload.single('url'),
-  aiSearchResultController.addImage2,
-);
+// aiSearchResultRouter.post(
+//   '/v1/predict',
+//   upload.single('url'),
+//   aiSearchResultController.addImage2,
+// );
 
 // aiSearchResultRouter.get('/', aiSearchResultController.myReview);
 
