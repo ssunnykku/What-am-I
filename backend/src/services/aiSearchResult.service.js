@@ -1,9 +1,6 @@
 import { AiSearchResult } from '../models/AiSearchResult.model';
 import { Prediction } from '../models/Prediction.model';
-import { db } from '../models/index';
 import { LakeFormation } from 'aws-sdk';
-import { Sequelize } from 'sequelize';
-const Op = Sequelize.Op;
 
 class aiSearchResultService {
   // 1. ai 분석 요청하기 (사진 업로드)
@@ -11,42 +8,33 @@ class aiSearchResultService {
     // const t = await db.sequelize.transaction();
 
     try {
-      const info = await AiSearchResult.create(
-        {
-          userId,
-          dogName,
-          aiImage,
-        },
-        // { transaction: t },
-      );
-      console.log('1', info);
+      const info = await AiSearchResult.create({
+        userId,
+        dogName,
+        aiImage,
+      });
+
       const findInfo = await AiSearchResult.findOne({
         where: { userId, aiImage },
       });
-      // console.log(findInfo);
-      // throw Error('에러발생');
 
       const predictResult = [];
       for (const result of predictions) {
-        const searchResult = await Prediction.create(
-          {
-            aiResultId: findInfo.id,
-            predictId: result.id,
-            label: result.label,
-            score: result.score,
-            rank: result.rank,
-          },
-          // { transaction: t },
-        );
+        const searchResult = await Prediction.create({
+          aiResultId: findInfo.id,
+          predictId: result.id,
+          label: result.label,
+          score: result.score,
+          rank: result.rank,
+        });
         predictResult.push(searchResult);
       }
-      // console.log('2', predictResult);
+
       await Promise.all(predictResult); //비동기
-      // await t.commit();
+
       return predictResult;
     } catch (error) {
       console.log(error);
-      // await t.rollback();
     }
   }
 
@@ -73,7 +61,6 @@ class aiSearchResultService {
       include: [
         {
           model: Prediction,
-          right: true,
         },
       ],
     });
