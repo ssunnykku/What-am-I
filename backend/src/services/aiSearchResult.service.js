@@ -60,7 +60,6 @@ class aiSearchResultService {
       offset: (defaultPage - 1) * 10,
       include: {
         model: Prediction,
-        right: true,
       },
       order: [['id', 'DESC']],
     });
