@@ -214,7 +214,6 @@ const LikedCommuPage = () => {
           <InfoBox>
             <div>
               <CommuLikeBtn listInfo={commuInfo} />
-              {postCount?.countCommunityLike}
             </div>
             <div>
               <StickyNote2Icon style={{ marginRight: '3px' }} />
@@ -273,7 +272,7 @@ const IntroBox = styled.div`
 `;
 
 const ImageBox = styled.div`
-  border: solid 1px black;
+  /* border: solid 1px black; */
   border-radius: 5px;
   height: 9rem;
   width: 10rem;
@@ -356,7 +355,7 @@ const WritingBtnBox = styled.div`
 
 const SmallBox = styled.div`
   height: 2rem;
-  width: 50rem;
+  width: 49.5rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

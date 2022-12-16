@@ -65,7 +65,6 @@ const CommunityPage = () => {
   const getCommunitiesList = async () => {
     const res = await getCommunitiesRequest(pages);
     setCommuList(res.selectedCommunity);
-    console.log(res);
   };
 
   useEffect(() => {

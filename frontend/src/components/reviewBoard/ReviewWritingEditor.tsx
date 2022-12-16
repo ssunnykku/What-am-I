@@ -165,6 +165,11 @@ const ModalContents = styled.div`
 
 const AddImage = styled.div`
   border-right: solid 1px lightgray;
+  -ms-overflow-style: none;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const AddWriting = styled.div`

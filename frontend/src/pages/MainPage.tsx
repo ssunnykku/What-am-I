@@ -10,7 +10,7 @@ function MainPage() {
     <CommonWrapper>
       <MainContent>
         <MainImageBox>
-          <MainImage></MainImage>
+          <MainImage />
         </MainImageBox>
         <MainLetterBox>
           <p>우리 집 댕댕이는</p>

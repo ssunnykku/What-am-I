@@ -34,10 +34,6 @@ const AITestPage = () => {
               <div className="upload-box">
                 <label htmlFor="file">사진 업로드</label>
               </div>
-              {/* <input
-                className="upload-name"
-                placeholder={dogName ? dogName : '임펩시 사진'}
-              /> */}
               <input
                 type="file"
                 id="file"

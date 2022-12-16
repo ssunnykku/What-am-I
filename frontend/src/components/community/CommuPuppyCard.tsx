@@ -30,7 +30,7 @@ const popup = keyframes`
 const PuppyCardBox = styled.div`
   width: 14rem;
   height: 13rem;
-  border: solid 1px black;
+  /* border: solid 1px black; */
   border-radius: 10px;
   margin: 10px 10px;
   display: flex;

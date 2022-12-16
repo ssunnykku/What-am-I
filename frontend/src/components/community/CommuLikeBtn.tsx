@@ -12,10 +12,13 @@ const CommuLikeBtn = ({ listInfo }: CommunityTypeProps) => {
   const [like, setLike] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number>(0);
 
+  let getParameter = (key: string) => {
+    return new URLSearchParams(location.search).get(key);
+  };
+  const id = getParameter('id') ? getParameter('id') : listInfo?.id;
+
   const getCurrCommu = async () => {
-    const res = await getCurrentCommunityRequest(
-      `communities/posts/${listInfo?.id}`,
-    );
+    const res = await getCurrentCommunityRequest(`communities/posts/${id}`);
     setLikeCount(res.likeCount);
 
     if (res.likeStatus === 1) {
@@ -25,20 +28,6 @@ const CommuLikeBtn = ({ listInfo }: CommunityTypeProps) => {
     }
   };
 
-  // const getCurrCommuPost = async () => {
-  //   if (postingInfo) {
-  //     const res = await getCurrentCommunityRequest(
-  //       `communitypost/${postingInfo?.communityId}`,
-  //     );
-  //     setLikeCount(res.countCommunityLike);
-
-  //     if (res.myCommunityLikeStatus === 1) {
-  //       setLike(true);
-  //     } else {
-  //       setLike(false);
-  //     }
-  //   }
-  // };
   useEffect(() => {
     getCurrCommu();
   }, []);
@@ -46,7 +35,7 @@ const CommuLikeBtn = ({ listInfo }: CommunityTypeProps) => {
   const onClickCommuLikeBtn = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    const res = await postCommuLikeRequest(`communitieslikes/${listInfo?.id}`);
+    const res = await postCommuLikeRequest(`communitieslikes/${id}`);
 
     if (res.newLike) {
       setLike(true);
@@ -58,13 +47,6 @@ const CommuLikeBtn = ({ listInfo }: CommunityTypeProps) => {
       setLikeCount(likeCount - 1);
     }
   };
-
-  // const onClickPostLikeBtn = async (e: React.MouseEvent) => {
-  //   e.preventDefault();
-  //   const res = await postCommuLikeRequest(
-  //     `communityPostLike/${postingInfo?.id}`,
-  //   );
-  // };
 
   return (
     <LikeBox

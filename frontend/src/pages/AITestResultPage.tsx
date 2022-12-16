@@ -16,6 +16,9 @@ const AITestResultPage = () => {
     async function getData() {
       const response = await postPuppyData(dogName, aiImage);
       console.log(response);
+
+      const resMap = response.data.map((res: any) => res.label);
+      console.log(resMap);
     }
 
     getData();
@@ -25,7 +28,9 @@ const AITestResultPage = () => {
       <div style={{ letterSpacing: '1px', fontSize: '27px' }}>
         AI 견종 분석 결과
         <ResultDescBox>
-          <PuppyImg></PuppyImg>
+          <PuppyImg>
+            <img src={aiImage} />
+          </PuppyImg>
           <PuppyResult>
             {`${dogName}의 견종 분석 결과`}
             <ResultText></ResultText>
@@ -83,7 +88,18 @@ const ResultDescBox = styled.div`
 
 const PuppyImg = styled.div`
   border: solid 1px ${theme.boldColor};
+  width: 100%;
   height: 24rem;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const PuppyResult = styled.div`

@@ -46,11 +46,10 @@ export default PaginateButton;
 const PaginateBox = styled.div`
   height: 2rem;
   width: 35rem;
-  margin-top: 0.7rem;
-  padding: 30px;
   position: relative;
   bottom: 2.5%;
   display: flex;
+  margin-top: 5px;
   justify-content: center;
 `;
 
