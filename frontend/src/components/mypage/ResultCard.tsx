@@ -47,7 +47,7 @@ function ResultCard(props: receiveProps) {
   );
   return (
     <CardContainer>
-      <Img src={props.value.images} alt="dog_img"></Img>
+      <Img src={props.value.AiSearchResult.aiImage} alt="dog_img"></Img>
       <Name>{props.value.description}</Name>
       <div className="wrapper">
         <ButtonContainer id="ButtonContainer">
