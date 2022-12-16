@@ -27,7 +27,7 @@ class AiSearchResult extends Sequelize.Model {
           },
         },
         aiResult: {
-          type: DataTypes.STRING,
+          type: DataTypes.JSON,
           allowNull: false,
         },
         aiImage: {
@@ -57,6 +57,10 @@ class AiSearchResult extends Sequelize.Model {
     db.AiSearchResult.belongsTo(db.User, {
       foreignKey: 'userId',
       targetKey: 'userId',
+    });
+    db.AiSearchResult.hasMany(db.Prediction, {
+      foreignKey: 'aiResultId',
+      targetKey: 'id',
     });
   }
 }
