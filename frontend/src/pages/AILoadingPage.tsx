@@ -5,20 +5,17 @@ import { CustomSpinner } from '../components/loader/CustomSpinner';
 import { AIresultType } from '../types/reviewboard/reviewType';
 import styled from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
+import Storage from '../storage/storage';
 
 const AILoadingPage = () => {
-  //   const [data, setData] = useState<AIresultType[]>([]);
-  //   const [result, setResult] = useState<any[]>([]);
-
   const navigate = useNavigate();
   const location = useLocation();
   const aiImage = location.state.aiImage;
   const dogName = location.state.dogName;
 
   useEffect(() => {
-    async function getData() {
+    async function getDataUser() {
       const response = await postPuppyData(dogName, aiImage);
-      // setResult(response.data);
       navigate('/dnaresult', {
         state: {
           result: response.data,
@@ -27,7 +24,17 @@ const AILoadingPage = () => {
         },
       });
     }
-    getData();
+    async function getDataNotUser() {
+      const response = await postPuppyData(dogName, aiImage);
+      navigate('/dnaresult', {
+        state: {
+          result: response.data.result,
+          aiImage,
+          dogName,
+        },
+      });
+    }
+    Storage.getUserIdItem() ? getDataUser() : getDataNotUser();
   }, []);
 
   return (
