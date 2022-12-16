@@ -6,23 +6,22 @@ import { CommunityType } from '../../types/community/communityType';
 import CommuLikeBtn from './CommuLikeBtn';
 
 export interface CommunityTypeProps {
-  info?: CommunityType;
-  id?: number;
+  listInfo?: CommunityType;
 }
 
-const CommuRankingCard = ({ info }: CommunityTypeProps) => {
+const CommuRankingCard = ({ listInfo }: CommunityTypeProps) => {
   return (
     <Link
       style={{ textDecoration: 'none', color: 'black' }}
-      to={`/likedcommunity?id=${info?.id}`}
+      to={`/likedcommunity?id=${listInfo?.id}`}
     >
       <CommuRankingCardBox>
         <CommuImage>
-          <img src={info?.communityImage} />
+          <img src={listInfo?.communityImage} />
         </CommuImage>
-        <CommuName>{info?.name}</CommuName>
+        <CommuName>{listInfo?.name}</CommuName>
         <div className="like-icon">
-          <CommuLikeBtn id={info?.id} />
+          <CommuLikeBtn listInfo={listInfo} />
         </div>
       </CommuRankingCardBox>
     </Link>

@@ -7,51 +7,51 @@ import {
   postCommuLikeRequest,
 } from '../../apis/communityFetcher';
 import { CommunityTypeProps } from './CommuRankingCard';
-import { CommunityType } from '../../types/community/communityType';
 
-const CommuLikeBtn = ({ id }: CommunityTypeProps) => {
+const CommuLikeBtn = ({ listInfo }: CommunityTypeProps) => {
   const [like, setLike] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number>(0);
-  const [likeInfo, setLikeInfo] = useState<CommunityType>();
 
   const getCurrCommu = async () => {
-    const res = await getCurrentCommunityRequest(`communities/posts/${id}`);
-    setLikeInfo(res);
+    const res = await getCurrentCommunityRequest(
+      `communities/posts/${listInfo?.id}`,
+    );
     setLikeCount(res.likeCount);
-    console.log(res.likeStatus);
 
-    if (res.likStatus === 1) {
+    if (res.likeStatus === 1) {
       setLike(true);
     } else if (res.likeStatus === 0) {
       setLike(false);
     }
   };
-  useEffect(() => {
-    getCurrCommu();
-  }, []);
 
-  // const getLikeInfo = () => {
-  //   if (info) {
-  //     setLikeCount(info.likeCount);
-  //     if (info.likeStatus === 1) {
+  // const getCurrCommuPost = async () => {
+  //   if (postingInfo) {
+  //     const res = await getCurrentCommunityRequest(
+  //       `communitypost/${postingInfo?.communityId}`,
+  //     );
+  //     setLikeCount(res.countCommunityLike);
+
+  //     if (res.myCommunityLikeStatus === 1) {
   //       setLike(true);
-  //     } else if (info.likeStatus === 0) {
+  //     } else {
   //       setLike(false);
   //     }
   //   }
   // };
-  // useEffect(() => {
-  //   getLikeInfo();
-  // }, []);
+  useEffect(() => {
+    getCurrCommu();
+  }, []);
 
-  const onClickLikeBtn = async (e: React.MouseEvent) => {
+  const onClickCommuLikeBtn = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    const res = await postCommuLikeRequest(`communitieslikes/${likeInfo?.id}`);
+    const res = await postCommuLikeRequest(`communitieslikes/${listInfo?.id}`);
 
     if (res.newLike) {
       setLike(true);
       setLikeCount(likeCount + 1);
+      console.log(likeCount as number);
     }
     if (res.deletedLike) {
       setLike(false);
@@ -59,10 +59,17 @@ const CommuLikeBtn = ({ id }: CommunityTypeProps) => {
     }
   };
 
+  // const onClickPostLikeBtn = async (e: React.MouseEvent) => {
+  //   e.preventDefault();
+  //   const res = await postCommuLikeRequest(
+  //     `communityPostLike/${postingInfo?.id}`,
+  //   );
+  // };
+
   return (
     <LikeBox
       onClick={(e) => {
-        onClickLikeBtn(e);
+        onClickCommuLikeBtn(e);
       }}
     >
       {like ? (

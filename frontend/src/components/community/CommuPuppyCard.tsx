@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
-import CommuLikeBtn from '../community/CommuLikeBtn';
 import { CurrentCommuityProps } from '../modal/CommuContentsModal';
+import CommuPostingLikeBtn from './CommuPostingLikeBtn';
 
 const CommuPuppyCard = ({
   onCardModalClickEvent,
@@ -10,7 +10,7 @@ const CommuPuppyCard = ({
     <PuppyCardBox onClick={onCardModalClickEvent}>
       <img src={commuPost?.images.split('최고')[0]} />
       <div className="like-icon">
-        <CommuLikeBtn />
+        <CommuPostingLikeBtn commuPost={commuPost} />
       </div>
     </PuppyCardBox>
   );

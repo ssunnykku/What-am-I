@@ -2,7 +2,7 @@ import useModal from '../../hooks/modal/useModal';
 import MyModal from './MyModal';
 import ReviewPuppyCard from '../reviewBoard/ReviewPuppyCard';
 import ReviewContentsViewer from '../reviewBoard/ReviewContentsViewer';
-import { ReviewType } from '../../types/reviewboard/reviewType';
+import { ReviewPostType, ReviewType } from '../../types/reviewboard/reviewType';
 import { UserInfoType } from '../../types/auth/authType';
 import { useEffect } from 'react';
 
@@ -15,6 +15,7 @@ export interface ReviewTypeProps {
   currentUser?: string;
   userInfo?: UserInfoType;
   onCardModalClickEvent?: () => void;
+  reviewPost?: ReviewPostType;
 }
 
 const ReviewContentsModal = ({

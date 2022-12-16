@@ -7,7 +7,6 @@ import { ReviewTypeProps } from '../modal/ReviewContentsModal';
 import { editReviewRequest } from '../../apis/reviewFetcher';
 import { getUserData } from '../../apis/mypageFetcher';
 import { UserInfoType } from '../../types/auth/authType';
-import { ReviewType } from '../../types/reviewboard/reviewType';
 
 const ReviewWritingEditor = (props: ReviewTypeProps) => {
   const [description, setDescription] = useState<string>(
@@ -23,21 +22,17 @@ const ReviewWritingEditor = (props: ReviewTypeProps) => {
   };
   useEffect(() => {
     getCurrentUserInfo();
-    console.log(props.review);
   }, []);
 
   // 리뷰 포스팅
   const handleWritingEditorClick = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(props.review?.aiResultId);
-
-    // const res = await createReviewRequest(
-    //   `review/${props.review?.aiResultId}`,
-    //   {
-    //     description,
-    //   },
-    // );
-    // console.log(res);
+    const res = await createReviewRequest(
+      `review/${props.review?.aiResultId}`,
+      {
+        description,
+      },
+    );
   };
 
   // 수정하기 버튼

@@ -30,7 +30,7 @@ export interface CommunityType {
 export interface CommunityRankingType {
   likeStatus: number | boolean;
   communityId: number;
-  countLike: number;
+  likeCount: number;
   Community: {
     id: number;
     userId: string;
@@ -58,6 +58,8 @@ export interface CurrentCommuPostsType {
   userId: string;
   nickname: string;
   profileImg: string;
+  likeCount: number;
+  likeStatus: number;
 }
 
 export interface CurrCommuCommentsType {
@@ -69,13 +71,9 @@ export interface CurrCommuCommentsType {
   profileImg: string;
 }
 
-export interface CommuNewLikeType {
-  countikes: number;
-  newLike: {
-    communityId: number;
-    createdAt: string;
-    id: number;
-    updatedAt: string;
-    userId: string;
-  };
+export interface CommuNumType {
+  communityPostCount: number;
+  countAllPosts: number;
+  countCommunityLike: number;
+  myCommunityLikeStatus: number;
 }

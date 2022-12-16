@@ -10,6 +10,7 @@ import usePaginate from '../hooks/usePaginate/usePaginate';
 import { ReviewPostType, ReviewType } from '../types/reviewboard/reviewType';
 import { getUserData } from '../apis/mypageFetcher';
 import { UserInfoType } from '../types/auth/authType';
+import Storage from '../storage/storage';
 
 const ReviewBoardPage = () => {
   const [pages, setPages] = useState<number>(1);
@@ -46,7 +47,9 @@ const ReviewBoardPage = () => {
     setReviews(res.result.selectedReviews);
     setTotalPages(res.result.reviewCount);
 
-    // const resMap = res.result.selectedReviews.map((res: ReviewType) => res.id);
+    for (let i = 0; i < res.result.selectedReviews.length; i++) {
+      setReviewPost(res.result.selectedReviews[i]);
+    }
   };
   useEffect(() => {
     getReviews();
@@ -70,21 +73,25 @@ const ReviewBoardPage = () => {
     <BoardBox>
       <BoardHeader>
         사람들과 AI 분석 결과를 공유해보세요.
-        <ReviewWritingModal />
+        <ReviewWritingModal reviewPost={reviewPost} />
       </BoardHeader>
       <BoardContent>
         <SlideLeftBtn disabled={isFirst} onClick={handlePrevBtnClick} />
+
         <CardBox>
-          {reviews?.map((review) => (
-            <ReviewContentsModal
-              key={review.id}
-              review={review}
-              getReviews={getReviews}
-              currentUser={currentUser}
-              userInfo={userInfo}
-            />
-          ))}
+          <div className="card-box">
+            {reviews?.map((review) => (
+              <ReviewContentsModal
+                key={review.id}
+                review={review}
+                getReviews={getReviews}
+                currentUser={currentUser}
+                userInfo={userInfo}
+              />
+            ))}
+          </div>
         </CardBox>
+
         <SlideRightBtn disabled={isLast} onClick={handleNextBtnClick} />
       </BoardContent>
       <SearchBox style={{ marginTop: '7vh' }} onSubmit={(e) => onSearch(e)}>
@@ -132,10 +139,19 @@ const CardBox = styled.div`
   display: flexbox;
   justify-content: center;
   justify-content: space-evenly;
-  flex-wrap: wrap;
-  width: 70rem;
-  min-width: 70rem;
+  width: 75rem;
+  min-width: 75rem;
   min-height: 27rem;
+
+  .card-box {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    place-items: center;
+    width: 65rem;
+    min-width: 65rem;
+    height: 30rem;
+  }
 `;
 
 const SlideLeftBtn = styled.button`
