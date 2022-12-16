@@ -8,16 +8,16 @@ class aiSearchResultController {
       const userId = req.currentUserId || null;
       const { dogName } = req.body;
       const image = req.file;
-      // const aiImage = image == undefined ? null : image.transforms[0].location;
       const aiImage = image == undefined ? null : image.location;
       let prediction = null;
+
+      // ai 분석 post
       const predictResponse = await axios
         .post(`${process.env.RESPONSE_POST_URL}/v1/predict`, {
           url: aiImage,
         })
         .then((res) => {
-          prediction = res.data[0].label;
-          console.log(res.data);
+          prediction = JSON.stringify(res.data);
         });
 
       const searchResult = await aiSearchResultService.createResult({
@@ -31,16 +31,6 @@ class aiSearchResultController {
       next(error);
     }
   }
-
-  // static async myReview2(req, res, next) {
-  //   try {
-  //     const userId = req.currentUserId;
-  //     const getMyImages = await aiSearchResultService.getMyResults(userId);
-  //     return res.status(200).send(getMyImages);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
 
   //  2. 내가 남긴 리뷰 리스트 가져오기
   static async myReview(req, res, next) {

@@ -27,7 +27,7 @@ class AiSearchResult extends Sequelize.Model {
           },
         },
         aiResult: {
-          type: DataTypes.STRING,
+          type: DataTypes.JSON,
           allowNull: false,
         },
         aiImage: {
