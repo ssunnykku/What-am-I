@@ -3,10 +3,6 @@ import db from './src/models/index';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import sequelize from './src/config/sequelize';
-import flash from 'connect-flash';
-import cookieParser from 'cookie-parser';
-import session from 'express-session';
-import sessionMysql from 'express-mysql-session';
 
 //**Router */
 import { communityRouter } from './src/routes/community.route';
@@ -33,35 +29,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: '*', credentials: true }));
-// app.use(cookieParser(process.env.COOKIE_SECRET));
-
-// import passportConfig from './src/utils/passport.js';
-
-// app.use(passport.initialize());
-// passportConfig();
-
-// const MySqlStore = sessionMysql(session);
-// const options = {
-//   host: process.env.DB_HOST,
-//   port: process.env.DB_PORT,
-//   user: process.env.DB_USER_NAME,
-//   password: process.env.DB_USER_PASSWORD,
-//   database: process.env.DB_NAME,
-//   clearExpired: true,
-//   checkExpirationInterval: 10000,
-//   expiration: 10000,
-// };
-
-// const sessionStore = new MySqlStore(options);
-
-// app.use(
-//   session({
-//     secret: process.env.COOKIE_SECRET,
-//     resave: false,
-//     saveUninitialized: true,
-//     store: sessionStore,
-//   }),
-// );
 
 sequelize.sync({ force: false });
 
