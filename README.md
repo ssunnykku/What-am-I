@@ -6,7 +6,7 @@ AI를 이용해 견종을 분석하고 랜선 견주들의 커뮤니티 형성�
 ## GitLab 링크
 
 https://kdt-gitlab.elice.io/ai_track/class05/ai_project/team08/team08-project
-<br> 서비스 링크 추가 (추후 예정)
+<br> 서비스 링크 (추후 추가 예정)
 <br>
 <br>
 
@@ -56,9 +56,9 @@ Node.js & Express 코드의 양을 줄여 주고, 추후에 유지 보수에 용
 
 ## 프로젝트 구성
 
-[플로우 차트(윔지컬)](https://whimsical.com/3-CFWtfKhQm5ordE5wtXu8VS)
+[플로우 차트 (윔지컬)](https://whimsical.com/3-CFWtfKhQm5ordE5wtXu8VS)
 <br>
-[와이어 프레임(피그마)](https://www.figma.com/file/pDiUJYWrYapvzgJUHNf6QC/Untitled?node-id=0%3A1)
+[와이어 프레임 (피그마)](https://www.figma.com/file/pDiUJYWrYapvzgJUHNf6QC/Untitled?node-id=0%3A1)
 
 <br>
 
@@ -84,22 +84,22 @@ AI 종 분석
 ![image](https://kdt-gitlab.elice.io/ai_track/class05/ai_project/team08/team08-project/uploads/14f75f9d0c6ef5000737c5085e601c18/KakaoTalk_20221215_153249555_01.gif)
 <br>
 
-AI 종 분석 후기 
+AI 종 분석 후기 작성 
 <br>
 <img src="/uploads/92abd79c74d46f1e9f361f13a6b9f85f/AI_종_분석_후기.gif"  width="600" height="360">
 <br>
 
-커뮤니티 검색 및 좋아요 기능
+커뮤니티 검색 및 좋아요 
 <br>
 ![image](https://kdt-gitlab.elice.io/ai_track/class05/ai_project/team08/team08-project/uploads/9d09e32637108eb9eb9b7aec2d795c27/KakaoTalk_20221215_153249555.gif)
 <br>
 
-커뮤니티에 글을 남겨 소통하기
+커뮤니티 내 게시물 작성 및 댓글 기능
 <br>
 ![image](https://kdt-gitlab.elice.io/ai_track/class05/ai_project/team08/team08-project//uploads/197204a6fe0f67262ada578e895f4f39/KakaoTalk_20221217_050315347.gif)
 <br>
 
-내 정보에서 내가 속한 커뮤니티 및 나의 글을 모아볼 수 있음
+좋아요를 누른 커뮤니티 및 내가 만든 커뮤니티 보기, 작성한 글을 모아보기
 <br>
 ![image](https://kdt-gitlab.elice.io/ai_track/class05/ai_project/team08/team08-project/uploads/3a6dc6f4af33ac4f8b529c4b3a4050c8/KakaoTalk_20221215_153249555_02.gif)
 <br>
@@ -118,17 +118,16 @@ AI 종 분석 후기
 
 ### 견종 분석 후 결과 공유 페이지
 
-- 강아지 사진을 첨부하여 견종을 분석하고 해당 사진과 결과를 유저와 공유할 수 있음
+- 강아지 사진을 첨부하여 견종을 분석하고 해당 사진과 결과를 다른 유저와 공유할 수 있음
 - 후기 글에 댓글을 달며 소통할 수 있음
 
 ### 커뮤니티
 
-- 유저가 직접 원하는 커뮤니티를 만들 수 있음
+- 유저가 누구나 원하는 커뮤니티를 만들 수 있음
 - 좋아요 개수를 기준으로 1~3순위 커뮤니티를 사용자에게 보여줌
-- 유저 누구나 커뮤니티를 만들 수 있으며 별도로 좋아요를 누른 커뮤니티는 마이페이지에서 모아 볼 수 있음
+- 좋아요를 누른 커뮤니티는 별도로 마이페이지에서 모아 볼 수 있음
 - 같은 커뮤니티 내에서 유저끼리 게시물과 댓글로 소통할 수 있음
 - 커뮤니티 내 게시물 작성 시 최대 5장의 사진까지 첨부 가능
-- 커뮤니티 내 게시물에 좋아요를 누르고 댓글 작성 가능
 
 ### 마이 페이지
 
@@ -161,7 +160,7 @@ AI 종 분석 후기
 
 | 이름   | 역할       | 담당 부분                                                                                                                                                                                        |
 | ------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 임동민 | 프론트엔드 | 와이어프레임 제작 <br> AI 견종 분석 페이지 API 연결 <br> 로그인, 나의 정보 페이지 및 내 정보 수정 <br> 내가 찜한 커뮤니티, ai결과 모아보기 <br> ai결과 공유 게시판 통신 <br> 발표 |
+| 임동민 | 프론트엔드 | 와이어프레임 제작 <br> AI 견종 분석 페이지 API 연결 <br> 로그인, 나의 정보 페이지 및 내 정보 수정 <br> 내가 찜한 커뮤니티, ai결과 모아보기 <br> ai결과 공유 게시판 통신 <br> 최종 발표 |
 | 이다솜 | 프론트엔드 | 와이어프레임 제작 <br> AI 견종 분석 페이지 디자인 <br> 후기 게시판 <br> 커뮤니티 게시판 <br> 커뮤니티 내 페이지 <br> ai 종 분석 결과 게시판 |
 | 김선희 | 백엔드     | 데이터 테이블 구상 <br> 회원가입 및 로그인 API 작성 <br> 커뮤니티 API 작성 <br> top3 커뮤니티 검색기능, 커뮤니티 및 커뮤니티 좋아요 <br> S3 설정연결 및 사진기능 구현 <br>ai API연결             |
 | 안수진 | 백엔드     | 데이터 테이블 구상 <br> 견종분석 API 작성 <br> 후기게시판 좋아요 <br> 커뮤니티 모임 및 댓글기능<br>커뮤니티, 리뷰 게시판 페이지네이션 <br> 배포 및 발표 자료준비                                 |
