@@ -52,9 +52,7 @@ const ReviewWritingEditor = (props: ReviewReceiveProps) => {
     e.preventDefault();
     await editReviewRequest(`review/${props.review?.id}`, description);
 
-    if (props.modalHandler) {
-      props.modalHandler();
-    }
+    props.modalHandler?.();
   };
 
   return (

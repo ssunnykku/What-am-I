@@ -5,7 +5,6 @@ export const authLoginRequest = async (email: string, password: string) => {
     email,
     password,
   });
-  console.log(res);
   return res;
 };
 

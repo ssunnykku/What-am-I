@@ -91,11 +91,8 @@ export async function postCurrCommuCommentsRequest(
 }
 
 // 포스팅 수정
-export async function editCommuPostRequest(
-  endpoint: string,
-  description: string,
-) {
-  const res = await axiosInstance.put(endpoint, {
+export async function editCommuPostRequest(id: number, description: string) {
+  const res = await axiosInstance.put(`communitypost/${id}`, {
     description,
   });
   return res.data;

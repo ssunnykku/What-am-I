@@ -79,15 +79,10 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
   const handleEditCurrentCommuPost = async (e: React.FormEvent) => {
     e.preventDefault();
     if (props.commuPost) {
-      await editCommuPostRequest(
-        `communitypost/${props.commuPost?.id}`,
-        description,
-      );
+      await editCommuPostRequest(props.commuPost?.id, description);
     }
 
-    if (props.modalHandler) {
-      props.modalHandler();
-    }
+    props.modalHandler?.();
   };
 
   return (

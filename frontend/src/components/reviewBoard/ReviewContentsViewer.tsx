@@ -99,9 +99,9 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
     await deleteReviewRequest(`review/${props.review?.id}`);
   };
 
-  const deleteConfirm = () => (
-    handleDeleteMyReview(), window.alert('삭제했습니다.')
-  );
+  const deleteConfirm = () => {
+    handleDeleteMyReview(), window.alert('삭제했습니다.');
+  };
   const cancelConfirm = () => window.alert('취소했습니다.');
 
   const confirmDelete = useConfirm(

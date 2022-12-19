@@ -19,10 +19,10 @@ const CommuPostingLikeBtn = ({ commuPost }: CurrentCommuityProps) => {
 
       if (res.newLike) {
         setLike(true);
-        setLikeCount(likeCount + 1);
+        setLikeCount((prevLikeCount) => (prevLikeCount += 1));
       } else if (res.deletedLike) {
         setLike(false);
-        setLikeCount(likeCount - 1);
+        setLikeCount((prevLikeCount) => (prevLikeCount -= 1));
       }
     }
   };

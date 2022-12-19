@@ -14,9 +14,6 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (req) => {
-    // req.headers = {
-    //   'Autorization' : `Bearer ${sessionStorage.getItem('userToken')}`
-    // }
     return req;
   },
   (error) => {

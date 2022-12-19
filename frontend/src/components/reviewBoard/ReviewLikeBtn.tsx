@@ -32,10 +32,10 @@ const ReviewLikeBtn = ({ review }: ReviewTypeProps) => {
 
       if (res.likeInformation) {
         setLike(true);
-        setLikeCount(likeCount + 1);
+        setLikeCount((prevLikeCount) => (prevLikeCount += 1));
       } else if (res.myLikedeleted) {
         setLike(false);
-        setLikeCount(likeCount - 1);
+        setLikeCount((prevLikeCount) => (prevLikeCount -= 1));
       }
     }
   };

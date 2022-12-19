@@ -47,7 +47,7 @@ const AITestPage = () => {
               <input
                 type="text"
                 className="puppy-name"
-                placeholder="임펩시"
+                placeholder="강아지 이름을 입력해주세요."
                 onChange={(e: any) => setDogName(e.target.value)}
               />
             </div>

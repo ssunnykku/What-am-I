@@ -68,13 +68,12 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
     }
   };
 
-  const deletePost = (e: any) => {
+  const deletePost = (e: React.FormEvent) => {
+    e.preventDefault();
     if (window.confirm('게시글을 삭제하시겠습니까?')) {
-      e.preventDefault();
       handleDeleteMyCommuPost();
       return window.alert('삭제했습니다.');
     } else {
-      e.preventDefault();
       return window.alert('취소했습니다.');
     }
   };
@@ -91,16 +90,20 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const postCurrCommuComments = async (e: React.FormEvent) => {
     e.preventDefault();
     if (props.commuPost) {
-      const res = await postCurrCommuCommentsRequest(
-        props.commuPost?.id,
-        description,
-      );
+      try {
+        const res = await postCurrCommuCommentsRequest(
+          props.commuPost?.id,
+          description,
+        );
 
-      const result = await getCurrentCommunityRequest(
-        `communityComment/${res.communityPostId}/${res.id}`,
-      );
-      setComments([...result, ...comments]);
-      setDescription('');
+        const result = await getCurrentCommunityRequest(
+          `communityComment/${res.communityPostId}/${res.id}`,
+        );
+        setComments((prevComments) => [...result, ...prevComments]);
+        setDescription('');
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
