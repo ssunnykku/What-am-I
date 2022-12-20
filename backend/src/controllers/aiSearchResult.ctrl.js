@@ -9,18 +9,19 @@ class aiSearchResultController {
       const { dogName } = req.body;
       const image = req.file;
       const aiImage = image == undefined ? null : image.location;
-      let predictions = null;
 
       // ai 분석 post
-      const predictResponse = await axios
-        .post(`${process.env.RESPONSE_POST_URL}/v1/predict`, {
+      const predictResponse = await axios.post(
+        `${process.env.RESPONSE_POST_URL}/v1/predict`,
+        {
           url: aiImage,
-        })
-        .then((res) => (predictions = res.data));
-      const data = predictions.map((predict, index) => {
+        },
+      );
+      let predictions = predictResponse.data;
+      await predictions.map((predict, index) => {
         predict.rank = index;
       });
-
+      console.log(predictions);
       const searchResult = await aiSearchResultService.createResult({
         dogName,
         aiImage,
@@ -39,19 +40,20 @@ class aiSearchResultController {
       const image = req.file;
       const aiImage = image == undefined ? null : image.location;
 
-      let result = null;
-
       // ai 분석 post
-      const justSearch = await axios
-        .post(`${process.env.RESPONSE_POST_URL}/v1/predict`, {
+      const search = await axios.post(
+        `${process.env.RESPONSE_POST_URL}/v1/predict`,
+        {
           url: aiImage,
-        })
-        .then((res) => (result = res.data));
-      const data = result.map((predict, index) => {
+        },
+      );
+
+      let predictions = search.data;
+      await predictions.map((predict, index) => {
         predict.rank = index;
       });
-
-      return res.status(200).send({ dogName, result });
+      console.log(predictions);
+      return res.status(200).send({ dogName, predictions });
     } catch (error) {
       next(error);
     }
