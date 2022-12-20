@@ -47,7 +47,7 @@ function uploadImageS3() {
   return multer({
     storage: storage,
     //* 용량 제한
-    limits: { fileSize: 500 * 1024 * 1024 }, //500MB });
+    limits: { fileSize: 100 * 1024 * 1024 }, //100MB });
     // return storage;
   });
 }
