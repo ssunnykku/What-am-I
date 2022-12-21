@@ -26,8 +26,20 @@ import { aiSearchResultRouter } from './src/routes/aiSearchResult.route';
 import errorMiddleware from './src/middlewares/error';
 
 dotenv.config();
+const app = express();
 
-const app = express(); // https
+const httpPort = 80;
+const httpsPort = 5001;
+
+// HTTPS 서버
+https.createServer(credentials, app).listen(process.env.SEVER_PORT, () => {
+  console.log(`HTTPS: Express listening on port ${process.env.SEVER_PORT}`);
+});
+
+// HTTP 서버
+app.listen(process.env.HTTP_PORT, () => {
+  console.log(`HTTP: Express listening on port ${process.env.HTTP_PORT}`);
+});
 
 const privateKey = fs.readFileSync(process.env.PRIVATEKEY);
 const certificate = fs.readFileSync(process.env.CERTIFICATE);
@@ -39,21 +51,13 @@ const credentials = {
   ca: ca,
 };
 
-const httpsServer = https.createServer(credentials, app);
-
-app.get('/', (req, res) => {
-  console.log('------ https get / -----' + new Date().toLocaleString());
-  console.log('req.ip => ' + req.ip);
-  console.log('req.hostname => ' + req.hostname);
-  console.log(req.url);
-  console.log(req.originalUrl);
-
-  res.send('<h1>HTTPS Server running on port 5001</h1>');
-});
-
-httpsServer.listen(process.env.SEVER_PORT, () => {
-  console.log(new Date().toLocaleString());
-  console.log(`HTTPS -- listening on port ${process.env.SEVER_PORT} ...`);
+app.use((req, res, next) => {
+  if (req.secure) {
+    next();
+  } else {
+    const to = `https://${req.hostname}${req.url}`;
+    res.redirect(to);
+  }
 });
 
 app.use(express.json());
