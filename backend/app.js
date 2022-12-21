@@ -28,7 +28,7 @@ import errorMiddleware from './src/middlewares/error';
 dotenv.config();
 
 const app = express(); // https
-const app2 = express(); // http
+// const app2 = express(); // http
 
 const privateKey = fs.readFileSync(process.env.PRIVATEKEY, 'utf8');
 const certificate = fs.readFileSync(process.env.CERTIFICATE, 'utf8');
@@ -40,21 +40,20 @@ const credentials = {
   ca: ca,
 };
 
-const httpServer = http.createServer(app2);
+// const httpServer = http.createServer(app2);
 const httpsServer = https.createServer(credentials, app);
 
 // 80 port -- http
-app2.get('/', (req, res) => {
-  console.log('------ http get / -----' + new Date().toLocaleString());
-  console.log('req.ip => ' + req.ip);
-  console.log('req.hostname => ' + req.hostname);
-  console.log(req.url);
-  console.log(req.originalUrl);
+// app2.get('/', (req, res) => {
+//   console.log('------ http get / -----' + new Date().toLocaleString());
+//   console.log('req.ip => ' + req.ip);
+//   console.log('req.hostname => ' + req.hostname);
+//   console.log(req.url);
+//   console.log(req.originalUrl);
 
-  res.send('<h1>HTTP Server running on port 80</h1>');
-});
+//   res.send('<h1>HTTP Server running on port 80</h1>');
+// });
 
-// 5000 port -- https
 app.get('/', (req, res) => {
   console.log('------ https get / -----' + new Date().toLocaleString());
   console.log('req.ip => ' + req.ip);
@@ -65,10 +64,10 @@ app.get('/', (req, res) => {
   res.send('<h1>HTTPS Server running on port 5001</h1>');
 });
 
-httpServer.listen(80, () => {
-  console.log(new Date().toLocaleString());
-  console.log('HTTP Server running on port 80');
-});
+// httpServer.listen(80, () => {
+//   console.log(new Date().toLocaleString());
+//   console.log('HTTP Server running on port 80');
+// });
 
 httpsServer.listen(process.env.SEVER_PORT, () => {
   console.log(new Date().toLocaleString());
