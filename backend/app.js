@@ -30,12 +30,9 @@ dotenv.config();
 const app = express(); // https
 const app2 = express(); // http
 
-const privateKey = fs.readFileSync(__dirname + process.env.PRIVATEKEY, 'utf8');
-const certificate = fs.readFileSync(
-  __dirname + process.env.CERTIFICATE,
-  'utf8',
-);
-const ca = fs.readFileSync(__dirname + process.env.CA, 'utf8');
+const privateKey = fs.readFileSync(process.env.PRIVATEKEY, 'utf8');
+const certificate = fs.readFileSync(process.env.CERTIFICATE, 'utf8');
+const ca = fs.readFileSync(process.env.CA, 'utf8');
 
 const credentials = {
   key: privateKey,
