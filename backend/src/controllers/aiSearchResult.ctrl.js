@@ -21,7 +21,7 @@ class aiSearchResultController {
       await predictions.map((predict, index) => {
         predict.rank = index;
       });
-      console.log(predictions);
+
       const searchResult = await aiSearchResultService.createResult({
         dogName,
         aiImage,
