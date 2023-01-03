@@ -52,7 +52,6 @@ class aiSearchResultController {
       await predictions.map((predict, index) => {
         predict.rank = index;
       });
-      console.log(predictions);
       return res.status(200).send({ dogName, predictions });
     } catch (error) {
       next(error);
