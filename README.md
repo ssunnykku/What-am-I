@@ -40,10 +40,6 @@ AI 분석을 통해 강아지 종을 알아 봅니다.
 
 <img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=black"/> <img src="https://img.shields.io/badge/Express-c2c2c2?style=flat&logo=Express&logoColor=black"/> <img src="https://img.shields.io/badge/Amazon S3-569A31?style=flat&logo=Amazon S3&logoColor=black"/>
 <br>
-Node.js & Express 코드의 양을 줄여 주고, 추후에 유지 보수에 용이
-<br>Sequelize, MySQL 관계형 데이터베이스로 데이터 간 관계를 파악하기 좋고, 빠르게 처리할 수 있음
-<br>AWS S3 로컬에 저장할 필요 없이 많은 데이터를 보관할 수 있음
-<br>
 
 ### AI
 
