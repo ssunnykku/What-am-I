@@ -1,19 +1,19 @@
 import { AiSearchResult } from '../models/AiSearchResult.model';
 import { Prediction } from '../models/Prediction.model';
-import { LakeFormation } from 'aws-sdk';
 
 class aiSearchResultService {
   // 1. ai 분석 요청하기 (사진 업로드)
   static async createResult({ aiImage, dogName, userId, predictions }) {
     // const t = await db.sequelize.transaction();
-
+    // id값을 autoIncrease 말고 다른걸 적용 한다면 해결될까?
     try {
+      // 이 부분이 메모리에 저장되는 부분
       const info = await AiSearchResult.create({
         userId,
         dogName,
         aiImage,
       });
-
+      // 필요 없는 코드
       const findInfo = await AiSearchResult.findOne({
         where: { userId, aiImage },
       });

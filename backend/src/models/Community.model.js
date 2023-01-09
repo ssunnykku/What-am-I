@@ -62,6 +62,10 @@ class Community extends Sequelize.Model {
       foreignKey: 'communityId',
       targetKey: 'id',
     });
+    db.Community.hasMany(db.PinnedCommunity, {
+      foreignKey: 'communityId',
+      targetKey: 'id',
+    });
   }
 }
 

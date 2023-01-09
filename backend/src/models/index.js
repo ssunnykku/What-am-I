@@ -13,6 +13,7 @@ import { CommunityPost } from './CommunityPost.model';
 import { CommunityPostLike } from './CommunityPostLike.model';
 import { CommunityComment } from './CommunityComment.model';
 import { CommunityLike } from './CommunityLike.model';
+import { PinnedCommunity } from './PinnedCommunity.model';
 import { Prediction } from './Prediction.model';
 
 const db = {};
@@ -31,6 +32,7 @@ db.CommunityLike = CommunityLike;
 db.CommunityPostLike = CommunityPostLike;
 db.AiSearchResult = AiSearchResult;
 db.Prediction = Prediction;
+db.PinnedCommunity = PinnedCommunity;
 
 User.init(sequelize);
 Session.init(sequelize);
@@ -44,6 +46,7 @@ CommunityLike.init(sequelize);
 CommunityPostLike.init(sequelize);
 AiSearchResult.init(sequelize);
 Prediction.init(sequelize);
+PinnedCommunity.init(sequelize);
 
 Community.associate(db);
 CommunityPost.associate(db);
@@ -56,5 +59,6 @@ ReviewComment.associate(db);
 ReviewLike.associate(db);
 AiSearchResult.associate(db);
 Prediction.associate(db);
+PinnedCommunity.associate(db);
 
 export { db };
