@@ -9,6 +9,7 @@ import { communityRouter } from './src/routes/community.route';
 import { communityPostRouter } from './src/routes/communityPost.route';
 import { communityCommentRouter } from './src/routes/communityComment.route';
 import { communityPostLikeRouter } from './src/routes/communityPostLike.route';
+import { pinnedCommunityRouter } from './src/routes/pinnedCommunity.route';
 
 import { userRouter } from './src/routes/user.router';
 import { reviewRouter } from './src/routes/review.route';
@@ -43,6 +44,7 @@ app.use(myPageRouter);
 app.use(communityLikeRouter);
 app.use(communityCommentRouter);
 app.use(communityPostLikeRouter);
+app.use(pinnedCommunityRouter);
 
 app.use(aiSearchResultRouter);
 

@@ -3,6 +3,7 @@ import { CommunityPost } from '../models/CommunityPost.model';
 import { CommunityLike } from '../models/CommunityLike.model';
 import ApiError from '../utils/ApiError';
 import { COMMUNITY_PER_PAGE } from '../utils/Constant';
+import { PinnedCommunity } from '../models/PinnedCommunity.model';
 
 import { Op } from 'sequelize';
 

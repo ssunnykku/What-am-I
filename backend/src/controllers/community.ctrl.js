@@ -61,7 +61,7 @@ class communityController {
       const getLikedCommunities = await communityService.findBestCommunities({
         userId,
       });
-      res.status(200).json(getLikedCommunities);
+      return res.status(200).json(getLikedCommunities);
     } catch (error) {
       next(error);
     }
@@ -71,7 +71,7 @@ class communityController {
     try {
       const userId = req.currentUserId;
       const getAll = await communityService.findAllCommunities();
-      res.status(200).json(getAll);
+      return res.status(200).json(getAll);
     } catch (error) {
       next(error);
     }
@@ -102,7 +102,7 @@ class communityController {
       });
       return res.status(200).json(message);
     } catch (error) {
-      return next(error);
+      next(error);
     }
   }
   // 7. 커뮤니티 삭제
@@ -121,7 +121,7 @@ class communityController {
       }
       return res.status(200).json(deleteCommunity);
     } catch (error) {
-      return next(error);
+      next(error);
     }
   }
   // 8. 커뮤니티 검색기능
@@ -135,7 +135,7 @@ class communityController {
       if (searchedData.errorMessage) {
         throw new Error(searchedData, errorMessage);
       }
-      res.status(200).json(searchedData);
+      return res.status(200).json(searchedData);
     } catch (error) {
       next(error);
     }
