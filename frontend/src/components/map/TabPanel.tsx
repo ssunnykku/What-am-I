@@ -15,9 +15,9 @@ export default function TabPanel({ value, setValue }: TabPanelProps) {
 
   return (
     <Tabs value={value} onChange={handleChange} centered>
-      <Tab value={PAGEVALUE.PROFILE} label="산책로" />
-      <Tab value={PAGEVALUE.RESULT} label="쓰레기통" />
-      <Tab value={PAGEVALUE.COMMUNITY} label="음수대" />
+      <Tab value={PAGEVALUE.WALK_MAP} label="산책로" />
+      <Tab value={PAGEVALUE.TRASH_MAP} label="쓰레기통" />
+      <Tab value={PAGEVALUE.WATER_MAP} label="음수대" />
     </Tabs>
   );
 }

@@ -17,6 +17,6 @@ export const menus = [
   {
     title: '지도',
     path: '/map',
-    id: 'map',
+    id: 'maplink',
   },
 ];
