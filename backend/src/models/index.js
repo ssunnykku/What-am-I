@@ -17,7 +17,7 @@ import { PinnedCommunity } from './PinnedCommunity.model';
 import { Prediction } from './Prediction.model';
 
 import { Friend } from './Friend.model';
-import { Block } from './Block.model';
+import { BlockList } from './BlockList.model';
 
 const db = {};
 
@@ -37,7 +37,7 @@ db.AiSearchResult = AiSearchResult;
 db.Prediction = Prediction;
 db.PinnedCommunity = PinnedCommunity;
 db.Friend = Friend;
-db.Block = Block;
+db.BlockList = BlockList;
 
 User.init(sequelize);
 Session.init(sequelize);
@@ -53,7 +53,7 @@ AiSearchResult.init(sequelize);
 Prediction.init(sequelize);
 PinnedCommunity.init(sequelize);
 Friend.init(sequelize);
-Block.init(sequelize);
+BlockList.init(sequelize);
 
 Community.associate(db);
 CommunityPost.associate(db);
@@ -68,6 +68,6 @@ AiSearchResult.associate(db);
 Prediction.associate(db);
 PinnedCommunity.associate(db);
 Friend.associate(db);
-Block.associate(db);
+BlockList.associate(db);
 
 export { db };
