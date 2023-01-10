@@ -102,6 +102,22 @@ class User extends Sequelize.Model {
       foreignKey: 'userId',
       sourceKey: 'userId',
     });
+    db.User.hasMany(db.User, {
+      foreignKey: 'userId',
+      sourceKey: 'userId',
+    });
+    db.User.hasMany(db.User, {
+      foreignKey: 'followingId',
+      sourceKey: 'userId',
+    });
+    db.User.hasMany(db.User, {
+      foreignKey: 'userId',
+      sourceKey: 'userId',
+    });
+    db.User.hasMany(db.User, {
+      foreignKey: 'blockId',
+      sourceKey: 'userId',
+    });
   }
 }
 
