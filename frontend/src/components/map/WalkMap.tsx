@@ -21,12 +21,21 @@ function WalkMap() {
     let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
   }, []);
 
-  return <Map id="map" />;
+  return (
+    <Div>
+      <Map id="map" />
+    </Div>
+  );
 }
 export default WalkMap;
 
+const Div = styled.div`
+  margin: 0 auto;
+`;
+
 const Map = styled.div`
-  width: 300px;
-  height: 300px;
+  margin: 0 auto;
+  width: 1000px;
+  height: 700px;
   border: 1px solid black;
 `;
