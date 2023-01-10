@@ -42,7 +42,10 @@ function NavBar() {
               </DropdownButton>
               <Menu isDropped={myPageIsOpen}>
                 <Ul>
-                  <LinkWrapper to="/mypage" style={{ margin: '0' }}>
+                  <LinkWrapper to="/mybuddy">
+                    <Li>친구 관리</Li>
+                  </LinkWrapper>
+                  <LinkWrapper to="/mypage">
                     <Li>마이페이지</Li>
                   </LinkWrapper>
                   <LinkWrapper onClick={onLogout} to="/">
