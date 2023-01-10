@@ -21,7 +21,7 @@ communityRouter.get(
   communityController.getOne,
 );
 
-// 3. 전체 커뮤니티 리스트 10개씩
+// 3. 전체 커뮤니티 가져오기(페이지네이션 : 리스트 10개씩)
 communityRouter.get(
   '/communities',
   loginRequired,

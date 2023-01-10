@@ -58,15 +58,25 @@ class communityService {
       const errorMessage = `Cannot find id = ${id} community`;
       return errorMessage;
     }
+    // 해당 게시물 좋아요 개수
     getCommunity.dataValues.likeCount = await CommunityLike.count({
       where: { communityId: id },
     });
+    // 유저의 좋아요 상태
     getCommunity.dataValues.likeStatus = await CommunityLike.count({
       where: {
         userId: userId,
         communityId: id,
       },
     });
+    // 유저의 pin 설정 여부
+    getCommunity.dataValues.pinStatus = await PinnedCommunity.count({
+      where: {
+        userId,
+        communityId: id,
+      },
+    });
+
     return getCommunity;
   }
 
@@ -83,6 +93,7 @@ class communityService {
     }
   }
 
+  // 커뮤니티 전체 가져오기
   static async selectCommunity(defaultPage, userId) {
     const selectedCommunity = await Community.findAll({
       where: { id: { [Op.gt]: 0 } },
@@ -92,12 +103,17 @@ class communityService {
     });
 
     for (const community of selectedCommunity) {
+      // 좋아요 갯수
       community.dataValues.likeCount = await CommunityLike.count({
         where: { communityId: community.id },
       });
-
+      // 좋아요 상태
       community.dataValues.likeStatus = await CommunityLike.count({
         where: { userId: userId, communityId: community.id },
+      });
+      // pin 상태
+      community.dataValues.pinStatus = await PinnedCommunity.count({
+        where: { userId, communityId: community.id },
       });
     }
 
@@ -138,12 +154,15 @@ class communityService {
         await CommunityLike.count({
           where: { userId: userId, communityId: community.communityId },
         });
-      for (const community of bestThree) {
-        community.dataValues.Community.dataValues.countLike =
-          await CommunityLike.count({
-            where: { communityId: community.communityId },
-          });
-      }
+
+      community.dataValues.Community.dataValues.countLike =
+        await CommunityLike.count({
+          where: { communityId: community.communityId },
+        });
+
+      community.Community.dataValues.pinStatus = await PinnedCommunity.count({
+        where: { userId, communityId: community.communityId },
+      });
     }
 
     return bestThree;

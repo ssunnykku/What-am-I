@@ -11,6 +11,7 @@ pinnedCommunityRouter.post(
   pinnedCommunityController.pinCommunity,
 );
 
+// 로그인한 사용자의 pin 정보
 pinnedCommunityRouter.get(
   '/pinedcommunities',
   loginRequired,
