@@ -5,6 +5,7 @@ import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import useDetectClose from '../../hooks/dropdown/useDetectClose';
 import Storage from '../../storage/storage';
+import SpeechBubble from './SpeechBubble';
 const VITE_PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
 
 interface DropdownCssProps {
@@ -35,6 +36,7 @@ function NavBar() {
         <li id="profile">
           {Storage.getTokenItem() ? (
             <DropdownContainer>
+              <SpeechBubble />
               <DropdownButton onClick={myPageHandler} ref={myPageRef}>
                 {Storage.getNicknameItem()} 님
               </DropdownButton>
@@ -85,9 +87,10 @@ const NavDiv = styled.div`
 
   text-align: center;
   width: 100%;
-  height: 10vh;
-  min-width: 55rem;
-  line-height: 10vh;
+  height: 95px;
+  min-width: 56rem;
+  min-height: 95px;
+  line-height: 95px;
   font-family: ${font.bold};
   font-size: 1.3rem;
   background-color: ${theme.backColor};
@@ -96,6 +99,7 @@ const NavDiv = styled.div`
 const DropdownContainer = styled.div`
   position: relative;
   text-align: center;
+  display: flex;
 `;
 
 const DropdownButton = styled.div`

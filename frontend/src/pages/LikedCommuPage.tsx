@@ -4,6 +4,7 @@ import { font } from '../assets/styles/common/fonts';
 import {
   EditDelBtn,
   SearchBox,
+  EntryBtn,
 } from '../assets/styles/common/commonComponentStyle';
 import { theme } from '../assets/styles/common/palette';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
@@ -22,6 +23,7 @@ import {
 import CommuLikeBtn from '../components/community/CommuLikeBtn';
 import { UserInfoType } from '../types/auth/authType';
 import { getUserData } from '../apis/mypageFetcher';
+import { useNavigate } from 'react-router-dom';
 
 const LikedCommuPage = () => {
   const [page, setPage] = useState<number>(1);
@@ -38,6 +40,7 @@ const LikedCommuPage = () => {
   const editImgRef = useRef<HTMLInputElement>(null);
   const editInputRef = useRef<HTMLInputElement>(null);
   const editTextAreaRef = useRef<HTMLTextAreaElement>(null);
+  const navigate = useNavigate();
 
   // 쿼리 스트링에 값 넣어주기
   let getParameter = (key: string) => {
@@ -203,12 +206,18 @@ const LikedCommuPage = () => {
             </CommuIntro>
           </NameBox>
           <WritingBtnBox>
+            <EntryBtn
+              className="entry-btn"
+              onClick={() => navigate('/commuchat')}
+            >
+              채팅방 입장
+            </EntryBtn>
             <CommuWritingModal commuInfo={commuInfo} />
           </WritingBtnBox>
         </IntroBox>
         <SmallBox>
           <SearchBox style={{ height: '1.8rem' }}>
-            <input></input>
+            <input />
             <button>검색</button>
           </SearchBox>
           <InfoBox>
@@ -348,14 +357,31 @@ const CommuIntro = styled.div`
 
 const WritingBtnBox = styled.div`
   display: flex;
+  flex-direction: column;
   position: absolute;
   bottom: 0;
-  right: 80px;
+  right: 70px;
+
+  .entry-btn {
+    margin-bottom: 13px;
+
+    /* 말풍선 꼬리 */
+    /* :after {
+      border-top: 10px solid ${theme.mainColor};
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 110px;
+    } */
+  }
 `;
 
 const SmallBox = styled.div`
   height: 2rem;
-  width: 49.5rem;
+  width: 50rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

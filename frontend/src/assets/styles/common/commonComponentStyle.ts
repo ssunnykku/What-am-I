@@ -134,3 +134,11 @@ export const EditDelBtn = styled.button`
   color: ${theme.mainColor};
   margin-right: 5px;
 `;
+
+export const BigBox = styled.div`
+  width: 99vw;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

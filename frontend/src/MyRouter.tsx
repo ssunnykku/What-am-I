@@ -18,6 +18,8 @@ const MyPage = lazy(() => import('./pages/MyPage'));
 const LikedCommunity = lazy(() => import('./pages/LikedCommuPage'));
 const AIResultCard = lazy(() => import('./pages/AIResultCardPage'));
 const AILoading = lazy(() => import('./pages/AILoadingPage'));
+const CommuChat = lazy(() => import('./pages/CommuChatPage'));
+const ChatRoom = lazy(() => import('./pages/ChatRoomPage'));
 
 const MyRouter = () => {
   return (
@@ -36,6 +38,8 @@ const MyRouter = () => {
           <Route path="/likedcommunity" element={<LikedCommunity />} />
           <Route path="/airesultcard" element={<AIResultCard />} />
           <Route path="/ailoading" element={<AILoading />} />
+          <Route path="/commuchat" element={<CommuChat />} />
+          <Route path="/chatroom" element={<ChatRoom />} />
         </Routes>
       </BrowserRouter>
     </Suspense>
