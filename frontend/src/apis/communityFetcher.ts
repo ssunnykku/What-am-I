@@ -67,6 +67,12 @@ export async function getRankingCommunityRequest() {
   return res.data;
 }
 
+// 고정 커뮤니티 받기
+export async function getPinnedCommunityRequest() {
+  const res = await axiosInstance.get('pinedcommunities');
+  return res.data;
+}
+
 // 커뮤니티 전체 목록 받기
 export async function getCommunitiesRequest(pages: number) {
   const res = await axiosInstance.get(`communities?page=${pages}`);
@@ -126,4 +132,8 @@ export async function deleteCurrCommuRequest(endpoint: string) {
 export async function postCommuLikeRequest(endpoint: string) {
   const res = await axiosInstance.post(endpoint);
   return res.data;
+}
+
+export async function postPinRequest(communityId: number) {
+  const res = await axiosInstance.post(`pinnedcommunities/${communityId}`);
 }

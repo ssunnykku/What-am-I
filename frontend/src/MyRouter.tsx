@@ -20,6 +20,7 @@ const AIResultCard = lazy(() => import('./pages/AIResultCardPage'));
 const AILoading = lazy(() => import('./pages/AILoadingPage'));
 const CommuChat = lazy(() => import('./pages/CommuChatPage'));
 const ChatRoom = lazy(() => import('./pages/ChatRoomPage'));
+const MyBuddy = lazy(() => import('./pages/MyBuddyPage'));
 
 const MyRouter = () => {
   return (
@@ -40,6 +41,7 @@ const MyRouter = () => {
           <Route path="/ailoading" element={<AILoading />} />
           <Route path="/commuchat" element={<CommuChat />} />
           <Route path="/chatroom" element={<ChatRoom />} />
+          <Route path="/mybuddy" element={<MyBuddy />} />
         </Routes>
       </BrowserRouter>
     </Suspense>
