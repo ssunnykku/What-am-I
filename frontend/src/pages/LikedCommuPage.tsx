@@ -25,6 +25,7 @@ import { UserInfoType } from '../types/auth/authType';
 import { getUserData } from '../apis/mypageFetcher';
 import { useNavigate } from 'react-router-dom';
 import CheckPinBtn from '../components/community/CommuPinBtn';
+import { Link } from 'react-router-dom';
 
 const LikedCommuPage = () => {
   const [page, setPage] = useState<number>(1);
@@ -208,12 +209,14 @@ const LikedCommuPage = () => {
             </CommuIntro>
           </NameBox>
           <WritingBtnBox>
-            <EntryBtn
-              className="entry-btn"
-              onClick={() => navigate('/commuchat')}
-            >
-              채팅방 입장
-            </EntryBtn>
+            <Link to={`/commuchat?id=${commuInfo?.id}`}>
+              <EntryBtn
+                className="entry-btn"
+                // onClick={() => navigate('/commuchat')}
+              >
+                채팅방 입장
+              </EntryBtn>
+            </Link>
             <CommuWritingModal commuInfo={commuInfo} />
           </WritingBtnBox>
         </IntroBox>

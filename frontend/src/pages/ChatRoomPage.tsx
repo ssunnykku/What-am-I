@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { theme } from '../assets/styles/common/palette';
 import { font } from '../assets/styles/common/fonts';
@@ -6,6 +7,7 @@ import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 
 const ChatRoomPage = () => {
+  const [message, setMessage] = useState<string>('');
   return (
     <BigBox>
       <RoomBox>
@@ -27,7 +29,12 @@ const ChatRoomPage = () => {
           <BottomBox>
             <InputBox>
               <div className="input-container">
-                <input placeholder="메시지를 입력해주세요..." />
+                <input
+                  type="text"
+                  placeholder="메시지를 입력해주세요..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                />
                 <div>
                   <ImageOutlinedIcon
                     style={{
@@ -36,7 +43,7 @@ const ChatRoomPage = () => {
                     }}
                   />
                 </div>
-                <button>
+                <button disabled={message.length === 0}>
                   <SendOutlinedIcon
                     style={{
                       fontSize: '30px',
@@ -176,7 +183,6 @@ export const InputBox = styled.div`
     background-color: white;
     font-family: ${font.normal};
     padding-left: 10px;
-    color: gray;
 
     // 인풋 글자 길이 !==0
     /* color: black; */
@@ -184,6 +190,11 @@ export const InputBox = styled.div`
     :hover {
       cursor: pointer;
       color: ${theme.mainColor};
+    }
+
+    &[disabled] {
+      color: gray;
+      cursor: revert;
     }
   }
 `;
