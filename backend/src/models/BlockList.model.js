@@ -15,13 +15,9 @@ class BlockList extends Sequelize.Model {
   }
   static associate(db) {
     db.BlockList.belongsTo(db.User, {
-      foreignKey: 'userId',
+      foreignKey: 'blockId',
       targetKey: 'userId',
-    }),
-      db.BlockList.belongsTo(db.User, {
-        foreignKey: 'blockId',
-        targetKey: 'userId',
-      });
+    });
   }
 }
 

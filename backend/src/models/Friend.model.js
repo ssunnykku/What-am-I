@@ -22,13 +22,9 @@ class Friend extends Sequelize.Model {
   }
   static associate(db) {
     db.Friend.belongsTo(db.User, {
-      foreignKey: 'userId',
+      foreignKey: 'followingId',
       targetKey: 'userId',
-    }),
-      db.Friend.belongsTo(db.User, {
-        foreignKey: 'followingId',
-        targetKey: 'userId',
-      });
+    });
   }
 }
 
