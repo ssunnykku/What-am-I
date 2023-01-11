@@ -43,6 +43,21 @@ export interface CommunityRankingType {
   };
 }
 
+export interface PinnedCommunityType {
+  Community: {
+    communityImage: string;
+    createdAt: string;
+    id: number;
+    introduction: string;
+    name: string;
+    updatedAt: string;
+    userId: string;
+  };
+  communityId: number;
+  id: number;
+  userId: string;
+}
+
 export interface CommunityListType {
   communityCount: number;
   selectedCommunity: Array<CommunityType>;

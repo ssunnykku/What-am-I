@@ -37,7 +37,6 @@ const CheckPinBtn = ({ listInfo }: CommunityTypeProps) => {
     e.preventDefault();
 
     const res = await postCommuRequest(`pinnedcommunities/${id}`);
-    console.log(res.result);
 
     if (listInfo) {
       if (res.result === 'Pin has been created') {

@@ -14,6 +14,7 @@ import {
 import {
   CommunityRankingType,
   CommunityType,
+  PinnedCommunityType,
 } from '../types/community/communityType';
 import { useInView } from 'react-intersection-observer';
 import { CommuSpinner } from '../components/loader/CustomSpinner';
@@ -65,9 +66,13 @@ const CommunityPage = () => {
   };
 
   // 고정 커뮤니티
-  // const getPinnedCommunity = async () => {
-  //   const res = await getPinnedCommunityRequest();
-  // };
+  const getPinnedCommunity = async () => {
+    const res = await getPinnedCommunityRequest();
+    const pinnedMap = res.map(
+      (pinned: PinnedCommunityType) => pinned.Community,
+    );
+    setPinned(pinnedMap);
+  };
 
   // 전체 커뮤니티 목록
   const getCommunitiesList = async () => {
@@ -78,7 +83,7 @@ const CommunityPage = () => {
   useEffect(() => {
     getRankingCommunity();
     getCommunitiesList();
-    // getPinnedCommunity();
+    getPinnedCommunity();
   }, []);
 
   return (
@@ -96,7 +101,11 @@ const CommunityPage = () => {
             ))}
           </RankingBox>
           <PinHeader>고정 커뮤니티</PinHeader>
-          <PinBox></PinBox>
+          <PinBox>
+            {pinned?.map((pin) => (
+              <CommuPinCard key={pin.id} listInfo={pin} />
+            ))}
+          </PinBox>
         </PopularCommuBox>
         <ListsBox>
           <CommuListHeader>
@@ -153,7 +162,6 @@ const PopularCommuBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: solid 1px purple;
 `;
 
 const RankingHeader = styled.div`
@@ -173,7 +181,9 @@ const RankingBox = styled.div`
   margin-top: 1.5rem;
 `;
 
-const PinHeader = styled(RankingHeader)``;
+const PinHeader = styled(RankingHeader)`
+  margin-top: 6rem;
+`;
 const PinBox = styled(RankingBox)``;
 
 const ListsBox = styled.div`
