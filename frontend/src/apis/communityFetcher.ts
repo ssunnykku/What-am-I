@@ -128,12 +128,8 @@ export async function deleteCurrCommuRequest(endpoint: string) {
   return res.data;
 }
 
-// like fetcher
-export async function postCommuLikeRequest(endpoint: string) {
+// like / pinned fetcher
+export async function postCommuRequest(endpoint: string) {
   const res = await axiosInstance.post(endpoint);
   return res.data;
-}
-
-export async function postPinRequest(communityId: number) {
-  const res = await axiosInstance.post(`pinnedcommunities/${communityId}`);
 }

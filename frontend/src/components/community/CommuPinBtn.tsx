@@ -3,27 +3,51 @@ import styled from 'styled-components';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import BookmarkOutlinedIcon from '@mui/icons-material/BookmarkOutlined';
 import { CommunityTypeProps } from './CommuRankingCard';
+import {
+  getCurrentCommunityRequest,
+  postCommuRequest,
+} from '../../apis/communityFetcher';
 
 const CheckPinBtn = ({ listInfo }: CommunityTypeProps) => {
   const [pinned, setPinned] = useState<boolean>(false);
 
-  const onClickPinBtn = (e: React.MouseEvent) => {
+  // 주소에서 id 가져오기
+  let getParameter = (key: string) => {
+    return new URLSearchParams(location.search).get(key);
+  };
+  const id = getParameter('id') ? getParameter('id') : listInfo?.id;
+
+  // 고정 커뮤 정보 불러오기
+  const getPinnedCommu = async () => {
+    const res = await getCurrentCommunityRequest(`communities/posts/${id}`);
+
+    if (res.pinStatus === 1) {
+      setPinned(true);
+    } else if (res.pinStatus === 0) {
+      setPinned(false);
+    }
+  };
+
+  useEffect(() => {
+    getPinnedCommu();
+  }, []);
+
+  // 핀 버튼 체크
+  const onClickPinBtn = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    // 정리만 해두자 어떻게 해야 할지
-    // 일단 포스트로 할 수 있게 해야 하고 포스트를 하면~!
-    // result 값이 달라지네 이걸로 pinned = true / false로 하면 됨
-    // get으로 보여주기 like-button이랑 똑같이 하면 됨
+    const res = await postCommuRequest(`pinnedcommunities/${id}`);
+    console.log(res.result);
 
     if (listInfo) {
-      if (listInfo?.pinStatus === 0) {
+      if (res.result === 'Pin has been created') {
+        setPinned(true);
+      } else if (res.result === 'Pin has been canceled') {
+        setPinned(false);
+      } else {
         setPinned(true);
       }
-      if (listInfo?.pinStatus === 1) {
-        setPinned(false);
-      }
     }
-    console.log(listInfo?.pinStatus);
   };
 
   return (
