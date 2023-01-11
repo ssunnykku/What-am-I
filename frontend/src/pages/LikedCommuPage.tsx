@@ -24,6 +24,7 @@ import CommuLikeBtn from '../components/community/CommuLikeBtn';
 import { UserInfoType } from '../types/auth/authType';
 import { getUserData } from '../apis/mypageFetcher';
 import { useNavigate } from 'react-router-dom';
+import CheckPinBtn from '../components/community/CommuPinBtn';
 
 const LikedCommuPage = () => {
   const [page, setPage] = useState<number>(1);
@@ -179,6 +180,7 @@ const LikedCommuPage = () => {
               ) : (
                 <>
                   <div>{commuInfo?.name}</div>
+                  <CheckPinBtn />
                   {commuInfo?.userId === currentUserInfo?.userId ? (
                     <EditDelBtn
                       style={{ margin: '0 10px' }}

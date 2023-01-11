@@ -8,6 +8,7 @@ import { theme } from '../assets/styles/common/palette';
 import MakingCommuModal from '../components/modal/MakingCommuModal';
 import {
   getCommunitiesRequest,
+  getPinnedCommunityRequest,
   getRankingCommunityRequest,
 } from '../apis/communityFetcher';
 import {
@@ -17,10 +18,12 @@ import {
 import { useInView } from 'react-intersection-observer';
 import { CommuSpinner } from '../components/loader/CustomSpinner';
 import Storage from '../storage/storage';
+import CommuPinCard from '../components/community/CommuPinCard';
 
 const CommunityPage = () => {
   const [rankings, setRankings] = useState<CommunityType[]>([]);
   const [commuList, setCommuList] = useState<CommunityType[]>([]);
+  const [pinned, setPinned] = useState<CommunityType[]>([]);
   const [pages, setPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [ref, inView] = useInView();
@@ -61,15 +64,22 @@ const CommunityPage = () => {
     setRankings(rankingMap);
   };
 
+  // 고정 커뮤니티
+  // const getPinnedCommunity = async () => {
+  //   const res = await getPinnedCommunityRequest();
+  // };
+
   // 전체 커뮤니티 목록
   const getCommunitiesList = async () => {
     const res = await getCommunitiesRequest(pages);
     setCommuList(res.selectedCommunity);
+    console.log(res);
   };
 
   useEffect(() => {
     getRankingCommunity();
     getCommunitiesList();
+    // getPinnedCommunity();
   }, []);
 
   return (
@@ -86,6 +96,8 @@ const CommunityPage = () => {
               <CommuRankingCard key={ranking.id} listInfo={ranking} />
             ))}
           </RankingBox>
+          <PinHeader>고정 커뮤니티</PinHeader>
+          <PinBox></PinBox>
         </PopularCommuBox>
         <ListsBox>
           <CommuListHeader>
@@ -101,8 +113,8 @@ const CommunityPage = () => {
                 const observerRef =
                   commuList.length - 1 === idx ? ref : undefined;
                 return (
-                  <div key={commu.id} ref={observerRef}>
-                    <CommuListCard listInfo={commu} />
+                  <div ref={observerRef}>
+                    <CommuListCard key={commu.id} listInfo={commu} />
                   </div>
                 );
               })}
@@ -142,6 +154,7 @@ const PopularCommuBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: solid 1px purple;
 `;
 
 const RankingHeader = styled.div`
@@ -160,6 +173,9 @@ const RankingBox = styled.div`
   justify-content: space-evenly;
   margin-top: 1.5rem;
 `;
+
+const PinHeader = styled(RankingHeader)``;
+const PinBox = styled(RankingBox)``;
 
 const ListsBox = styled.div`
   display: flex;

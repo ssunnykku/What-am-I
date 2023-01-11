@@ -13,7 +13,7 @@ const CommuChat = ({ commuInfo }: CurrentCommuityProps) => {
       <ChatBox>
         <ContentsBox>{commuInfo?.name}채팅방 사진 + 이름...</ContentsBox>
         <BottomBox>
-          <InputBox>
+          <InputBox style={{ bottom: '20px' }}>
             <div className="input-container">
               <input placeholder="메시지를 입력해주세요..." />
               <div>
@@ -46,7 +46,7 @@ const ChatBox = styled.div`
   flex-direction: column;
   position: relative;
   width: 55vw;
-  height: 97%;
+  height: 95%;
   max-width: 950px;
   min-width: 450px;
   background-color: ${theme.backColor};

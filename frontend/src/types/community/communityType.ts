@@ -25,6 +25,7 @@ export interface CommunityType {
   communityImage: string;
   createdAt: string;
   updatedAt: string;
+  pinStatus: number;
 }
 
 export interface CommunityRankingType {
