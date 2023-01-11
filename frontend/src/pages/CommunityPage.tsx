@@ -138,8 +138,8 @@ const CommunityPage = () => {
 export default CommunityPage;
 
 const CommuBox = styled.div`
-  width: 100%;
-  height: 87vh;
+  /* width: 100%;
+  height: 87vh; */
   font-family: ${font.bold};
 `;
 
@@ -156,12 +156,14 @@ const CommuContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
 `;
 
 const PopularCommuBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 3rem;
 `;
 
 const RankingHeader = styled.div`
@@ -182,7 +184,7 @@ const RankingBox = styled.div`
 `;
 
 const PinHeader = styled(RankingHeader)`
-  margin-top: 6rem;
+  margin-top: 4rem;
 `;
 const PinBox = styled(RankingBox)``;
 
@@ -190,6 +192,7 @@ const ListsBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 3rem;
 `;
 
 const CommuListHeader = styled.div`
