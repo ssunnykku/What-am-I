@@ -5,6 +5,7 @@ import { font } from '../assets/styles/common/fonts';
 import { BigBox } from '../assets/styles/common/commonComponentStyle';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
+import Storage from '../storage/storage';
 
 const ChatRoomPage = () => {
   const [message, setMessage] = useState<string>('');
@@ -12,18 +13,20 @@ const ChatRoomPage = () => {
     <BigBox>
       <RoomBox>
         <ChatList>
-          <header>내 닉네임</header>
+          <header>{Storage.getNicknameItem()}</header>
           <BuddyChat>
             <img />
             <div className="profile-box">
-              <div>닉네임</div>
+              <div>상대방 닉네임</div>
               <div className="preview-chat">blah blah blah blah...</div>
             </div>
           </BuddyChat>
         </ChatList>
         <ChatPlace>
           <header>
-            <img />
+            <div className="profile">
+              <img />
+            </div>
             <div>상대방 닉네임</div>
           </header>
           <BottomBox>
@@ -70,14 +73,6 @@ const RoomBox = styled.div`
   border-radius: 10px;
   background-color: ${theme.backColor};
   box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.2);
-`;
-
-const ChatList = styled.div`
-  border-right: solid 1px lightgray;
-  font-family: ${font.normal};
-  margin: 5px 0;
-  letter-spacing: 3px;
-  min-width: 300px;
 
   header {
     height: 3.5rem;
@@ -86,7 +81,16 @@ const ChatList = styled.div`
     align-items: center;
     justify-content: center;
     font-size: 15px;
+    font-family: ${font.bold};
   }
+`;
+
+const ChatList = styled.div`
+  border-right: solid 1px lightgray;
+  font-family: ${font.normal};
+  margin: 5px 0;
+  letter-spacing: 3px;
+  min-width: 300px;
 `;
 
 const BuddyChat = styled.div`
@@ -123,20 +127,20 @@ const ChatPlace = styled.div`
   letter-spacing: 3px;
   position: relative;
 
-  header {
-    height: 3.5rem;
-    border-bottom: solid 1px lightgray;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
+  .profile {
+    width: 1.6rem;
+    height: 1.6rem;
+    border: solid 1px gray;
+    border-radius: 50%;
+    margin-right: 15px;
+    position: relative;
 
     img {
-      width: 1.6rem;
-      height: 1.6rem;
-      border: solid 1px gray;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       border-radius: 50%;
-      margin-right: 15px;
     }
   }
 `;
@@ -183,9 +187,6 @@ export const InputBox = styled.div`
     background-color: white;
     font-family: ${font.normal};
     padding-left: 10px;
-
-    // 인풋 글자 길이 !==0
-    /* color: black; */
 
     :hover {
       cursor: pointer;

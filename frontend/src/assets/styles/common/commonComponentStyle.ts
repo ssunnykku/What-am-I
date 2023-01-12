@@ -142,3 +142,40 @@ export const BigBox = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const ContentsProfile = styled.div`
+  display: flex;
+  align-items: center;
+  width: 80%;
+  height: 3.5rem;
+  line-height: 4.3rem;
+  font-size: 17px;
+  font-family: ${font.bold};
+
+  .profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+export const WritingProfile = styled(ContentsProfile)`
+  padding-left: 3%;
+  font-size: 16px;
+
+  .profile {
+    width: 45px;
+    height: 45px;
+    margin-right: 10px;
+  }
+`;

@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
-import { EditDelBtn } from '../../assets/styles/common/commonComponentStyle';
+import {
+  EditDelBtn,
+  ContentsProfile,
+} from '../../assets/styles/common/commonComponentStyle';
 import MyModal from '../modal/MyModal';
 import useModal from '../../hooks/modal/useModal';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import CommuLikeBtn from './CommuLikeBtn';
 import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 import CommuWritingEditor from './CommuWritingEditor';
 import {
@@ -165,12 +167,12 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
         <AddWriting>
           <TopDiv>
             <div className="user-name">
-              <ProfileBox>
+              <ContentsProfile>
                 <div className="profile">
                   <img src={postInfo?.profileImg} />
                 </div>
                 <div>{postInfo?.nickname}</div>
-              </ProfileBox>
+              </ContentsProfile>
             </div>
             {props.currentUserInfo?.userId === postInfo?.userId ? (
               <ButtonBox>
@@ -329,33 +331,6 @@ const AddWriting = styled.div`
     padding-left: 20px;
     display: flex;
     align-items: center;
-  }
-`;
-
-const ProfileBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 80%;
-  height: 3.5rem;
-  line-height: 4.3rem;
-  font-size: 17px;
-  font-family: ${font.bold};
-
-  .profile {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 15px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
   }
 `;
 

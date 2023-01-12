@@ -109,7 +109,7 @@ const ChatBox = styled.div`
     }
 
     .chat-name {
-      font-size: 18px;
+      font-size: 17px;
       margin-left: 15px;
     }
   }
