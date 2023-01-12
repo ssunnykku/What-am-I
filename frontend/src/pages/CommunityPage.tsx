@@ -29,6 +29,12 @@ const CommunityPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [ref, inView] = useInView();
 
+  // 로그인 여부
+  if (!Storage.getUserIdItem()) {
+    alert('로그인이 필요한 서비스입니다. 로그인하러 가볼까요?');
+    document.location.href = '/login';
+  }
+
   // 무한 스크롤
   const handleScroll = useCallback(async () => {
     setLoading(true);
@@ -50,41 +56,38 @@ const CommunityPage = () => {
     }
   }, [inView]);
 
-  // 로그인 여부
-  if (!Storage.getUserIdItem()) {
-    alert('로그인이 필요한 서비스입니다. 로그인하러 가볼까요?');
-    document.location.href = '/login';
-  }
+  // 전체 커뮤니티 목록
+  useEffect(() => {
+    const getCommunitiesList = async () => {
+      const res = await getCommunitiesRequest(pages);
+      setCommuList(res.selectedCommunity);
+    };
+    getCommunitiesList();
+  }, []);
 
   // 베스트 커뮤니티
-  const getRankingCommunity = async () => {
-    const res = await getRankingCommunityRequest();
-    const rankingMap = res.map(
-      (ranking: CommunityRankingType) => ranking.Community,
-    );
-    setRankings(rankingMap);
-  };
+  useEffect(() => {
+    const getRankingCommunity = async () => {
+      const res = await getRankingCommunityRequest();
+      const rankingMap = res.map(
+        (ranking: CommunityRankingType) => ranking.Community,
+      );
+      setRankings(rankingMap);
+    };
+    getRankingCommunity();
+  }, [rankings]);
 
   // 고정 커뮤니티
-  const getPinnedCommunity = async () => {
-    const res = await getPinnedCommunityRequest();
-    const pinnedMap = res.map(
-      (pinned: PinnedCommunityType) => pinned.Community,
-    );
-    setPinned(pinnedMap);
-  };
-
-  // 전체 커뮤니티 목록
-  const getCommunitiesList = async () => {
-    const res = await getCommunitiesRequest(pages);
-    setCommuList(res.selectedCommunity);
-  };
-
   useEffect(() => {
-    getRankingCommunity();
-    getCommunitiesList();
+    const getPinnedCommunity = async () => {
+      const res = await getPinnedCommunityRequest();
+      const pinnedMap = res.map(
+        (pinned: PinnedCommunityType) => pinned.Community,
+      );
+      setPinned(pinnedMap);
+    };
     getPinnedCommunity();
-  }, []);
+  }, [pinned]);
 
   return (
     <CommuBox>

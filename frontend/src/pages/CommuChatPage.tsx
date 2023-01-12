@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { BigBox } from '../assets/styles/common/commonComponentStyle';
 import { font } from '../assets/styles/common/fonts';
 import { theme } from '../assets/styles/common/palette';
-import { CurrentCommuityProps } from '../components/modal/CommuContentsModal';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import { BottomBox, InputBox } from './ChatRoomPage';
@@ -26,7 +25,7 @@ const CommuChat = () => {
 
   useEffect(() => {
     getCommuChatInfo();
-  });
+  }, []);
 
   return (
     <BigBox>
