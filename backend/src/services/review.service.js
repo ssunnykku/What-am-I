@@ -1,6 +1,5 @@
 import { Review } from '../models/Review.model.js';
 import { ReviewLike } from '../models/ReviewLike.model';
-import sequelize from '../config/sequelize';
 
 import { REVIEW_PER_PAGE } from '../utils/Constant';
 import { Sequelize } from 'sequelize';

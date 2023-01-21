@@ -102,9 +102,17 @@ class User extends Sequelize.Model {
       foreignKey: 'userId',
       sourceKey: 'userId',
     });
+    // 추가한 친구
     db.User.belongsToMany(db.User, {
-      foreignKey: 'followerId',
-      as: 'Friend',
+      foreignKey: 'friendId',
+      as: 'friend',
+      through: 'friends',
+      timestamps: false,
+    });
+    // 로그인한 유저
+    db.User.belongsToMany(db.User, {
+      foreignKey: 'userId',
+      as: 'currentUser',
       through: 'friends',
       timestamps: false,
     });
