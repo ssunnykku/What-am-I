@@ -105,29 +105,29 @@ class User extends Sequelize.Model {
     // 차단 목록에 추가한 사용자
     db.User.belongsToMany(db.User, {
       foreignKey: 'blockId',
-      as: 'blocked',
-      through: 'blocks',
+      as: 'Blocked',
+      through: 'Blocks',
       timestamps: false,
     });
     // 로그인한 유저가 차단한 사용자들
     db.User.belongsToMany(db.User, {
       foreignKey: 'userId',
-      as: 'blockings',
-      through: 'blocks',
+      as: 'Blockings',
+      through: 'Blocks',
       timestamps: false,
     });
     // 추가한 친구
     db.User.belongsToMany(db.User, {
       foreignKey: 'friendId',
-      as: 'addedFriends',
-      through: 'friends',
+      as: 'FriendLists',
+      through: 'Friends',
       timestamps: false,
     });
-    // 로그인한 유저
+    // 로그인한 유저의 친구정보
     db.User.belongsToMany(db.User, {
       foreignKey: 'userId',
-      as: 'friendList',
-      through: 'friends',
+      as: 'UserFriends',
+      through: 'Friends',
       timestamps: false,
     });
   }

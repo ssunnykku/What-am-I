@@ -10,4 +10,10 @@ friendRouter.post(
   friendController.addFriend,
 );
 
+friendRouter.post(
+  '/friends/blocks/:friendId',
+  loginRequired,
+  friendController.blockFriend,
+);
+
 export { friendRouter };
