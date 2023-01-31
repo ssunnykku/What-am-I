@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import styled, { css } from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import CommuRankingCard from '../components/community/CommuRankingCard';
 import CommuListCard from '../components/community/CommuListCard';
@@ -20,6 +20,11 @@ import { useInView } from 'react-intersection-observer';
 import { CommuSpinner } from '../components/loader/CustomSpinner';
 import Storage from '../storage/storage';
 import CommuPinCard from '../components/community/CommuPinCard';
+import useDetectClose from '../hooks/dropdown/useDetectClose';
+
+interface DropdownProps {
+  isDropped: boolean;
+}
 
 const CommunityPage = () => {
   const [rankings, setRankings] = useState<CommunityType[]>([]);
@@ -28,6 +33,10 @@ const CommunityPage = () => {
   const [pages, setPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [ref, inView] = useInView();
+
+  const [menu, setMenu] = useState<string>('최신 순');
+  const [sortIsOpen, sortRef, sortHandler] = useDetectClose(false);
+  const listRef = useRef();
 
   // 로그인 여부
   if (!Storage.getUserIdItem()) {
@@ -64,6 +73,49 @@ const CommunityPage = () => {
     };
     getCommunitiesList();
   }, []);
+
+  // 커뮤니티 목록 드롭다운
+  const onChangeReverse = () => {
+    if (menu === '최신 순') {
+      setMenu('오래된 순');
+      commuList.sort((x, y) => {
+        return +new Date(x.createdAt) - +new Date(y.createdAt);
+      });
+    } else {
+      setMenu('최신 순');
+      commuList.sort((x, y) => {
+        return +new Date(y.createdAt) - +new Date(x.createdAt);
+      });
+    }
+  };
+
+  const onChangeName = () => {
+    setMenu('이름 순');
+    commuList.sort((x, y) => {
+      return x.name < y.name ? -1 : x.name > y.name ? 1 : 0;
+    });
+
+    if (menu === '이름 순') {
+      setMenu('오래된 순');
+      commuList.sort((x, y) => {
+        return +new Date(x.createdAt) - +new Date(y.createdAt);
+      });
+    }
+  };
+
+  const onChangeLike = () => {
+    setMenu('좋아요 순');
+    commuList.sort((x, y) => {
+      return x.likeCount < y.likeCount ? 1 : x.likeCount > y.likeCount ? -1 : 0;
+    });
+
+    if (menu === '좋아요 순') {
+      setMenu('오래된 순');
+      commuList.sort((x, y) => {
+        return +new Date(x.createdAt) - +new Date(y.createdAt);
+      });
+    }
+  };
 
   // 베스트 커뮤니티
   useEffect(() => {
@@ -105,13 +157,37 @@ const CommunityPage = () => {
           </RankingBox>
           <PinHeader>고정 커뮤니티</PinHeader>
           <PinBox>
-            {pinned?.map((pin) => (
-              <CommuPinCard key={pin.id} listInfo={pin} />
-            ))}
+            {pinned?.map((pin) => {
+              return (
+                <div draggable={true} style={{ border: 'solid 1px blue' }}>
+                  <CommuPinCard key={pin.id} listInfo={pin} />
+                </div>
+              );
+            })}
           </PinBox>
         </PopularCommuBox>
         <ListsBox>
           <CommuListHeader>
+            <DropdownPlace>
+              <DropdownContainer>
+                <li onClick={sortHandler} ref={sortRef}>
+                  {menu}
+                </li>
+                <ListMenu isDropped={sortIsOpen}>
+                  <ListBox>
+                    <li onClick={onChangeReverse}>
+                      {menu === '최신 순' ? '오래된 순' : '최신 순'}
+                    </li>
+                    <li onClick={onChangeName}>
+                      {menu === '이름 순' ? '오래된 순' : '이름 순'}
+                    </li>
+                    <li onClick={onChangeLike}>
+                      {menu === '좋아요 순' ? '오래된 순' : '좋아요 순'}
+                    </li>
+                  </ListBox>
+                </ListMenu>
+              </DropdownContainer>
+            </DropdownPlace>
             커뮤니티 목록
             <SearchBox style={{ marginLeft: '20px', width: '20rem' }}>
               <input type="text" placeholder="댕댕이 커뮤니티 찾아보기" />
@@ -189,7 +265,12 @@ const RankingBox = styled.div`
 const PinHeader = styled(RankingHeader)`
   margin-top: 4rem;
 `;
-const PinBox = styled(RankingBox)``;
+
+const PinBox = styled(RankingBox)`
+  border: solid 1px red;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+`;
 
 const ListsBox = styled.div`
   display: flex;
@@ -209,6 +290,80 @@ const CommuListHeader = styled.div`
   margin-top: 3rem;
   color: ${theme.mainColor};
   font-size: 20px;
+  position: relative;
+`;
+
+const DropdownPlace = styled.div`
+  position: absolute;
+  left: 0;
+  cursor: pointer;
+`;
+
+const DropdownContainer = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  line-height: 1.5rem;
+  font-size: 0.9rem;
+  background-color: ${theme.backColor};
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+
+  li {
+    width: 5rem;
+    height: 1.5rem;
+  }
+`;
+
+const ListMenu = styled.div<DropdownProps>`
+  background: ${theme.backColor};
+  position: absolute;
+  top: 1.6rem;
+  left: 50%;
+  width: 5rem;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -20px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+  z-index: 9;
+
+  &:after {
+    content: '';
+    height: 0;
+    width: 0;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* border: 12px solid transparent; */
+    /* border: 1rem solid transparent; */
+    border-bottom-color: ${theme.backColor};
+  }
+
+  ${({ isDropped }) =>
+    isDropped &&
+    css`
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+      left: 50%;
+      border-radius: 5px;
+      box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+    `};
+`;
+
+const ListBox = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  li {
+    width: 5rem;
+    border-bottom: solid 1px lightgray;
+  }
 `;
 
 const CommuListsBox = styled.div`

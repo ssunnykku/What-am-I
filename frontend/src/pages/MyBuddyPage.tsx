@@ -29,7 +29,7 @@ const MyBuddyPage = () => {
           <YourList>
             <header className="list-header">나를 추가한 친구</header>
             <div className="list-buddy">
-              내가 추가한 친구들 목록
+              나를 추가한 친구들 목록
               <button className="list-btn">차단</button>
             </div>
           </YourList>
