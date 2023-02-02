@@ -11,6 +11,7 @@ import { getUserData } from '../../apis/mypageFetcher';
 import { UserInfoType } from '../../types/auth/authType';
 import { ReviewType } from '../../types/reviewboard/reviewType';
 import { useNavigate } from 'react-router-dom';
+import { WritingProfile } from '../../assets/styles/common/commonComponentStyle';
 
 interface ReviewReceiveProps {
   id?: number;
@@ -77,12 +78,12 @@ const ReviewWritingEditor = (props: ReviewReceiveProps) => {
         </AddImage>
         <AddWriting>
           <div className="user-name">
-            <ProfileBox>
+            <WritingProfile>
               <div className="profile">
                 <img src={userInfo?.profileImg} />
               </div>
               <div>{userInfo?.nickname}</div>
-            </ProfileBox>
+            </WritingProfile>
           </div>
           <div className="writing">
             <textarea

@@ -2,7 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
-import { EditDelBtn } from '../../assets/styles/common/commonComponentStyle';
+import {
+  EditDelBtn,
+  ContentsProfile,
+} from '../../assets/styles/common/commonComponentStyle';
 import { ReviewTypeProps } from '../modal/ReviewContentsModal';
 import {
   createReviewCommentRequest,
@@ -17,7 +20,6 @@ import {
   AITestType,
   OneReviewType,
   ReviewCommentType,
-  ReviewType,
 } from '../../types/reviewboard/reviewType';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -178,12 +180,12 @@ const ReviewContentsViewer = (props: ReviewTypeProps) => {
         <AddWriting>
           <TopDiv>
             <div className="user-name">
-              <ProfileBox>
+              <ContentsProfile>
                 <div className="profile">
                   <img src={reviewer?.User.profileImg} />
                 </div>
                 <div>{reviewer?.User.nickname}</div>
-              </ProfileBox>
+              </ContentsProfile>
             </div>
             {props.currentUser === reviewer?.userId ? (
               <ButtonBox>
@@ -362,33 +364,6 @@ const AddWriting = styled.div`
     padding-left: 20px;
     display: flex;
     align-items: center;
-  }
-`;
-
-const ProfileBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 80%;
-  height: 3.5rem;
-  line-height: 4.3rem;
-  font-size: 16px;
-  font-family: ${font.bold};
-
-  .profile {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 15px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
   }
 `;
 

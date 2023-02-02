@@ -10,6 +10,7 @@ import {
 import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 import { getUserData } from '../../apis/mypageFetcher';
 import { UserInfoType } from '../../types/auth/authType';
+import { WritingProfile } from '../../assets/styles/common/commonComponentStyle';
 
 const CommuWritingEditor = (props: CurrentCommuityProps) => {
   const [description, setDescription] = useState<string>(
@@ -137,12 +138,12 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
           </AddImage>
           <AddWriting>
             <div className="user-name">
-              <ProfileBox>
+              <WritingProfile>
                 <div className="profile">
                   <img src={userInfo?.profileImg} />
                 </div>
                 <div>{userInfo?.nickname}</div>
-              </ProfileBox>
+              </WritingProfile>
             </div>
             <div className="writing">
               <textarea
@@ -234,33 +235,6 @@ const ImagePlace = styled.div`
   height: 70%;
   position: relative;
   overflow: hidden;
-
-  img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-const ProfileBox = styled.div`
-  display: flex;
-  align-items: center;
-  width: 80%;
-  height: 3.5rem;
-  line-height: 4.3rem;
-  padding-left: 3%;
-  font-size: 16px;
-  font-family: ${font.bold};
-
-  .profile {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    margin-right: 10px;
-    position: relative;
-    overflow: hidden;
-  }
 
   img {
     position: absolute;
