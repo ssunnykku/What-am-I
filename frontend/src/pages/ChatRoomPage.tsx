@@ -6,6 +6,7 @@ import { BigBox } from '../assets/styles/common/commonComponentStyle';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import Storage from '../storage/storage';
+import SearchMsgModal from '../components/modal/SearchMsgModal';
 
 const ChatRoomPage = () => {
   const [message, setMessage] = useState<string>('');
@@ -13,9 +14,14 @@ const ChatRoomPage = () => {
     <BigBox>
       <RoomBox>
         <ChatList>
-          <header>{Storage.getNicknameItem()}</header>
+          <header>
+            {Storage.getNicknameItem()}
+            <div className="msg-icon">
+              <SearchMsgModal />
+            </div>
+          </header>
           <BuddyChat>
-            <img />
+            <img src="img/강아지.png" />
             <div className="profile-box">
               <div>상대방 닉네임</div>
               <div className="preview-chat">blah blah blah blah...</div>
@@ -43,6 +49,7 @@ const ChatRoomPage = () => {
                     style={{
                       fontSize: '30px',
                       width: '35px',
+                      cursor: 'pointer',
                     }}
                   />
                 </div>
@@ -82,6 +89,13 @@ const RoomBox = styled.div`
     justify-content: center;
     font-size: 15px;
     font-family: ${font.bold};
+
+    .msg-icon {
+      text-align: center;
+      width: 2rem;
+      height: 1.4rem;
+      margin-left: 10px;
+    }
   }
 `;
 
@@ -101,10 +115,10 @@ const BuddyChat = styled.div`
   padding: 0 10px;
 
   img {
-    border: solid 1px gray;
-    height: 50px;
-    width: 50px;
+    height: 47px;
+    width: 47px;
     border-radius: 50%;
+    margin-left: 5px;
   }
 
   .profile-box {
