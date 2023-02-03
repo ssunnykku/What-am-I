@@ -2,7 +2,7 @@ import sequelize from '../config/sequelize';
 import Sequelize from 'sequelize';
 
 import { User } from './User.model';
-import { Session } from './Session.model';
+import { RefreshToken } from './RefreshToken.model';
 import { Review } from './Review.model.js';
 import { ReviewComment } from './ReviewComment.model.js';
 import { AiSearchResult } from './AiSearchResult.model';
@@ -35,7 +35,7 @@ db.Prediction = Prediction;
 db.PinnedCommunity = PinnedCommunity;
 
 User.init(sequelize);
-Session.init(sequelize);
+RefreshToken.init(sequelize);
 Review.init(sequelize);
 ReviewLike.init(sequelize);
 ReviewComment.init(sequelize);
@@ -60,5 +60,6 @@ ReviewLike.associate(db);
 AiSearchResult.associate(db);
 Prediction.associate(db);
 PinnedCommunity.associate(db);
+// RefreshToken.associate(db);
 
 export { db };

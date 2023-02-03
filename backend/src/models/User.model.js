@@ -130,6 +130,10 @@ class User extends Sequelize.Model {
       through: 'Friends',
       timestamps: false,
     });
+    // db.User.hasOne(db.RefreshToken, {
+    //   foreignKey: 'userId',
+    //   sourceKey: 'userId',
+    // });
   }
 }
 
