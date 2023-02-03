@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { theme } from '../assets/styles/common/palette';
 import { font } from '../assets/styles/common/fonts';
@@ -10,6 +10,31 @@ import SearchMsgModal from '../components/modal/SearchMsgModal';
 
 const ChatRoomPage = () => {
   const [message, setMessage] = useState<string>('');
+  const [previews, setPreviews] = useState<string[]>([]);
+  const [uploadImages, setUploadImages] = useState<File[]>([]);
+
+  const imageInputRef = useRef<HTMLInputElement>(null);
+
+  const handleUploadFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length !== 0) {
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      // setUploadImages([...previews, e.target.files[0]]);
+
+      reader.onload = () => {
+        const previewUrl = reader.result as string;
+
+        if (previewUrl) {
+          setPreviews([...previews, previewUrl]);
+        }
+      };
+    }
+  };
+
+  const handleDeletePreview = async (e: React.MouseEvent) => {
+    setPreviews([]);
+  };
+
   return (
     <BigBox>
       <RoomBox>
@@ -36,7 +61,17 @@ const ChatRoomPage = () => {
             <div>상대방 닉네임</div>
           </header>
           <BottomBox>
-            <InputBox>
+            <InputBox className={previews.length !== 0 ? 'add-div' : ''}>
+              {previews.map((preview, idx) => (
+                <ImagePlace key={idx}>
+                  {preview ? (
+                    <>
+                      <img src={preview} />
+                      <button onClick={handleDeletePreview}>X</button>
+                    </>
+                  ) : null}
+                </ImagePlace>
+              ))}
               <div className="input-container">
                 <input
                   type="text"
@@ -45,13 +80,24 @@ const ChatRoomPage = () => {
                   onChange={(e) => setMessage(e.target.value)}
                 />
                 <div>
-                  <ImageOutlinedIcon
-                    style={{
-                      fontSize: '30px',
-                      width: '35px',
-                      cursor: 'pointer',
-                    }}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="pre-img"
+                    ref={imageInputRef}
+                    onChange={handleUploadFile}
+                    hidden
+                    multiple
                   />
+                  <label htmlFor="pre-img">
+                    <ImageOutlinedIcon
+                      style={{
+                        fontSize: '30px',
+                        width: '35px',
+                        cursor: 'pointer',
+                      }}
+                    />
+                  </label>
                 </div>
                 <button disabled={message.length === 0}>
                   <SendOutlinedIcon
@@ -141,6 +187,12 @@ const ChatPlace = styled.div`
   letter-spacing: 3px;
   position: relative;
 
+  .add-div {
+    height: 250px;
+    display: flex;
+    padding-right: 8px;
+  }
+
   .profile {
     width: 1.6rem;
     height: 1.6rem;
@@ -171,15 +223,18 @@ export const InputBox = styled.div`
   width: 97%;
   height: 50px;
   bottom: 10px;
-  border-radius: 20px;
+  border-radius: 10px;
   margin: 0 5px;
 
   .input-container {
+    width: 98%;
     height: 50px;
-    border-radius: 20px;
     margin: 0 5px;
     display: flex;
     align-items: center;
+    position: absolute;
+    bottom: 0;
+    border-top: solid 1px lightgray;
 
     input {
       height: 90%;
@@ -211,5 +266,34 @@ export const InputBox = styled.div`
       color: gray;
       cursor: revert;
     }
+  }
+`;
+
+const ImagePlace = styled.div`
+  position: relative;
+  overflow: hidden;
+  height: 180px;
+  width: 200px;
+  margin: 10px 0 0 10px;
+  border-radius: 5px;
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  button {
+    z-index: 9;
+    position: absolute;
+    right: 0;
+    width: 35px;
+    height: 35px;
+    font-family: ${font.bold};
+    font-size: 20px;
+    border: 0;
+    background-color: transparent;
+    color: tomato;
   }
 `;
