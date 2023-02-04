@@ -2,6 +2,8 @@ import { useState } from 'react';
 import TabPanel from '../components/map/TabPanel';
 import WalkMap from '../components/map/WalkMap';
 import styled from 'styled-components';
+import TrashMap from '../components/map/TrashMap';
+import WaterMap from '../components/map/WaterMap';
 
 export const enum PAGEVALUE {
   WALK_MAP = 'WalkMap',
@@ -18,10 +20,10 @@ function MapPage() {
         return <WalkMap />;
 
       case PAGEVALUE.TRASH_MAP:
-        return <WalkMap />;
+        return <TrashMap />;
 
       case PAGEVALUE.WATER_MAP:
-        return <WalkMap />;
+        return <WaterMap />;
     }
   };
 
