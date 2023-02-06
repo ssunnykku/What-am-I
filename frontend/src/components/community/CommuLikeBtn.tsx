@@ -4,7 +4,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import styled, { keyframes } from 'styled-components';
 import {
   getCurrentCommunityRequest,
-  postCommuLikeRequest,
+  postCommuRequest,
 } from '../../apis/communityFetcher';
 import { CommunityTypeProps } from './CommuRankingCard';
 
@@ -35,7 +35,7 @@ const CommuLikeBtn = ({ listInfo }: CommunityTypeProps) => {
   const onClickCommuLikeBtn = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    const res = await postCommuLikeRequest(`communitieslikes/${id}`);
+    const res = await postCommuRequest(`communitieslikes/${id}`);
 
     if (res.newLike) {
       setLike(true);

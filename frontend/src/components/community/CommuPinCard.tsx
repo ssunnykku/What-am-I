@@ -1,21 +1,22 @@
 import { Link } from 'react-router-dom';
-import styled, { keyframes } from 'styled-components';
-import { theme } from '../../assets/styles/common/palette';
-import { font } from '../../assets/styles/common/fonts';
-import CommuLikeBtn from './CommuLikeBtn';
-import { CommuCardBox, CommuImage, CommuName } from './CommuRankingCard';
+import {
+  CommuCardBox,
+  CommuImage,
+  CommuName,
+  CommunityTypeProps,
+} from './CommuRankingCard';
 
-const CommuPinCard = () => {
+const CommuPinCard = ({ listInfo }: CommunityTypeProps) => {
   return (
     <Link
       style={{ textDecoration: 'none', color: 'black' }}
-      to={'/likedcommunity'}
+      to={`/likedcommunity?id=${listInfo?.id}`}
     >
       <CommuCardBox>
         <CommuImage>
-          <img />
+          <img src={listInfo?.communityImage} />
         </CommuImage>
-        <CommuName></CommuName>
+        <CommuName>{listInfo?.name}</CommuName>
       </CommuCardBox>
     </Link>
   );
