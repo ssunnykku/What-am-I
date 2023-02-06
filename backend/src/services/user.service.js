@@ -58,10 +58,14 @@ class userService {
     const refreshToken = jwt.sign({}, refreshJWTSecretKey, {
       expiresIn: process.env.REFRESH_JWT_EXPIRES,
     });
+
     // accessToken 발급
     const token = jwt.sign({ userId: user.userId }, accessJWTSecretKey, {
       expiresIn: process.env.ACCESS_JWT_EXPIRES,
     });
+
+    // accessToken 유효일자
+    const expJWT = jwt.verify(token, accessJWTSecretKey).exp;
 
     // 테이블에 저장된 토큰이 있는지 확인
     const find = await RefreshToken.findOne({ where: { userId: user.userId } });
@@ -76,7 +80,14 @@ class userService {
           },
         },
       );
-      return { refreshToken, token };
+      return {
+        token,
+        refreshToken,
+        AccessTokenExp: Date(expJWT),
+        userId,
+        email,
+        errorMessage: null,
+      };
     }
     // 없으면 새로 저장하기
     await RefreshToken.create({ refreshToken, userId: user.userId });
@@ -86,6 +97,7 @@ class userService {
     const loginUser = {
       token,
       refreshToken,
+      AccessTokenExp: Date(expJWT),
       userId,
       email,
       nickname,
@@ -194,7 +206,7 @@ class userService {
     const token = await RefreshToken.destroy({
       where: { userId: userId },
     });
-    return;
+    return token;
   }
 
   static async checkToken({ refreshToken }) {
@@ -218,7 +230,7 @@ class userService {
           await RefreshToken.destroy({
             where: { refreshToken: findToken.refreshToken },
           });
-          const errorMessage = '다시 로그인하세요';
+          const errorMessage = '토큰이 유효하지 않음. 다시 로그인하세요';
           return errorMessage;
         }
       },

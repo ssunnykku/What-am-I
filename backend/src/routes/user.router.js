@@ -28,9 +28,9 @@ userRouter.get('/users/:userId', loginRequired, userController.select);
 // 회원 탈퇴
 userRouter.delete('/users', loginRequired, userController.withdrawal);
 
-// 로그아웃, api 명세서 입력 전임
-userRouter.delete('/users/current', loginRequired, userController.logOut);
+// 로그아웃 radis로 구현해볼까?
+userRouter.delete('/logout', loginRequired, userController.logOut);
 
 // refresh 토큰으로 access 토큰 재발급
-userRouter.post('/users/current/refreshtoken', userController.verifyToken);
+userRouter.post('/refreshtoken', userController.verifyToken);
 export { userRouter };

@@ -145,7 +145,7 @@ class userController {
       const userId = req.currentUserId;
 
       const findRefreshToken = await userService.deleteRefreshToken({ userId });
-      return res.status(205).send(findRefreshToken);
+      return res.status(205).send({ success: true, message: 'log out' });
     } catch (error) {
       next(error);
     }
