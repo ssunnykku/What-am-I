@@ -102,14 +102,38 @@ class User extends Sequelize.Model {
       foreignKey: 'userId',
       sourceKey: 'userId',
     });
-    db.User.hasMany(db.Friend, {
-      foreignKey: 'followingId',
-      sourceKey: 'userId',
-    });
-    db.User.hasMany(db.BlockList, {
+    // 차단 목록에 추가한 사용자
+    db.User.belongsToMany(db.User, {
       foreignKey: 'blockId',
-      sourceKey: 'userId',
+      as: 'Blocked',
+      through: 'Blocks',
+      timestamps: false,
     });
+    // 로그인한 유저가 차단한 사용자들
+    db.User.belongsToMany(db.User, {
+      foreignKey: 'userId',
+      as: 'Blockings',
+      through: 'Blocks',
+      timestamps: false,
+    });
+    // 추가한 친구
+    db.User.belongsToMany(db.User, {
+      foreignKey: 'friendId',
+      as: 'FriendLists',
+      through: 'Friends',
+      timestamps: false,
+    });
+    // 로그인한 유저의 친구정보
+    db.User.belongsToMany(db.User, {
+      foreignKey: 'userId',
+      as: 'UserFriends',
+      through: 'Friends',
+      timestamps: false,
+    });
+    // db.User.hasOne(db.RefreshToken, {
+    //   foreignKey: 'userId',
+    //   sourceKey: 'userId',
+    // });
   }
 }
 

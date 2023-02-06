@@ -2,7 +2,7 @@ import sequelize from '../config/sequelize';
 import Sequelize from 'sequelize';
 
 import { User } from './User.model';
-import { Session } from './Session.model';
+import { RefreshToken } from './RefreshToken.model';
 import { Review } from './Review.model.js';
 import { ReviewComment } from './ReviewComment.model.js';
 import { AiSearchResult } from './AiSearchResult.model';
@@ -15,9 +15,6 @@ import { CommunityComment } from './CommunityComment.model';
 import { CommunityLike } from './CommunityLike.model';
 import { PinnedCommunity } from './PinnedCommunity.model';
 import { Prediction } from './Prediction.model';
-
-import { Friend } from './Friend.model';
-import { BlockList } from './BlockList.model';
 
 const db = {};
 
@@ -36,11 +33,9 @@ db.CommunityPostLike = CommunityPostLike;
 db.AiSearchResult = AiSearchResult;
 db.Prediction = Prediction;
 db.PinnedCommunity = PinnedCommunity;
-db.Friend = Friend;
-db.BlockList = BlockList;
 
 User.init(sequelize);
-Session.init(sequelize);
+RefreshToken.init(sequelize);
 Review.init(sequelize);
 ReviewLike.init(sequelize);
 ReviewComment.init(sequelize);
@@ -52,8 +47,6 @@ CommunityPostLike.init(sequelize);
 AiSearchResult.init(sequelize);
 Prediction.init(sequelize);
 PinnedCommunity.init(sequelize);
-Friend.init(sequelize);
-BlockList.init(sequelize);
 
 Community.associate(db);
 CommunityPost.associate(db);
@@ -67,7 +60,6 @@ ReviewLike.associate(db);
 AiSearchResult.associate(db);
 Prediction.associate(db);
 PinnedCommunity.associate(db);
-Friend.associate(db);
-BlockList.associate(db);
+// RefreshToken.associate(db);
 
 export { db };

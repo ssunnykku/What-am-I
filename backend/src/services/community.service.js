@@ -8,6 +8,7 @@ import { PinnedCommunity } from '../models/PinnedCommunity.model';
 import { Op } from 'sequelize';
 
 class communityService {
+  // 1. 커뮤니티 만들기
   static async createCommunity(name, introduction, userId, communityImage) {
     const createCommunity = await Community.create({
       name: name,
@@ -18,7 +19,7 @@ class communityService {
 
     return createCommunity;
   }
-
+  // like 갯수 몇개인지 보내주기
   static async getCommunityLike({ communityId: id, userId }) {
     const getCommunity = await Community.findOne({ where: { id } });
     if (!getCommunity) {
@@ -33,11 +34,11 @@ class communityService {
 
     return likeCount;
   }
-
+  // 좋아요 한 게시물인지 확인해서 res값에 포함(상태)
   static async getCommunityStatus({ communityId: id, userId }) {
     const getCommunity = await Community.findOne({ where: { id } });
     if (!getCommunity) {
-      const errorMessage = `Cannot find id = ${id} community`;
+      const errorMessage = `Cannot find "id = ${id}" community`;
       return errorMessage;
     }
     getCommunity.dataValues.likeStatus = await CommunityLike.count({
@@ -51,7 +52,7 @@ class communityService {
 
     return likeStatus;
   }
-
+  // 2. 커뮤니티 1개 가져오기
   static async getOneCommunity({ id, userId }) {
     const getCommunity = await Community.findOne({ where: { id } });
     if (!getCommunity) {
@@ -79,7 +80,7 @@ class communityService {
 
     return getCommunity;
   }
-
+  // 3. 전체 커뮤니티 리스트 10개씩
   static async countCommunity() {
     const showCommunityCount = await Community.count({
       where: { id: { [Op.gt]: 0 } },
@@ -133,7 +134,7 @@ class communityService {
 
     return selectedCommunities;
   }
-
+  // 4. 인기 커뮤니티 3개 가져오기
   static async findBestCommunities({ userId }) {
     const bestThree = await CommunityLike.findAll({
       attributes: [
@@ -167,7 +168,7 @@ class communityService {
 
     return bestThree;
   }
-
+  // 5. 전체 커뮤니티와 커뮤니티 별 게시물들 보여주기
   static async findAllCommunities() {
     const findAll = await Community.findAndCountAll({
       include: { model: CommunityPost },
@@ -175,7 +176,7 @@ class communityService {
     });
     return findAll;
   }
-
+  // 6. 커뮤니티 수정
   static async updateCommunity({
     name,
     updatedImage,
@@ -225,7 +226,7 @@ class communityService {
       return comment;
     }
   }
-
+  // 7. 커뮤니티 삭제
   static async deleteCommunity({ id, userId }) {
     const id_ = await Community.destroy({
       where: { id: id, userId: userId },
@@ -238,7 +239,7 @@ class communityService {
       return message;
     }
   }
-
+  // 8. 커뮤니티 검색기능
   static async searchedCommunities({ search }) {
     const searchResult = await Community.findAndCountAll({
       where: {

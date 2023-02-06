@@ -4,6 +4,16 @@ import { loginRequired } from '../middlewares/loginRequired.js';
 
 const friendRouter = Router();
 
-friendRouter.post('/', loginRequired, friendController.add);
+friendRouter.post(
+  '/friends/:friendId',
+  loginRequired,
+  friendController.addFriend,
+);
+
+friendRouter.post(
+  '/friends/blocks/:friendId',
+  loginRequired,
+  friendController.blockFriend,
+);
 
 export { friendRouter };
