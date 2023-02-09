@@ -143,32 +143,6 @@ const ModalHeaderBtn = styled.button`
   }
 `;
 
-const ProfileBox = styled.div`
-  display: flex;
-  align-items: center;
-  width: 80%;
-  height: 3.5rem;
-  font-size: 16px;
-  font-family: ${font.bold};
-  padding-left: 5px;
-
-  .profile {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    margin-right: 10px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
 const ModalContents = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;

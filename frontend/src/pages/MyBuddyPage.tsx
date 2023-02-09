@@ -10,12 +10,12 @@ const MyBuddyPage = () => {
       <ListBox>
         <BoxHeader>
           <div>my buddies🐶</div>
-          <div className="search-box">
+          <SearchBuddy>
             <input placeholder="닉네임을 검색하세요..." />
             <button>
               <SearchOutlinedIcon style={{ fontSize: '20px' }} />
             </button>
-          </div>
+          </SearchBuddy>
         </BoxHeader>
         <ListContainer>
           <MyList>
@@ -81,6 +81,34 @@ const ListBox = styled.div`
   }
 `;
 
+export const SearchBuddy = styled.div`
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  background-color: white;
+  border: 0.1px solid lightgray;
+
+  input {
+    height: 28px;
+    width: 230px;
+    margin-left: 10px;
+    border: 0;
+
+    :focus {
+      outline: 0;
+    }
+  }
+
+  button {
+    margin-right: 8px;
+    padding-left: 10px;
+    border: 0;
+    border-left: solid 0.1px lightgray;
+    background-color: white;
+    cursor: pointer;
+  }
+`;
+
 const BoxHeader = styled.header`
   display: flex;
   align-items: center;
@@ -89,34 +117,6 @@ const BoxHeader = styled.header`
   margin: 0 20px 0 30px;
   letter-spacing: 3px;
   border-bottom: solid 1px lightgray;
-
-  .search-box {
-    display: flex;
-    align-items: center;
-    border-radius: 20px;
-    background-color: white;
-    border: 0.1px solid lightgray;
-
-    input {
-      height: 28px;
-      width: 230px;
-      margin-left: 10px;
-      border: 0;
-
-      :focus {
-        outline: 0;
-      }
-    }
-
-    button {
-      margin-right: 8px;
-      padding-left: 10px;
-      border: 0;
-      border-left: solid 0.1px lightgray;
-      background-color: white;
-      cursor: pointer;
-    }
-  }
 `;
 
 const ListContainer = styled.div`

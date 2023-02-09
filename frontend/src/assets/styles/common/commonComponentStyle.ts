@@ -153,6 +153,7 @@ export const ContentsProfile = styled.div`
   font-family: ${font.bold};
 
   .profile {
+    display: flex;
     width: 50px;
     height: 50px;
     border-radius: 50%;
