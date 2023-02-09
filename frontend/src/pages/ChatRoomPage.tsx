@@ -31,8 +31,10 @@ const ChatRoomPage = () => {
     }
   };
 
-  const handleDeletePreview = async (e: React.MouseEvent) => {
-    setPreviews([]);
+  const handleDeletePreview = (index: any) => {
+    const imgNameArr = previews.filter((_, idx) => idx !== index);
+
+    setPreviews([...imgNameArr]);
   };
 
   return (
@@ -62,16 +64,16 @@ const ChatRoomPage = () => {
           </header>
           <BottomBox>
             <InputBox className={previews.length !== 0 ? 'add-div' : ''}>
-              {previews.map((preview, idx) => (
-                <ImagePlace key={idx}>
-                  {preview ? (
-                    <>
+              {previews.length !== 0 ? (
+                <ImageContainer>
+                  {previews.map((preview, idx) => (
+                    <ImagePlace key={idx}>
                       <img src={preview} />
                       <button onClick={handleDeletePreview}>X</button>
-                    </>
-                  ) : null}
-                </ImagePlace>
-              ))}
+                    </ImagePlace>
+                  ))}
+                </ImageContainer>
+              ) : null}
               <div className="input-container">
                 <input
                   type="text"
@@ -190,7 +192,7 @@ const ChatPlace = styled.div`
   .add-div {
     height: 250px;
     display: flex;
-    padding-right: 8px;
+    /* padding-right: 8px; */
   }
 
   .profile {
@@ -269,12 +271,22 @@ export const InputBox = styled.div`
   }
 `;
 
+const ImageContainer = styled.div`
+  display: flex;
+  align-items: center;
+  height: 200px;
+  width: 100%;
+  overflow-x: scroll;
+  padding-left: 10px;
+`;
+
 const ImagePlace = styled.div`
   position: relative;
   overflow: hidden;
   height: 180px;
   width: 200px;
-  margin: 10px 0 0 10px;
+  min-width: 200px;
+  margin-right: 10px;
   border-radius: 5px;
 
   img {
