@@ -142,7 +142,7 @@ const RoomBox = styled.div`
       text-align: center;
       width: 2rem;
       height: 1.4rem;
-      margin-left: 10px;
+      margin-left: 7px;
     }
   }
 `;

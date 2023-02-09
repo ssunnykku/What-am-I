@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import { theme } from '../assets/styles/common/palette';
 import { font } from '../assets/styles/common/fonts';
-import { BigBox } from '../assets/styles/common/commonComponentStyle';
+import {
+  BigBox,
+  WritingProfile,
+} from '../assets/styles/common/commonComponentStyle';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
 const MyBuddyPage = () => {
@@ -22,14 +25,27 @@ const MyBuddyPage = () => {
             <header className="list-header">내가 추가한 친구</header>
             {/* 이걸 누르면 바로 채팅창으로 넘어가는 걸로 */}
             <div className="list-buddy">
-              내가 추가한 친구들 목록
+              <NicknamePlace>
+                <div className="profile">
+                  <img src="/img/강아지.png" />
+                </div>
+                <div>친구 닉네임</div>
+              </NicknamePlace>
               <button className="list-btn">삭제</button>
             </div>
           </MyList>
           <YourList>
             <header className="list-header">나를 추가한 친구</header>
             <div className="list-buddy">
-              나를 추가한 친구들 목록
+              <NicknamePlace>
+                <div className="profile">
+                  <img src="/img/강아지1.jpg" />
+                </div>
+                <div>친구 닉네임</div>
+              </NicknamePlace>
+              <button style={{ margin: '55px' }} className="list-btn">
+                삭제
+              </button>
               <button className="list-btn">차단</button>
             </div>
           </YourList>
@@ -66,7 +82,8 @@ const ListBox = styled.div`
     display: flex;
     align-items: center;
     position: relative;
-    margin-left: 25px;
+    margin-left: 20px;
+    margin-top: 3px;
     cursor: pointer;
 
     .list-btn {
@@ -75,8 +92,9 @@ const ListBox = styled.div`
       background-color: white;
       border-radius: 20px;
       border: solid 0.1px lightgray;
-      height: 30px;
+      height: 27px;
       width: 50px;
+      cursor: pointer;
     }
   }
 `;
@@ -131,4 +149,14 @@ const MyList = styled.div`
 
 const YourList = styled.div`
   border-left: solid 0.05px lightgray;
+`;
+
+const NicknamePlace = styled(WritingProfile)`
+  font-size: 15px;
+
+  .profile {
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+  }
 `;
