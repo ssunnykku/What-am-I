@@ -84,7 +84,7 @@ class userService {
         token,
         refreshToken,
         AccessTokenExp: Date(expJWT),
-        userId,
+        userId: user.userId,
         email,
         errorMessage: null,
       };

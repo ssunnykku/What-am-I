@@ -4,16 +4,11 @@ import { loginRequired } from '../middlewares/loginRequired.js';
 
 const friendRouter = Router();
 
+// 친구목록 추가
 friendRouter.post(
   '/friends/:friendId',
   loginRequired,
   friendController.addFriend,
-);
-
-friendRouter.post(
-  '/friends/blocks/:friendId',
-  loginRequired,
-  friendController.blockFriend,
 );
 
 export { friendRouter };
