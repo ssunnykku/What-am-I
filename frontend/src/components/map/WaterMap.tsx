@@ -10,6 +10,7 @@ declare global {
 }
 
 const { kakao } = window;
+let markerList: any = [];
 
 function WalkMap() {
   useEffect(() => {
@@ -30,6 +31,12 @@ function WalkMap() {
         latlng: new kakao.maps.LatLng(+value.lat, +value.lng),
       });
     });
+
+    kakao.maps.event.addListener(
+      map,
+      'zoom_changed',
+      makeZoomListner(map, positions),
+    );
 
     for (var i = 0; i < positions.length; i++) {
       // 마커를 생성합니다
@@ -87,11 +94,43 @@ function WalkMap() {
         map.panTo(pos);
       };
     }
+    function makeZoomListner(map: any, positions: any) {
+      return function () {
+        if (map.getLevel() <= 3) {
+          //마커 조회 및 표출
+          var neLat = map.getBounds().getNorthEast().getLat();
+          var neLng = map.getBounds().getNorthEast().getLng();
+          var swLat = map.getBounds().getSouthWest().getLat();
+          var swLng = map.getBounds().getSouthWest().getLng();
+          console.log(swLat);
+          console.log(neLat);
+          console.log(swLng);
+          console.log(neLng);
+          markerList = positions.filter(
+            (value: any) =>
+              swLng < value.latlng.La &&
+              value.latlng.La < neLng &&
+              swLat < value.latlng.Ma &&
+              value.latlng.Ma < neLat,
+          );
+          console.log(markerList);
+        } else {
+          //마커 제거
+        }
+      };
+    }
   }, []);
 
   return (
     <Div>
       <Map id="map" />
+      <div
+        style={{ border: '1px solid black', height: '100px', width: '1000px' }}
+      >
+        {markerList.map((value: any) => {
+          <div>12</div>;
+        })}
+      </div>
     </Div>
   );
 }
