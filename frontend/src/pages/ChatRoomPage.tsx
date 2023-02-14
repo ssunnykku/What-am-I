@@ -142,7 +142,7 @@ const RoomBox = styled.div`
       text-align: center;
       width: 2rem;
       height: 1.4rem;
-      margin-left: 10px;
+      margin-left: 7px;
     }
   }
 `;
@@ -166,13 +166,14 @@ const BuddyChat = styled.div`
     height: 47px;
     width: 47px;
     border-radius: 50%;
-    margin-left: 5px;
+    margin-left: 10px;
   }
 
   .profile-box {
     display: flex;
     flex-direction: column;
     padding-left: 10px;
+    margin-left: 2px;
     font-size: 15px;
   }
 

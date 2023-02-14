@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import { theme } from '../../assets/styles/common/palette';
 import { font } from '../../assets/styles/common/fonts';
 import { WritingProfile } from '../../assets/styles/common/commonComponentStyle';
-import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import { SearchBuddy } from '../../pages/MyBuddyPage';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 
 const SearchMsgModal = () => {
   const [isOpen, modalHandler] = useModal();
@@ -46,7 +46,7 @@ const SearchMsgModal = () => {
         </ModalContainer>
       </MyModal>
       <div onClick={modalHandler}>
-        <PeopleOutlineIcon style={{ cursor: 'pointer' }} />
+        <EmojiPeopleIcon style={{ cursor: 'pointer', fontSize: '32px' }} />
       </div>
     </>
   );
