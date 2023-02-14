@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, FormEvent } from 'react';
 import styled from '@emotion/styled';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
@@ -47,16 +47,10 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
   };
 
   // 미리보기 삭제
-  const handleDeletePreviewFile = (index: number) => {
+  const handleDeletePreviewFile = (e: MouseEvent, index: number) => {
+    e.preventDefault();
     setPreviewImgs(previewImgs.filter((_, idx) => idx !== index));
     setPostImages(postImages.filter((_, idx) => idx !== index));
-    console.log(postImages);
-
-    // if (imageInputRef.current) {
-    //   imageInputRef.current.value = '';
-    //   setPreviewImgs([]);
-    //   setPostImages([]);
-    // }
   };
 
   // 커뮤니티 내에 포스팅
@@ -138,7 +132,9 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
                   <>
                     <ImagePlace key={idx}>
                       <img src={pre} alt={`${pre}-${idx}`} />
-                      <button onClick={() => handleDeletePreviewFile(idx)}>
+                      <button
+                        onClick={(e: any) => handleDeletePreviewFile(e, idx)}
+                      >
                         X
                       </button>
                     </ImagePlace>
@@ -295,7 +291,7 @@ const ImagePlace = styled.div`
   border-top: solid 1px lightgray;
   /* border-bottom: solid 1px lightgray; */
   width: 100%;
-  height: 50%;
+  height: 40%;
   position: relative;
   overflow: hidden;
   margin-bottom: 15px;
