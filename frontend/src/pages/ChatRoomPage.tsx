@@ -31,10 +31,8 @@ const ChatRoomPage = () => {
     }
   };
 
-  const handleDeletePreview = (index: any) => {
-    const imgNameArr = previews.filter((_, idx) => idx !== index);
-
-    setPreviews([...imgNameArr]);
+  const handleDeletePreview = (index: number) => {
+    setPreviews(previews.filter((_, idx) => idx !== index));
   };
 
   return (
@@ -66,10 +64,12 @@ const ChatRoomPage = () => {
             <InputBox className={previews.length !== 0 ? 'add-div' : ''}>
               {previews.length !== 0 ? (
                 <ImageContainer>
-                  {previews.map((preview, idx) => (
-                    <ImagePlace key={idx}>
+                  {previews.map((preview, index) => (
+                    <ImagePlace key={index}>
                       <img src={preview} />
-                      <button onClick={handleDeletePreview}>X</button>
+                      <button onClick={() => handleDeletePreview(index)}>
+                        X
+                      </button>
                     </ImagePlace>
                   ))}
                 </ImageContainer>
