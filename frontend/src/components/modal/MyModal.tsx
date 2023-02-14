@@ -13,18 +13,11 @@ const MyModal = ({
   onModalStateChangeEvent,
   children,
 }: MyModalProps) => {
-  useEffect(() => {
-    document.body.style.cssText = `
-      position: fixed; 
-      top: -${window.scrollY}px;
-      overflow-y: scroll;
-      width: 100%;`;
-    return () => {
-      const scrollY = document.body.style.top;
-      document.body.style.cssText = '';
-      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
-    };
-  }, []);
+  if (isOpen) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = 'auto';
+  }
   return (
     <MyModalBackdrop isOpen={isOpen} onClick={onModalStateChangeEvent}>
       <MyModalWrapper onClick={(e) => e.stopPropagation()}>
@@ -39,6 +32,7 @@ export default MyModal;
 
 const MyModalBackdrop = styled.div<{ isOpen: boolean }>`
   position: fixed;
+  overflow: hidden;
   background-color: rgba(0, 0, 0, 0.5);
   top: 0;
   left: 0;
