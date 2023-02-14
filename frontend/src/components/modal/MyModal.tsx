@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { CommonComponentType } from '../../types/common/commonComponentType';
 import { font } from '../../assets/styles/common/fonts';
@@ -12,6 +13,18 @@ const MyModal = ({
   onModalStateChangeEvent,
   children,
 }: MyModalProps) => {
+  useEffect(() => {
+    document.body.style.cssText = `
+      position: fixed; 
+      top: -${window.scrollY}px;
+      overflow-y: scroll;
+      width: 100%;`;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = '';
+      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+    };
+  }, []);
   return (
     <MyModalBackdrop isOpen={isOpen} onClick={onModalStateChangeEvent}>
       <MyModalWrapper onClick={(e) => e.stopPropagation()}>
