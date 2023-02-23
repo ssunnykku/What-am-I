@@ -10,5 +10,23 @@ friendRouter.post(
   loginRequired,
   friendController.addFriend,
 );
+// 내가 추가한 친구 보기(following)
+friendRouter.get(
+  '/friends/followings',
+  loginRequired,
+  friendController.getFollowings,
+);
+// // 나를 추가한 친구 보기(followers)
+// friendRouter.get(
+//   '/friends/followers',
+//   loginRequired,
+//   friendController.getFollowers,
+// );
+// // 친구목록 삭제
+// friendRouter.delete(
+//   '/friends/:friendId',
+//   loginRequired,
+//   friendController.deleteFriend,
+// );
 
 export { friendRouter };
