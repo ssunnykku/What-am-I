@@ -1,9 +1,8 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import { CommonComponentType } from '../../types/common/commonComponentType';
 import { font } from '../../assets/styles/common/fonts';
 
-interface MyModalProps extends CommonComponentType {
+export interface MyModalProps extends CommonComponentType {
   isOpen: boolean;
   onModalStateChangeEvent: () => void;
 }
@@ -23,7 +22,7 @@ const MyModal = ({
       <MyModalWrapper onClick={(e) => e.stopPropagation()}>
         {children}
       </MyModalWrapper>
-      <CloseButton>X</CloseButton>
+      {/* <CloseButton>X</CloseButton> */}
     </MyModalBackdrop>
   );
 };
@@ -38,7 +37,7 @@ const MyModalBackdrop = styled.div<{ isOpen: boolean }>`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10000;
+  z-index: 100;
   ${(props) => (props.isOpen ? 'display: block' : 'display: none')};
 `;
 
