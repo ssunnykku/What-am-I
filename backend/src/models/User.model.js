@@ -134,6 +134,14 @@ class User extends Sequelize.Model {
       through: 'Friend',
       timestamps: false,
     });
+    db.User.hasMany(db.Friend, {
+      foreignKey: 'userId',
+      sourceKey: 'userId',
+    });
+    db.User.hasMany(db.Friend, {
+      foreignKey: 'friendId',
+      sourceKey: 'userId',
+    });
     // db.User.hasOne(db.RefreshToken, {
     //   foreignKey: 'userId',
     //   sourceKey: 'userId',

@@ -67,6 +67,7 @@ ReviewLike.associate(db);
 AiSearchResult.associate(db);
 Prediction.associate(db);
 PinnedCommunity.associate(db);
+Friend.associate(db);
 // RefreshToken.associate(db);
 
 export { db };
