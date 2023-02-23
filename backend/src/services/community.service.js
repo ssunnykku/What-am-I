@@ -87,12 +87,10 @@ class communityService {
       order: [['id', 'DESC']],
     });
 
-    if (showCommunityCount % +process.env.COMMUNITY_PER_PAGE === 0) {
-      return showCommunityCount / +process.env.COMMUNITY_PER_PAGE;
+    if (showCommunityCount % 10 === 0) {
+      return showCommunityCount / 10;
     } else {
-      return Math.Math.ceil(
-        showCommunityCount / +process.env.COMMUNITY_PER_PAGE,
-      );
+      return Math.Math.ceil(showCommunityCount / 10);
     }
   }
 
@@ -101,8 +99,8 @@ class communityService {
     const selectedCommunity = await Community.findAll({
       where: { id: { [Op.gt]: 0 } },
       order: [['id', 'DESC']],
-      offset: (defaultPage - 1) * +process.env.COMMUNITY_PER_PAGE,
-      limit: +process.env.COMMUNITY_PER_PAGE,
+      offset: (defaultPage - 1) * 10,
+      limit: 10,
     });
 
     for (const community of selectedCommunity) {
@@ -125,8 +123,8 @@ class communityService {
 
   static async showAllCommunities(defaultPage) {
     const selectedCommunities = await Community.findAll({
-      offset: (defaultPage - 1) * +process.env.COMMUNITY_PER_PAGE,
-      limit: +process.env.COMMUNITY_PER_PAGE,
+      offset: (defaultPage - 1) * 10,
+      limit: 10,
       order: [['id', 'DESC']],
     });
 
