@@ -6,7 +6,7 @@ import { uploadImageS3 } from '../middlewares/uploadImageS3';
 const communityPostRouter = Router();
 const upload = uploadImageS3();
 
-//해당커뮤니티에 나의 게시글 남기기
+//1. 해당커뮤니티에 나의 게시글 남기기
 communityPostRouter.post(
   '/communitypost/:communityId',
   loginRequired,
@@ -14,30 +14,30 @@ communityPostRouter.post(
   communityPostController.addPost,
 );
 
-//해당 커뮤니티의 게시글 전부 다 가지고 오기
+//2. 해당 커뮤니티의 게시글 전부 다 가지고 오기
 communityPostRouter.get(
   '/communitypost/:communityId',
   loginRequired,
   communityPostController.getCommunityPostList,
 );
 
-//해당 커뮤니티의 게시글 한개씩 가지고 오기
+//3. 해당 커뮤니티의 게시글 한개씩 가지고 오기
 communityPostRouter.get(
   '/communitypost/one/:communityPostId',
   loginRequired,
   communityPostController.getOneCommunityPost,
 );
 
-//내가 쓴 포스팅(글) 수정하기
+//4.내가 쓴 포스팅(글) 수정하기
 communityPostRouter.put(
-  '/communitypost/:id',
+  '/communitypost/:communityPostId',
   loginRequired,
   communityPostController.updateCommunityPost,
 );
 
-//내가 쓴 포스팅(글) 삭제하기
+//5.내가 쓴 포스팅(글) 삭제하기
 communityPostRouter.delete(
-  '/communitypost/:id',
+  '/communitypost/:communityPostId',
   loginRequired,
   communityPostController.deleteCommunityPost,
 );

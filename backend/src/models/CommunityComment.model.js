@@ -4,6 +4,13 @@ class CommunityComment extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
+        id: {
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+          foreignKey: true,
+          type: DataTypes.INTEGER,
+        },
         description: {
           type: DataTypes.TEXT,
           allowNull: false,
