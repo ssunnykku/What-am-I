@@ -2,11 +2,11 @@ import { Community } from '../models/Community.model';
 import { CommunityPost } from '../models/CommunityPost.model';
 import { CommunityLike } from '../models/CommunityLike.model';
 import ApiError from '../utils/ApiError';
-import { COMMUNITY_PER_PAGE } from '../utils/Constant';
+import dotenv from 'dotenv';
 import { PinnedCommunity } from '../models/PinnedCommunity.model';
-
 import { Op } from 'sequelize';
 
+dotenv.config();
 class communityService {
   // 1. 커뮤니티 만들기
   static async createCommunity(name, introduction, userId, communityImage) {
@@ -87,10 +87,12 @@ class communityService {
       order: [['id', 'DESC']],
     });
 
-    if (showCommunityCount % COMMUNITY_PER_PAGE === 0) {
-      return showCommunityCount / COMMUNITY_PER_PAGE;
+    if (showCommunityCount % +process.env.COMMUNITY_PER_PAGE === 0) {
+      return showCommunityCount / +process.env.COMMUNITY_PER_PAGE;
     } else {
-      return Math.floor(showCommunityCount / COMMUNITY_PER_PAGE) + 1;
+      return Math.Math.ceil(
+        showCommunityCount / +process.env.COMMUNITY_PER_PAGE,
+      );
     }
   }
 
@@ -99,8 +101,8 @@ class communityService {
     const selectedCommunity = await Community.findAll({
       where: { id: { [Op.gt]: 0 } },
       order: [['id', 'DESC']],
-      offset: (defaultPage - 1) * COMMUNITY_PER_PAGE,
-      limit: COMMUNITY_PER_PAGE,
+      offset: (defaultPage - 1) * +process.env.COMMUNITY_PER_PAGE,
+      limit: +process.env.COMMUNITY_PER_PAGE,
     });
 
     for (const community of selectedCommunity) {
@@ -123,8 +125,8 @@ class communityService {
 
   static async showAllCommunities(defaultPage) {
     const selectedCommunities = await Community.findAll({
-      offset: (defaultPage - 1) * COMMUNITY_PER_PAGE,
-      limit: COMMUNITY_PER_PAGE,
+      offset: (defaultPage - 1) * +process.env.COMMUNITY_PER_PAGE,
+      limit: +process.env.COMMUNITY_PER_PAGE,
       order: [['id', 'DESC']],
     });
 

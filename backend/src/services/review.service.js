@@ -1,12 +1,11 @@
 import { Review } from '../models/Review.model.js';
 import { ReviewLike } from '../models/ReviewLike.model';
-
-import { REVIEW_PER_PAGE } from '../utils/Constant';
+import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
 import { AiSearchResult } from '../models/AiSearchResult.model.js';
 import { User } from '../models/User.model';
-
-const Op = Sequelize.Op;
+import { Op } from 'sequelize';
+dotenv.config();
 
 class reviewService {
   static async addReview({ description, userId, aiResultId }) {
@@ -30,17 +29,16 @@ class reviewService {
     return createdNewReview;
   }
 
-  //모든리뷰 다 가지고 오기
   static async countReviewpage() {
     const reviewCount = await Review.count();
 
-    if (reviewCount % REVIEW_PER_PAGE === 0) {
-      return reviewCount / REVIEW_PER_PAGE;
+    if (reviewCount % +process.env.REVIEW_PER_PAGE === 0) {
+      return reviewCount / +process.env.REVIEW_PER_PAGE;
     } else {
-      return Math.floor(reviewCount / REVIEW_PER_PAGE) + 1;
+      return Math.ceil(reviewCount / +process.env.REVIEW_PER_PAGE);
     }
   }
-
+  //모든리뷰 다 가지고 오기
   static async selectReviews(defaultpage, _userId) {
     const selectedReviews = await Review.findAll({
       include: {
@@ -49,8 +47,8 @@ class reviewService {
           exclude: ['userId', 'id', 'dogName'],
         },
       },
-      offset: (defaultpage - 1) * REVIEW_PER_PAGE,
-      limit: REVIEW_PER_PAGE,
+      offset: (defaultpage - 1) * +process.env.REVIEW_PER_PAGE,
+      limit: +process.env.REVIEW_PER_PAGE,
       order: [['id', 'DESC']],
     });
 
