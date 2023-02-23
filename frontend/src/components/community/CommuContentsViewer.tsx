@@ -25,6 +25,8 @@ import {
 } from '../../types/community/communityType';
 import ImgCarousel from './Carousel';
 import CommuPostingLikeBtn from './CommuPostingLikeBtn';
+import ProfileCard from '../ProfileCard/ProfileCard';
+import ToggleModal from '../modal/ToggleModal';
 
 const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const [isOpen, modalHandler] = useModal();
@@ -168,9 +170,10 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
           <TopDiv>
             <div className="user-name">
               <ContentsProfile>
-                <div className="profile">
+                <ProfileCard commuPost={postInfo} />
+                {/* <div className="profile">
                   <img src={postInfo?.profileImg} />
-                </div>
+                </div> */}
                 <div>{postInfo?.nickname}</div>
               </ContentsProfile>
             </div>
@@ -195,7 +198,7 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
             <div className="user-contents">{props.commuPost?.description}</div>
             {comments?.map((comment, idx) => (
               <div key={comment.id} className="user-comments">
-                <div className="profile-image">
+                <div className="profile">
                   <img src={comment.profileImg} />
                 </div>
                 {selectedIdx === idx && editing ? (
@@ -367,7 +370,7 @@ const ContentsBox = styled.div`
     line-height: 20px;
     font-size: 14px;
 
-    .profile-image {
+    .profile {
       height: 37px;
       width: 37px;
       border-radius: 50%;
