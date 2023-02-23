@@ -1,4 +1,4 @@
-import react, { useState } from 'react';
+import react, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { theme } from '../../assets/styles/common/palette';
 import { font } from '../../assets/styles/common/fonts';
@@ -8,17 +8,18 @@ import DoneIcon from '@mui/icons-material/Done';
 import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 import { ContentsProfile } from '../../assets/styles/common/commonComponentStyle';
 import { postCommuRequest } from '../../apis/communityFetcher';
+import { getBuddyData } from '../../apis/mypageFetcher';
 
 const ProfileCard = (props: CurrentCommuityProps) => {
   const [checked, setChecked] = useState<boolean>(false);
   const [isOpen, modalHandler] = useModal();
 
   const onClickCheckBtn = async () => {
-    // setChecked((prev) => !prev);
+    const res = await postCommuRequest(`friends/${props.commuPost?.userId}`);
 
-    const res = await postCommuRequest(`friends/${props.commuPost?.id}`);
-
-    console.log(res);
+    if (res.message) {
+      setChecked(true);
+    }
   };
 
   return (
