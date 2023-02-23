@@ -118,3 +118,8 @@ export async function getPuppyData(id: number) {
   const response = await axiosInstance.get(`/airesult/${id}`);
   return response.data;
 }
+
+export async function getBuddyData(page: number) {
+  const response = await axiosInstance.get(`friends/followings?page=${page}`);
+  return response.data;
+}

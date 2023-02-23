@@ -1,4 +1,4 @@
-import react, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { theme } from '../../assets/styles/common/palette';
 import { font } from '../../assets/styles/common/fonts';
@@ -8,17 +8,20 @@ import DoneIcon from '@mui/icons-material/Done';
 import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 import { ContentsProfile } from '../../assets/styles/common/commonComponentStyle';
 import { postCommuRequest } from '../../apis/communityFetcher';
+import Storage from '../../storage/storage';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileCard = (props: CurrentCommuityProps) => {
   const [checked, setChecked] = useState<boolean>(false);
   const [isOpen, modalHandler] = useModal();
+  const navigate = useNavigate();
 
   const onClickCheckBtn = async () => {
-    // setChecked((prev) => !prev);
+    const res = await postCommuRequest(`friends/${props.commuPost?.userId}`);
 
-    const res = await postCommuRequest(`friends/${props.commuPost?.id}`);
-
-    console.log(res);
+    if (res.message) {
+      setChecked(true);
+    }
   };
 
   return (
@@ -36,10 +39,27 @@ const ProfileCard = (props: CurrentCommuityProps) => {
             </div>
             <div className="nickname">{props.commuPost?.nickname}</div>
           </ProfileName>
-          <ProfileBtn onClick={onClickCheckBtn}>
-            {checked ? <DoneIcon style={{ color: '#2d98da' }} /> : '친구 추가'}
-          </ProfileBtn>
-          <ProfileBtn>1:1 메시지 보내기</ProfileBtn>
+          {props.commuPost?.userId === Storage.getUserIdItem() ? (
+            <>
+              <ProfileBtn onClick={() => navigate('/mybuddy')}>
+                친구 목록으로 가기
+              </ProfileBtn>
+              <ProfileBtn onClick={() => navigate('/chatroom')}>
+                채팅 목록으로 가기
+              </ProfileBtn>
+            </>
+          ) : (
+            <>
+              <ProfileBtn onClick={onClickCheckBtn}>
+                {checked ? (
+                  <DoneIcon style={{ color: '#2d98da' }} />
+                ) : (
+                  '친구 추가'
+                )}
+              </ProfileBtn>
+              <ProfileBtn>1:1 메시지 보내기</ProfileBtn>
+            </>
+          )}
         </ProfileBox>
       </ToggleModal>
     </>

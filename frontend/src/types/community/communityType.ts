@@ -93,3 +93,14 @@ export interface CommuNumType {
   countCommunityLike: number;
   myCommunityLikeStatus: number;
 }
+
+export interface BuddyType {
+  userId: string;
+  nickname: string;
+  profileImg: string;
+  Friend: {
+    id: number;
+    friendId: string;
+    userId: string;
+  };
+}

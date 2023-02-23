@@ -91,7 +91,7 @@ const NavDiv = styled.div`
   text-align: center;
   width: 100%;
   height: 95px;
-  min-width: 56rem;
+  min-width: 60rem;
   min-height: 95px;
   line-height: 95px;
   font-family: ${font.bold};
