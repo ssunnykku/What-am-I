@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, FormEvent } from 'react';
 import styled from '@emotion/styled';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
@@ -47,13 +47,10 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
   };
 
   // 미리보기 삭제
-  const handleDeletePreviewFile = (e: React.MouseEvent) => {
+  const handleDeletePreviewFile = (e: MouseEvent, index: number) => {
     e.preventDefault();
-    if (imageInputRef.current) {
-      imageInputRef.current.value = '';
-      setPreviewImgs([]);
-      setPostImages([]);
-    }
+    setPreviewImgs(previewImgs.filter((_, idx) => idx !== index));
+    setPostImages(postImages.filter((_, idx) => idx !== index));
   };
 
   // 커뮤니티 내에 포스팅
@@ -108,12 +105,6 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
             ) : (
               ''
             )}
-            {previewImgs &&
-              previewImgs.map((pre, idx) => (
-                <ImagePlace key={idx}>
-                  <img src={pre} alt={`${pre}-${idx}`} />
-                </ImagePlace>
-              ))}
             {props.mode !== 'edit' ? (
               <InputBox>
                 <div className="upload-box">
@@ -128,13 +119,28 @@ const CommuWritingEditor = (props: CurrentCommuityProps) => {
                   accept="image/*"
                   onChange={handleChangeFile}
                 />
-                <button onClick={handleDeletePreviewFile}>삭제</button>
+                {/* <button onClick={() => handleDeletePreviewFile}>삭제</button> */}
               </InputBox>
             ) : (
               <div>
                 <img src={props.commuPost?.images.split('최고')[0]} />
               </div>
             )}
+            <div className="add-image">
+              {previewImgs &&
+                previewImgs.map((pre, idx) => (
+                  <>
+                    <ImagePlace key={idx}>
+                      <img src={pre} alt={`${pre}-${idx}`} />
+                      <button
+                        onClick={(e: any) => handleDeletePreviewFile(e, idx)}
+                      >
+                        X
+                      </button>
+                    </ImagePlace>
+                  </>
+                ))}
+            </div>
           </AddImage>
           <AddWriting>
             <div className="user-name">
@@ -166,7 +172,7 @@ const CreateModalWrapper = styled.form`
   width: 55%;
   height: 80%;
   max-width: 47rem;
-  min-width: 35rem;
+  min-width: 47rem;
   min-height: 20rem;
   position: fixed;
   top: 50%;
@@ -220,6 +226,16 @@ const AddImage = styled.div`
   position: relative;
   overflow: hidden;
 
+  .add-image {
+    border-radius: 10px;
+    height: 100%;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   img {
     position: absolute;
     width: 100%;
@@ -228,26 +244,10 @@ const AddImage = styled.div`
   }
 `;
 
-const ImagePlace = styled.div`
-  border-top: solid 1px lightgray;
-  /* border-bottom: solid 1px lightgray; */
-  width: 100%;
-  height: 70%;
-  position: relative;
-  overflow: hidden;
-
-  img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
 const InputBox = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 5px;
+  margin: 5px 0;
 
   .upload-box {
     border: solid 1px ${theme.boldColor};
@@ -284,6 +284,38 @@ const InputBox = styled.div`
     :hover {
       transform: translateY(-2px);
     }
+  }
+`;
+
+const ImagePlace = styled.div`
+  border-top: solid 1px lightgray;
+  /* border-bottom: solid 1px lightgray; */
+  width: 100%;
+  height: 40%;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 15px;
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  button {
+    z-index: 9;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 35px;
+    height: 35px;
+    font-family: ${font.bold};
+    font-size: 25px;
+    border: 0;
+    background-color: transparent;
+    color: tomato;
+    cursor: pointer;
   }
 `;
 

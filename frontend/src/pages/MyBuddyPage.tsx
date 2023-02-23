@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { theme } from '../assets/styles/common/palette';
 import { font } from '../assets/styles/common/fonts';
@@ -6,8 +7,20 @@ import {
   WritingProfile,
 } from '../assets/styles/common/commonComponentStyle';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import { getBuddyData } from '../apis/mypageFetcher';
+import { BuddyType } from '../types/community/communityType';
 
 const MyBuddyPage = () => {
+  const [page, setPage] = useState<number>(1);
+  const [buddyInfo, setBuddyInfo] = useState<BuddyType[]>();
+
+  useEffect(() => {
+    async function getFriendData() {
+      const res = await getBuddyData(page);
+      setBuddyInfo(res);
+    }
+    getFriendData();
+  }, []);
   return (
     <BigBox>
       <ListBox>
@@ -23,30 +36,35 @@ const MyBuddyPage = () => {
         <ListContainer>
           <MyList>
             <header className="list-header">내가 추가한 친구</header>
-            {/* 이걸 누르면 바로 채팅창으로 넘어가는 걸로 */}
-            <div className="list-buddy">
-              <NicknamePlace>
-                <div className="profile">
-                  <img src="/img/강아지.png" />
+            <div className="list-body">
+              {buddyInfo?.map((buddy) => (
+                <div className="list-buddy">
+                  <NicknamePlace>
+                    <div key={buddy.userId} className="profile">
+                      <img src={buddy.profileImg} />
+                    </div>
+                    <div>{buddy.nickname}</div>
+                  </NicknamePlace>
+                  <button className="list-btn">삭제</button>
                 </div>
-                <div>친구 닉네임</div>
-              </NicknamePlace>
-              <button className="list-btn">삭제</button>
+              ))}
             </div>
           </MyList>
           <YourList>
             <header className="list-header">나를 추가한 친구</header>
-            <div className="list-buddy">
-              <NicknamePlace>
-                <div className="profile">
-                  <img src="/img/강아지1.jpg" />
-                </div>
-                <div>친구 닉네임</div>
-              </NicknamePlace>
-              <button style={{ margin: '55px' }} className="list-btn">
-                삭제
-              </button>
-              <button className="list-btn">차단</button>
+            <div className="list-body">
+              <div className="list-buddy">
+                <NicknamePlace>
+                  <div className="profile">
+                    <img src="/img/강아지1.jpg" />
+                  </div>
+                  <div>친구 닉네임</div>
+                </NicknamePlace>
+                <button style={{ margin: '55px' }} className="list-btn">
+                  삭제
+                </button>
+                <button className="list-btn">차단</button>
+              </div>
             </div>
           </YourList>
         </ListContainer>
@@ -77,13 +95,23 @@ const ListBox = styled.div`
     margin: 0 20px;
   }
 
+  .list-body {
+    margin-top: 5px;
+    height: 90%;
+    -ms-overflow-style: none;
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   .list-buddy {
     height: 60px;
     display: flex;
     align-items: center;
     position: relative;
     margin-left: 20px;
-    margin-top: 3px;
+    /* margin-top: 3px; */
     cursor: pointer;
 
     .list-btn {
@@ -153,6 +181,7 @@ const YourList = styled.div`
 
 const NicknamePlace = styled(WritingProfile)`
   font-size: 15px;
+  display: flex;
 
   .profile {
     width: 40px;

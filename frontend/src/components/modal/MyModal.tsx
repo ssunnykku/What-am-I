@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { CommonComponentType } from '../../types/common/commonComponentType';
 import { font } from '../../assets/styles/common/fonts';
 
-interface MyModalProps extends CommonComponentType {
+export interface MyModalProps extends CommonComponentType {
   isOpen: boolean;
   onModalStateChangeEvent: () => void;
 }
@@ -12,12 +12,17 @@ const MyModal = ({
   onModalStateChangeEvent,
   children,
 }: MyModalProps) => {
+  if (isOpen) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = 'auto';
+  }
   return (
     <MyModalBackdrop isOpen={isOpen} onClick={onModalStateChangeEvent}>
       <MyModalWrapper onClick={(e) => e.stopPropagation()}>
         {children}
       </MyModalWrapper>
-      <CloseButton>X</CloseButton>
+      {/* <CloseButton>X</CloseButton> */}
     </MyModalBackdrop>
   );
 };
@@ -26,12 +31,13 @@ export default MyModal;
 
 const MyModalBackdrop = styled.div<{ isOpen: boolean }>`
   position: fixed;
+  overflow: hidden;
   background-color: rgba(0, 0, 0, 0.5);
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10000;
+  z-index: 100;
   ${(props) => (props.isOpen ? 'display: block' : 'display: none')};
 `;
 

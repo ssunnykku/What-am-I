@@ -159,7 +159,10 @@ const CommunityPage = () => {
           <PinBox>
             {pinned?.map((pin) => {
               return (
-                <div draggable={true} style={{ border: 'solid 1px blue' }}>
+                <div
+                  draggable={true}
+                  // style={{ border: 'solid 1px blue' }}
+                >
                   <CommuPinCard key={pin.id} listInfo={pin} />
                 </div>
               );
@@ -267,7 +270,7 @@ const PinHeader = styled(RankingHeader)`
 `;
 
 const PinBox = styled(RankingBox)`
-  border: solid 1px red;
+  /* border: solid 1px red; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 `;
