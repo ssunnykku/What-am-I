@@ -14,4 +14,9 @@ export const menus = [
     path: '/community',
     id: 'community',
   },
+  {
+    title: '지도',
+    path: '/map',
+    id: 'maplink',
+  },
 ];
