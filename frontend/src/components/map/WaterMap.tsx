@@ -1,18 +1,28 @@
 /* global kakao */
-import SeoulWater from '../../../public/mockdata/SeoulWater.json';
-import { useEffect } from 'react';
+import SeoulWater from '../../../public/mockdata/SeoulWater_all.json';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { MarkEmailReadSharp } from '@mui/icons-material';
+import MarkerList from './MarkerList';
 declare global {
   interface Window {
     kakao: any;
   }
 }
 
+export interface MarkerProps {
+  content: string;
+  latlng: {
+    La: number;
+    Ma: number;
+  };
+}
+
 const { kakao } = window;
-let markerList: any = [];
 
 function WalkMap() {
+  // let markerList: MarkerProps[] = [];
+  const [markerList, setMarkerList] = useState<MarkerProps[]>([]);
+
   useEffect(() => {
     let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
     let options = {
@@ -27,15 +37,15 @@ function WalkMap() {
 
     SeoulWater.DATA.map((value) => {
       positions.push({
-        content: `<div>${value.cot_conts_name}</div>`,
+        content: value.cot_conts_name,
         latlng: new kakao.maps.LatLng(+value.lat, +value.lng),
       });
     });
 
     kakao.maps.event.addListener(
       map,
-      'zoom_changed',
-      makeZoomListner(map, positions),
+      'center_changed',
+      makeCenterChangedListner(map, positions),
     );
 
     for (var i = 0; i < positions.length; i++) {
@@ -48,7 +58,7 @@ function WalkMap() {
 
       // 마커에 표시할 인포윈도우를 생성합니다
       var infowindow = new kakao.maps.InfoWindow({
-        content: positions[i].content, // 인포윈도우에 표시할 내용
+        content: `<div>${positions[i].content}</div>`, // 인포윈도우에 표시할 내용
       });
 
       // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
@@ -94,26 +104,23 @@ function WalkMap() {
         map.panTo(pos);
       };
     }
-    function makeZoomListner(map: any, positions: any) {
+    function makeCenterChangedListner(map: any, positions: any) {
       return function () {
-        if (map.getLevel() <= 3) {
+        if (map.getLevel() <= 6) {
           //마커 조회 및 표출
           var neLat = map.getBounds().getNorthEast().getLat();
           var neLng = map.getBounds().getNorthEast().getLng();
           var swLat = map.getBounds().getSouthWest().getLat();
           var swLng = map.getBounds().getSouthWest().getLng();
-          console.log(swLat);
-          console.log(neLat);
-          console.log(swLng);
-          console.log(neLng);
-          markerList = positions.filter(
-            (value: any) =>
-              swLng < value.latlng.La &&
-              value.latlng.La < neLng &&
-              swLat < value.latlng.Ma &&
-              value.latlng.Ma < neLat,
+          setMarkerList(
+            positions.filter(
+              (value: any) =>
+                swLng < value.latlng.La &&
+                value.latlng.La < neLng &&
+                swLat < value.latlng.Ma &&
+                value.latlng.Ma < neLat,
+            ),
           );
-          console.log(markerList);
         } else {
           //마커 제거
         }
@@ -124,13 +131,7 @@ function WalkMap() {
   return (
     <Div>
       <Map id="map" />
-      <div
-        style={{ border: '1px solid black', height: '100px', width: '1000px' }}
-      >
-        {markerList.map((value: any) => {
-          <div>12</div>;
-        })}
-      </div>
+      <MarkerList list={markerList} />
     </Div>
   );
 }
@@ -138,11 +139,12 @@ export default WalkMap;
 
 const Div = styled.div`
   margin: 0 auto;
+  display: flex;
+  flex-direction: row;
 `;
 
 const Map = styled.div`
-  margin: 0 auto;
-  width: 1000px;
+  width: 700px;
   height: 700px;
-  border: 1px solid black;
+  border: 2px solid rgba(100, 100, 100, 0.5);
 `;
