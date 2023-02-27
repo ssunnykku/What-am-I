@@ -60,15 +60,22 @@ class userService {
     });
 
     // accessToken 발급
-    const token = jwt.sign({ userId: user.userId }, accessJWTSecretKey, {
-      expiresIn: process.env.ACCESS_JWT_EXPIRES,
-    });
+    const token = jwt.sign(
+      { userId: user.userId, nickname: user.nickname },
+      accessJWTSecretKey,
+      {
+        expiresIn: process.env.ACCESS_JWT_EXPIRES,
+      },
+    );
 
     // accessToken 유효일자
     const expJWT = jwt.verify(token, accessJWTSecretKey).exp;
 
     // 테이블에 저장된 토큰이 있는지 확인
     const find = await RefreshToken.findOne({ where: { userId: user.userId } });
+
+    // refreshToken 만료 여부 확인하기
+    // 만료되었다면 수정 저장, 만료아니라면 accessToken 재발행??
 
     // 데이터가 있으면, refreshToken을 수정 저장
     if (find) {
@@ -235,10 +242,17 @@ class userService {
         }
       },
     );
-    // 유효하면 accessToken 발급
-    const token = jwt.sign({ userId: findToken.userId }, accessJWTSecretKey, {
-      expiresIn: process.env.ACCESS_JWT_EXPIRES,
+    const user = await User.findOne({
+      where: { userId: findToken.userId },
     });
+    // 유효하면 accessToken 발급
+    const token = jwt.sign(
+      { userId: findToken.userId, nickname: user.nickname },
+      accessJWTSecretKey,
+      {
+        expiresIn: process.env.ACCESS_JWT_EXPIRES,
+      },
+    );
     return { result: '재발급 완료', token };
   }
 }
