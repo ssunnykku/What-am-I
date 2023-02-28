@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { menus } from '../commonConst/NavConst';
@@ -6,6 +7,7 @@ import { theme } from '../../assets/styles/common/palette';
 import useDetectClose from '../../hooks/dropdown/useDetectClose';
 import Storage from '../../storage/storage';
 import SpeechBubble from './SpeechBubble';
+import { getUserData } from '../../apis/mypageFetcher';
 const VITE_PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
 
 interface DropdownCssProps {
@@ -13,12 +15,21 @@ interface DropdownCssProps {
 }
 
 function NavBar() {
+  const [nickname, setNickname] = useState<string>('');
   const [myPageIsOpen, myPageRef, myPageHandler] = useDetectClose(false);
 
   function onLogout() {
     Storage.clearItemAll();
     location.href = `${VITE_PUBLIC_URL}`;
   }
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const res = await getUserData();
+      setNickname(res.nickname);
+    };
+    getUserInfo();
+  }, []);
 
   return (
     <NavDiv>
@@ -38,7 +49,8 @@ function NavBar() {
             <DropdownContainer>
               <SpeechBubble />
               <DropdownButton onClick={myPageHandler} ref={myPageRef}>
-                {Storage.getNicknameItem()} 님
+                {/* {Storage.getNicknameItem()} 님 */}
+                {nickname} 님
               </DropdownButton>
               <Menu isDropped={myPageIsOpen}>
                 <Ul>
