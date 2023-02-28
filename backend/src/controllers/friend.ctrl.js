@@ -30,6 +30,21 @@ class friendController {
       next(error);
     }
   }
+  // 3. 나를 추가한 친구 보기(followers)
+  static async getFollowers(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const { page } = req.query;
+      const defaultPage = page || 1;
+      const followers = await friendService.getFollowers({
+        defaultPage,
+        userId,
+      });
+      return res.status(200).send(followers);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export { friendController };

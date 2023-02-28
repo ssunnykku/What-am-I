@@ -13,7 +13,7 @@ class pinnedCommunityController {
       if (pinnedCommunity.errorMessage) {
         throw new Error(pinnedCommunity, errorMessage);
       }
-      return res.status(201).json(pinnedCommunity);
+      return res.status(200).json(pinnedCommunity);
     } catch (error) {
       next(error);
     }
