@@ -95,15 +95,15 @@ class communityService {
   }
 
   // 커뮤니티 전체 가져오기
-  static async selectCommunity(defaultPage, userId) {
-    const selectedCommunity = await Community.findAll({
+  static async getCommunities(defaultPage, userId) {
+    const Communities = await Community.findAll({
       where: { id: { [Op.gt]: 0 } },
       order: [['id', 'DESC']],
       offset: (defaultPage - 1) * +process.env.COMMUNITY_PER_PAGE,
       limit: +process.env.COMMUNITY_PER_PAGE,
     });
 
-    for (const community of selectedCommunity) {
+    for (const community of Communities) {
       // 좋아요 갯수
       community.dataValues.likeCount = await CommunityLike.count({
         where: { communityId: community.id },
@@ -118,7 +118,7 @@ class communityService {
       });
     }
 
-    return selectedCommunity;
+    return Communities;
   }
 
   static async showAllCommunities(defaultPage) {
