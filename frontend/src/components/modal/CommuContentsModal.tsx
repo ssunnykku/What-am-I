@@ -4,12 +4,14 @@ import CommuPuppyCard from '../community/CommuPuppyCard';
 import CommuContentsViewer from '../community/CommuContentsViewer';
 import {
   CommunityType,
+  CurrCommuCommentsType,
   CurrentCommuPostsType,
 } from '../../types/community/communityType';
 import { UserInfoType } from '../../types/auth/authType';
 import { useEffect } from 'react';
 
 export interface CurrentCommuityProps {
+  comment?: CurrCommuCommentsType;
   commuInfo?: CommunityType;
   commuPost?: CurrentCommuPostsType;
   mode?: string;

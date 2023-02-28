@@ -29,6 +29,7 @@ const ProfileCard = (props: CurrentCommuityProps) => {
       <ProfileContainer onClick={modalHandler}>
         <ContentsProfile className="profile">
           <img src={props.commuPost?.profileImg} />
+          <img src={props.comment?.profileImg} />
         </ContentsProfile>
       </ProfileContainer>
       <ToggleModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
@@ -36,10 +37,13 @@ const ProfileCard = (props: CurrentCommuityProps) => {
           <ProfileName>
             <div className="img">
               <img src={props.commuPost?.profileImg} />
+              <img src={props.comment?.profileImg} />
             </div>
             <div className="nickname">{props.commuPost?.nickname}</div>
+            <div className="nickname2">{props.comment?.nickname}</div>
           </ProfileName>
-          {props.commuPost?.userId === Storage.getUserIdItem() ? (
+          {props.commuPost?.userId ||
+          props.comment?.userId === Storage.getUserIdItem() ? (
             <>
               <ProfileBtn onClick={() => navigate('/mybuddy')}>
                 친구 목록으로 가기
@@ -118,6 +122,11 @@ const ProfileName = styled.div`
     font-size: 16px;
     font-family: ${font.bold};
   }
+
+  .nickname2 {
+    font-size: 16px;
+    font-family: ${font.bold};
+  }
 `;
 
 const ProfileBtn = styled.div`
@@ -130,6 +139,7 @@ const ProfileBtn = styled.div`
   font-size: 14px;
   /* background-color: rgba(0, 0, 0, 0.05); */
   border: solid 1px ${theme.boldColor};
+  font-family: ${font.normal};
 
   :hover {
     border: solid 1px #87c3ff;
