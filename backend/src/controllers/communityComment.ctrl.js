@@ -1,6 +1,7 @@
 import { communityCommentService } from '../services/communityComment.service';
 
 class communityCommentController {
+  //1. 댓글쓰기
   static async newCommunityComments(req, res, next) {
     try {
       const userId = req.currentUserId;
@@ -22,7 +23,7 @@ class communityCommentController {
       next(error);
     }
   }
-
+  //2. 게시물에 댓글 전부 다 보기
   static async showCommunityComments(req, res, next) {
     try {
       const _communityPostId = req.params.communityPostId;
@@ -39,7 +40,7 @@ class communityCommentController {
       next(error);
     }
   }
-
+  //3. 게시물에 댓글 한개 보기
   static async showOneCommunityComments(req, res, next) {
     try {
       const userId = req.currentUserId;
@@ -60,7 +61,7 @@ class communityCommentController {
       next(error);
     }
   }
-
+  //4. 내가 쓴 리뷰 수정
   static async updateComment(req, res, next) {
     try {
       const userId = req.currentUserId;
@@ -86,7 +87,7 @@ class communityCommentController {
       next(error);
     }
   }
-
+  //5. 내가쓴 댓글 삭제
   static async deleteComment(req, res, next) {
     try {
       const userId = req.currentUserId;
@@ -101,6 +102,19 @@ class communityCommentController {
         throw new Error(deleteComment);
       }
       return res.status(200).json(deleteComment);
+    } catch (error) {
+      next(error);
+    }
+  }
+  //6. 게시물 댓글 작성자 프로필 보기 (해당 Id 한개씩)
+  static async CommunityCommenterInfo(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const id = req.params.communityCommentId;
+      const getCommenterInfo =
+        await communityCommentService.getCommenterProfile({ userId, id });
+
+      return res.status(200).json(getCommenterInfo);
     } catch (error) {
       next(error);
     }

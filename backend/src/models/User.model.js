@@ -118,7 +118,7 @@ class User extends Sequelize.Model {
       through: 'Block',
       timestamps: false,
     });
-    // 추가한 친구
+    // 나를 추가한 친구
     db.User.belongsToMany(db.User, {
       primaryKey: 'id',
       foreignKey: 'friendId',

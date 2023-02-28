@@ -33,6 +33,33 @@ class friendService {
 
     return getFriends;
   }
+
+  // 3. 나를 추가한 친구 보기(followers)
+  static async getFollowers({ userId, defaultPage }) {
+    const user = await User.findOne({ where: { userId: userId } });
+
+    const followers = await user.getFriendList({
+      attributes: ['userId', 'nickname', 'profileImg'],
+      order: [['nickname', 'DESC']],
+      offset: (defaultPage - 1) * +process.env.FRIENDLIST_PER_PAGE,
+      limit: +process.env.FRIENDLIST_PER_PAGE,
+    });
+    // 내가 친구추가 했는지 여부 보여주기
+    for (const follower of followers) {
+      let friend = follower.dataValues.userId;
+      const findFriend = await Friend.findOne({
+        where: {
+          userId,
+          friendId: friend,
+        },
+      });
+      findFriend
+        ? (follower.dataValues.friendStatus = 1)
+        : (follower.dataValues.friendStatus = 0);
+    }
+
+    return followers;
+  }
 }
 
 export { friendService };
