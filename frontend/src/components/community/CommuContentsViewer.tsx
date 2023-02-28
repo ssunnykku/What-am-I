@@ -198,9 +198,10 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
             <div className="user-contents">{props.commuPost?.description}</div>
             {comments?.map((comment, idx) => (
               <div key={comment.id} className="user-comments">
-                <div className="profile">
+                <ProfileCard comment={comment} />
+                {/* <div className="profile">
                   <img src={comment.profileImg} />
-                </div>
+                </div> */}
                 {selectedIdx === idx && editing ? (
                   <input
                     ref={editInputRef}
