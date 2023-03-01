@@ -45,6 +45,21 @@ class friendController {
       next(error);
     }
   }
+  // 4. 친구 삭제
+  static async deleteFriend(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const friendId = req.params.friendId;
+      const findFriend = await friendService.findDeleteFriend({
+        userId,
+        friendId,
+      });
+
+      return res.status(200).send(findFriend);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export { friendController };

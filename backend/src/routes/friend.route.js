@@ -22,11 +22,11 @@ friendRouter.get(
   loginRequired,
   friendController.getFollowers,
 );
-// // 친구목록 삭제
-// friendRouter.delete(
-//   '/friends/:friendId',
-//   loginRequired,
-//   friendController.deleteFriend,
-// );
+// 4. 친구 삭제
+friendRouter.delete(
+  '/friends/:friendId',
+  loginRequired,
+  friendController.deleteFriend,
+);
 
 export { friendRouter };

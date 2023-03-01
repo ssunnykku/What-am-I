@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 class friendService {
+  // 1. 친구목록 추가
   static async findFriend({ userId, friendId }) {
     const user = await User.findOne({ where: { userId: friendId } });
 
@@ -20,7 +21,7 @@ class friendService {
       'Successfully added the user to the friendList ';
     return findFriendList;
   }
-  // 친구 목록 가져오기, 페이지네이션 20개씩
+  // 2. 친구 목록 가져오기, 페이지네이션 20개씩
   static async findFriends({ userId, defaultPage }) {
     const user = await User.findOne({ where: { userId: userId } });
 
@@ -59,6 +60,13 @@ class friendService {
     }
 
     return followers;
+  }
+  // 4. 친구 삭제
+  static async findDeleteFriend({ userId, friendId }) {
+    await Friend.destroy({
+      where: { userId, friendId },
+    });
+    return { result: 'successfully deleted' };
   }
 }
 
