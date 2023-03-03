@@ -26,7 +26,6 @@ import {
 import ImgCarousel from './Carousel';
 import CommuPostingLikeBtn from './CommuPostingLikeBtn';
 import ProfileCard from '../ProfileCard/ProfileCard';
-import ToggleModal from '../modal/ToggleModal';
 
 const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const [isOpen, modalHandler] = useModal();

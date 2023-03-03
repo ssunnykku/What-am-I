@@ -21,7 +21,6 @@ export default ToggleModal;
 
 const ToggleModalBox = styled.div<{ isOpen: boolean }>`
   position: fixed;
-  overflow: hidden;
   top: 0;
   left: 0;
   right: 0;
@@ -31,7 +30,7 @@ const ToggleModalBox = styled.div<{ isOpen: boolean }>`
 `;
 
 const ToggleModalContainer = styled.div`
-  /* top: 5%;
-  left: 59%;
-  position: absolute; */
+  position: relative;
+  border: solid 2px red;
+  top: 50%;
 `;
