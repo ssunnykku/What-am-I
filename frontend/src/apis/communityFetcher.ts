@@ -79,6 +79,12 @@ export async function getCommunitiesRequest(pages: number) {
   return res.data;
 }
 
+// 커뮤니티 검색
+export async function getSearchRequest(word: string) {
+  const res = await axiosInstance.get(`communities/search?data=${word}`);
+  return res.data;
+}
+
 // 현재 커뮤니티 게시글/댓글 받기
 export async function getCurrentCommunityRequest(endpoint: string) {
   const res = await axiosInstance.get(endpoint);
