@@ -152,22 +152,21 @@ const CommunityPage = () => {
     );
     return setRankings(rankingMap);
   }, []);
-
   useEffect(() => {
     getRankingCommunity();
-  }, [setRankings]);
+  }, []);
 
   // 고정 커뮤니티
-  const getPinnedCommunity = async () => {
-    const res = await getPinnedCommunityRequest();
-    const pinnedMap = res.map(
-      (pinned: PinnedCommunityType) => pinned.Community,
-    );
-    setPinned(pinnedMap);
-  };
   useEffect(() => {
+    const getPinnedCommunity = async () => {
+      const res = await getPinnedCommunityRequest();
+      const pinnedMap = res.map(
+        (pinned: PinnedCommunityType) => pinned.Community,
+      );
+      setPinned(pinnedMap);
+    };
     getPinnedCommunity();
-  }, [setPinned]);
+  }, []);
 
   return (
     <CommuBox>
