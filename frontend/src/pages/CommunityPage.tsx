@@ -46,10 +46,15 @@ const CommunityPage = () => {
 
   const [userInput, setUserInput] = useState<string>('');
   const [searchLists, setSearchLists] = useState<CommunityType[]>([]);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
 
   // 커뮤니티 검색
   const getSearchData = (e: ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value.toLowerCase());
+
+    if (userInput.length === 1) {
+      setIsSearching(false);
+    }
   };
   const searchedData = searchLists.filter((item) =>
     item.name
@@ -62,7 +67,7 @@ const CommunityPage = () => {
     e.preventDefault();
     const res = await getSearchRequest(userInput);
     setSearchLists(res.rows);
-    console.log(res.rows);
+    setIsSearching(true);
   };
 
   // 로그인 여부
@@ -236,30 +241,30 @@ const CommunityPage = () => {
           <CommuListsBox>
             <ScrollBox>
               <>
-                {searchLists.length === 0 ? (
+                {!isSearching ? (
                   <>
-                    {userInput.length > 0 ? (
-                      <div>검색 결과가 없습니다.</div>
-                    ) : (
-                      <>
-                        {commuList?.map((commu, idx) => {
-                          const observerRef =
-                            commuList.length - 1 === idx ? ref : undefined;
-                          return (
-                            <div ref={observerRef}>
-                              <CommuListCard key={commu.id} listInfo={commu} />
-                            </div>
-                          );
-                        })}
-                      </>
-                    )}
+                    {commuList?.map((commu, idx) => {
+                      const observerRef =
+                        commuList.length - 1 === idx ? ref : undefined;
+                      return (
+                        <div ref={observerRef}>
+                          <CommuListCard key={commu.id} listInfo={commu} />
+                        </div>
+                      );
+                    })}
                   </>
                 ) : (
-                  <div>
-                    {searchLists.map((item) => (
-                      <CommuListCard listInfo={item} />
-                    ))}
-                  </div>
+                  <>
+                    {searchLists.length === 0 ? (
+                      <span>검색 결과가 없습니다.</span>
+                    ) : (
+                      <div>
+                        {searchLists.map((item) => (
+                          <CommuListCard listInfo={item} />
+                        ))}
+                      </div>
+                    )}
+                  </>
                 )}
               </>
               <div className="spinner">{loading ? <CommuSpinner /> : null}</div>
