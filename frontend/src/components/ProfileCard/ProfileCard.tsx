@@ -26,12 +26,13 @@ const ProfileCard = (props: CurrentCommuityProps) => {
 
   return (
     <>
-      <ProfileContainer onClick={modalHandler}>
-        <ContentsProfile className="profile">
+      <ModalContainer>
+        <ContentsProfile onClick={modalHandler} className="profile">
           <img src={props.commuPost?.profileImg} />
           <img src={props.comment?.profileImg} />
         </ContentsProfile>
-      </ProfileContainer>
+      </ModalContainer>
+
       <ToggleModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
         <ProfileBox onClick={(e) => e.stopPropagation()}>
           <ProfileName>
@@ -72,11 +73,14 @@ const ProfileCard = (props: CurrentCommuityProps) => {
 
 export default ProfileCard;
 
-const ProfileContainer = styled.div``;
+const ModalContainer = styled.div`
+  position: relative;
+  /* border: solid 2px red; */
+`;
 
 const ProfileBox = styled.div`
-  top: 5%;
-  left: 59%;
+  top: 30px;
+  left: 30px;
   position: absolute;
   width: 12rem;
   height: 11rem;

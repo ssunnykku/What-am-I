@@ -60,7 +60,7 @@ export interface PinnedCommunityType {
 
 export interface CommunityListType {
   communityCount: number;
-  selectedCommunity: Array<CommunityType>;
+  getCommunities: Array<CommunityType>;
 }
 
 export interface CurrentCommuPostsType {
