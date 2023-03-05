@@ -43,7 +43,7 @@ const ProfileCard = (props: CurrentCommuityProps) => {
             <div className="nickname">{props.commuPost?.nickname}</div>
             <div className="nickname2">{props.comment?.nickname}</div>
           </ProfileName>
-          {props.commuPost?.userId ||
+          {props.commuPost?.userId === Storage.getUserIdItem() ||
           props.comment?.userId === Storage.getUserIdItem() ? (
             <>
               <ProfileBtn onClick={() => navigate('/mybuddy')}>
