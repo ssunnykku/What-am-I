@@ -14,9 +14,6 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (req) => {
-    // req.headers = {
-    //   'Autorization' : `Bearer ${sessionStorage.getItem('userToken')}`
-    // }
     return req;
   },
   (error) => {
@@ -26,12 +23,44 @@ axiosInstance.interceptors.request.use(
 );
 
 axiosInstance.interceptors.response.use(
-  (res) => {
-    return res;
+  (response) => {
+    return response;
   },
-  (error) => {
+  async (error) => {
     // server error
-    throw error;
+    const {
+      config,
+      response: { status },
+    } = error;
+
+    const originalRequest = config;
+
+    if (status !== 201) {
+      const accessToken = Storage.getTokenItem();
+      const refreshToken = Storage.getRefreshTokenItem();
+
+      try {
+        const { data } = await axios({
+          method: 'post',
+          url: `${BASE_URL}refreshtoken`,
+          data: { accessToken, refreshToken },
+        });
+        const newAccessToken = data.data.accessToken;
+        const newRefreshToken = data.data.refreshToken;
+        originalRequest.headers = {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${newAccessToken}`,
+        };
+        Storage.setTokenItem(newAccessToken);
+        Storage.setRefreshTokenItem(newRefreshToken);
+
+        return await axios(originalRequest);
+      } catch (error: any) {
+        new Error(error);
+        // console.log(err);
+      }
+    }
+    return Promise.reject(error);
   },
 );
 

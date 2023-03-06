@@ -72,6 +72,7 @@ export interface CurrentCommuPostsType {
   images: string;
   updatedAt: string;
   userId: string;
+  friendId: string;
   nickname: string;
   profileImg: string;
   likeCount: number;
@@ -85,6 +86,7 @@ export interface CurrCommuCommentsType {
   userId: string;
   nickname: string;
   profileImg: string;
+  friendId: string;
 }
 
 export interface CommuNumType {

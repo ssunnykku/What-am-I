@@ -52,7 +52,7 @@ const CommunityPage = () => {
   const getSearchData = (e: ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value.toLowerCase());
 
-    if (userInput.length === 1) {
+    if (userInput.length <= 1) {
       setIsSearching(false);
     }
   };

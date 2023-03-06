@@ -1,6 +1,7 @@
 const USER_TOKEN = 'userToken';
 const USER_ID = 'userId';
 const NICKNAME = 'nickname';
+const REFRESH_TOKEN = 'refreshToken';
 
 class Storage {
   static setTokenItem(token: string) {
@@ -12,6 +13,9 @@ class Storage {
   static setNicknameItem(nickname: string) {
     sessionStorage.setItem(NICKNAME, nickname);
   }
+  static setRefreshTokenItem(refreshToken: string) {
+    sessionStorage.setItem(REFRESH_TOKEN, refreshToken);
+  }
 
   static getTokenItem() {
     return sessionStorage.getItem(USER_TOKEN);
@@ -21,6 +25,9 @@ class Storage {
   }
   static getNicknameItem() {
     return sessionStorage.getItem(NICKNAME);
+  }
+  static getRefreshTokenItem() {
+    return sessionStorage.getItem(REFRESH_TOKEN);
   }
 
   static clearItemAll() {
