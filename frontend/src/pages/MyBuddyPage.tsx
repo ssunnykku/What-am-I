@@ -7,19 +7,41 @@ import {
   WritingProfile,
 } from '../assets/styles/common/commonComponentStyle';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import { getBuddyData } from '../apis/mypageFetcher';
+import {
+  getFollowerBuddyData,
+  getFollowingBuddyData,
+  deleteFollowingBuddy,
+} from '../apis/mypageFetcher';
 import { BuddyType } from '../types/community/communityType';
 
 const MyBuddyPage = () => {
   const [page, setPage] = useState<number>(1);
-  const [buddyInfo, setBuddyInfo] = useState<BuddyType[]>();
+  const [followingInfo, setFollowingInfo] = useState<BuddyType[]>();
+  const [followerInfo, setFollowerInfo] = useState<BuddyType[]>();
+
+  const getFollowingData = async () => {
+    const res = await getFollowingBuddyData(page);
+    setFollowingInfo(res);
+  };
+  const getFollowerData = async () => {
+    const res = await getFollowerBuddyData(page);
+    setFollowerInfo(res);
+  };
+
+  // 내가 추가한 친구 삭제
+  const handleDeleteBuddy = async (
+    e: React.MouseEvent,
+    followingInfo: BuddyType,
+  ) => {
+    // e.preventDefault();
+    await deleteFollowingBuddy(followingInfo.Friend.friendId);
+    const res = await getFollowingBuddyData(page);
+    setFollowingInfo(res);
+  };
 
   useEffect(() => {
-    async function getFriendData() {
-      const res = await getBuddyData(page);
-      setBuddyInfo(res);
-    }
-    getFriendData();
+    getFollowingData();
+    getFollowerData();
   }, []);
   return (
     <BigBox>
@@ -37,7 +59,7 @@ const MyBuddyPage = () => {
           <MyList>
             <header className="list-header">내가 추가한 친구</header>
             <div className="list-body">
-              {buddyInfo?.map((buddy) => (
+              {followingInfo?.map((buddy) => (
                 <div className="list-buddy">
                   <NicknamePlace>
                     <div key={buddy.userId} className="profile">
@@ -45,7 +67,12 @@ const MyBuddyPage = () => {
                     </div>
                     <div>{buddy.nickname}</div>
                   </NicknamePlace>
-                  <button className="list-btn">삭제</button>
+                  <button
+                    className="list-btn"
+                    onClick={(e) => handleDeleteBuddy(e, buddy)}
+                  >
+                    삭제
+                  </button>
                 </div>
               ))}
             </div>
@@ -53,18 +80,20 @@ const MyBuddyPage = () => {
           <YourList>
             <header className="list-header">나를 추가한 친구</header>
             <div className="list-body">
-              <div className="list-buddy">
-                <NicknamePlace>
-                  <div className="profile">
-                    <img src="/img/강아지1.jpg" />
-                  </div>
-                  <div>친구 닉네임</div>
-                </NicknamePlace>
-                <button style={{ margin: '55px' }} className="list-btn">
-                  삭제
-                </button>
-                <button className="list-btn">차단</button>
-              </div>
+              {followerInfo?.map((follower) => (
+                <div className="list-buddy">
+                  <NicknamePlace key={follower.userId}>
+                    <div className="profile">
+                      <img src={follower.profileImg} />
+                    </div>
+                    <div>{follower.nickname}</div>
+                  </NicknamePlace>
+                  <button style={{ margin: '55px' }} className="list-btn">
+                    삭제
+                  </button>
+                  <button className="list-btn">차단</button>
+                </div>
+              ))}
             </div>
           </YourList>
         </ListContainer>
