@@ -1,40 +1,61 @@
-import { useState, useEffect } from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Storage from '../../storage/storage';
+import { useNavigate } from 'react-router-dom';
 import { theme } from '../../assets/styles/common/palette';
 import { font } from '../../assets/styles/common/fonts';
-import useModal from '../../hooks/modal/useModal';
-import ToggleModal from '../modal/ToggleModal';
 import DoneIcon from '@mui/icons-material/Done';
 import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 import { ContentsProfile } from '../../assets/styles/common/commonComponentStyle';
 import { postCommuRequest } from '../../apis/communityFetcher';
-import Storage from '../../storage/storage';
-import { useNavigate } from 'react-router-dom';
 
-const ProfileCard = (props: CurrentCommuityProps) => {
-  const [checked, setChecked] = useState<boolean>(false);
-  const [isOpen, modalHandler] = useModal();
+export default function BasicMenu(props: CurrentCommuityProps) {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const [checked, setChecked] = React.useState<boolean>(false);
   const navigate = useNavigate();
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const onClickCheckBtn = async () => {
-    const res = await postCommuRequest(`friends/${props.commuPost?.userId}`);
-
-    if (res.message) {
-      setChecked(true);
-    }
+    // const res = await postCommuRequest(`friends/${props.commuPost?.userId}`);
+    console.log(props);
+    // if (res.message) {
+    //   setChecked(true);
+    // }
   };
 
   return (
-    <>
-      <ModalContainer>
-        <ContentsProfile onClick={modalHandler} className="profile">
+    <div>
+      <Button
+        id="basic-button"
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+      >
+        <ContentsProfile className="profile">
           <img src={props.commuPost?.profileImg} />
           <img src={props.comment?.profileImg} />
         </ContentsProfile>
-      </ModalContainer>
-
-      <ToggleModal isOpen={isOpen} onModalStateChangeEvent={modalHandler}>
-        <ProfileBox onClick={(e) => e.stopPropagation()}>
+      </Button>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleClose}>
           <ProfileName>
             <div className="img">
               <img src={props.commuPost?.profileImg} />
@@ -43,18 +64,24 @@ const ProfileCard = (props: CurrentCommuityProps) => {
             <div className="nickname">{props.commuPost?.nickname}</div>
             <div className="nickname2">{props.comment?.nickname}</div>
           </ProfileName>
-          {props.commuPost?.userId === Storage.getUserIdItem() ||
-          props.comment?.userId === Storage.getUserIdItem() ? (
-            <>
+        </MenuItem>
+        {props.commuPost?.userId === Storage.getUserIdItem() ||
+        props.comment?.userId === Storage.getUserIdItem() ? (
+          <>
+            <MenuItem onClick={handleClose}>
               <ProfileBtn onClick={() => navigate('/mybuddy')}>
                 친구 목록으로 가기
               </ProfileBtn>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
               <ProfileBtn onClick={() => navigate('/chatroom')}>
                 채팅 목록으로 가기
               </ProfileBtn>
-            </>
-          ) : (
-            <>
+            </MenuItem>
+          </>
+        ) : (
+          <>
+            <MenuItem>
               <ProfileBtn onClick={onClickCheckBtn}>
                 {checked ? (
                   <DoneIcon style={{ color: '#2d98da' }} />
@@ -62,36 +89,16 @@ const ProfileCard = (props: CurrentCommuityProps) => {
                   '친구 추가'
                 )}
               </ProfileBtn>
+            </MenuItem>
+            <MenuItem>
               <ProfileBtn>1:1 메시지 보내기</ProfileBtn>
-            </>
-          )}
-        </ProfileBox>
-      </ToggleModal>
-    </>
+            </MenuItem>
+          </>
+        )}
+      </Menu>
+    </div>
   );
-};
-
-export default ProfileCard;
-
-const ModalContainer = styled.div`
-  position: relative;
-  /* border: solid 2px red; */
-`;
-
-const ProfileBox = styled.div`
-  top: 30px;
-  left: 30px;
-  position: absolute;
-  width: 12rem;
-  height: 11rem;
-  background-color: ${theme.backColor};
-  border-radius: 10px;
-  box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  padding: 10px;
-`;
+}
 
 const ProfileName = styled.div`
   display: flex;
@@ -142,11 +149,11 @@ const ProfileBtn = styled.div`
   border-radius: 5px;
   font-size: 14px;
   /* background-color: rgba(0, 0, 0, 0.05); */
-  border: solid 1px ${theme.boldColor};
+  /* border: solid 1px ${theme.boldColor}; */
   font-family: ${font.normal};
 
   :hover {
-    border: solid 1px #87c3ff;
+    /* border: solid 1px #87c3ff; */
     color: ${theme.pointColor};
     cursor: pointer;
   }

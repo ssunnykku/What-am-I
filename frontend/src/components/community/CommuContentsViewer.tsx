@@ -26,7 +26,7 @@ import {
 import ImgCarousel from './Carousel';
 import CommuPostingLikeBtn from './CommuPostingLikeBtn';
 import ProfileCard from '../ProfileCard/ProfileCard';
-import ToggleModal from '../modal/ToggleModal';
+import BasicMenu from '../ProfileCard/ProfileContextMenu';
 
 const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const [isOpen, modalHandler] = useModal();
@@ -170,7 +170,8 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
           <TopDiv>
             <div className="user-name">
               <ContentsProfile>
-                <ProfileCard commuPost={postInfo} />
+                {/* <ProfileCard commuPost={postInfo} /> */}
+                <BasicMenu commuPost={postInfo} />
                 {/* <div className="profile">
                   <img src={postInfo?.profileImg} />
                 </div> */}
@@ -198,7 +199,8 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
             <div className="user-contents">{props.commuPost?.description}</div>
             {comments?.map((comment, idx) => (
               <div key={comment.id} className="user-comments">
-                <ProfileCard comment={comment} />
+                {/* <ProfileCard comment={comment} /> */}
+                <BasicMenu comment={comment} />
                 {/* <div className="profile">
                   <img src={comment.profileImg} />
                 </div> */}

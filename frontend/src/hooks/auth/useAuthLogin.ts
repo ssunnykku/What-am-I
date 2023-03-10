@@ -26,6 +26,7 @@ const useAuthLogin = () => {
         Storage.setTokenItem(res.data.token);
         Storage.setUserIdItem(res.data.userId);
         Storage.setNicknameItem(res.data.nickname);
+        Storage.setRefreshTokenItem(res.data.refreshToken);
         window.location.replace('/');
       } catch (e: any) {
         console.log(e);

@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  ChangeEvent,
+} from 'react';
 import styled, { css } from 'styled-components';
 import { font } from '../assets/styles/common/fonts';
 import CommuRankingCard from '../components/community/CommuRankingCard';
@@ -10,6 +16,7 @@ import {
   getCommunitiesRequest,
   getPinnedCommunityRequest,
   getRankingCommunityRequest,
+  getSearchRequest,
 } from '../apis/communityFetcher';
 import {
   CommunityRankingType,
@@ -36,7 +43,32 @@ const CommunityPage = () => {
 
   const [menu, setMenu] = useState<string>('최신 순');
   const [sortIsOpen, sortRef, sortHandler] = useDetectClose(false);
-  const listRef = useRef();
+
+  const [userInput, setUserInput] = useState<string>('');
+  const [searchLists, setSearchLists] = useState<CommunityType[]>([]);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+
+  // 커뮤니티 검색
+  const getSearchData = (e: ChangeEvent<HTMLInputElement>) => {
+    setUserInput(e.target.value.toLowerCase());
+
+    if (userInput.length <= 1) {
+      setIsSearching(false);
+    }
+  };
+  const searchedData = searchLists.filter((item) =>
+    item.name
+      .replace(' ', '')
+      .toLocaleLowerCase()
+      .includes(userInput.toLocaleLowerCase().replace(' ', '')),
+  );
+
+  const onClickSearchInput = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    const res = await getSearchRequest(userInput);
+    setSearchLists(res.rows);
+    setIsSearching(true);
+  };
 
   // 로그인 여부
   if (!Storage.getUserIdItem()) {
@@ -48,7 +80,7 @@ const CommunityPage = () => {
   const handleScroll = useCallback(async () => {
     setLoading(true);
     await getCommunitiesRequest(pages).then((res) => {
-      setCommuList((prevList) => [...prevList, ...res.selectedCommunity]);
+      setCommuList((prevList) => [...prevList, ...res.getCommunities]);
     });
     setLoading(false);
   }, [pages]);
@@ -69,7 +101,7 @@ const CommunityPage = () => {
   useEffect(() => {
     const getCommunitiesList = async () => {
       const res = await getCommunitiesRequest(pages);
-      setCommuList(res.selectedCommunity);
+      setCommuList(res.getCommunities);
     };
     getCommunitiesList();
   }, []);
@@ -118,16 +150,16 @@ const CommunityPage = () => {
   };
 
   // 베스트 커뮤니티
+  const getRankingCommunity = useCallback(async () => {
+    const res = await getRankingCommunityRequest();
+    const rankingMap = res.map(
+      (ranking: CommunityRankingType) => ranking.Community,
+    );
+    return setRankings(rankingMap);
+  }, []);
   useEffect(() => {
-    const getRankingCommunity = async () => {
-      const res = await getRankingCommunityRequest();
-      const rankingMap = res.map(
-        (ranking: CommunityRankingType) => ranking.Community,
-      );
-      setRankings(rankingMap);
-    };
     getRankingCommunity();
-  }, [rankings]);
+  }, []);
 
   // 고정 커뮤니티
   useEffect(() => {
@@ -139,7 +171,7 @@ const CommunityPage = () => {
       setPinned(pinnedMap);
     };
     getPinnedCommunity();
-  }, [pinned]);
+  }, []);
 
   return (
     <CommuBox>
@@ -193,21 +225,48 @@ const CommunityPage = () => {
             </DropdownPlace>
             커뮤니티 목록
             <SearchBox style={{ marginLeft: '20px', width: '20rem' }}>
-              <input type="text" placeholder="댕댕이 커뮤니티 찾아보기" />
-              <button>검색</button>
+              <input
+                onChange={getSearchData}
+                type="text"
+                placeholder="커뮤니티 이름 또는 소개글로 검색됩니다"
+              />
+              <button
+                onClick={onClickSearchInput}
+                disabled={userInput.length === 0}
+              >
+                검색
+              </button>
             </SearchBox>
           </CommuListHeader>
           <CommuListsBox>
             <ScrollBox>
-              {commuList?.map((commu, idx) => {
-                const observerRef =
-                  commuList.length - 1 === idx ? ref : undefined;
-                return (
-                  <div ref={observerRef}>
-                    <CommuListCard key={commu.id} listInfo={commu} />
-                  </div>
-                );
-              })}
+              <>
+                {!isSearching ? (
+                  <>
+                    {commuList?.map((commu, idx) => {
+                      const observerRef =
+                        commuList.length - 1 === idx ? ref : undefined;
+                      return (
+                        <div ref={observerRef}>
+                          <CommuListCard key={commu.id} listInfo={commu} />
+                        </div>
+                      );
+                    })}
+                  </>
+                ) : (
+                  <>
+                    {searchLists.length === 0 ? (
+                      <span>검색 결과가 없습니다.</span>
+                    ) : (
+                      <div>
+                        {searchLists.map((item) => (
+                          <CommuListCard listInfo={item} />
+                        ))}
+                      </div>
+                    )}
+                  </>
+                )}
+              </>
               <div className="spinner">{loading ? <CommuSpinner /> : null}</div>
             </ScrollBox>
           </CommuListsBox>
