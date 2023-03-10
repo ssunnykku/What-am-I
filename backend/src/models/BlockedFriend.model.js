@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize';
 
-class Block extends Sequelize.Model {
+class BlockedFriend extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
@@ -14,12 +14,22 @@ class Block extends Sequelize.Model {
       {
         sequelize,
         timestamps: false,
-        tableName: 'blocks',
+        tableName: 'blockedFriends',
         charset: 'utf8mb4',
         collate: 'utf8mb4_general_ci',
       },
     );
   }
+  static associate(db) {
+    db.Friend.belongsTo(db.User, {
+      foreignKey: 'userId',
+      sourceKey: 'userId',
+    });
+    db.Friend.belongsTo(db.User, {
+      foreignKey: 'blockedFriendId',
+      sourceKey: 'userId',
+    });
+  }
 }
 
-export { Block };
+export { BlockedFriend };

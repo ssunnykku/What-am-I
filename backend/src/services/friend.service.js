@@ -19,7 +19,7 @@ class friendService {
     });
     findFriendList.dataValues.message =
       'Successfully added the user to the friendList ';
-    return findFriendList;
+    return addedFriend;
   }
   // 2. 친구 목록 가져오기, 페이지네이션 20개씩
   static async findFriends({ userId, defaultPage }) {
@@ -63,10 +63,10 @@ class friendService {
   }
   // 4. 친구 삭제
   static async findDeleteFriend({ userId, friendId }) {
-    await Friend.destroy({
+    const deleteOne = await Friend.destroy({
       where: { userId, friendId },
     });
-    return { result: 'successfully deleted' };
+    return deleteOne;
   }
 }
 

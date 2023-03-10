@@ -105,8 +105,8 @@ class User extends Sequelize.Model {
     // 차단 목록에 추가한 사용자
     db.User.belongsToMany(db.User, {
       primaryKey: 'id',
-      foreignKey: 'blockId',
-      as: 'Blocked',
+      foreignKey: 'blockedFriendId',
+      as: 'BlockedFriends',
       through: 'Block',
       timestamps: false,
     });
@@ -114,9 +114,17 @@ class User extends Sequelize.Model {
     db.User.belongsToMany(db.User, {
       primaryKey: 'id',
       foreignKey: 'userId',
-      as: 'Blockings',
+      as: 'BlockingFriends',
       through: 'Block',
       timestamps: false,
+    });
+    db.User.hasMany(db.BlockedFriend, {
+      foreignKey: 'userId',
+      sourceKey: 'userId',
+    });
+    db.User.hasMany(db.BlockedFriend, {
+      foreignKey: 'blockedFriendId',
+      sourceKey: 'userId',
     });
     // 나를 추가한 친구
     db.User.belongsToMany(db.User, {

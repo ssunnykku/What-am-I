@@ -6,7 +6,7 @@ const blockFriendRouter = Router();
 
 // 차단하기
 blockFriendRouter.post(
-  '/friends/blocks/:friendId',
+  '/friends/block/:friendId',
   loginRequired,
   blockFriendController.blockFriend,
 );

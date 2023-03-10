@@ -55,7 +55,11 @@ class friendController {
         friendId,
       });
 
-      return res.status(200).send(findFriend);
+      return res.status(200).send({
+        userId: userId,
+        friendId: friendId,
+        message: 'successfully deleted',
+      });
     } catch (error) {
       next(error);
     }

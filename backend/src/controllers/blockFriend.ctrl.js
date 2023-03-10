@@ -4,14 +4,14 @@ class blockFriendController {
   static async blockFriend(req, res, next) {
     try {
       const userId = req.currentUserId;
-      const friendId = req.params.friendId;
+      const blockedFriendId = req.params.friendId;
       await blockFriendService.addBlockList({
         userId,
-        friendId,
+        blockedFriendId,
       });
       return res.status(201).send({
         userId: userId,
-        friendId: friendId,
+        blockedFriendId: blockedFriendId,
         message: 'Successfully added the user to the blockList ',
       });
     } catch (error) {
