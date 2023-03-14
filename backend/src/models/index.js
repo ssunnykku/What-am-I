@@ -17,7 +17,6 @@ import { PinnedCommunity } from './PinnedCommunity.model';
 import { Prediction } from './Prediction.model';
 
 import { Friend } from './Friend.model';
-import { BlockedFriend } from './BlockedFriend.model';
 
 const db = {};
 
@@ -37,7 +36,6 @@ db.AiSearchResult = AiSearchResult;
 db.Prediction = Prediction;
 db.PinnedCommunity = PinnedCommunity;
 db.Friend = Friend;
-db.BlockedFriend = BlockedFriend;
 
 User.init(sequelize);
 RefreshToken.init(sequelize);
@@ -53,7 +51,6 @@ AiSearchResult.init(sequelize);
 Prediction.init(sequelize);
 PinnedCommunity.init(sequelize);
 Friend.init(sequelize);
-BlockedFriend.init(sequelize);
 
 Community.associate(db);
 CommunityPost.associate(db);
@@ -68,7 +65,5 @@ AiSearchResult.associate(db);
 Prediction.associate(db);
 PinnedCommunity.associate(db);
 Friend.associate(db);
-BlockedFriend.associate(db);
-// RefreshToken.associate(db);
 
 export { db };

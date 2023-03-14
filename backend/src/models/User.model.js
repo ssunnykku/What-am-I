@@ -118,14 +118,6 @@ class User extends Sequelize.Model {
       through: 'Block',
       timestamps: false,
     });
-    db.User.hasMany(db.BlockedFriend, {
-      foreignKey: 'userId',
-      sourceKey: 'userId',
-    });
-    db.User.hasMany(db.BlockedFriend, {
-      foreignKey: 'blockedFriendId',
-      sourceKey: 'userId',
-    });
     // 나를 추가한 친구
     db.User.belongsToMany(db.User, {
       primaryKey: 'id',

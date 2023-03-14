@@ -21,7 +21,7 @@ import { communityLikeRouter } from './src/routes/communityLike.route';
 import { aiSearchResultRouter } from './src/routes/aiSearchResult.route';
 
 import { friendRouter } from './src/routes/friend.route';
-import { blockFriendRouter } from './src/routes/blockedFriend.route';
+
 //**middleware */
 import errorMiddleware from './src/middlewares/error';
 
@@ -51,7 +51,6 @@ app.use(pinnedCommunityRouter);
 app.use(aiSearchResultRouter);
 
 app.use(friendRouter);
-app.use(blockFriendRouter);
 
 app.use(errorMiddleware);
 

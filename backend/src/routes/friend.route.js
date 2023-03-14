@@ -6,7 +6,7 @@ const friendRouter = Router();
 
 // 1. 친구목록 추가
 friendRouter.post(
-  '/friends/:friendId',
+  '/friends/:friendId/:status',
   loginRequired,
   friendController.addFriend,
 );

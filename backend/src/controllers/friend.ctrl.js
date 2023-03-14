@@ -6,9 +6,11 @@ class friendController {
     try {
       const userId = req.currentUserId;
       const friendId = req.params.friendId;
+      const status = req.params.status;
       const addFriend = await friendService.findFriend({
         userId,
         friendId,
+        status,
       });
       return res.status(201).send(addFriend);
     } catch (error) {
