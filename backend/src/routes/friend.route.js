@@ -4,7 +4,7 @@ import { loginRequired } from '../middlewares/loginRequired.js';
 
 const friendRouter = Router();
 
-// 1. 친구목록 추가
+// 1. 친구목록 추가/차단목록 추가
 friendRouter.post(
   '/friends/:friendId/:status',
   loginRequired,
@@ -22,7 +22,7 @@ friendRouter.get(
   loginRequired,
   friendController.getFollowers,
 );
-// 4. 친구 삭제
+// 4. 친구 삭제 or 차단 친구 삭제
 friendRouter.delete(
   '/friends/:friendId',
   loginRequired,
