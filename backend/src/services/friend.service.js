@@ -43,10 +43,10 @@ class friendService {
     return getFriends;
   }
 
-  // 3. 나를 추가한 친구 보기(followers) // 수정 해야됨..
+  // 3. 나를 추가한 친구 보기(followers)
   static async getFollowers({ userId, defaultPage }) {
     const followers = await Friend.findAll({
-      where: { userId, friendOrBlockStatus: 1 },
+      where: { friendId: userId, friendOrBlockStatus: 1 },
       offset: (defaultPage - 1) * +process.env.FRIENDLIST_PER_PAGE,
       limit: +process.env.FRIENDLIST_PER_PAGE,
       include: {
