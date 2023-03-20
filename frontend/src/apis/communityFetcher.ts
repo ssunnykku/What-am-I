@@ -139,3 +139,20 @@ export async function postCommuRequest(endpoint: string) {
   const res = await axiosInstance.post(endpoint);
   return res.data;
 }
+
+// 친구 추가
+export async function postAddBuddyRequest(
+  friendId: string,
+  friendOrBlockStatus: number,
+) {
+  const res = await axiosInstance.post(
+    `friends/${friendId}/${friendOrBlockStatus}`,
+  );
+  return res.data;
+}
+
+// 프로필 하나 받기
+export async function getProfileRequest(friendId: string) {
+  const res = await axiosInstance.get(`friends/profile/${friendId}`);
+  return res.data;
+}

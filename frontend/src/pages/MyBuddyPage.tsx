@@ -19,13 +19,18 @@ const MyBuddyPage = () => {
   const [followingInfo, setFollowingInfo] = useState<BuddyType[]>();
   const [followerInfo, setFollowerInfo] = useState<BuddyType[]>();
 
+  // 내가 추가한 친구
   const getFollowingData = async () => {
     const res = await getFollowingBuddyData(page);
     setFollowingInfo(res);
+    console.log('내가 추가한 친구', res);
   };
+
+  // 나를 추가한 친구
   const getFollowerData = async () => {
     const res = await getFollowerBuddyData(page);
     setFollowerInfo(res);
+    console.log('나를 추가한 친구', res);
   };
 
   // 내가 추가한 친구 삭제
@@ -34,9 +39,14 @@ const MyBuddyPage = () => {
     followingInfo: BuddyType,
   ) => {
     // e.preventDefault();
-    await deleteFollowingBuddy(followingInfo.Friend.friendId);
+    await deleteFollowingBuddy(followingInfo.friendId);
     const res = await getFollowingBuddyData(page);
     setFollowingInfo(res);
+  };
+
+  // 친구 차단
+  const handleBlockBuddy = async (followerInfo: BuddyType) => {
+    console.log('친구 차단');
   };
 
   useEffect(() => {
@@ -62,10 +72,10 @@ const MyBuddyPage = () => {
               {followingInfo?.map((buddy) => (
                 <div className="list-buddy">
                   <NicknamePlace>
-                    <div key={buddy.userId} className="profile">
-                      <img src={buddy.profileImg} />
+                    <div key={buddy.friendId} className="profile">
+                      <img src={buddy.User.profileImg} />
                     </div>
-                    <div>{buddy.nickname}</div>
+                    <div>{buddy.User.nickname}</div>
                   </NicknamePlace>
                   <button
                     className="list-btn"
@@ -82,11 +92,11 @@ const MyBuddyPage = () => {
             <div className="list-body">
               {followerInfo?.map((follower) => (
                 <div className="list-buddy">
-                  <NicknamePlace key={follower.userId}>
+                  <NicknamePlace key={follower.friendId}>
                     <div className="profile">
-                      <img src={follower.profileImg} />
+                      <img src={follower.User.profileImg} />
                     </div>
-                    <div>{follower.nickname}</div>
+                    <div>{follower.User.nickname}</div>
                   </NicknamePlace>
                   <button style={{ margin: '55px' }} className="list-btn">
                     삭제
