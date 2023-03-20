@@ -41,10 +41,12 @@ const CheckPinBtn = ({ listInfo }: CommunityTypeProps) => {
     if (listInfo) {
       if (res.result === 'Pin has been created') {
         setPinned(true);
+        console.log(res.result);
       } else if (res.result === 'Pin has been canceled') {
         setPinned(false);
+        console.log(res.result);
       } else {
-        setPinned(true);
+        window.alert('고정핀 설정 개수는 최대 3개입니다.');
       }
     }
   };
