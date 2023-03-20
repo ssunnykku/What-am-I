@@ -38,11 +38,4 @@ communityCommentRouter.delete(
   communityCommentController.deleteComment,
 );
 
-//6.게시물 댓글 작성자 프로필 보기 (해당 Id 한개씩)
-communityCommentRouter.get(
-  '/communityComment/:communityCommentId',
-  loginRequired,
-  communityCommentController.CommunityCommenterInfo,
-);
-
 export { communityCommentRouter };

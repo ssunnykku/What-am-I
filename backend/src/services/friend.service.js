@@ -101,6 +101,29 @@ class friendService {
 
     return blockedFriends;
   }
+  /**프로필 정보 하나씩 보기 */
+
+  // 6. 특정 유저의 프로필 정보 보기
+  static async getProfile({ friendId, userId }) {
+    const getOne = await User.findOne({
+      where: {
+        userId: friendId,
+      },
+      attributes: ['email', 'userId', 'nickname', 'profileImg'],
+    });
+
+    const isFriend = await Friend.findOne({
+      where: {
+        friendId,
+        userId,
+      },
+    });
+    !!isFriend
+      ? (getOne.dataValues.friendStatus = 1)
+      : (getOne.dataValues.friendStatus = 0);
+
+    return getOne;
+  }
 }
 
 export { friendService };

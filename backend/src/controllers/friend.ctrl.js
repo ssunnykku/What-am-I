@@ -88,6 +88,23 @@ class friendController {
       next(error);
     }
   }
+
+  /**프로필 정보 하나씩 보기 */
+
+  // 6. 특정 유저의 프로필 정보 보기
+  static async profile(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const friendId = req.params.friendId;
+      const friendInfo = await friendService.getProfile({
+        friendId,
+        userId,
+      });
+      return res.status(200).send(friendInfo);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export { friendController };

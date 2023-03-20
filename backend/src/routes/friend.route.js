@@ -38,4 +38,12 @@ friendRouter.get(
   friendController.getBlockList,
 );
 
+/**프로필 정보 하나씩 보기 */
+
+// 6. 특정 유저의 프로필 정보 보기
+friendRouter.get(
+  '/friends/profile/:friendId',
+  loginRequired,
+  friendController.profile,
+);
 export { friendRouter };

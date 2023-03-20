@@ -95,16 +95,6 @@ class communityCommentService {
       return message;
     }
   }
-  //6. 게시물 댓글 작성자 프로필 보기 (해당 Id 한개씩)
-  static async getCommenterProfile({ id, userId }) {
-    const getProfile = await CommunityComment.findOne({
-      where: { id: id },
-      attributes: ['id', 'userId', 'profileImg'],
-    });
-    // const friend = await Friend.findAll();
-    // console.log(friend);
-    return;
-  }
 }
 
 export { communityCommentService };

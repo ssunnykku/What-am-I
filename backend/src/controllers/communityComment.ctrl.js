@@ -106,19 +106,6 @@ class communityCommentController {
       next(error);
     }
   }
-  //6. 게시물 댓글 작성자 프로필 보기 (해당 Id 한개씩)
-  static async CommunityCommenterInfo(req, res, next) {
-    try {
-      const userId = req.currentUserId;
-      const id = req.params.communityCommentId;
-      const getCommenterInfo =
-        await communityCommentService.getCommenterProfile({ userId, id });
-
-      return res.status(200).json(getCommenterInfo);
-    } catch (error) {
-      next(error);
-    }
-  }
 }
 
 export { communityCommentController };
