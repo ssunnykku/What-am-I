@@ -11,12 +11,16 @@ import DoneIcon from '@mui/icons-material/Done';
 import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 import { ContentsProfile } from '../../assets/styles/common/commonComponentStyle';
 import { postCommuRequest } from '../../apis/communityFetcher';
+import { FriendType } from '../../types/community/communityType';
+import { getFollowingBuddyData } from '../../apis/mypageFetcher';
 
-export default function BasicMenu(props: CurrentCommuityProps) {
+export default function ProfileContextMenu(props: CurrentCommuityProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [checked, setChecked] = React.useState<boolean>(false);
   const navigate = useNavigate();
+
+  const [friend, setFriend] = React.useState<FriendType>();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -30,6 +34,8 @@ export default function BasicMenu(props: CurrentCommuityProps) {
     // if (res.message) {
     //   setChecked(true);
     // }
+
+    setChecked((prev) => !prev);
   };
 
   return (
@@ -55,7 +61,7 @@ export default function BasicMenu(props: CurrentCommuityProps) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <NameMenuItem onClick={handleClose} id="profile-name">
           <ProfileName>
             <div className="img">
               <img src={props.commuPost?.profileImg} />
@@ -64,24 +70,24 @@ export default function BasicMenu(props: CurrentCommuityProps) {
             <div className="nickname">{props.commuPost?.nickname}</div>
             <div className="nickname2">{props.comment?.nickname}</div>
           </ProfileName>
-        </MenuItem>
+        </NameMenuItem>
         {props.commuPost?.userId === Storage.getUserIdItem() ||
         props.comment?.userId === Storage.getUserIdItem() ? (
-          <>
-            <MenuItem onClick={handleClose}>
+          <div>
+            <NewMenuItem onClick={handleClose}>
               <ProfileBtn onClick={() => navigate('/mybuddy')}>
                 친구 목록으로 가기
               </ProfileBtn>
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
+            </NewMenuItem>
+            <NewMenuItem onClick={handleClose}>
               <ProfileBtn onClick={() => navigate('/chatroom')}>
                 채팅 목록으로 가기
               </ProfileBtn>
-            </MenuItem>
-          </>
+            </NewMenuItem>
+          </div>
         ) : (
-          <>
-            <MenuItem>
+          <div>
+            <NewMenuItem>
               <ProfileBtn onClick={onClickCheckBtn}>
                 {checked ? (
                   <DoneIcon style={{ color: '#2d98da' }} />
@@ -89,31 +95,36 @@ export default function BasicMenu(props: CurrentCommuityProps) {
                   '친구 추가'
                 )}
               </ProfileBtn>
-            </MenuItem>
-            <MenuItem>
+            </NewMenuItem>
+            <NewMenuItem>
               <ProfileBtn>1:1 메시지 보내기</ProfileBtn>
-            </MenuItem>
-          </>
+            </NewMenuItem>
+          </div>
         )}
       </Menu>
     </div>
   );
 }
 
+const NameMenuItem = styled(MenuItem)`
+  pointer-events: none;
+`;
+
+const NewMenuItem = styled(MenuItem)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
 const ProfileName = styled.div`
   display: flex;
   align-items: center;
-  padding: 5px 10px 8px 10px;
-  /* background-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.05) 52%,
-    transparent 48%
-  ); */
-  border-bottom: solid 0.1px ${theme.boldColor};
+  padding: 5px 10px 15px 5px;
+  border-bottom: solid 0.1px ${theme.mainColor};
 
   .img {
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     border: solid 1px gray;
     border-radius: 50%;
     display: flex;
@@ -148,12 +159,9 @@ const ProfileBtn = styled.div`
   margin-top: 5px;
   border-radius: 5px;
   font-size: 14px;
-  /* background-color: rgba(0, 0, 0, 0.05); */
-  /* border: solid 1px ${theme.boldColor}; */
   font-family: ${font.normal};
 
   :hover {
-    /* border: solid 1px #87c3ff; */
     color: ${theme.pointColor};
     cursor: pointer;
   }

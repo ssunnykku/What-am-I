@@ -26,7 +26,7 @@ import {
 import ImgCarousel from './Carousel';
 import CommuPostingLikeBtn from './CommuPostingLikeBtn';
 import ProfileCard from '../ProfileCard/ProfileCard';
-import BasicMenu from '../ProfileCard/ProfileContextMenu';
+import ProfileContextMenu from '../ProfileCard/ProfileContextMenu';
 
 const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const [isOpen, modalHandler] = useModal();
@@ -171,7 +171,7 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
             <div className="user-name">
               <ContentsProfile>
                 {/* <ProfileCard commuPost={postInfo} /> */}
-                <BasicMenu commuPost={postInfo} />
+                <ProfileContextMenu commuPost={postInfo} />
                 {/* <div className="profile">
                   <img src={postInfo?.profileImg} />
                 </div> */}
@@ -200,7 +200,7 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
             {comments?.map((comment, idx) => (
               <div key={comment.id} className="user-comments">
                 {/* <ProfileCard comment={comment} /> */}
-                <BasicMenu comment={comment} />
+                <ProfileContextMenu comment={comment} />
                 {/* <div className="profile">
                   <img src={comment.profileImg} />
                 </div> */}
@@ -367,8 +367,9 @@ const ContentsBox = styled.div`
   .user-comments {
     display: inline-flex;
     justify-content: space-between;
+    align-items: center;
     position: relative;
-    padding: 10px 0;
+    padding: 6px 0;
     width: 100%;
     line-height: 20px;
     font-size: 14px;
@@ -377,7 +378,7 @@ const ContentsBox = styled.div`
       height: 37px;
       width: 37px;
       border-radius: 50%;
-      margin: 0 10px;
+      margin: 0 7px 0 10px;
       position: relative;
       overflow: hidden;
 
@@ -391,8 +392,8 @@ const ContentsBox = styled.div`
 
     .comment {
       width: 88%;
-      margin-top: 3px;
-      margin-left: 3px;
+      /* margin-top: 3px; */
+      /* margin-left: 3px; */
 
       span {
         font-family: ${font.bold};
