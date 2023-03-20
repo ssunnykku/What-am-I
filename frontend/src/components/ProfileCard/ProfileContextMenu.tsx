@@ -11,12 +11,16 @@ import DoneIcon from '@mui/icons-material/Done';
 import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 import { ContentsProfile } from '../../assets/styles/common/commonComponentStyle';
 import { postCommuRequest } from '../../apis/communityFetcher';
+import { FriendType } from '../../types/community/communityType';
+import { getFollowingBuddyData } from '../../apis/mypageFetcher';
 
 export default function ProfileContextMenu(props: CurrentCommuityProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [checked, setChecked] = React.useState<boolean>(false);
   const navigate = useNavigate();
+
+  const [friend, setFriend] = React.useState<FriendType>();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

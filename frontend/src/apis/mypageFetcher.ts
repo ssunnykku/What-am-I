@@ -119,7 +119,20 @@ export async function getPuppyData(id: number) {
   return response.data;
 }
 
-export async function getBuddyData(page: number) {
+// 내가 추가한 친구
+export async function getFollowingBuddyData(page: number) {
   const response = await axiosInstance.get(`friends/followings?page=${page}`);
   return response.data;
+}
+
+// 나를 추가한 친구
+export async function getFollowerBuddyData(page: number) {
+  const res = await axiosInstance.get(`friends/followers?page=${page}`);
+  return res.data;
+}
+
+// 나를 추가한 친구 삭제
+export async function deleteFollowingBuddy(friendId: string) {
+  const res = await axiosInstance.delete(`friends/${friendId}`);
+  return res.data;
 }
