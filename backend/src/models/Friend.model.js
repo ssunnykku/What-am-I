@@ -10,7 +10,7 @@ class Friend extends Sequelize.Model {
           autoIncrement: true,
           allowNull: false,
         },
-        status: {
+        friendOrBlockStatus: {
           type: DataTypes.INTEGER,
         },
       },

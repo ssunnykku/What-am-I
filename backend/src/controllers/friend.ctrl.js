@@ -6,12 +6,12 @@ class friendController {
     try {
       const userId = req.currentUserId;
       const friendId = req.params.friendId;
-      const status = req.params.status;
+      const friendOrBlockStatus = req.params.friendOrBlockStatus;
 
       const addFriend = await friendService.findFriend({
         userId,
         friendId,
-        status,
+        friendOrBlockStatus,
       });
 
       return res.status(201).send(addFriend);
@@ -58,12 +58,32 @@ class friendController {
         userId,
         friendId,
       });
-
+      if (findFriend.errorMessage) {
+        throw new Error(findFriend, errorMessage);
+      }
       return res.status(200).send({
         userId: userId,
         friendId: friendId,
         message: 'successfully deleted',
       });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  /**친구 차단 관련 */
+
+  // 5. 내가 차단한 친구 목록 전체 보기
+  static async getBlockList(req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const { page } = req.query;
+      const defaultPage = page || 1;
+      const blockedFriends = await friendService.findBlockedFriends({
+        defaultPage,
+        userId,
+      });
+      return res.status(200).send(blockedFriends);
     } catch (error) {
       next(error);
     }
