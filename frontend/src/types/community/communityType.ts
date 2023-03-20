@@ -97,19 +97,29 @@ export interface CommuNumType {
 }
 
 export interface BuddyType {
-  userId: string;
-  nickname: string;
-  profileImg: string;
-  Friend: {
-    id: number;
-    friendId: string;
+  User: {
+    nickname: string;
+    profileImg: string;
     userId: string;
   };
+  friendId: string;
+  friendOrBlockStatus: number;
+  id: number;
+  userId: string;
 }
 
 export interface FriendType {
   id: number;
-  friendId: string;
   userId: string;
+  friendId: string;
+  friendOrBlockStatus: number;
   message: string;
+}
+
+export interface UserProfileType {
+  email: string;
+  friendStatus: number;
+  nickname: string;
+  profileImg: string;
+  userId: string;
 }

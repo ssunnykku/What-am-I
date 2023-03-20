@@ -121,8 +121,8 @@ export async function getPuppyData(id: number) {
 
 // 내가 추가한 친구
 export async function getFollowingBuddyData(page: number) {
-  const response = await axiosInstance.get(`friends/followings?page=${page}`);
-  return response.data;
+  const res = await axiosInstance.get(`friends/followings?page=${page}`);
+  return res.data;
 }
 
 // 나를 추가한 친구

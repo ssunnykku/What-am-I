@@ -10,32 +10,57 @@ import { font } from '../../assets/styles/common/fonts';
 import DoneIcon from '@mui/icons-material/Done';
 import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 import { ContentsProfile } from '../../assets/styles/common/commonComponentStyle';
-import { postCommuRequest } from '../../apis/communityFetcher';
-import { FriendType } from '../../types/community/communityType';
+import {
+  FriendType,
+  UserProfileType,
+} from '../../types/community/communityType';
 import { getFollowingBuddyData } from '../../apis/mypageFetcher';
+import {
+  getProfileRequest,
+  postAddBuddyRequest,
+} from '../../apis/communityFetcher';
 
 export default function ProfileContextMenu(props: CurrentCommuityProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [checked, setChecked] = React.useState<boolean>(false);
   const navigate = useNavigate();
+  const [userProfile, setUserProfile] = React.useState<UserProfileType>();
 
-  const [friend, setFriend] = React.useState<FriendType>();
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+
+    if (props.commuPost) {
+      const postRes = await getProfileRequest(props.commuPost?.userId);
+      setUserProfile(postRes);
+      console.log(postRes);
+
+      if (postRes.friendStatus === 1) {
+        setChecked(true);
+      }
+    }
+    if (props.comment) {
+      const commentRes = await getProfileRequest(props.comment?.userId);
+      setUserProfile(commentRes);
+      console.log(commentRes);
+
+      if (commentRes.friendStatus === 1) {
+        setChecked(true);
+      }
+    }
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const onClickCheckBtn = async () => {
-    // const res = await postCommuRequest(`friends/${props.commuPost?.userId}`);
-    console.log(props);
-    // if (res.message) {
-    //   setChecked(true);
-    // }
 
-    setChecked((prev) => !prev);
+  const onClickCheckBtn = async () => {
+    if (userProfile) {
+      const res = await postAddBuddyRequest(userProfile?.userId, 1);
+
+      if (res.message) {
+        setChecked(true);
+      }
+    }
   };
 
   return (
@@ -90,7 +115,14 @@ export default function ProfileContextMenu(props: CurrentCommuityProps) {
             <NewMenuItem>
               <ProfileBtn onClick={onClickCheckBtn}>
                 {checked ? (
-                  <DoneIcon style={{ color: '#2d98da' }} />
+                  <div
+                    style={{
+                      color: '#2d98da',
+                      // pointerEvents: 'none',
+                    }}
+                  >
+                    <DoneIcon />
+                  </div>
                 ) : (
                   '친구 추가'
                 )}
