@@ -157,7 +157,7 @@ export const ContentsProfile = styled.div`
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    margin-right: 15px;
+    margin-right: 10px;
     position: relative;
     overflow: hidden;
   }

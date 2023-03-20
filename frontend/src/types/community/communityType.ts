@@ -106,3 +106,10 @@ export interface BuddyType {
     userId: string;
   };
 }
+
+export interface FriendType {
+  id: number;
+  friendId: string;
+  userId: string;
+  message: string;
+}
