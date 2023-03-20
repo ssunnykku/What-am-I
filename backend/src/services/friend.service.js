@@ -45,15 +45,13 @@ class friendService {
 
   // 3. 나를 추가한 친구 보기(followers)
   static async getFollowers({ userId, defaultPage }) {
-    const followers = await Friend.findAll({
-      where: { friendId: userId, friendOrBlockStatus: 1 },
+    const user = await User.findOne({ where: { userId: userId } });
+
+    const followers = await user.getFriendList({
+      attributes: ['userId', 'nickname', 'profileImg'],
+      order: [['nickname', 'DESC']],
       offset: (defaultPage - 1) * +process.env.FRIENDLIST_PER_PAGE,
       limit: +process.env.FRIENDLIST_PER_PAGE,
-      include: {
-        model: User,
-        attributes: ['userId', 'nickname', 'profileImg'],
-        order: [['nickname', 'DESC']],
-      },
     });
 
     // 내가 친구추가 했는지 여부 보여주기
