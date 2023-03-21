@@ -12,41 +12,45 @@ import {
   getFollowingBuddyData,
   deleteFollowingBuddy,
 } from '../apis/mypageFetcher';
-import { BuddyType } from '../types/community/communityType';
+import { BuddyType, FollowerType } from '../types/community/communityType';
+import { postAddOrBlockRequest } from '../apis/communityFetcher';
 
 const MyBuddyPage = () => {
   const [page, setPage] = useState<number>(1);
   const [followingInfo, setFollowingInfo] = useState<BuddyType[]>();
-  const [followerInfo, setFollowerInfo] = useState<BuddyType[]>();
+  const [followerInfo, setFollowerInfo] = useState<FollowerType[]>();
 
   // 내가 추가한 친구
   const getFollowingData = async () => {
     const res = await getFollowingBuddyData(page);
     setFollowingInfo(res);
-    console.log('내가 추가한 친구', res);
   };
 
   // 나를 추가한 친구
   const getFollowerData = async () => {
     const res = await getFollowerBuddyData(page);
-    setFollowerInfo(res);
-    console.log('나를 추가한 친구', res);
+    console.log(res);
+    function nonBlockBuddy(el: FollowerType) {
+      if (el.blockStatus === 0) {
+        return true;
+      }
+    }
+    const result = res.filter(nonBlockBuddy);
+    setFollowerInfo(result);
   };
 
   // 내가 추가한 친구 삭제
-  const handleDeleteBuddy = async (
-    e: React.MouseEvent,
-    followingInfo: BuddyType,
-  ) => {
-    // e.preventDefault();
+  const handleDeleteBuddy = async (followingInfo: BuddyType) => {
     await deleteFollowingBuddy(followingInfo.friendId);
     const res = await getFollowingBuddyData(page);
     setFollowingInfo(res);
   };
 
   // 친구 차단
-  const handleBlockBuddy = async (followerInfo: BuddyType) => {
-    console.log('친구 차단');
+  const handleBlockBuddy = async (followerInfo: FollowerType) => {
+    await postAddOrBlockRequest(followerInfo.userId, 0);
+    const res = await getFollowerBuddyData(page);
+    setFollowerInfo(res);
   };
 
   useEffect(() => {
@@ -79,7 +83,7 @@ const MyBuddyPage = () => {
                   </NicknamePlace>
                   <button
                     className="list-btn"
-                    onClick={(e) => handleDeleteBuddy(e, buddy)}
+                    onClick={() => handleDeleteBuddy(buddy)}
                   >
                     삭제
                   </button>
@@ -92,16 +96,18 @@ const MyBuddyPage = () => {
             <div className="list-body">
               {followerInfo?.map((follower) => (
                 <div className="list-buddy">
-                  <NicknamePlace key={follower.friendId}>
+                  <NicknamePlace key={follower.userId}>
                     <div className="profile">
-                      <img src={follower.User.profileImg} />
+                      <img src={follower.profileImg} />
                     </div>
-                    <div>{follower.User.nickname}</div>
+                    <div>{follower.nickname}</div>
                   </NicknamePlace>
-                  <button style={{ margin: '55px' }} className="list-btn">
-                    삭제
+                  <button
+                    className="list-btn"
+                    onClick={() => handleBlockBuddy(follower)}
+                  >
+                    차단
                   </button>
-                  <button className="list-btn">차단</button>
                 </div>
               ))}
             </div>
