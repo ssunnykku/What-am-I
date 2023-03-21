@@ -63,9 +63,15 @@ class friendService {
           friendId: friend,
         },
       });
+      console.log(findFriend.dataValues.friendOrBlockStatus);
+      // 내가 추가한 친구인지 상태 확인
       findFriend
         ? (follower.dataValues.friendStatus = 1)
         : (follower.dataValues.friendStatus = 0);
+      // 차단한 친구는 제외
+      findFriend.dataValues.friendOrBlockStatus == 1
+        ? (follower.dataValues.blockStatus = 1)
+        : (follower.dataValues.blockStatus = 0);
     }
 
     return followers;
@@ -77,7 +83,6 @@ class friendService {
     });
     if (!deleteOne) {
       throw ApiError.setBadRequest(`${friendId} is not on the Friends List`);
-      // const errorMessage = `${friendId} is not on the Friends List`;
     }
     return deleteOne;
   }
@@ -116,7 +121,7 @@ class friendService {
         userId,
       },
     });
-    !!isFriend
+    isFriend
       ? (getOne.dataValues.friendStatus = 1)
       : (getOne.dataValues.friendStatus = 0);
 
