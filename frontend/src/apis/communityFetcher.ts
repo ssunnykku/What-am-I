@@ -141,7 +141,7 @@ export async function postCommuRequest(endpoint: string) {
 }
 
 // 친구 추가
-export async function postAddBuddyRequest(
+export async function postAddOrBlockRequest(
   friendId: string,
   friendOrBlockStatus: number,
 ) {
