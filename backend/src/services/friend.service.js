@@ -63,18 +63,30 @@ class friendService {
           friendId: friend,
         },
       });
-
       /** 내가 추가한 사용자인지 상태 확인 (차단 포함) */
-      findFriend
-        ? (follower.dataValues.friendStatus = 1)
-        : (follower.dataValues.friendStatus = 0);
+      if (findFriend) {
+        // 추가한 사용자라면 friendStatus = 1 을 추가해주기
+        follower.dataValues.friendStatus = 1;
 
-      /** 내가 차단한 사용자인지 확인 */
-      // 차단한 사용자이면
-      findFriend.dataValues.friendOrBlockStatus == 0
-        ? // blockStatus = 1을 추가, 아니면 0
-          (follower.dataValues.blockStatus = 1)
-        : (follower.dataValues.blockStatus = 0);
+        /** 내가 차단한 사용자인지 확인 */
+        findFriend.dataValues.friendOrBlockStatus == 0
+          ? //차단했으면 blockStatus = 1을 추가, 아니면 0
+            (follower.dataValues.blockStatus = 1)
+          : (follower.dataValues.blockStatus = 0);
+      } else {
+        follower.dataValues.friendStatus = 0;
+      }
+
+      // findFriend
+      //   ? (follower.dataValues.friendStatus = 1)
+      //   : (follower.dataValues.friendStatus = 0);
+
+      //
+      // // 차단한 사용자이면
+      // findFriend.dataValues.friendOrBlockStatus == 0
+      //   ? // blockStatus = 1을 추가, 아니면 0
+      //     (follower.dataValues.blockStatus = 1)
+      //   : (follower.dataValues.blockStatus = 0);
     }
 
     return followers;
