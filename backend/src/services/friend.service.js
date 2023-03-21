@@ -63,14 +63,17 @@ class friendService {
           friendId: friend,
         },
       });
-      console.log(findFriend.dataValues.friendOrBlockStatus);
-      // 내가 추가한 친구인지 상태 확인
+
+      /** 내가 추가한 사용자인지 상태 확인 (차단 포함) */
       findFriend
         ? (follower.dataValues.friendStatus = 1)
         : (follower.dataValues.friendStatus = 0);
-      // 차단한 친구는 제외
-      findFriend.dataValues.friendOrBlockStatus == 1
-        ? (follower.dataValues.blockStatus = 1)
+
+      /** 내가 차단한 사용자인지 확인 */
+      // 차단한 사용자이면
+      findFriend.dataValues.friendOrBlockStatus == 0
+        ? // blockStatus = 1을 추가, 아니면 0
+          (follower.dataValues.blockStatus = 1)
         : (follower.dataValues.blockStatus = 0);
     }
 
