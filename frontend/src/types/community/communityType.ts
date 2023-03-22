@@ -108,6 +108,20 @@ export interface BuddyType {
   userId: string;
 }
 
+export interface FollowerType {
+  Friend: {
+    friendId: string;
+    friendOrBlockStatus: number;
+    id: number;
+    userId: string;
+  };
+  blockStatus: number;
+  friendStatus: number;
+  nickname: string;
+  profileImg: string;
+  userId: string;
+}
+
 export interface FriendType {
   id: number;
   userId: string;

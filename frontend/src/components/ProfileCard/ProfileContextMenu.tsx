@@ -17,7 +17,7 @@ import {
 import { getFollowingBuddyData } from '../../apis/mypageFetcher';
 import {
   getProfileRequest,
-  postAddBuddyRequest,
+  postAddOrBlockRequest,
 } from '../../apis/communityFetcher';
 
 export default function ProfileContextMenu(props: CurrentCommuityProps) {
@@ -33,7 +33,6 @@ export default function ProfileContextMenu(props: CurrentCommuityProps) {
     if (props.commuPost) {
       const postRes = await getProfileRequest(props.commuPost?.userId);
       setUserProfile(postRes);
-      console.log(postRes);
 
       if (postRes.friendStatus === 1) {
         setChecked(true);
@@ -42,7 +41,6 @@ export default function ProfileContextMenu(props: CurrentCommuityProps) {
     if (props.comment) {
       const commentRes = await getProfileRequest(props.comment?.userId);
       setUserProfile(commentRes);
-      console.log(commentRes);
 
       if (commentRes.friendStatus === 1) {
         setChecked(true);
@@ -55,7 +53,7 @@ export default function ProfileContextMenu(props: CurrentCommuityProps) {
 
   const onClickCheckBtn = async () => {
     if (userProfile) {
-      const res = await postAddBuddyRequest(userProfile?.userId, 1);
+      const res = await postAddOrBlockRequest(userProfile?.userId, 1);
 
       if (res.message) {
         setChecked(true);
