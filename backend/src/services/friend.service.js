@@ -2,7 +2,9 @@ import { User } from '../models/User.model';
 import { Friend } from '../models/Friend.model';
 import dotenv from 'dotenv';
 import ApiError from '../utils/ApiError';
-
+// import sequelize from 'sequelize';
+// import { QueryTypes } from 'sequelize';
+import sequelize from '../config/sequelize';
 dotenv.config();
 
 class friendService {
@@ -35,8 +37,9 @@ class friendService {
       limit: +process.env.FRIENDLIST_PER_PAGE,
       include: {
         model: User,
+        as: 'FriendList',
         attributes: ['userId', 'nickname', 'profileImg'],
-        order: [['nickname', 'DESC']],
+        order: [['nickname']],
       },
     });
 
@@ -45,18 +48,17 @@ class friendService {
 
   // 3. 나를 추가한 친구 보기(followers)
   static async getFollowers({ userId, defaultPage }) {
-    const user = await User.findOne({ where: { userId: userId } });
+    const query = `Select friends.id, friends.friendOrBlockStatus,friends.friendId, friends.userId, users.email, users.nickname, users.profileImg from friends left join users on users.userId = friends.userId WHERE friendId='${userId}' AND friendOrBlockStatus='1' ORDER BY nickname`;
 
-    const followers = await user.getFriendList({
-      attributes: ['userId', 'nickname', 'profileImg'],
-      order: [['nickname', 'DESC']],
+    const followers = await sequelize.query(query, {
+      type: sequelize.QueryTypes.SELECT,
       offset: (defaultPage - 1) * +process.env.FRIENDLIST_PER_PAGE,
       limit: +process.env.FRIENDLIST_PER_PAGE,
     });
 
     // 내가 친구추가 혹은 차단 했는지 여부 확인
     for (const follower of followers) {
-      let friend = follower.dataValues.userId;
+      let friend = follower.userId;
       const findFriend = await Friend.findOne({
         where: {
           userId,
@@ -64,25 +66,25 @@ class friendService {
         },
       });
 
-      follower.dataValues.friendStatus = 0;
-      follower.dataValues.blockStatus = 0;
+      follower.friendStatus = 0;
+      follower.blockStatus = 0;
 
       /** 내가 추가한 사용자인지 상태 확인 (차단 포함) */
       if (findFriend) {
-        // 추가한 사용자라면 friendStatus = 1 을 추가해주기
-        follower.dataValues.friendStatus = 1;
-
+        if (findFriend.dataValues.friendOrBlockStatus == 1) {
+          // 추가한 사용자라면 friendStatus = 1 을 추가해주기
+          follower.friendStatus = 1;
+        }
         /** 내가 차단한 사용자인지 확인 */
         if (findFriend.dataValues.friendOrBlockStatus == 0)
           //차단했으면 blockStatus = 1을 추가
-          follower.dataValues.blockStatus = 1;
-        // 친구 아님
-        follower.dataValues.friendStatus = 0;
+          follower.blockStatus = 1;
       }
     }
 
     return followers;
   }
+
   // 4. 친구 삭제/ 차단목록에서 삭제
   static async findDeleteFriend({ userId, friendId }) {
     const deleteOne = await Friend.destroy({
@@ -105,7 +107,7 @@ class friendService {
       include: {
         model: User,
         attributes: ['userId', 'nickname', 'profileImg'],
-        order: [['nickname', 'DESC']],
+        order: [['nickname']],
       },
     });
 

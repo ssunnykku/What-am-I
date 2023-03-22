@@ -27,10 +27,13 @@ class Friend extends Sequelize.Model {
     db.Friend.belongsTo(db.User, {
       foreignKey: 'userId',
       sourceKey: 'userId',
+      // 요 as 설정을 해주어야 어느 속성을 외래키로 설정할지 알 수 있음!!
+      as: 'UserFriends',
     });
     db.Friend.belongsTo(db.User, {
       foreignKey: 'friendId',
       sourceKey: 'userId',
+      as: 'FriendList',
     });
   }
 }

@@ -103,44 +103,46 @@ class User extends Sequelize.Model {
       sourceKey: 'userId',
     });
     // 차단 목록에 추가한 사용자
-    db.User.belongsToMany(db.User, {
-      primaryKey: 'id',
-      foreignKey: 'blockedFriendId',
-      as: 'BlockedFriends',
-      through: 'Block',
-      timestamps: false,
-    });
+    // db.User.belongsToMany(db.User, {
+    //   primaryKey: 'id',
+    //   foreignKey: 'blockedFriendId',
+    //   as: 'BlockedFriends',
+    //   through: 'Block',
+    //   timestamps: false,
+    // });
     // 로그인한 유저가 차단한 사용자들
-    db.User.belongsToMany(db.User, {
-      primaryKey: 'id',
-      foreignKey: 'userId',
-      as: 'BlockingFriends',
-      through: 'Block',
-      timestamps: false,
-    });
+    // db.User.belongsToMany(db.User, {
+    //   primaryKey: 'id',
+    //   foreignKey: 'userId',
+    //   as: 'BlockingFriends',
+    //   through: 'Block',
+    //   timestamps: false,
+    // });
     // 나를 추가한 친구
-    db.User.belongsToMany(db.User, {
-      primaryKey: 'id',
-      foreignKey: 'friendId',
-      as: 'FriendList',
-      through: 'Friend',
-      timestamps: false,
-    });
+    // db.User.belongsToMany(db.User, {
+    //   primaryKey: 'id',
+    //   foreignKey: 'friendId',
+    //   as: 'FriendList',
+    //   through: 'Friend',
+    //   timestamps: false,
+    // });
     // 로그인한 유저의 친구정보
-    db.User.belongsToMany(db.User, {
-      primaryKey: 'id',
-      foreignKey: 'userId',
-      as: 'UserFriends',
-      through: 'Friend',
-      timestamps: false,
-    });
+    // db.User.belongsToMany(db.User, {
+    //   primaryKey: 'id',
+    //   foreignKey: 'userId',
+    //   as: 'UserFriends',
+    //   through: 'Friend',
+    //   timestamps: false,
+    // });
     db.User.hasMany(db.Friend, {
       foreignKey: 'userId',
       sourceKey: 'userId',
+      as: 'UserFriends',
     });
     db.User.hasMany(db.Friend, {
       foreignKey: 'friendId',
       sourceKey: 'userId',
+      as: 'FriendList',
     });
     // db.User.hasOne(db.RefreshToken, {
     //   foreignKey: 'userId',
