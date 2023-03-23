@@ -108,6 +108,7 @@ class friendService {
         model: User,
         attributes: ['userId', 'nickname', 'profileImg'],
         order: [['nickname']],
+        as: 'FriendList',
       },
     });
 
