@@ -97,7 +97,7 @@ export interface CommuNumType {
 }
 
 export interface BuddyType {
-  User: {
+  FriendList: {
     nickname: string;
     profileImg: string;
     userId: string;
@@ -109,14 +109,12 @@ export interface BuddyType {
 }
 
 export interface FollowerType {
-  Friend: {
-    friendId: string;
-    friendOrBlockStatus: number;
-    id: number;
-    userId: string;
-  };
   blockStatus: number;
+  email: string;
+  friendId: string;
+  friendOrBlockStatus: number;
   friendStatus: number;
+  id: number;
   nickname: string;
   profileImg: string;
   userId: string;

@@ -29,7 +29,6 @@ const MyBuddyPage = () => {
   // 나를 추가한 친구
   const getFollowerData = async () => {
     const res = await getFollowerBuddyData(page);
-    console.log(res);
     function nonBlockBuddy(el: FollowerType) {
       if (el.blockStatus === 0) {
         return true;
@@ -48,9 +47,20 @@ const MyBuddyPage = () => {
 
   // 친구 차단
   const handleBlockBuddy = async (followerInfo: FollowerType) => {
-    await postAddOrBlockRequest(followerInfo.userId, 0);
-    const res = await getFollowerBuddyData(page);
-    setFollowerInfo(res);
+    if (confirm(`${followerInfo.nickname} 님을 차단하시겠습니까?`) == true) {
+      await postAddOrBlockRequest(followerInfo.userId, 0);
+      window.alert(`${followerInfo.nickname} 님을 차단하였습니다.`);
+      const res = await getFollowerBuddyData(page);
+      function nonBlockBuddy(el: FollowerType) {
+        if (el.blockStatus === 0) {
+          return true;
+        }
+      }
+      const result = res.filter(nonBlockBuddy);
+      setFollowerInfo(result);
+    } else {
+      console.log('취소되었습니다.');
+    }
   };
 
   useEffect(() => {
@@ -76,10 +86,10 @@ const MyBuddyPage = () => {
               {followingInfo?.map((buddy) => (
                 <div className="list-buddy">
                   <NicknamePlace>
-                    <div key={buddy.friendId} className="profile">
-                      <img src={buddy.User.profileImg} />
+                    <div key={buddy.id} className="profile">
+                      <img src={buddy.FriendList.profileImg} />
                     </div>
-                    <div>{buddy.User.nickname}</div>
+                    <div>{buddy.FriendList.nickname}</div>
                   </NicknamePlace>
                   <button
                     className="list-btn"
@@ -96,7 +106,7 @@ const MyBuddyPage = () => {
             <div className="list-body">
               {followerInfo?.map((follower) => (
                 <div className="list-buddy">
-                  <NicknamePlace key={follower.userId}>
+                  <NicknamePlace key={follower.id}>
                     <div className="profile">
                       <img src={follower.profileImg} />
                     </div>
