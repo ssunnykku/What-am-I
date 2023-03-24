@@ -1,3 +1,4 @@
 frontend/.env
 backend/package-lock.json
 .gitignore
+.DS_Store
