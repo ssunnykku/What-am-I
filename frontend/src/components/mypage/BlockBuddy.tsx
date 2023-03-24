@@ -13,21 +13,24 @@ const BlockBuddy = () => {
   const [page, setPage] = useState<number>(1);
   const [blockPP, setBlockPP] = useState<BuddyType[]>();
 
+  const getBlockList = async () => {
+    const res = await getBlockBuddyData(page);
+    setBlockPP(res);
+  };
   useEffect(() => {
-    const getBlockList = async () => {
-      const res = await getBlockBuddyData(page);
-      setBlockPP(res);
-      console.log(res);
-    };
     getBlockList();
   }, []);
 
   const handleDeleteBlockBuddy = async (blockPP: BuddyType) => {
-    await deleteFollowingBuddy(blockPP.User.userId);
-    const res = await getBlockBuddyData(page);
-    setBlockPP(res);
-    console.log(res);
-    // console.log(blockPP);
+    if (
+      confirm(
+        `${blockPP.FriendList.nickname} 님을 차단 해제하시겠습니까? 해제 후 '내가 추가한 친구' 목록에는 추가되지 않습니다.`,
+      ) == true
+    ) {
+      await deleteFollowingBuddy(blockPP.FriendList.userId);
+      const res = await getBlockBuddyData(page);
+      setBlockPP(res);
+    }
   };
 
   return (
@@ -38,9 +41,9 @@ const BlockBuddy = () => {
             {blockPP?.map((one) => (
               <ListContent key={one.id}>
                 <div className="profile">
-                  <img src={one.User.profileImg} />
+                  <img src={one.FriendList.profileImg} />
                 </div>
-                <div>{one.User.nickname}</div>
+                <div>{one.FriendList.nickname}</div>
                 <button onClick={() => handleDeleteBlockBuddy(one)}>
                   차단 해제
                 </button>
