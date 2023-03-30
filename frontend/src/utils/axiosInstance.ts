@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getUserData } from '../apis/mypageFetcher';
 import Storage from '../storage/storage';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -45,14 +46,16 @@ axiosInstance.interceptors.response.use(
           url: `${BASE_URL}refreshtoken`,
           data: { accessToken, refreshToken },
         });
-        const newAccessToken = data.data.accessToken;
-        const newRefreshToken = data.data.refreshToken;
-        originalRequest.headers = {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${newAccessToken}`,
-        };
-        Storage.setTokenItem(newAccessToken);
-        Storage.setRefreshTokenItem(newRefreshToken);
+
+        if (refreshToken) {
+          const newAccessToken = data.token;
+
+          originalRequest.headers = {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${newAccessToken}`,
+          };
+          Storage.setTokenItem(newAccessToken);
+        }
 
         return await axios(originalRequest);
       } catch (error: any) {
