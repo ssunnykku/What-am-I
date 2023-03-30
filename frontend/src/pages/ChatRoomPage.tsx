@@ -7,13 +7,23 @@ import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import Storage from '../storage/storage';
 import SearchMsgModal from '../components/modal/SearchMsgModal';
+import { getFollowingBuddyData, getUserData } from '../apis/mypageFetcher';
+import { BuddyType } from '../types/community/communityType';
 
 const ChatRoomPage = () => {
+  const [nickname, setNickname] = useState<string>('');
   const [message, setMessage] = useState<string>('');
   const [previews, setPreviews] = useState<string[]>([]);
   const [uploadImages, setUploadImages] = useState<File[]>([]);
-
   const imageInputRef = useRef<HTMLInputElement>(null);
+
+  const getUserInfo = async () => {
+    const res = await getUserData();
+    setNickname(res.nickname);
+  };
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   const handleUploadFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length !== 0) {
@@ -40,10 +50,12 @@ const ChatRoomPage = () => {
       <RoomBox>
         <ChatList>
           <header>
-            {Storage.getNicknameItem()}
-            <div className="msg-icon">
-              <SearchMsgModal />
-            </div>
+            <>
+              {nickname}
+              <div className="msg-icon">
+                <SearchMsgModal />
+              </div>
+            </>
           </header>
           <BuddyChat>
             <img src="img/강아지.png" />
@@ -122,7 +134,7 @@ export default ChatRoomPage;
 const RoomBox = styled.div`
   width: 50vw;
   height: 90%;
-  min-width: 450px;
+  min-width: 480px;
   display: grid;
   grid-template-columns: 1fr 2.5fr;
   border-radius: 10px;

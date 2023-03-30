@@ -8,10 +8,23 @@ import { WritingProfile } from '../../assets/styles/common/commonComponentStyle'
 import { SearchBuddy } from '../../pages/MyBuddyPage';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import { getFollowingBuddyData } from '../../apis/mypageFetcher';
+import { BuddyType } from '../../types/community/communityType';
 
 const SearchMsgModal = () => {
   const [isOpen, modalHandler] = useModal();
   const [nickname, setNickname] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
+  const [followingInfo, setFollowingInfo] = useState<BuddyType[]>();
+
+  const getFollowingInfo = async () => {
+    const res = await getFollowingBuddyData(page);
+    setFollowingInfo(res);
+  };
+
+  useEffect(() => {
+    getFollowingInfo();
+  }, [isOpen]);
 
   return (
     <>
@@ -31,16 +44,18 @@ const SearchMsgModal = () => {
             </SearchBox>
             <RecList>
               <p>추천</p>
-              <BuddyBox>
-                <WritingProfile>
-                  <div className="profile">
-                    <img src="img/강아지.png" />
-                  </div>
-                  <div style={{ fontSize: '15px', marginLeft: '3px' }}>
-                    친구 닉네임
-                  </div>
-                </WritingProfile>
-              </BuddyBox>
+              {followingInfo?.map((buddy) => (
+                <BuddyBox key={buddy.id}>
+                  <WritingProfile>
+                    <div className="profile">
+                      <img src={buddy.FriendList.profileImg} />
+                    </div>
+                    <div style={{ fontSize: '14px', marginLeft: '3px' }}>
+                      {buddy.FriendList.nickname}
+                    </div>
+                  </WritingProfile>
+                </BuddyBox>
+              ))}
             </RecList>
           </ListBox>
         </ModalContainer>
@@ -58,6 +73,7 @@ const ModalContainer = styled.div`
   width: 50%;
   height: 50%;
   max-width: 25rem;
+  min-width: 20rem;
   position: fixed;
   top: 50%;
   left: 50%;
