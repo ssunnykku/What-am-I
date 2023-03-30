@@ -98,11 +98,11 @@ const CommunityPage = () => {
   }, [inView]);
 
   // 전체 커뮤니티 목록
+  const getCommunitiesList = async () => {
+    const res = await getCommunitiesRequest(pages);
+    setCommuList(res.getCommunities);
+  };
   useEffect(() => {
-    const getCommunitiesList = async () => {
-      const res = await getCommunitiesRequest(pages);
-      setCommuList(res.getCommunities);
-    };
     getCommunitiesList();
   }, []);
 
@@ -162,14 +162,14 @@ const CommunityPage = () => {
   }, []);
 
   // 고정 커뮤니티
+  const getPinnedCommunity = async () => {
+    const res = await getPinnedCommunityRequest();
+    const pinnedMap = res.map(
+      (pinned: PinnedCommunityType) => pinned.Community,
+    );
+    setPinned(pinnedMap);
+  };
   useEffect(() => {
-    const getPinnedCommunity = async () => {
-      const res = await getPinnedCommunityRequest();
-      const pinnedMap = res.map(
-        (pinned: PinnedCommunityType) => pinned.Community,
-      );
-      setPinned(pinnedMap);
-    };
     getPinnedCommunity();
   }, []);
 
