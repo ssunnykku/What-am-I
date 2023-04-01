@@ -3,6 +3,7 @@ import db from './src/models/index';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import sequelize from './src/config/sequelize';
+import { logger } from './src/config/logger';
 
 //**Router */
 import { communityRouter } from './src/routes/community.route';
@@ -47,13 +48,20 @@ app.use(communityLikeRouter);
 app.use(communityCommentRouter);
 app.use(communityPostLikeRouter);
 app.use(pinnedCommunityRouter);
-
 app.use(aiSearchResultRouter);
-
 app.use(friendRouter);
 
 app.use(errorMiddleware);
 
+// 왜 모든 url에서 에러가?
+// app.use((req, res, next) => {
+//   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
+//   error.status = 404;
+//   logger.info('Hello, Winston logger, some info!');
+//   logger.error('Error message');
+//   next(error);
+// });
+
 app.listen(process.env.SEVER_PORT, () =>
-  console.log(`✅ Listening to port 5001`),
+  logger.info(`✅ Listening to port 5001`),
 );
