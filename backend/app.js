@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import sequelize from './src/config/sequelize';
 import { logger } from './src/config/logger';
+import http from 'http';
+import { Server } from 'socket.io';
 
 //**Router */
 import { communityRouter } from './src/routes/community.route';
