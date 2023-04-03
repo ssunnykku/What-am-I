@@ -2,8 +2,6 @@ import { User } from '../models/User.model';
 import { Friend } from '../models/Friend.model';
 import dotenv from 'dotenv';
 import ApiError from '../utils/ApiError';
-// import sequelize from 'sequelize';
-// import { QueryTypes } from 'sequelize';
 import sequelize from '../config/sequelize';
 dotenv.config();
 
