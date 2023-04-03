@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import sequelize from './src/config/sequelize';
 import { logger } from './src/config/logger';
+import http from 'http';
+import { Server } from 'socket.io';
 
 //**Router */
 import { communityRouter } from './src/routes/community.route';
@@ -50,6 +52,24 @@ app.use(communityPostLikeRouter);
 app.use(pinnedCommunityRouter);
 app.use(aiSearchResultRouter);
 app.use(friendRouter);
+
+const server = http.createServer(app);
+const io = new Server(server);
+
+io.on('connection', (socket) => {
+  sockets.push(socket);
+  socket['nickname'] = 'Anon';
+  console.log('Connected to Browser ✅');
+
+  socket.on('chat message', (msg) => {
+    console.log('chat message: ' + msg);
+    io.emit('chat message', msg);
+  });
+
+  socket.on('close', () => {
+    console.log('Disconnected from the Browser ❌');
+  });
+});
 
 app.use(errorMiddleware);
 
