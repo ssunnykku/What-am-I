@@ -61,6 +61,11 @@ io.on('connection', (socket) => {
   socket['nickname'] = 'Anon';
   console.log('Connected to Browser ✅');
 
+  socket.on('nickname', (msg) => {
+    console.log('nickname: ' + msg);
+    io.emit('nickname', msg);
+  });
+
   socket.on('chat message', (msg) => {
     console.log('chat message: ' + msg);
     io.emit('chat message', msg);
