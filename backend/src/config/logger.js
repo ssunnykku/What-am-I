@@ -5,12 +5,12 @@ const logDir = 'logs'; // 여기 하위에 로그 파일 저장
 const { combine, timestamp, printf } = winston.format;
 
 // Define log format
-// const logFormat = printf((info) => {
-//   return `${info.timestamp} ${info.level}: ${info.message}`;
-// });
-const logFormat = printf(({ level, message, label, timestamp }) => {
-  return `${timestamp} [${label}] ${level}: ${message}`; // 날짜 [시스템이름] 로그레벨 메세지
+const logFormat = printf((info) => {
+  return `${info.timestamp} ${info.level}: ${info.message}`;
 });
+// const logFormat = printf(({ level, message, label, timestamp }) => {
+//   return `${timestamp} [${label}] ${level}: ${message}`; // 날짜 [시스템이름] 로그레벨 메세지
+// });
 /*
  * Log Level
  * error: 0, warn: 1, info: 2, http: 3, verbose: 4, debug: 5, silly: 6

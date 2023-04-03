@@ -3,7 +3,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import styled, { keyframes } from 'styled-components';
 import { CurrentCommuityProps } from '../modal/CommuContentsModal';
-import { postCommuLikeRequest } from '../../apis/communityFetcher';
+import { postCommuRequest } from '../../apis/communityFetcher';
 
 const CommuPostingLikeBtn = ({ commuPost }: CurrentCommuityProps) => {
   const [like, setLike] = useState<boolean>(false);
@@ -13,9 +13,7 @@ const CommuPostingLikeBtn = ({ commuPost }: CurrentCommuityProps) => {
     e.preventDefault();
 
     if (commuPost) {
-      const res = await postCommuLikeRequest(
-        `communityPostLike/${commuPost?.id}`,
-      );
+      const res = await postCommuRequest(`communityPostLike/${commuPost?.id}`);
 
       if (res.newLike) {
         setLike(true);

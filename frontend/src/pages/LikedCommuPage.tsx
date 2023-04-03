@@ -4,6 +4,7 @@ import { font } from '../assets/styles/common/fonts';
 import {
   EditDelBtn,
   SearchBox,
+  EntryBtn,
 } from '../assets/styles/common/commonComponentStyle';
 import { theme } from '../assets/styles/common/palette';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
@@ -22,6 +23,8 @@ import {
 import CommuLikeBtn from '../components/community/CommuLikeBtn';
 import { UserInfoType } from '../types/auth/authType';
 import { getUserData } from '../apis/mypageFetcher';
+import CheckPinBtn from '../components/community/CommuPinBtn';
+import { Link } from 'react-router-dom';
 
 const LikedCommuPage = () => {
   const [page, setPage] = useState<number>(1);
@@ -175,15 +178,20 @@ const LikedCommuPage = () => {
                 </>
               ) : (
                 <>
-                  <div>{commuInfo?.name}</div>
-                  {commuInfo?.userId === currentUserInfo?.userId ? (
-                    <EditDelBtn
-                      style={{ margin: '0 10px' }}
-                      onClick={onClickCommuintyEditBtn}
-                    >
-                      수정
-                    </EditDelBtn>
-                  ) : null}
+                  <div className="commu-name">
+                    {commuInfo?.name}
+                    <CheckPinBtn listInfo={commuInfo} />
+                  </div>
+                  <div>
+                    {commuInfo?.userId === currentUserInfo?.userId ? (
+                      <EditDelBtn
+                        style={{ margin: '0 10px' }}
+                        onClick={onClickCommuintyEditBtn}
+                      >
+                        수정
+                      </EditDelBtn>
+                    ) : null}
+                  </div>
                 </>
               )}
             </CommuName>
@@ -201,14 +209,17 @@ const LikedCommuPage = () => {
                 <div>{commuInfo?.introduction}</div>
               )}
             </CommuIntro>
+            <WritingBtnBox>
+              <Link to={`/commuchat?id=${commuInfo?.id}`}>
+                <EntryBtn className="entry-btn">채팅방 입장</EntryBtn>
+              </Link>
+              <CommuWritingModal commuInfo={commuInfo} />
+            </WritingBtnBox>
           </NameBox>
-          <WritingBtnBox>
-            <CommuWritingModal commuInfo={commuInfo} />
-          </WritingBtnBox>
         </IntroBox>
         <SmallBox>
           <SearchBox style={{ height: '1.8rem' }}>
-            <input></input>
+            <input />
             <button>검색</button>
           </SearchBox>
           <InfoBox>
@@ -217,7 +228,7 @@ const LikedCommuPage = () => {
             </div>
             <div>
               <StickyNote2Icon style={{ marginRight: '3px' }} />
-              {postCount?.communityPostCount}
+              {postCount?.countAllPosts}
             </div>
           </InfoBox>
         </SmallBox>
@@ -259,7 +270,6 @@ const CommunityBox = styled.div`
   align-items: center;
   border-radius: 30px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
-  position: relative;
 `;
 
 const IntroBox = styled.div`
@@ -268,7 +278,6 @@ const IntroBox = styled.div`
   flex-direction: row;
   align-items: center;
   margin-top: 25px;
-  position: relative;
 `;
 
 const ImageBox = styled.div`
@@ -304,20 +313,26 @@ const NameBox = styled.div`
   flex-direction: column;
   justify-content: center;
   /* height: 75%; */
+  width: 630px;
   margin-left: 10px;
+  position: relative;
 `;
 
 const CommuName = styled.div`
   display: flex;
   align-items: center;
-  width: 550px;
   height: 3rem;
   font-family: ${font.bold};
   font-size: 22px;
   letter-spacing: 0.1rem;
 
+  .commu-name {
+    width: 420px;
+    display: flex;
+  }
+
   .newname-text {
-    width: 480px;
+    width: 420px;
     height: 60%;
     font-family: ${font.bold};
     font-size: 18px;
@@ -332,12 +347,12 @@ const CommuIntro = styled.div`
   height: 5rem;
   font-family: ${font.normal};
   font-size: 16.5px;
-  /* margin-top: 5px; */
+  margin-top: 5px;
   line-height: 22px;
   white-space: pre-wrap;
 
   .newintro-text {
-    width: 475px;
+    width: 480px;
     height: 4rem;
     font-family: ${font.normal};
     font-size: 15px;
@@ -348,14 +363,19 @@ const CommuIntro = styled.div`
 
 const WritingBtnBox = styled.div`
   display: flex;
+  flex-direction: column;
   position: absolute;
   bottom: 0;
-  right: 80px;
+  right: 0;
+
+  .entry-btn {
+    margin-bottom: 13px;
+  }
 `;
 
 const SmallBox = styled.div`
   height: 2rem;
-  width: 49.5rem;
+  width: 50rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

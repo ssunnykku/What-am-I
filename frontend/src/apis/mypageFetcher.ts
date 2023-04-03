@@ -118,3 +118,27 @@ export async function getPuppyData(id: number) {
   const response = await axiosInstance.get(`/airesult/${id}`);
   return response.data;
 }
+
+// 내가 추가한 친구
+export async function getFollowingBuddyData(page: number) {
+  const res = await axiosInstance.get(`friends/followings?page=${page}`);
+  return res.data;
+}
+
+// 나를 추가한 친구
+export async function getFollowerBuddyData(page: number) {
+  const res = await axiosInstance.get(`friends/followers?page=${page}`);
+  return res.data;
+}
+
+// 나를 추가한 친구/차단 친구 삭제
+export async function deleteFollowingBuddy(friendId: string) {
+  const res = await axiosInstance.delete(`friends/${friendId}`);
+  return res.data;
+}
+
+// 친구 차단 목록 받기
+export async function getBlockBuddyData(page: number) {
+  const res = await axiosInstance.get(`friends/blocklist?page=${page}`);
+  return res.data;
+}

@@ -2,11 +2,13 @@ import { Community } from '../models/Community.model';
 import { CommunityPost } from '../models/CommunityPost.model';
 import { CommunityLike } from '../models/CommunityLike.model';
 import ApiError from '../utils/ApiError';
-import { COMMUNITY_PER_PAGE } from '../utils/Constant';
-
+import dotenv from 'dotenv';
+import { PinnedCommunity } from '../models/PinnedCommunity.model';
 import { Op } from 'sequelize';
 
+dotenv.config();
 class communityService {
+  // 1. 커뮤니티 만들기
   static async createCommunity(name, introduction, userId, communityImage) {
     const createCommunity = await Community.create({
       name: name,
@@ -17,7 +19,7 @@ class communityService {
 
     return createCommunity;
   }
-
+  // like 갯수 몇개인지 보내주기
   static async getCommunityLike({ communityId: id, userId }) {
     const getCommunity = await Community.findOne({ where: { id } });
     if (!getCommunity) {
@@ -32,11 +34,11 @@ class communityService {
 
     return likeCount;
   }
-
+  // 좋아요 한 게시물인지 확인해서 res값에 포함(상태)
   static async getCommunityStatus({ communityId: id, userId }) {
     const getCommunity = await Community.findOne({ where: { id } });
     if (!getCommunity) {
-      const errorMessage = `Cannot find id = ${id} community`;
+      const errorMessage = `Cannot find "id = ${id}" community`;
       return errorMessage;
     }
     getCommunity.dataValues.likeStatus = await CommunityLike.count({
@@ -50,63 +52,79 @@ class communityService {
 
     return likeStatus;
   }
-
+  // 2. 커뮤니티 1개 가져오기
   static async getOneCommunity({ id, userId }) {
     const getCommunity = await Community.findOne({ where: { id } });
     if (!getCommunity) {
       const errorMessage = `Cannot find id = ${id} community`;
       return errorMessage;
     }
+    // 해당 게시물 좋아요 개수
     getCommunity.dataValues.likeCount = await CommunityLike.count({
       where: { communityId: id },
     });
+    // 유저의 좋아요 상태
     getCommunity.dataValues.likeStatus = await CommunityLike.count({
       where: {
         userId: userId,
         communityId: id,
       },
     });
+    // 유저의 pin 설정 여부
+    getCommunity.dataValues.pinStatus = await PinnedCommunity.count({
+      where: {
+        userId,
+        communityId: id,
+      },
+    });
+
     return getCommunity;
   }
-
+  // 3. 전체 커뮤니티 리스트 10개씩
   static async countCommunity() {
     const showCommunityCount = await Community.count({
       where: { id: { [Op.gt]: 0 } },
       order: [['id', 'DESC']],
     });
 
-    if (showCommunityCount % COMMUNITY_PER_PAGE === 0) {
-      return showCommunityCount / COMMUNITY_PER_PAGE;
+    if (showCommunityCount % +process.env.COMMUNITY_PER_PAGE === 0) {
+      return showCommunityCount / +process.env.COMMUNITY_PER_PAGE;
     } else {
-      return Math.floor(showCommunityCount / COMMUNITY_PER_PAGE) + 1;
+      return Math.ceil(showCommunityCount / +process.env.COMMUNITY_PER_PAGE);
     }
   }
 
-  static async selectCommunity(defaultPage, userId) {
-    const selectedCommunity = await Community.findAll({
+  // 커뮤니티 전체 가져오기
+  static async getCommunities(defaultPage, userId) {
+    const Communities = await Community.findAll({
       where: { id: { [Op.gt]: 0 } },
       order: [['id', 'DESC']],
-      offset: (defaultPage - 1) * COMMUNITY_PER_PAGE,
-      limit: COMMUNITY_PER_PAGE,
+      offset: (defaultPage - 1) * +process.env.COMMUNITY_PER_PAGE,
+      limit: +process.env.COMMUNITY_PER_PAGE,
     });
 
-    for (const community of selectedCommunity) {
+    for (const community of Communities) {
+      // 좋아요 갯수
       community.dataValues.likeCount = await CommunityLike.count({
         where: { communityId: community.id },
       });
-
+      // 좋아요 상태
       community.dataValues.likeStatus = await CommunityLike.count({
         where: { userId: userId, communityId: community.id },
       });
+      // pin 상태
+      community.dataValues.pinStatus = await PinnedCommunity.count({
+        where: { userId, communityId: community.id },
+      });
     }
 
-    return selectedCommunity;
+    return Communities;
   }
 
   static async showAllCommunities(defaultPage) {
     const selectedCommunities = await Community.findAll({
-      offset: (defaultPage - 1) * COMMUNITY_PER_PAGE,
-      limit: COMMUNITY_PER_PAGE,
+      offset: (defaultPage - 1) * +process.env.COMMUNITY_PER_PAGE,
+      limit: +process.env.COMMUNITY_PER_PAGE,
       order: [['id', 'DESC']],
     });
 
@@ -116,7 +134,7 @@ class communityService {
 
     return selectedCommunities;
   }
-
+  // 4. 인기 커뮤니티 3개 가져오기
   static async findBestCommunities({ userId }) {
     const bestThree = await CommunityLike.findAll({
       attributes: [
@@ -137,17 +155,20 @@ class communityService {
         await CommunityLike.count({
           where: { userId: userId, communityId: community.communityId },
         });
-      for (const community of bestThree) {
-        community.dataValues.Community.dataValues.countLike =
-          await CommunityLike.count({
-            where: { communityId: community.communityId },
-          });
-      }
+
+      community.dataValues.Community.dataValues.countLike =
+        await CommunityLike.count({
+          where: { communityId: community.communityId },
+        });
+
+      community.Community.dataValues.pinStatus = await PinnedCommunity.count({
+        where: { userId, communityId: community.communityId },
+      });
     }
 
     return bestThree;
   }
-
+  // 5. 전체 커뮤니티와 커뮤니티 별 게시물들 보여주기
   static async findAllCommunities() {
     const findAll = await Community.findAndCountAll({
       include: { model: CommunityPost },
@@ -155,7 +176,7 @@ class communityService {
     });
     return findAll;
   }
-
+  // 6. 커뮤니티 수정
   static async updateCommunity({
     name,
     updatedImage,
@@ -205,7 +226,7 @@ class communityService {
       return comment;
     }
   }
-
+  // 7. 커뮤니티 삭제
   static async deleteCommunity({ id, userId }) {
     const id_ = await Community.destroy({
       where: { id: id, userId: userId },
@@ -218,7 +239,7 @@ class communityService {
       return message;
     }
   }
-
+  // 8. 커뮤니티 검색기능
   static async searchedCommunities({ search }) {
     const searchResult = await Community.findAndCountAll({
       where: {

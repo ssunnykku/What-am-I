@@ -19,6 +19,7 @@ export default function TabPanel({ value, setValue }: TabPanelProps) {
       <Tab value={PAGEVALUE.RESULT} label="내 후기" />
       <Tab value={PAGEVALUE.COMMUNITY} label="커뮤니티" />
       <Tab value={PAGEVALUE.MYCOMMUNITY} label="내가 만든 커뮤니티" />
+      <Tab value={PAGEVALUE.BLOCKBUDDY} label="차단한 친구" />
     </Tabs>
   );
 }

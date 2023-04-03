@@ -1,7 +1,10 @@
 import { CommunityComment } from '../models/CommunityComment.model';
+import { User } from '../models/User.model';
+import { Friend } from '../models/Friend.model';
 import sequelize from '../config/sequelize';
 
 class communityCommentService {
+  //1. 댓글쓰기
   static async addCommunityComment({ description, communityPostId, userId }) {
     // db에 저장
     const createdNewComment = await CommunityComment.create({
@@ -14,6 +17,7 @@ class communityCommentService {
     return createdNewComment;
   }
 
+  //2. 게시물에 댓글 전부 다 보기
   static async showAllCommunityComments({ _communityPostId: communityPostId }) {
     const [_communityPostId, metadata] = await sequelize.query(
       `select CC.id,CC.description,CC.userId,CC.communityPostId,U.userId,U.nickname,U.profileImg from communityComments as CC  inner join users as U on CC.userId = U.userId where communityPostId=${communityPostId}`,
@@ -29,7 +33,7 @@ class communityCommentService {
       return _communityPostId;
     }
   }
-
+  //3. 게시물에 댓글 한개 보기
   static async showOneCommunityComments({
     id: id,
     communityPostId: communityPostId,
@@ -38,9 +42,6 @@ class communityCommentService {
       `select CC.id, CC.description, CC.userId, CC.communityPostId ,U.userId, U.nickname, U.profileImg from communityComments as CC  inner join users as U on CC.userId = U.userId where CC.id=${id} and communityPostId=${communityPostId};`,
     );
 
-    // const _id = await CommunityComment.findOne({
-    //   where: { id: id, communityPostId: communityPostId },
-    // });
     if (!_id) {
       const errorMessage = '댓글이 없습니다';
       return { errorMessage };
@@ -48,7 +49,7 @@ class communityCommentService {
       return _id;
     }
   }
-
+  //4. 내가 쓴 리뷰 수정
   static async findMessage({ id, userId }) {
     const comment = await CommunityComment.findOne({
       where: { id: id, userId: userId },
@@ -60,10 +61,7 @@ class communityCommentService {
       return comment;
     }
   }
-
   static async updateComment({ description, id, userId }) {
-    //db검색
-
     const descriptionId = await CommunityComment.findOne({
       where: { id: id, userId: userId },
     });
@@ -84,7 +82,7 @@ class communityCommentService {
       return descriptionId;
     }
   }
-
+  //5. 내가쓴 댓글 삭제
   static async deleteComment({ id, userId }) {
     const id_ = await CommunityComment.destroy({
       where: { id: id, userId: userId },

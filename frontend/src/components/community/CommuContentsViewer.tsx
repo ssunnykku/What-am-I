@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
-import { EditDelBtn } from '../../assets/styles/common/commonComponentStyle';
+import {
+  EditDelBtn,
+  ContentsProfile,
+} from '../../assets/styles/common/commonComponentStyle';
 import MyModal from '../modal/MyModal';
 import useModal from '../../hooks/modal/useModal';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import CommuLikeBtn from './CommuLikeBtn';
 import { CurrentCommuityProps } from '../modal/CommuContentsModal';
 import CommuWritingEditor from './CommuWritingEditor';
 import {
@@ -23,6 +25,8 @@ import {
 } from '../../types/community/communityType';
 import ImgCarousel from './Carousel';
 import CommuPostingLikeBtn from './CommuPostingLikeBtn';
+import ProfileCard from '../ProfileCard/ProfileCard';
+import ProfileContextMenu from '../ProfileCard/ProfileContextMenu';
 
 const CommuContentsViewer = (props: CurrentCommuityProps) => {
   const [isOpen, modalHandler] = useModal();
@@ -165,12 +169,14 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
         <AddWriting>
           <TopDiv>
             <div className="user-name">
-              <ProfileBox>
-                <div className="profile">
+              <ContentsProfile>
+                {/* <ProfileCard commuPost={postInfo} /> */}
+                <ProfileContextMenu commuPost={postInfo} />
+                {/* <div className="profile">
                   <img src={postInfo?.profileImg} />
-                </div>
+                </div> */}
                 <div>{postInfo?.nickname}</div>
-              </ProfileBox>
+              </ContentsProfile>
             </div>
             {props.currentUserInfo?.userId === postInfo?.userId ? (
               <ButtonBox>
@@ -193,9 +199,11 @@ const CommuContentsViewer = (props: CurrentCommuityProps) => {
             <div className="user-contents">{props.commuPost?.description}</div>
             {comments?.map((comment, idx) => (
               <div key={comment.id} className="user-comments">
-                <div className="profile-image">
+                {/* <ProfileCard comment={comment} /> */}
+                <ProfileContextMenu comment={comment} />
+                {/* <div className="profile">
                   <img src={comment.profileImg} />
-                </div>
+                </div> */}
                 {selectedIdx === idx && editing ? (
                   <input
                     ref={editInputRef}
@@ -332,33 +340,6 @@ const AddWriting = styled.div`
   }
 `;
 
-const ProfileBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 80%;
-  height: 3.5rem;
-  line-height: 4.3rem;
-  font-size: 17px;
-  font-family: ${font.bold};
-
-  .profile {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 15px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
 const ContentsBox = styled.div`
   border-top: solid 1px lightgray;
   padding: 3% 2%;
@@ -386,17 +367,18 @@ const ContentsBox = styled.div`
   .user-comments {
     display: inline-flex;
     justify-content: space-between;
+    align-items: center;
     position: relative;
-    padding: 10px 0;
+    padding: 6px 0;
     width: 100%;
     line-height: 20px;
     font-size: 14px;
 
-    .profile-image {
+    .profile {
       height: 37px;
       width: 37px;
       border-radius: 50%;
-      margin: 0 10px;
+      margin: 0 7px 0 10px;
       position: relative;
       overflow: hidden;
 
@@ -410,8 +392,8 @@ const ContentsBox = styled.div`
 
     .comment {
       width: 88%;
-      margin-top: 3px;
-      margin-left: 3px;
+      /* margin-top: 3px; */
+      /* margin-left: 3px; */
 
       span {
         font-family: ${font.bold};

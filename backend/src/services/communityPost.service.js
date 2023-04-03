@@ -1,8 +1,9 @@
 import { CommunityPost } from '../models/CommunityPost.model';
 import ApiError from '../utils/ApiError';
-import { COMMUNITYPOST_PER_PAGE } from '../utils/Constant';
+import dotenv from 'dotenv';
 import sequelize from '../config/sequelize';
 import { CommunityPostLike } from '../models/CommunityPostLike.model';
+dotenv.config();
 
 class communityPostService {
   static async createPost({ userId, communityId, images, description }) {
@@ -37,10 +38,12 @@ class communityPostService {
       },
     });
 
-    if (communityPostCount % COMMUNITYPOST_PER_PAGE === 0) {
-      return communityPostCount / COMMUNITYPOST_PER_PAGE;
+    if (communityPostCount % +process.env.COMMUNITYPOST_PER_PAGE === 0) {
+      return communityPostCount / +process.env.COMMUNITYPOST_PER_PAGE;
     } else {
-      return Math.floor(communityPostCount / COMMUNITYPOST_PER_PAGE) + 1;
+      return (
+        Math.floor(communityPostCount / +process.env.COMMUNITYPOST_PER_PAGE) + 1
+      );
     }
   }
 
@@ -49,8 +52,8 @@ class communityPostService {
       where: { communityId: communityId },
       order: [['id', 'DESC']],
 
-      offset: (defaultPage - 1) * COMMUNITYPOST_PER_PAGE,
-      limit: COMMUNITYPOST_PER_PAGE,
+      offset: (defaultPage - 1) * +process.env.COMMUNITYPOST_PER_PAGE,
+      limit: +process.env.COMMUNITYPOST_PER_PAGE,
     });
     if (!selectedCommunityPost) {
       throw ApiError.setBadRequest('No community available');

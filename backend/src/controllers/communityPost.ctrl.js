@@ -100,9 +100,8 @@ class communityPostController {
   //내가쓴 포스팅(글) 수정
   static async updateCommunityPost(req, res, next) {
     try {
-      // const userId = testId;
       const userId = req.currentUserId;
-      const id = req.params.id;
+      const id = req.params.communityPostId;
       const { images, description } = req.body;
 
       const updateCommunityPost =
@@ -130,9 +129,8 @@ class communityPostController {
   //내가쓴 포스팅(글) 삭제하기
   static async deleteCommunityPost(req, res, next) {
     try {
-      // const userId = testId;
       const userId = req.currentUserId;
-      const id = req.params.id;
+      const id = req.params.communityPostId;
 
       const deleteCommunityPost =
         await communityPostService.deleteCommunityPost({

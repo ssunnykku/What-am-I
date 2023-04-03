@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getUserData } from '../apis/mypageFetcher';
 import Storage from '../storage/storage';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -14,9 +15,6 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (req) => {
-    // req.headers = {
-    //   'Autorization' : `Bearer ${sessionStorage.getItem('userToken')}`
-    // }
     return req;
   },
   (error) => {
@@ -26,12 +24,46 @@ axiosInstance.interceptors.request.use(
 );
 
 axiosInstance.interceptors.response.use(
-  (res) => {
-    return res;
+  (response) => {
+    return response;
   },
-  (error) => {
+  async (error) => {
     // server error
-    throw error;
+    const {
+      config,
+      response: { status },
+    } = error;
+
+    const originalRequest = config;
+
+    if (status !== 201) {
+      const accessToken = Storage.getTokenItem();
+      const refreshToken = Storage.getRefreshTokenItem();
+
+      try {
+        const { data } = await axios({
+          method: 'post',
+          url: `${BASE_URL}refreshtoken`,
+          data: { accessToken, refreshToken },
+        });
+
+        if (refreshToken) {
+          const newAccessToken = data.token;
+
+          originalRequest.headers = {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${newAccessToken}`,
+          };
+          Storage.setTokenItem(newAccessToken);
+        }
+
+        return await axios(originalRequest);
+      } catch (error: any) {
+        new Error(error);
+        // console.log(err);
+      }
+    }
+    return Promise.reject(error);
   },
 );
 

@@ -5,6 +5,7 @@ import { theme } from '../../assets/styles/common/palette';
 import { font } from '../../assets/styles/common/fonts';
 import CommuLikeBtn from './CommuLikeBtn';
 import { CommunityTypeProps } from './CommuRankingCard';
+import CheckPinBtn from './CommuPinBtn';
 
 const CommuListCard = ({ listInfo }: CommunityTypeProps) => {
   return (
@@ -16,6 +17,7 @@ const CommuListCard = ({ listInfo }: CommunityTypeProps) => {
         <CommuName>{listInfo?.name}</CommuName>
         <LikeNum>
           <CommuLikeBtn listInfo={listInfo} />
+          <CheckPinBtn listInfo={listInfo} />
         </LikeNum>
       </SmallBox>
       <Link to={`/likedcommunity?id=${listInfo?.id}`}>

@@ -67,9 +67,21 @@ export async function getRankingCommunityRequest() {
   return res.data;
 }
 
+// 고정 커뮤니티 받기
+export async function getPinnedCommunityRequest() {
+  const res = await axiosInstance.get('pinedcommunities');
+  return res.data;
+}
+
 // 커뮤니티 전체 목록 받기
 export async function getCommunitiesRequest(pages: number) {
   const res = await axiosInstance.get(`communities?page=${pages}`);
+  return res.data;
+}
+
+// 커뮤니티 검색
+export async function getSearchRequest(word: string) {
+  const res = await axiosInstance.get(`communities/search?data=${word}`);
   return res.data;
 }
 
@@ -122,8 +134,25 @@ export async function deleteCurrCommuRequest(endpoint: string) {
   return res.data;
 }
 
-// like fetcher
-export async function postCommuLikeRequest(endpoint: string) {
+// like / pinned fetcher
+export async function postCommuRequest(endpoint: string) {
   const res = await axiosInstance.post(endpoint);
+  return res.data;
+}
+
+// 친구 추가
+export async function postAddOrBlockRequest(
+  friendId: string,
+  friendOrBlockStatus: number,
+) {
+  const res = await axiosInstance.post(
+    `friends/${friendId}/${friendOrBlockStatus}`,
+  );
+  return res.data;
+}
+
+// 프로필 하나 받기
+export async function getProfileRequest(friendId: string) {
+  const res = await axiosInstance.get(`friends/profile/${friendId}`);
   return res.data;
 }

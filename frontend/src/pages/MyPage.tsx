@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import BlockBuddy from '../components/mypage/BlockBuddy';
 import Community from '../components/mypage/Community';
 import MyCommunity from '../components/mypage/MyCommunity';
 import Profile from '../components/mypage/Profile';
@@ -11,6 +12,7 @@ export const enum PAGEVALUE {
   RESULT = 'Result',
   COMMUNITY = 'Community',
   MYCOMMUNITY = 'Mycommunity',
+  BLOCKBUDDY = 'Blockbuddy',
 }
 
 function MyPage() {
@@ -29,6 +31,9 @@ function MyPage() {
 
       case PAGEVALUE.MYCOMMUNITY:
         return <MyCommunity />;
+
+      case PAGEVALUE.BLOCKBUDDY:
+        return <BlockBuddy />;
     }
   };
 

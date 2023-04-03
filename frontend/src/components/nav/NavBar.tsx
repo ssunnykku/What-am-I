@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { menus } from '../commonConst/NavConst';
@@ -5,6 +6,8 @@ import { font } from '../../assets/styles/common/fonts';
 import { theme } from '../../assets/styles/common/palette';
 import useDetectClose from '../../hooks/dropdown/useDetectClose';
 import Storage from '../../storage/storage';
+import SpeechBubble from './SpeechBubble';
+import { getUserData } from '../../apis/mypageFetcher';
 const VITE_PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
 
 interface DropdownCssProps {
@@ -12,12 +15,21 @@ interface DropdownCssProps {
 }
 
 function NavBar() {
+  const [nickname, setNickname] = useState<string>('');
   const [myPageIsOpen, myPageRef, myPageHandler] = useDetectClose(false);
 
   function onLogout() {
     Storage.clearItemAll();
     location.href = `${VITE_PUBLIC_URL}`;
   }
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const res = await getUserData();
+      setNickname(res.nickname);
+    };
+    getUserInfo();
+  }, []);
 
   return (
     <NavDiv>
@@ -35,12 +47,17 @@ function NavBar() {
         <li id="profile">
           {Storage.getTokenItem() ? (
             <DropdownContainer>
+              <SpeechBubble />
               <DropdownButton onClick={myPageHandler} ref={myPageRef}>
-                {Storage.getNicknameItem()} 님
+                {/* {Storage.getNicknameItem()} 님 */}
+                {nickname} 님
               </DropdownButton>
               <Menu isDropped={myPageIsOpen}>
                 <Ul>
-                  <LinkWrapper to="/mypage" style={{ margin: '0' }}>
+                  <LinkWrapper to="/mybuddy">
+                    <Li>친구 관리</Li>
+                  </LinkWrapper>
+                  <LinkWrapper to="/mypage">
                     <Li>마이페이지</Li>
                   </LinkWrapper>
                   <LinkWrapper onClick={onLogout} to="/">
@@ -85,9 +102,10 @@ const NavDiv = styled.div`
 
   text-align: center;
   width: 100%;
-  height: 10vh;
-  min-width: 55rem;
-  line-height: 10vh;
+  height: 95px;
+  min-width: 65rem;
+  min-height: 95px;
+  line-height: 95px;
   font-family: ${font.bold};
   font-size: 1.3rem;
   background-color: ${theme.backColor};
@@ -96,6 +114,7 @@ const NavDiv = styled.div`
 const DropdownContainer = styled.div`
   position: relative;
   text-align: center;
+  display: flex;
 `;
 
 const DropdownButton = styled.div`

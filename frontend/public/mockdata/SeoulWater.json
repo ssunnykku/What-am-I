@@ -1,0 +1,6 @@
+{
+"DESCRIPTION" : {"COT_NAME_12":"컨텐츠상세필드명12","COT_NAME_13":"컨텐츠상세필드명13","COT_VALUE_20":"컨텐츠상세명20","PNU":"지번주소 코드","COT_ADDR_FULL_OLD":"지번주소","COT_VALUE_13":"컨텐츠상세명13","COT_VALUE_12":"컨텐츠상세명12","COT_VALUE_11":"컨텐츠상세명11","COT_NAME_01":"컨텐츠상세필드명1","LNG":"X좌표(LNG)","COT_CONTS_ID":"컨텐츠 아이디","COT_NAME_20":"컨텐츠상세필드명20","COT_VALUE_19":"컨텐츠상세명19","COT_VALUE_18":"컨텐츠상세명18","COT_VALUE_17":"컨텐츠상세명17","COT_VALUE_16":"컨텐츠상세명16","COT_VALUE_15":"컨텐츠상세명15","COT_VALUE_14":"컨텐츠상세명14","COT_NAME_14":"컨텐츠상세필드명14","LAT":"Y좌표(LAT)","COT_NAME_15":"컨텐츠상세필드명15","COT_ADDR_FULL_NEW":"도로명주소","COT_CONTS_NAME":"공원 명","COT_NAME_16":"컨텐츠상세필드명16","RPNU":"도로명주소 코드","COT_NAME_17":"컨텐츠상세필드명17","COT_NAME_18":"컨텐츠상세필드명18","COT_NAME_19":"컨텐츠상세필드명19"},
+"DATA" : [
+{"cot_value_20":null,"cot_conts_name":"남산한옥마을","lng":"126.9945","cot_name_12":null,"cot_name_13":null,"lat":"37.55825","cot_value_11":null,"cot_value_12":null,"cot_addr_full_new":"서울특별시 중구 퇴계로34길 28","cot_conts_id":"중구-남산한옥마을-5","cot_value_13":null,"cot_name_17":null,"cot_value_18":null,"cot_value_19":null,"cot_name_16":null,"pnu":"1114013800100840001","cot_name_15":null,"cot_name_14":null,"rpnu":null,"cot_value_14":null,"cot_value_15":null,"cot_name_19":null,"cot_value_16":null,"cot_value_17":null,"cot_name_18":null,"cot_name_20":null,"cot_name_01":"공원명","cot_addr_full_old":"서울특별시 중구 필동2가 84-1"}
+]
+}

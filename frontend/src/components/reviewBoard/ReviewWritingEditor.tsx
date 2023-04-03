@@ -11,6 +11,7 @@ import { getUserData } from '../../apis/mypageFetcher';
 import { UserInfoType } from '../../types/auth/authType';
 import { ReviewType } from '../../types/reviewboard/reviewType';
 import { useNavigate } from 'react-router-dom';
+import { WritingProfile } from '../../assets/styles/common/commonComponentStyle';
 
 interface ReviewReceiveProps {
   id?: number;
@@ -77,12 +78,12 @@ const ReviewWritingEditor = (props: ReviewReceiveProps) => {
         </AddImage>
         <AddWriting>
           <div className="user-name">
-            <ProfileBox>
+            <WritingProfile>
               <div className="profile">
                 <img src={userInfo?.profileImg} />
               </div>
               <div>{userInfo?.nickname}</div>
-            </ProfileBox>
+            </WritingProfile>
           </div>
           <div className="writing">
             <textarea
@@ -139,32 +140,6 @@ const ModalHeaderBtn = styled.button`
   &[disabled] {
     background: rgba(0, 0, 0, 0.1);
     cursor: revert;
-  }
-`;
-
-const ProfileBox = styled.div`
-  display: flex;
-  align-items: center;
-  width: 80%;
-  height: 3.5rem;
-  font-size: 16px;
-  font-family: ${font.bold};
-  padding-left: 5px;
-
-  .profile {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    margin-right: 10px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
   }
 `;
 

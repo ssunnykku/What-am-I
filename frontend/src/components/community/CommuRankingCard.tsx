@@ -15,7 +15,7 @@ const CommuRankingCard = ({ listInfo }: CommunityTypeProps) => {
       style={{ textDecoration: 'none', color: 'black' }}
       to={`/likedcommunity?id=${listInfo?.id}`}
     >
-      <CommuRankingCardBox>
+      <CommuCardBox>
         <CommuImage>
           <img src={listInfo?.communityImage} />
         </CommuImage>
@@ -23,7 +23,7 @@ const CommuRankingCard = ({ listInfo }: CommunityTypeProps) => {
         <div className="like-icon">
           <CommuLikeBtn listInfo={listInfo} />
         </div>
-      </CommuRankingCardBox>
+      </CommuCardBox>
     </Link>
   );
 };
@@ -39,7 +39,7 @@ const popup = keyframes`
   }
 `;
 
-const CommuRankingCardBox = styled.div`
+export const CommuCardBox = styled.div`
   width: 12rem;
   height: 12rem;
   border-radius: 20px;
@@ -49,9 +49,9 @@ const CommuRankingCardBox = styled.div`
   align-items: center;
   background-color: ${theme.backColor};
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-
   position: relative;
   overflow: hidden;
+
   .like-icon {
     position: absolute;
     z-index: 2;
@@ -73,7 +73,7 @@ const CommuRankingCardBox = styled.div`
   }
 `;
 
-const CommuImage = styled.div`
+export const CommuImage = styled.div`
   height: 150px;
   width: 170px;
   margin-top: 15px;
@@ -89,7 +89,7 @@ const CommuImage = styled.div`
   }
 `;
 
-const CommuName = styled.div`
+export const CommuName = styled.div`
   width: 10rem;
   height: 3.5rem;
   margin-top: 10px;

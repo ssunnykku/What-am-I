@@ -25,6 +25,7 @@ export interface CommunityType {
   communityImage: string;
   createdAt: string;
   updatedAt: string;
+  pinStatus: number;
 }
 
 export interface CommunityRankingType {
@@ -42,9 +43,24 @@ export interface CommunityRankingType {
   };
 }
 
+export interface PinnedCommunityType {
+  Community: {
+    communityImage: string;
+    createdAt: string;
+    id: number;
+    introduction: string;
+    name: string;
+    updatedAt: string;
+    userId: string;
+  };
+  communityId: number;
+  id: number;
+  userId: string;
+}
+
 export interface CommunityListType {
   communityCount: number;
-  selectedCommunity: Array<CommunityType>;
+  getCommunities: Array<CommunityType>;
 }
 
 export interface CurrentCommuPostsType {
@@ -56,6 +72,7 @@ export interface CurrentCommuPostsType {
   images: string;
   updatedAt: string;
   userId: string;
+  friendId: string;
   nickname: string;
   profileImg: string;
   likeCount: number;
@@ -69,6 +86,7 @@ export interface CurrCommuCommentsType {
   userId: string;
   nickname: string;
   profileImg: string;
+  friendId: string;
 }
 
 export interface CommuNumType {
@@ -76,4 +94,44 @@ export interface CommuNumType {
   countAllPosts: number;
   countCommunityLike: number;
   myCommunityLikeStatus: number;
+}
+
+export interface BuddyType {
+  FriendList: {
+    nickname: string;
+    profileImg: string;
+    userId: string;
+  };
+  friendId: string;
+  friendOrBlockStatus: number;
+  id: number;
+  userId: string;
+}
+
+export interface FollowerType {
+  blockStatus: number;
+  email: string;
+  friendId: string;
+  friendOrBlockStatus: number;
+  friendStatus: number;
+  id: number;
+  nickname: string;
+  profileImg: string;
+  userId: string;
+}
+
+export interface FriendType {
+  id: number;
+  userId: string;
+  friendId: string;
+  friendOrBlockStatus: number;
+  message: string;
+}
+
+export interface UserProfileType {
+  email: string;
+  friendStatus: number;
+  nickname: string;
+  profileImg: string;
+  userId: string;
 }
