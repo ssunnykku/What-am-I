@@ -4,8 +4,6 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import sequelize from './src/config/sequelize';
 import { logger } from './src/config/logger';
-import http from 'http';
-import { Server } from 'socket.io';
 
 //**Router */
 import { communityRouter } from './src/routes/community.route';
@@ -76,6 +74,13 @@ app.use(friendRouter);
 //     });
 // });
 
+const getApiAndEmit = (socket) => {
+  const response = new Date();
+  // Emitting a new message. Will be consumed by the client
+  socket.emit('FromAPI', response);
+};
+server.listen(port, () => console.log(`Listening on port ${port}`));
+
 app.use(errorMiddleware);
 
 // 왜 모든 url에서 에러가?
@@ -87,6 +92,6 @@ app.use(errorMiddleware);
 //   next(error);
 // });
 
-app.listen(process.env.SEVER_PORT, () =>
-  logger.info(`✅ Listening to port 5001`),
-);
+// app.listen(process.env.SEVER_PORT, () =>
+//   logger.info(`✅ Listening to port 5001`),
+// );
