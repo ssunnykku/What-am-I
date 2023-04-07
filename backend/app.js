@@ -4,8 +4,6 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import sequelize from './src/config/sequelize';
 import { logger } from './src/config/logger';
-import http from 'http';
-import { Server } from 'socket.io';
 
 //**Router */
 import { communityRouter } from './src/routes/community.route';
@@ -53,28 +51,35 @@ app.use(pinnedCommunityRouter);
 app.use(aiSearchResultRouter);
 app.use(friendRouter);
 
+import http from 'http';
+import socketIo from 'socket.io';
+import index from './src/routes/index.js';
+app.use(index);
+
 const server = http.createServer(app);
-const io = new Server(server);
+
+const io = socketIo(server);
+
+let interval;
 
 io.on('connection', (socket) => {
-  sockets.push(socket);
-  socket['nickname'] = 'Anon';
-  console.log('Connected to Browser ✅');
-
-  socket.on('nickname', (msg) => {
-    console.log('nickname: ' + msg);
-    io.emit('nickname', msg);
-  });
-
-  socket.on('chat message', (msg) => {
-    console.log('chat message: ' + msg);
-    io.emit('chat message', msg);
-  });
-
-  socket.on('close', () => {
-    console.log('Disconnected from the Browser ❌');
+  console.log('New client connected');
+  if (interval) {
+    clearInterval(interval);
+  }
+  interval = setInterval(() => getApiAndEmit(socket), 1000);
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+    clearInterval(interval);
   });
 });
+
+const getApiAndEmit = (socket) => {
+  const response = new Date();
+  // Emitting a new message. Will be consumed by the client
+  socket.emit('FromAPI', response);
+};
+server.listen(port, () => console.log(`Listening on port ${port}`));
 
 app.use(errorMiddleware);
 
@@ -87,6 +92,6 @@ app.use(errorMiddleware);
 //   next(error);
 // });
 
-app.listen(process.env.SEVER_PORT, () =>
-  logger.info(`✅ Listening to port 5001`),
-);
+// app.listen(process.env.SEVER_PORT, () =>
+//   logger.info(`✅ Listening to port 5001`),
+// );
