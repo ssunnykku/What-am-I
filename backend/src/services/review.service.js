@@ -2,15 +2,14 @@ import { Review } from '../models/Review.model.js';
 import { ReviewLike } from '../models/ReviewLike.model';
 import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
-import { AiSearchResult } from '../models/AiSearchResult.model.js';
 import { User } from '../models/User.model';
 import { Op } from 'sequelize';
 dotenv.config();
 
 class reviewService {
-  static async addReview({ description, userId, aiResultId }) {
+  static async addReview({ description, userId }) {
     const findReview = await Review.findOne({
-      where: { userId, aiResultId },
+      where: { userId },
     });
 
     if (findReview) {
@@ -22,7 +21,6 @@ class reviewService {
     const createdNewReview = await Review.create({
       description,
       userId,
-      aiResultId,
     });
     createdNewReview.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
