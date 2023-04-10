@@ -5,10 +5,8 @@ import { font } from '../assets/styles/common/fonts';
 import { BigBox } from '../assets/styles/common/commonComponentStyle';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
-import Storage from '../storage/storage';
 import SearchMsgModal from '../components/modal/SearchMsgModal';
-import { getFollowingBuddyData, getUserData } from '../apis/mypageFetcher';
-import { BuddyType } from '../types/community/communityType';
+import { getUserData } from '../apis/mypageFetcher';
 
 const ChatRoomPage = () => {
   const [nickname, setNickname] = useState<string>('');
