@@ -2,6 +2,16 @@ import { userService } from '../services/user.service.js';
 import { registerValidator } from '../middlewares/userValidator';
 import jwt from 'jsonwebtoken';
 
+// redis
+// 토큰 발급 되었다
+// 다시 발급했다?
+// 새로운 토큰으로 덮어쓰기
+// 기존 데이터는 자연스럽게 사라짐
+// PK는 위험
+// jwt 토큰 : 어디까지 방어가 가능하고 어디까지 불가능한지??!! 알아야 됨
+// act 저장X ref 저장 => accesstoken 짧게 하면(관례적으로 이렇게 짬)
+// ref 유효기간을 redis 유효기간으로 설정??
+
 class userController {
   // 회원가입
   static async register(req, res, next) {
@@ -38,6 +48,7 @@ class userController {
       next(error);
     }
   }
+
   // 전체 가입자 목록
   static async userList(req, res, next) {
     try {
