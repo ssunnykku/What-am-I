@@ -29,7 +29,6 @@ class reviewController {
   //새로운 리뷰 등록
   static async register(req, res, next) {
     try {
-      const aiResultId = req.params.aiResultId;
       const userId = req.currentUserId;
 
       const { description } = req.body;
@@ -37,7 +36,6 @@ class reviewController {
       const newReview = await reviewService.addReview({
         description,
         userId,
-        aiResultId,
       });
       if (newReview.errorMessage) {
         throw new Error(newReview);

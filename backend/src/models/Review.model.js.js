@@ -19,11 +19,6 @@ class Review extends Sequelize.Model {
           type: DataTypes.UUID,
           foreignKey: true,
         },
-        aiResultId: {
-          type: Sequelize.INTEGER,
-          foreignKey: true,
-          allowNull: true,
-        },
       },
       {
         sequelize,
@@ -46,11 +41,6 @@ class Review extends Sequelize.Model {
     db.Review.hasMany(db.ReviewLike, {
       foreignKey: 'reviewId',
       targetKey: 'id',
-    });
-    db.Review.belongsTo(db.AiSearchResult, {
-      foreignKey: 'aiResultId',
-      targetKey: 'id',
-      onDelete: 'CASCADE',
     });
   }
 }
