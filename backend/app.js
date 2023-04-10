@@ -19,7 +19,6 @@ import { reviewLikeRouter } from './src/routes/reviewLike.route.js';
 
 import { myPageRouter } from './src/routes/myPage.route';
 import { communityLikeRouter } from './src/routes/communityLike.route';
-import { aiSearchResultRouter } from './src/routes/aiSearchResult.route';
 
 import { friendRouter } from './src/routes/friend.route';
 
@@ -48,7 +47,6 @@ app.use(communityLikeRouter);
 app.use(communityCommentRouter);
 app.use(communityPostLikeRouter);
 app.use(pinnedCommunityRouter);
-app.use(aiSearchResultRouter);
 app.use(friendRouter);
 
 import http from 'http';

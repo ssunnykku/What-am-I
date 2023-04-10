@@ -8,12 +8,8 @@ const reviewRouter = Router();
 //리뷰 전부다 가지고오기
 reviewRouter.get('/reviews', loginRequired, reviewController.allReviews);
 
-// 리뷰 작성하기
-reviewRouter.post(
-  '/review/:aiResultId',
-  loginRequired,
-  reviewController.register,
-);
+// 리뷰 작성하기 (수정된 api)
+reviewRouter.post('/reviews', loginRequired, reviewController.register);
 
 //내가쓴 모든 리뷰 다 가지고오기
 reviewRouter.get('/review/my', loginRequired, reviewController.myReviews);
