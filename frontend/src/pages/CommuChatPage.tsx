@@ -22,7 +22,7 @@ const CommuChat = () => {
   const id = getParameter('id');
 
   // 챗 연결 부분
-  const socket = io('http://localhost:3000', {
+  const socket = io('http://localhost:3500', {
     cors: {
       origin: '*',
     },
