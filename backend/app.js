@@ -5,8 +5,16 @@ import cors from 'cors';
 import sequelize from './src/config/sequelize';
 import { logger } from './src/config/logger';
 import http from 'http';
-import socketIo from 'socket.io';
-import index from './src/routes/index.js';
+// import socketIo from 'socket.io';
+// import index from './src/routes/index.js';
+import io from 'socket.io';
+
+const soekctServer = io(httpServer, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+  },
+});
 
 //**Router */
 import { communityRouter } from './src/routes/community.route';
@@ -57,7 +65,7 @@ app.use(index);
 
 app.use(errorMiddleware);
 
-const server = http.createServer(app);
+// const server = http.createServer(app);
 
 //       // 받은 데이터를 클라이언트로 전송
 //       res.json(data);
@@ -71,14 +79,14 @@ const server = http.createServer(app);
 //     });
 // });
 
-const getApiAndEmit = (socket) => {
-  const response = new Date();
-  // Emitting a new message. Will be consumed by the client
-  socket.emit('FromAPI', response);
-};
-server.listen(3500, () =>
-  console.log(`Listening on port ${process.env.SEVER_PORT}`),
-);
+// const getApiAndEmit = (socket) => {
+//   const response = new Date();
+//   // Emitting a new message. Will be consumed by the client
+//   socket.emit('FromAPI', response);
+// };
+// server.listen(3500, () =>
+//   console.log(`Listening on port ${process.env.SEVER_PORT}`),
+// );
 
 // 왜 모든 url에서 에러가?
 // app.use((req, res, next) => {
@@ -89,11 +97,16 @@ server.listen(3500, () =>
 //   next(error);
 // });
 
+socketServer.on('connect', (socket) => {
+  socket.on('test', (req) => {
+    console.log(req);
+  });
+});
+
 app.listen(process.env.SEVER_PORT, () =>
   logger.info(`✅ Listening to port 5001`),
 );
 
-process.on('uncaughtException', (err) => {
-  console.log(err);
-});
-//sudo lsof -i :5001
+// process.on('uncaughtException', (err) => {
+//   console.log(err);
+// });
