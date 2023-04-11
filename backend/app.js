@@ -5,24 +5,8 @@ import cors from 'cors';
 import sequelize from './src/config/sequelize';
 import { logger } from './src/config/logger';
 import http from 'http';
-// import socketIo from 'socket.io';
-// import index from './src/routes/index.js';
-import io from 'socket.io';
 
-const httpServer = http.createServer(app).listen(3000);
-
-const socketServer = io(httpServer, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST'],
-  },
-});
-
-socketServer.on('connect', (socket) => {
-  socket.on('test', (req) => {
-    console.log(req);
-  });
-});
+import { socketConfig } from './src/config/socket.js';
 
 //**Router */
 import { communityRouter } from './src/routes/community.route';
@@ -49,6 +33,10 @@ dotenv.config();
 
 const app = express();
 
+const httpServer = http.createServer(app).listen(3500);
+
+socketConfig(httpServer);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: '*', credentials: true }));
@@ -72,40 +60,6 @@ app.use(friendRouter);
 app.use(index);
 
 app.use(errorMiddleware);
-
-// const server = http.createServer(app);
-
-// const io = socketIo(server);
-
-// let interval;
-
-// io.on('connection', (socket) => {
-//   console.log('New client connected');
-//   if (interval) {
-//     clearInterval(interval);
-//   }
-//   interval = setInterval(() => getApiAndEmit(socket), 1000);
-//   socket.on('disconnect', () => {
-//     console.log('Client disconnected');
-//     clearInterval(interval);
-//   });
-// });
-
-// const getApiAndEmit = (socket) => {
-//   const response = new Date();
-//   // Emitting a new message. Will be consumed by the client
-//   socket.emit('FromAPI', response);
-// };
-// server.listen(port, () => console.log(`Listening on port ${port}`));
-
-// 왜 모든 url에서 에러가?
-// app.use((req, res, next) => {
-//   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
-//   error.status = 404;
-//   logger.info('Hello, Winston logger, some info!');
-//   logger.error('Error message');
-//   next(error);
-// });
 
 app.listen(process.env.SEVER_PORT, () =>
   logger.info(`✅ Listening to port 5001`),
