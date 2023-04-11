@@ -5,8 +5,16 @@ import cors from 'cors';
 import sequelize from './src/config/sequelize';
 import { logger } from './src/config/logger';
 import http from 'http';
-import socketIo from 'socket.io';
-import index from './src/routes/index.js';
+// import socketIo from 'socket.io';
+// import index from './src/routes/index.js';
+import io from 'socket.io';
+
+const soekctServer = io(httpServer, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+  },
+});
 
 //**Router */
 import { communityRouter } from './src/routes/community.route';
@@ -54,8 +62,6 @@ app.use(friendRouter);
 
 app.use(index);
 
-app.use(errorMiddleware);
-
 const server = http.createServer(app);
 
 const io = socketIo(server);
@@ -79,9 +85,9 @@ const getApiAndEmit = (socket) => {
   // Emitting a new message. Will be consumed by the client
   socket.emit('FromAPI', response);
 };
-server.listen(3500, () =>
-  console.log(`Listening on port ${process.env.SEVER_PORT}`),
-);
+server.listen(port, () => console.log(`Listening on port ${port}`));
+
+app.use(errorMiddleware);
 
 // 왜 모든 url에서 에러가?
 // app.use((req, res, next) => {
@@ -92,11 +98,6 @@ server.listen(3500, () =>
 //   next(error);
 // });
 
-app.listen(process.env.SEVER_PORT, () =>
-  logger.info(`✅ Listening to port 5001`),
-);
-
-process.on('uncaughtException', (err) => {
-  console.log(err);
-});
-//sudo lsof -i :5001
+// app.listen(process.env.SEVER_PORT, () =>
+//   logger.info(`✅ Listening to port 5001`),
+// );
