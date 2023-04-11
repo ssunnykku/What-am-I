@@ -9,7 +9,7 @@ import http from 'http';
 // import index from './src/routes/index.js';
 import io from 'socket.io';
 
-const httpServer = http.createServer(app).listen(3500);
+const httpServer = http.createServer(app).listen(3000);
 
 const socketServer = io(httpServer, {
   cors: {

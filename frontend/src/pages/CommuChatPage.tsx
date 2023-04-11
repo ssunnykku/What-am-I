@@ -22,8 +22,26 @@ const CommuChat = () => {
   const id = getParameter('id');
 
   // 챗 연결 부분
-  const BASE_URL = import.meta.env.VITE_PUBLIC_URL;
-  const socket = io();
+  const socket = io('http://localhost:3000', {
+    cors: {
+      origin: '*',
+    },
+  });
+
+  socket.on('test', (socket) => {
+    console.log(socket, 'test 소켓');
+  });
+
+  const handleRequestSocket = () => {
+    const res = socket.emit('test', {
+      data: 'test socket on client',
+    });
+    console.log(res);
+  };
+
+  function handleChange() {
+    console.log('change handle');
+  }
 
   const postChatMsg = (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,7 +105,8 @@ const CommuChat = () => {
               <button
                 style={{ width: '10%', marginLeft: '5px' }}
                 disabled={inputChatMsg.length === 0}
-                onClick={postChatMsg}
+                // onClick={postChatMsg}
+                onClick={handleRequestSocket}
               >
                 <SendOutlinedIcon
                   style={{
