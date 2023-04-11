@@ -9,11 +9,19 @@ import http from 'http';
 // import index from './src/routes/index.js';
 import io from 'socket.io';
 
-const soekctServer = io(httpServer, {
+const httpServer = http.createServer(app).listen(3500);
+
+const socketServer = io(httpServer, {
   cors: {
     origin: '*',
     methods: ['GET', 'POST'],
   },
+});
+
+socketServer.on('connect', (socket) => {
+  socket.on('test', (req) => {
+    console.log(req);
+  });
 });
 
 //**Router */
@@ -60,34 +68,33 @@ app.use(communityPostLikeRouter);
 app.use(pinnedCommunityRouter);
 app.use(friendRouter);
 
-app.use(index);
-
-const server = http.createServer(app);
-
-const io = socketIo(server);
-
-let interval;
-
-io.on('connection', (socket) => {
-  console.log('New client connected');
-  if (interval) {
-    clearInterval(interval);
-  }
-  interval = setInterval(() => getApiAndEmit(socket), 1000);
-  socket.on('disconnect', () => {
-    console.log('Client disconnected');
-    clearInterval(interval);
-  });
-});
-
-const getApiAndEmit = (socket) => {
-  const response = new Date();
-  // Emitting a new message. Will be consumed by the client
-  socket.emit('FromAPI', response);
-};
-server.listen(port, () => console.log(`Listening on port ${port}`));
-
+// app.use(index);
 app.use(errorMiddleware);
+
+// const server = http.createServer(app);
+
+// const io = socketIo(server);
+
+// let interval;
+
+// io.on('connection', (socket) => {
+//   console.log('New client connected');
+//   if (interval) {
+//     clearInterval(interval);
+//   }
+//   interval = setInterval(() => getApiAndEmit(socket), 1000);
+//   socket.on('disconnect', () => {
+//     console.log('Client disconnected');
+//     clearInterval(interval);
+//   });
+// });
+
+// const getApiAndEmit = (socket) => {
+//   const response = new Date();
+//   // Emitting a new message. Will be consumed by the client
+//   socket.emit('FromAPI', response);
+// };
+// server.listen(port, () => console.log(`Listening on port ${port}`));
 
 // 왜 모든 url에서 에러가?
 // app.use((req, res, next) => {
@@ -98,6 +105,6 @@ app.use(errorMiddleware);
 //   next(error);
 // });
 
-// app.listen(process.env.SEVER_PORT, () =>
-//   logger.info(`✅ Listening to port 5001`),
-// );
+app.listen(process.env.SEVER_PORT, () =>
+  logger.info(`✅ Listening to port 5001`),
+);
