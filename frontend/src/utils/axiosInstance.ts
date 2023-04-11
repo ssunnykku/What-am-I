@@ -49,12 +49,13 @@ axiosInstance.interceptors.response.use(
 
         if (refreshToken) {
           const newAccessToken = data.token;
+          Storage.setTokenItem(newAccessToken);
 
           originalRequest.headers = {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${newAccessToken}`,
           };
-          Storage.setTokenItem(newAccessToken);
+          // Storage.setTokenItem(newAccessToken);
         }
 
         return await axios(originalRequest);
