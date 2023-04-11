@@ -14,50 +14,10 @@ const BASE_URL = import.meta.env.VITE_PUBLIC_URL;
 // });
 
 function App() {
-  const [response, setResponse] = useState<string>('');
-
-  const socket = io('http://localhost:3500', {
-    cors: {
-      origin: '*',
-    },
-  });
-
-  socket.on('test', (socket) => {
-    console.log(socket);
-  });
-
-  const handleRequestSocket = () => {
-    const res = socket.emit('test', {
-      data: 'test socket on client',
-    });
-    console.log(res);
-  };
-
-  function handleChange() {
-    console.log('change handle');
-  }
-
-  // useEffect(() => {
-  //   const socket = io();
-  //   socket.on('chat message', (data) => {
-  //     console.log('message', data);
-  //     // setResponse(data);
-  //   });
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
-
   return (
     <ErrorBoundary FallbackComponent={UiErrorFallback}>
       <MyRouter />
       <GlobalStyle />
-      <div>
-        test socket connection
-        <button onClick={handleRequestSocket}>Request</button>
-        <input type="text" onChange={handleChange} />
-      </div>
     </ErrorBoundary>
   );
 }
