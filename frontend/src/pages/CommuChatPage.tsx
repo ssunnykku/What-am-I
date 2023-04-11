@@ -12,7 +12,8 @@ import { io } from 'socket.io-client';
 
 const CommuChat = () => {
   const [message, setMessage] = useState<string>('');
-  const [chatMsg, setChatMsg] = useState<string>('');
+  const [inputChatMsg, setInputChatMsg] = useState<string>('');
+  const [newChatMsg, setNewChatMsg] = useState<string>('');
   const [commuChatInfo, setCommuChatInfo] = useState<CommunityType>();
 
   let getParameter = (key: string) => {
@@ -21,18 +22,29 @@ const CommuChat = () => {
   const id = getParameter('id');
 
   // 챗 연결 부분
+  const BASE_URL = import.meta.env.VITE_PUBLIC_URL;
   const socket = io();
-  const onSubmitChatMsg = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const postChatMsg = (e: React.FormEvent) => {
     e.preventDefault();
-    if (message) {
-      socket.emit('chat message', e.target.value);
-      setMessage('');
-    }
+    socket.emit('chat message', inputChatMsg);
+    console.log('내가 보내는 채팅', inputChatMsg);
+    setInputChatMsg('');
   };
 
-  socket.on('chat message', function (msg) {
-    setChatMsg(msg);
-  });
+  // const onSubmitChatMsg = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   console.log(newChatMsg);
+  //   if (message) {
+  //     socket.emit('chat message', e.target.value);
+  //     console.log(e.target.value, '쳇 연결 값');
+  //     setMessage('');
+  //   }
+  // };
+
+  // socket.on('chat message', function (msg) {
+  //   setChatMsg(msg);
+  // });
 
   const getCommuChatInfo = async () => {
     const res = await getCurrentCommunityRequest(`communities/posts/${id}`);
@@ -53,16 +65,16 @@ const CommuChat = () => {
           <div className="chat-name">{commuChatInfo?.name}</div>
         </header>
         <ContentsBox>
-          <div>여기 부분에 챗 메시지가 떠야 함{chatMsg}</div>
+          <div>여기 부분에 챗 메시지가 떠야 함</div>
         </ContentsBox>
         <BottomBox>
           <InputBox style={{ bottom: '20px' }}>
-            <div className="input-container" onSubmit={onSubmitChatMsg}>
+            <div className="input-container">
               <input
                 type="text"
                 placeholder="메시지를 입력해주세요..."
-                value={message || ''}
-                onChange={(e) => setMessage(e.target.value)}
+                value={inputChatMsg}
+                onChange={(e) => setInputChatMsg(e.target.value)}
               />
               <div>
                 <ImageOutlinedIcon
@@ -74,8 +86,8 @@ const CommuChat = () => {
               </div>
               <button
                 style={{ width: '10%', marginLeft: '5px' }}
-                disabled={message.length === 0}
-                type="submit"
+                disabled={inputChatMsg.length === 0}
+                onClick={postChatMsg}
               >
                 <SendOutlinedIcon
                   style={{
