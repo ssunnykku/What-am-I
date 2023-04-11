@@ -16,11 +16,10 @@ const BASE_URL = import.meta.env.VITE_PUBLIC_URL;
 function App() {
   const [response, setResponse] = useState<string>('');
 
-  const socket = io('hhttp://127.0.0.1:3500/', {
+  const socket = io('http://localhost:3500', {
     cors: {
       origin: '*',
     },
-    transports: ['websocket'],
   });
 
   socket.on('test', (socket) => {
@@ -28,9 +27,10 @@ function App() {
   });
 
   const handleRequestSocket = () => {
-    socket.emit('test', {
+    const res = socket.emit('test', {
       data: 'test socket on client',
     });
+    console.log(res);
   };
 
   function handleChange() {
