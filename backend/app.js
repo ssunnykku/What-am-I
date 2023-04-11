@@ -9,11 +9,19 @@ import http from 'http';
 // import index from './src/routes/index.js';
 import io from 'socket.io';
 
-const soekctServer = io(httpServer, {
+const httpServer = http.createServer(app).listen(3500);
+
+const socketServer = io(httpServer, {
   cors: {
     origin: '*',
     methods: ['GET', 'POST'],
   },
+});
+
+socketServer.on('connect', (socket) => {
+  socket.on('test', (req) => {
+    console.log(req);
+  });
 });
 
 //**Router */
@@ -67,16 +75,20 @@ app.use(errorMiddleware);
 
 // const server = http.createServer(app);
 
-//       // 받은 데이터를 클라이언트로 전송
-//       res.json(data);
-//     })
-//     .catch((error) => {
-//       // API 요청이 실패한 경우
-//       console.error(error);
+// const io = socketIo(server);
 
-//       // 에러 메시지를 클라이언트로 전송
-//       res.status(500).json({ error: 'API 요청에 실패했습니다.' });
-//     });
+// let interval;
+
+// io.on('connection', (socket) => {
+//   console.log('New client connected');
+//   if (interval) {
+//     clearInterval(interval);
+//   }
+//   interval = setInterval(() => getApiAndEmit(socket), 1000);
+//   socket.on('disconnect', () => {
+//     console.log('Client disconnected');
+//     clearInterval(interval);
+//   });
 // });
 
 // const getApiAndEmit = (socket) => {
@@ -84,9 +96,7 @@ app.use(errorMiddleware);
 //   // Emitting a new message. Will be consumed by the client
 //   socket.emit('FromAPI', response);
 // };
-// server.listen(3500, () =>
-//   console.log(`Listening on port ${process.env.SEVER_PORT}`),
-// );
+// server.listen(port, () => console.log(`Listening on port ${port}`));
 
 // 왜 모든 url에서 에러가?
 // app.use((req, res, next) => {
@@ -97,16 +107,6 @@ app.use(errorMiddleware);
 //   next(error);
 // });
 
-socketServer.on('connect', (socket) => {
-  socket.on('test', (req) => {
-    console.log(req);
-  });
-});
-
 app.listen(process.env.SEVER_PORT, () =>
   logger.info(`✅ Listening to port 5001`),
 );
-
-// process.on('uncaughtException', (err) => {
-//   console.log(err);
-// });
