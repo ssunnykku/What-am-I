@@ -8,15 +8,31 @@ import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import { BottomBox, InputBox } from './ChatRoomPage';
 import { CommunityType } from '../types/community/communityType';
 import { getCurrentCommunityRequest } from '../apis/communityFetcher';
+import { io } from 'socket.io-client';
 
 const CommuChat = () => {
   const [message, setMessage] = useState<string>('');
+  const [chatMsg, setChatMsg] = useState<string>('');
   const [commuChatInfo, setCommuChatInfo] = useState<CommunityType>();
 
   let getParameter = (key: string) => {
     return new URLSearchParams(location.search).get(key);
   };
   const id = getParameter('id');
+
+  // 챗 연결 부분
+  const socket = io();
+  const onSubmitChatMsg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (message) {
+      socket.emit('chat message', e.target.value);
+      setMessage('');
+    }
+  };
+
+  socket.on('chat message', function (msg) {
+    setChatMsg(msg);
+  });
 
   const getCommuChatInfo = async () => {
     const res = await getCurrentCommunityRequest(`communities/posts/${id}`);
@@ -36,10 +52,12 @@ const CommuChat = () => {
           </div>
           <div className="chat-name">{commuChatInfo?.name}</div>
         </header>
-        <ContentsBox></ContentsBox>
+        <ContentsBox>
+          <div>여기 부분에 챗 메시지가 떠야 함{chatMsg}</div>
+        </ContentsBox>
         <BottomBox>
           <InputBox style={{ bottom: '20px' }}>
-            <div className="input-container">
+            <div className="input-container" onSubmit={onSubmitChatMsg}>
               <input
                 type="text"
                 placeholder="메시지를 입력해주세요..."
@@ -57,6 +75,7 @@ const CommuChat = () => {
               <button
                 style={{ width: '10%', marginLeft: '5px' }}
                 disabled={message.length === 0}
+                type="submit"
               >
                 <SendOutlinedIcon
                   style={{
