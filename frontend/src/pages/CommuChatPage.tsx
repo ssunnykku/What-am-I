@@ -29,49 +29,7 @@ const CommuChat = () => {
   };
   const id = getParameter('id');
 
-  // 챗 연결 부분
-  const socket = io('http://localhost:3000', {
-    cors: {
-      origin: '*',
-    },
-  });
-
-  socket.on('test', (socket) => {
-    console.log(socket, 'test 소켓');
-  });
-
-  const handleRequestSocket = () => {
-    const res = socket.emit('test', {
-      data: 'test socket on client',
-    });
-    console.log(res);
-  };
-
-  function handleChange() {
-    console.log('change handle');
-  }
-
-  const postChatMsg = (e: React.FormEvent) => {
-    e.preventDefault();
-    socket.emit('chat message', inputChatMsg);
-    console.log('내가 보내는 채팅', inputChatMsg);
-    setInputChatMsg('');
-  };
-
-  // const onSubmitChatMsg = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   console.log(newChatMsg);
-  //   if (message) {
-  //     socket.emit('chat message', e.target.value);
-  //     console.log(e.target.value, '쳇 연결 값');
-  //     setMessage('');
-  //   }
-  // };
-
-  // socket.on('chat message', function (msg) {
-  //   setChatMsg(msg);
-  // });
-
+  // 커뮤니티 정보 가져오기
   const getCommuChatInfo = async () => {
     const res = await getCurrentCommunityRequest(`communities/posts/${id}`);
     setCommuChatInfo(res);
