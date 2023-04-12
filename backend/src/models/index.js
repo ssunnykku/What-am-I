@@ -13,6 +13,8 @@ import { CommunityPostLike } from './CommunityPostLike.model';
 import { CommunityComment } from './CommunityComment.model';
 import { CommunityLike } from './CommunityLike.model';
 import { PinnedCommunity } from './PinnedCommunity.model';
+import { CommunityChat } from './communityChat.model';
+import { UserCommunity } from './UserCommunity.model';
 
 import { Friend } from './Friend.model';
 
@@ -32,6 +34,8 @@ db.CommunityLike = CommunityLike;
 db.CommunityPostLike = CommunityPostLike;
 db.PinnedCommunity = PinnedCommunity;
 db.Friend = Friend;
+db.CommunityChat = CommunityChat;
+db.UserCommunity = UserCommunity;
 
 User.init(sequelize);
 RefreshToken.init(sequelize);
@@ -45,6 +49,8 @@ CommunityLike.init(sequelize);
 CommunityPostLike.init(sequelize);
 PinnedCommunity.init(sequelize);
 Friend.init(sequelize);
+CommunityChat.init(sequelize);
+UserCommunity.init(sequelize);
 
 Community.associate(db);
 CommunityPost.associate(db);
@@ -57,5 +63,7 @@ ReviewComment.associate(db);
 ReviewLike.associate(db);
 PinnedCommunity.associate(db);
 Friend.associate(db);
+CommunityChat.associate(db);
+UserCommunity.associate(db);
 
 export { db };
