@@ -1,9 +1,3 @@
-import { Router } from 'express';
+import communityRouter from './community.Route';
 
-const router = Router();
-
-router.get('/', (req, res) => {
-  res.send({ response: 'I am alive' }).status(200);
-});
-
-module.exports = router;
+export { communityRouter };
