@@ -3,75 +3,88 @@ import styled from 'styled-components';
 import { BigBox } from '../assets/styles/common/commonComponentStyle';
 import { font } from '../assets/styles/common/fonts';
 import { theme } from '../assets/styles/common/palette';
-import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
-import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
-import { BottomBox, InputBox } from './ChatRoomPage';
 import { CommunityType } from '../types/community/communityType';
 import { getCurrentCommunityRequest } from '../apis/communityFetcher';
-import { io } from 'socket.io-client';
+import { Socket, io } from 'socket.io-client';
+import socketIOClient from 'socket.io-client';
+import CommuChatInput from '../components/chat/CommuChatInput';
+import { getUserData } from '../apis/mypageFetcher';
+import CommuChatLog from '../components/chat/CommuChatLog';
+
+interface UserInfoType {
+  email: string;
+  nickname: string;
+  profileImg: string;
+  userId: string;
+}
 
 const CommuChat = () => {
-  const [message, setMessage] = useState<string>('');
+  const [nickname, setNickname] = useState('');
   const [inputChatMsg, setInputChatMsg] = useState<string>('');
-  const [newChatMsg, setNewChatMsg] = useState<string>('');
   const [commuChatInfo, setCommuChatInfo] = useState<CommunityType>();
 
+  // 커뮤니티 아이디 가져오기
   let getParameter = (key: string) => {
     return new URLSearchParams(location.search).get(key);
   };
   const id = getParameter('id');
 
-  // 챗 연결 부분
-  const socket = io('http://localhost:3000', {
-    cors: {
-      origin: '*',
-    },
-  });
-
-  socket.on('test', (socket) => {
-    console.log(socket, 'test 소켓');
-  });
-
-  const handleRequestSocket = () => {
-    const res = socket.emit('test', {
-      data: 'test socket on client',
-    });
-    console.log(res);
-  };
-
-  function handleChange() {
-    console.log('change handle');
-  }
-
-  const postChatMsg = (e: React.FormEvent) => {
-    e.preventDefault();
-    socket.emit('chat message', inputChatMsg);
-    console.log('내가 보내는 채팅', inputChatMsg);
-    setInputChatMsg('');
-  };
-
-  // const onSubmitChatMsg = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   console.log(newChatMsg);
-  //   if (message) {
-  //     socket.emit('chat message', e.target.value);
-  //     console.log(e.target.value, '쳇 연결 값');
-  //     setMessage('');
-  //   }
-  // };
-
-  // socket.on('chat message', function (msg) {
-  //   setChatMsg(msg);
-  // });
-
+  // 커뮤니티 정보 가져오기
   const getCommuChatInfo = async () => {
     const res = await getCurrentCommunityRequest(`communities/posts/${id}`);
     setCommuChatInfo(res);
   };
-
+  const getUserInfo = async () => {
+    const res = await getUserData();
+    setNickname(res);
+    console.log(res);
+  };
   useEffect(() => {
     getCommuChatInfo();
+    getUserInfo();
   }, []);
+
+  // ###### socket.io 부분 ######
+
+  const [currSocket, setCurrSocket] = useState<Socket>();
+  const chatUserInfo = {
+    roomName: id,
+    userName: nickname,
+  };
+
+  useEffect(() => {
+    setCurrSocket(socketIOClient('http://localhost:3500'));
+  }, []);
+
+  if (currSocket) {
+    currSocket.on('connect', () => {
+      currSocket.emit('join', chatUserInfo);
+    });
+    console.log(chatUserInfo);
+    console.log('커뮤니티 아이디', id);
+  }
+
+  // socket.on('test', (socket) => {
+  //   console.log(socket, 'test 소켓');
+  // });
+
+  // const handleRequestSocket = () => {
+  //   const res = socket.emit('test', {
+  //     data: 'test socket on client',
+  //   });
+  //   console.log(res);
+  // };
+
+  // function handleChange() {
+  //   console.log('change handle');
+  // }
+
+  // const postChatMsg = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   socket.emit('chat message', inputChatMsg);
+  //   console.log('내가 보내는 채팅', inputChatMsg);
+  //   setInputChatMsg('');
+  // };
 
   return (
     <BigBox>
@@ -83,40 +96,14 @@ const CommuChat = () => {
           <div className="chat-name">{commuChatInfo?.name}</div>
         </header>
         <ContentsBox>
-          <div>여기 부분에 챗 메시지가 떠야 함</div>
+          {/* <div>
+            test socket connection
+            <button onClick={handleRequestSocket}>Request</button>
+            <input type="text" onChange={handleChange} />
+          </div> */}
+          <CommuChatLog socket={currSocket} />
+          <CommuChatInput nickname={nickname} socket={currSocket} />
         </ContentsBox>
-        <BottomBox>
-          <InputBox style={{ bottom: '20px' }}>
-            <div className="input-container">
-              <input
-                type="text"
-                placeholder="메시지를 입력해주세요..."
-                value={inputChatMsg}
-                onChange={(e) => setInputChatMsg(e.target.value)}
-              />
-              <div>
-                <ImageOutlinedIcon
-                  style={{
-                    fontSize: '30px',
-                    width: '40px',
-                  }}
-                />
-              </div>
-              <button
-                style={{ width: '10%', marginLeft: '5px' }}
-                disabled={inputChatMsg.length === 0}
-                // onClick={postChatMsg}
-                onClick={handleRequestSocket}
-              >
-                <SendOutlinedIcon
-                  style={{
-                    fontSize: '30px',
-                  }}
-                />
-              </button>
-            </div>
-          </InputBox>
-        </BottomBox>
       </ChatBox>
     </BigBox>
   );
