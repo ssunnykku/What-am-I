@@ -1,4 +1,6 @@
 import io from 'socket.io';
+import { communityChatService } from '../services/communityChat.service.js';
+import { loginRequired } from '../middlewares/loginRequired.js';
 
 const socketConfig = (httpServer) => {
   const socketServer = io(httpServer, {
@@ -7,7 +9,7 @@ const socketConfig = (httpServer) => {
       methods: ['GET', 'POST'],
     },
   });
-
+  // emit : 보내주기, on : 받기
   socketServer.on('connection', (socket) => {
     socket.on('nickname', (nickname) => {
       socket['nickname'] = nickname;
