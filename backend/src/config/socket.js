@@ -23,21 +23,21 @@ const socketConfig = (httpServer) => {
       'join',
       ({ roomName: room, nickname: nickname, profile: profile }) => {
         socket.join(room);
-        socketServer
-          .to(room)
-          .emit('onConnect', console.log(`${nickname} 님이 입장하셨습니다.`));
+        // socketServer
+        //   .to(room)
+        //   .emit('onConnect', console.log(`${nickname} 님이 입장하셨습니다.`));
         socket.on('onSend', (messageItem) => {
           socketServer.to(room).emit('onReceive', messageItem);
         });
 
         socket.on('disconnect', () => {
           socket.leave(room);
-          socketServer
-            .to(room)
-            .emit(
-              'onDisconnect',
-              console.log(`${nickname} 님이 퇴장하셨습니다`),
-            );
+          // socketServer
+          //   .to(room)
+          //   .emit(
+          //     'onDisconnect',
+          //     console.log(`${nickname} 님이 퇴장하셨습니다`),
+          //   );
         });
       },
     );
