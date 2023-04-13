@@ -23,12 +23,12 @@ const CommuChatLog = ({ socket }: socketProps) => {
         setMsgList((msgList) => [...msgList, messageItem]);
         console.log(messageItem);
       });
-      socket.on('onConnect', (systemMessage) => {
-        setMsgList((msgList): any => [...msgList, { msg: systemMessage }]);
-      });
-      socket.on('onDisconnect', (systemMessage) => {
-        setMsgList((msgList): any => [...msgList, { msg: systemMessage }]);
-      });
+      // socket.on('onConnect', (systemMessage) => {
+      //   setMsgList((msgList): any => [...msgList, { msg: systemMessage }]);
+      // });
+      // socket.on('onDisconnect', (systemMessage) => {
+      //   setMsgList((msgList): any => [...msgList, { msg: systemMessage }]);
+      // });
       return () => {
         socket.disconnect();
       };
