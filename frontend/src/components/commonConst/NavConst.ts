@@ -1,11 +1,6 @@
 export const menus = [
   {
-    title: 'AI 종 분석',
-    path: '/dna',
-    id: 'dna',
-  },
-  {
-    title: '후기게시판',
+    title: '일기장',
     path: '/reviewboard',
     id: 'board',
   },

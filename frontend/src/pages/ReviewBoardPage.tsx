@@ -4,17 +4,12 @@ import {
   CreateBtn,
   SearchBox,
 } from '../assets/styles/common/commonComponentStyle';
-import ReviewWritingModal from '../components/modal/ReviewWritingModal';
 import { theme } from '../assets/styles/common/palette';
 import { useEffect, useState } from 'react';
 import { getReviewRequest } from '../apis/reviewFetcher';
 import ReviewContentsModal from '../components/modal/ReviewContentsModal';
 import usePaginate from '../hooks/usePaginate/usePaginate';
-import {
-  AIresultType,
-  ReviewPostType,
-  ReviewType,
-} from '../types/reviewboard/reviewType';
+import { AIresultType, ReviewType } from '../types/reviewboard/reviewType';
 import { getPuppiesData, getUserData } from '../apis/mypageFetcher';
 import { UserInfoType } from '../types/auth/authType';
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +20,6 @@ const ReviewBoardPage = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentUser, setCurrentUser] = useState<string>('');
   const [userInfo, setUserInfo] = useState<UserInfoType>();
-  const [aiResult, setAiResult] = useState<AIresultType>();
 
   const [search, setSearch] = useState<string>('');
   const navigate = useNavigate();
@@ -45,9 +39,6 @@ const ReviewBoardPage = () => {
     }
   };
 
-  // const getAiTestResult = async () => {
-  //   await getPuppiesData();
-  // };
   useEffect(() => {
     getCurrentUser();
     getPuppiesData();
@@ -79,10 +70,11 @@ const ReviewBoardPage = () => {
 
   return (
     <BoardBox>
-      <BoardHeader>
+      {/* <BoardHeader>
         사람들과 AI 분석 결과를 공유해보세요.
         <CreateBtn onClick={() => navigate('/airesultcard')}>글쓰기</CreateBtn>
-      </BoardHeader>
+      </BoardHeader> */}
+      <header>이쪽이 탭</header>
       <BoardContent>
         <SlideLeftBtn disabled={isFirst} onClick={handlePrevBtnClick} />
 
@@ -103,7 +95,7 @@ const ReviewBoardPage = () => {
 
         <SlideRightBtn disabled={isLast} onClick={handleNextBtnClick} />
       </BoardContent>
-      <SearchBox style={{ marginTop: '7vh' }} onSubmit={(e) => onSearch(e)}>
+      {/* <SearchBox style={{ marginTop: '7vh' }} onSubmit={(e) => onSearch(e)}>
         <input
           type="text"
           value={search}
@@ -111,7 +103,7 @@ const ReviewBoardPage = () => {
           onChange={onChangeSearch}
         />
         <button type="submit">검색</button>
-      </SearchBox>
+      </SearchBox> */}
     </BoardBox>
   );
 };
