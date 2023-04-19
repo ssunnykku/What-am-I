@@ -71,7 +71,7 @@ class Community extends Sequelize.Model {
       targetKey: 'id',
     });
     db.Community.hasMany(db.CommunityChat, {
-      foreignKey: 'communityId',
+      foreignKey: 'roomId',
       targetKey: 'id',
     });
     db.Community.hasMany(db.UserCommunity, {
