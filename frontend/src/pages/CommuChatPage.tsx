@@ -20,6 +20,7 @@ interface UserInfoType {
 
 const CommuChat = () => {
   const [nickname, setNickname] = useState<string>('');
+  const [userId, setUserId] = useState<string>('');
   const [chatProfile, setChatProfile] = useState<string>('');
   const [commuChatInfo, setCommuChatInfo] = useState<CommunityType>();
   const [userInfo, setUserInfo] = useState<UserInfoType>();
@@ -81,6 +82,7 @@ const CommuChat = () => {
   const getUserInfo = async () => {
     const res = await getUserData();
     setNickname(res.nickname);
+    setUserId(res.userId);
     setChatProfile(res.profileImg);
   };
   useEffect(() => {
@@ -94,6 +96,7 @@ const CommuChat = () => {
   const chatUserInfo = {
     roomName: id,
     nickname: nickname,
+    userId: userId,
     profile: chatProfile,
   };
 
