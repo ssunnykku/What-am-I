@@ -5,8 +5,10 @@ const logDir = 'logs'; // 여기 하위에 로그 파일 저장
 const { combine, timestamp, printf } = winston.format;
 
 // Define log format
+// 헤더, 바디, params, 쿼리 전부 기록해보기
 const logFormat = printf((info) => {
-  return `${info.timestamp} ${info.level}: ${info.message}`;
+  console.log(info);
+  return `${info.timestamp} ${info.level}: ${info.status}, ${info.message}`;
 });
 // const logFormat = printf(({ level, message, label, timestamp }) => {
 //   return `${timestamp} [${label}] ${level}: ${message}`; // 날짜 [시스템이름] 로그레벨 메세지
@@ -57,15 +59,16 @@ const logger = winston.createLogger({
 });
 
 // Production 환경이 아닌 경우(dev 등)
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(
-    new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(), // log level별로 색상 적용하기
-        winston.format.simple(), // `${info.level}: ${info.message} JSON.stringify({ ...rest })` 포맷으로 출력
-      ),
-    }),
-  );
-}
+// if (process.env.NODE_ENV !== 'production') {
+logger.add(
+  // 콘솔에 출력
+  new winston.transports.Console({
+    format: winston.format.combine(
+      winston.format.colorize(), // log level별로 색상 적용하기
+      winston.format.simple(), // `${info.level}: ${info.message} JSON.stringify({ ...rest })` 포맷으로 출력
+    ),
+  }),
+);
+// }
 
 export { logger };
