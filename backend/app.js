@@ -1,5 +1,6 @@
 import express from 'express';
 import db from './src/models/index';
+import morgan from 'morgan';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import sequelize from './src/config/sequelize';
@@ -43,6 +44,8 @@ app.use(cors({ origin: '*', credentials: true }));
 
 sequelize.sync({ force: false });
 
+// app.use(morgan('combined'));
+
 app.use(userRouter);
 app.use(communityPostRouter);
 app.use(reviewRouter);
@@ -62,5 +65,5 @@ app.use(index);
 app.use(errorMiddleware);
 
 app.listen(process.env.SEVER_PORT, () =>
-  logger.info(`✅ Listening to port 5001`),
+  console.log(`✅ Listening to port 5001`),
 );
