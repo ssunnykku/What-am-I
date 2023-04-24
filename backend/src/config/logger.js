@@ -8,15 +8,12 @@ const { combine, timestamp, printf } = winston.format;
 // 헤더, 바디, params, 쿼리 전부 기록해보기
 const logFormat = printf((info) => {
   console.log(info);
-  return `${info.timestamp} ${info.level}: ${info.status}, ${info.message}`;
+  return `${info.timestamp} ${info.level} - [message]: ${info.status}, ${info.message}, [url]: ${info.url}, \n[header]: ${info.header}, \n[body]: ${info.body}, \n[params]: ${info.params}, [query]: ${info.query}`;
 });
-// const logFormat = printf(({ level, message, label, timestamp }) => {
-//   return `${timestamp} [${label}] ${level}: ${message}`; // 날짜 [시스템이름] 로그레벨 메세지
-// });
+
 /*
  * Log Level
  * error: 0, warn: 1, info: 2, http: 3, verbose: 4, debug: 5, silly: 6
- * 숫자가 낮을 수록 priority가 높다고 보면 된다. (error 가 가장 위험한 로그)
  */
 const logger = winston.createLogger({
   format: combine(
