@@ -36,7 +36,7 @@ class CommunityChat extends Sequelize.Model {
     );
   }
   static associate(db) {
-    db.CommunityChat.belongsTo(db.User, {
+    db.CommunityChat.belongsTo(db.UserCommunity, {
       foreignKey: 'userId',
       targetKey: 'userId',
     }),
