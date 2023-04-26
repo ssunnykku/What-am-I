@@ -35,6 +35,7 @@ const CommuChatLog = ({ socket }: socketProps) => {
         socket.disconnect();
       };
     }
+    // 여기가 문제?? (socket이 여러번 불러와지고있음)
   }, [socket]);
 
   return (

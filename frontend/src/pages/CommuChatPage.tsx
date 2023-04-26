@@ -46,6 +46,7 @@ const CommuChat = () => {
   useEffect(() => {
     getCommuChatInfo();
     getUserInfo();
+    setCurrSocket(socketIOClient('http://localhost:3500'));
   }, []);
 
   // ###### socket.io 부분 ######
@@ -58,15 +59,21 @@ const CommuChat = () => {
     profile: chatProfile,
   };
 
-  useEffect(() => {
-    setCurrSocket(socketIOClient('http://localhost:3500'));
-  }, []);
-
   if (currSocket) {
     currSocket.on('connect', () => {
       currSocket.emit('join', chatUserInfo);
     });
   }
+
+  // useEffect(() => {
+  //   setCurrSocket(socketIOClient('http://localhost:3500'));
+  // }, []);
+
+  //   if (currSocket) {
+  //     currSocket.on('connect', () => {
+  //       currSocket.emit('join', chatUserInfo);
+  //     });
+  //   }
 
   // socket.on('test', (socket) => {
   //   console.log(socket, 'test 소켓');
