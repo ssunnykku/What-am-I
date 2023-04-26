@@ -94,12 +94,12 @@ class User extends Sequelize.Model {
       foreignKey: 'userId',
       sourceKey: 'userId',
     });
-    db.User.hasMany(db.CommunityChat, {
-      foreignKey: 'userId',
-      sourceKey: 'userId',
-    });
+    // db.User.hasMany(db.CommunityChat, {
+    //   foreignKey: 'userId',
+    //   sourceKey: 'userId',
+    // });
     db.User.hasMany(db.UserCommunity, {
-      foreignKey: 'ownerId',
+      foreignKey: 'userId',
       sourceKey: 'userId',
     });
     db.User.hasMany(db.Friend, {
