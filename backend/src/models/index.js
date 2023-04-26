@@ -65,5 +65,6 @@ PinnedCommunity.associate(db);
 Friend.associate(db);
 CommunityChat.associate(db);
 UserCommunity.associate(db);
+// console.log(db);
 
 export { db };
