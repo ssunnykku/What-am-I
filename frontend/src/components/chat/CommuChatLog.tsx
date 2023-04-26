@@ -7,11 +7,13 @@ export interface socketProps {
   socket?: Socket;
   nickname?: string;
   profile?: string;
+  userId?: string;
 }
 interface msgListType {
   msg: string;
   nickname: string;
   profile: string;
+  userId: string;
 }
 
 const CommuChatLog = ({ socket }: socketProps) => {

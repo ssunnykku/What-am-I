@@ -7,7 +7,7 @@ import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import { BottomBox, InputBox } from '../../pages/ChatRoomPage';
 import { socketProps } from './CommuChatLog';
 
-const CommuChatInput = ({ nickname, profile, socket }: socketProps) => {
+const CommuChatInput = ({ nickname, profile, socket, userId }: socketProps) => {
   const [chatMessage, setChatMessage] = useState('');
 
   // 여기에 프롭스로 소켓 넘겨주기
@@ -17,6 +17,7 @@ const CommuChatInput = ({ nickname, profile, socket }: socketProps) => {
       nickname: nickname,
       msg: chatMessage,
       profile: profile,
+      userId: userId,
     });
     setChatMessage('');
   };
