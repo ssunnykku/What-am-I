@@ -24,18 +24,14 @@ const socketConfig = (httpServer) => {
 
     socket.on('join', ({ roomName: roomId, userId: userId }) => {
       socket.join(roomId);
+      // console.log(userId);
 
       // socketServer
       //   .to(room)
       //   .emit('onConnect', console.log(`${nickname} 님이 입장하셨습니다.`));
       socket.on('onSend', async (messageItem) => {
-        // const msg = messageItem.msg;
-        // await CommunityChat.create({
-        //   roomId,
-        //   userId,
-        //   message: messageItem.msg,
-        // });
-        // onReceive의 용도가 무엇인지? db에 저장해놨다가 보내주는 것과 비교해보면?
+        console.log(messageItem);
+
         socketServer.to(roomId).emit('onReceive', messageItem);
       });
 

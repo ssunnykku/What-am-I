@@ -148,6 +148,7 @@ const CommuChat = () => {
           nickname={nickname}
           profile={chatProfile}
           socket={currSocket}
+          userId={userId}
         />
       </ChatBox>
     </BigBox>
