@@ -21,10 +21,16 @@ const CommuChatLog = ({ socket }: socketProps) => {
 
   useEffect(() => {
     if (socket) {
-      socket.on('onReceive', (messageItem) => {
-        setMsgList((msgList) => [...msgList, messageItem]);
-        console.log(messageItem);
+      // socket.on('chatLog', (chatData) => {
+      //   // setMsgList((chatData) => [...chatData]);
+      //   console.log(chatData);
+      // });
+      socket.on('onReceive', (lastMessages) => {
+        setMsgList((msgList) => [...msgList, ...lastMessages]);
+        // console.log(messageItem);
+        console.log(lastMessages);
       });
+
       // socket.on('onConnect', (systemMessage) => {
       //   setMsgList((msgList): any => [...msgList, { msg: systemMessage }]);
       // });

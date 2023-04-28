@@ -58,9 +58,8 @@ class User extends Sequelize.Model {
     );
   }
   static associate(db) {
-    db.User.hasMany(db.Community, {
-      foreignKey: 'userId',
-      sourceKey: 'userId',
+    db.User.belongsToMany(db.Community, {
+      through: 'usersToCommunities',
     }),
       db.User.hasMany(db.CommunityPost, {
         foreignKey: 'userId',
@@ -94,9 +93,14 @@ class User extends Sequelize.Model {
       foreignKey: 'userId',
       sourceKey: 'userId',
     });
-    // db.User.hasMany(db.CommunityChat, {
+    db.User.hasMany(db.UserChat, {
+      foreignKey: 'userId',
+      sourceKey: 'userId',
+    });
+    // db.User.belongsToMany(db.CommunityChat, {
+    //   through: 'usersChat',
+    //   as: 'Chats',
     //   foreignKey: 'userId',
-    //   sourceKey: 'userId',
     // });
     db.User.hasMany(db.UserCommunity, {
       foreignKey: 'userId',
