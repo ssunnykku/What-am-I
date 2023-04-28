@@ -23,7 +23,7 @@ class CommunityChat extends Sequelize.Model {
         },
         message: {
           type: DataTypes.STRING,
-          allowNull: false,
+          allowNull: true,
         },
       },
       {
@@ -36,9 +36,14 @@ class CommunityChat extends Sequelize.Model {
     );
   }
   static associate(db) {
-    db.CommunityChat.belongsTo(db.UserCommunity, {
-      foreignKey: 'userId',
-      targetKey: 'userId',
+    // db.CommunityChat.belongsTo(db.UserCommunity, {
+    //   foreignKey: 'userId',
+    //   targetKey: 'userId',
+    // }),
+    db.CommunityChat.belongsToMany(db.User, {
+      through: 'usersChat',
+      as: 'Writers',
+      foreignKey: 'id',
     }),
       db.CommunityChat.belongsTo(db.Community, {
         foreignKey: 'roomId',

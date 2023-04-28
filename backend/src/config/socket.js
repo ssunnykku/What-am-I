@@ -5,7 +5,6 @@ import { loginRequired } from '../middlewares/loginRequired.js';
 
 const socketConfig = (httpServer) => {
   const socketServer = io(httpServer, {
-    // const socketServer = io.of('msg')
     cors: {
       origin: '*',
       methods: ['GET', 'POST'],
@@ -18,29 +17,43 @@ const socketConfig = (httpServer) => {
       console.log(`Socket Event: ${event}`);
     });
 
-    // 해야할 것
-    // 채팅 내용 저장하기
-    // 채팅 내용 가져오기
-
     // let joinStatus = [];
     // joinStatus.forEach((one)=>{
     //   if (roomId)
     // })
-    socket.on('join', ({ roomName: roomId, userId: userId }) => {
+    socket.on('join', async ({ roomName: roomId, userId: userId }) => {
       socket.join(roomId);
 
       // socketServer
       //   .to(room)
       //   .emit('onConnect', console.log(`${nickname} 님이 입장하셨습니다.`));
+
+      // socket.emit('chatLog', chatData);
+
       socket.on('onSend', async (messageItem) => {
-        console.log(messageItem);
-        console.log(roomId);
-        socketServer.to(roomId).emit('onReceive', messageItem);
+        // db에 채팅 메세지 저장
         await communityChatService.addChat({
           roomId: roomId,
           message: messageItem.msg,
           userId: messageItem.userId,
         });
+
+        let lastMessages = [];
+        // 저장된 메세지 내역 가져오기
+        const chatData = await communityChatService.getChat({
+          roomId,
+        });
+
+        await chatData.forEach((chat) => {
+          // console.log(chat.User);
+          // lastMessages.push({
+          //   nickname: chat.User.dataValues.nickname,
+          //   msg: chat.dataValues.message,
+          //   profile: chat.User.dataValues.profileImg,
+          // });
+        });
+        // console.log(lastMessages);
+        socketServer.to(roomId).emit('onReceive', lastMessages);
       });
 
       socket.on('disconnect', () => {

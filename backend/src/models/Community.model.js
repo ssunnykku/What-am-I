@@ -54,9 +54,8 @@ class Community extends Sequelize.Model {
       foreignKey: 'communityId',
       sourceKey: 'id',
     }),
-      db.Community.belongsTo(db.User, {
-        foreignKey: 'userId',
-        targetKey: 'userId',
+      db.Community.belongsToMany(db.User, {
+        through: 'usersToCommunities',
       });
     db.Community.hasMany(db.CommunityLike, {
       foreignKey: 'communityId',
