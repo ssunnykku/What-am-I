@@ -46,11 +46,11 @@ const socketConfig = (httpServer) => {
 
         await chatData.forEach((chat) => {
           // console.log(chat.User);
-          // lastMessages.push({
-          //   nickname: chat.User.dataValues.nickname,
-          //   msg: chat.dataValues.message,
-          //   profile: chat.User.dataValues.profileImg,
-          // });
+          lastMessages.push({
+            nickname: chat.User.dataValues.nickname,
+            msg: chat.dataValues.message,
+            profile: chat.User.dataValues.profileImg,
+          });
         });
         // console.log(lastMessages);
         socketServer.to(roomId).emit('onReceive', lastMessages);

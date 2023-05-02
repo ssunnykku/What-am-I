@@ -12,19 +12,22 @@ class communityChatService {
     return createChat;
   }
 
-  // 2. content 내용 가져오기
+  // 2. content 내용 가져오기(해당 room의 게시물 전부!)
   static async getChat({ roomId }) {
     // const query = `Select * from communnityChat`;
     const getData = await db.CommunityChat.findAll({
+      where: { roomId },
       include: [
         {
           model: db.User,
-          as: 'Writers',
-          attributes: ['nickname', 'profileImg'],
+          attribute: ['userId', 'roomId', 'message', 'prifileImg', 'nickname'],
         },
       ],
     });
 
+    // 필요한 것 :  해당 방의 대화 내역과 사용자 정보
+    // 먼저 해당 방의 대화 정보 가져오기
+    // roomId를 이용해
     // let lastMessages = [];
 
     // getData.forEach((chat) => {
@@ -34,7 +37,7 @@ class communityChatService {
     //     profile: chat.User.dataValues.profileImg,
     //   });
     // });
-    console.log(getData);
+    // console.log(getData);
     return getData;
   }
 }
