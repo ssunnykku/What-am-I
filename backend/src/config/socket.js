@@ -17,18 +17,8 @@ const socketConfig = (httpServer) => {
       console.log(`Socket Event: ${event}`);
     });
 
-    // let joinStatus = [];
-    // joinStatus.forEach((one)=>{
-    //   if (roomId)
-    // })
     socket.on('join', async ({ roomName: roomId, userId: userId }) => {
       socket.join(roomId);
-
-      // socketServer
-      //   .to(room)
-      //   .emit('onConnect', console.log(`${nickname} 님이 입장하셨습니다.`));
-
-      // socket.emit('chatLog', chatData);
 
       socket.on('onSend', async (messageItem) => {
         // db에 채팅 메세지 저장
@@ -39,34 +29,29 @@ const socketConfig = (httpServer) => {
         });
 
         let lastMessages = [];
-        // 저장된 메세지 내역 가져오기
+        // 해당 room의 저장된 메세지 내역 가져오기, 프론트로 보내줌!
         const chatData = await communityChatService.getChat({
           roomId,
         });
 
         await chatData.forEach((chat) => {
-          // console.log(chat.User);
           lastMessages.push({
             nickname: chat.User.dataValues.nickname,
             msg: chat.dataValues.message,
             profile: chat.User.dataValues.profileImg,
           });
         });
-        // console.log(lastMessages);
+
         socketServer.to(roomId).emit('onReceive', lastMessages);
       });
 
       socket.on('disconnect', () => {
         socket.leave(roomId);
-        // socketServer
-        //   .to(room)
-        //   .emit(
-        //     'onDisconnect',
-        //     console.log(`${nickname} 님이 퇴장하셨습니다`),
-        //   );
       });
     });
   });
 };
+/// socket.io로 DB에 저장되어도 되는지? 로그인 했는지 어떻게 검증할건지? 인가??
+// socket.io logging
 
 export { socketConfig };
