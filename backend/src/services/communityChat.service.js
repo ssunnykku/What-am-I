@@ -25,19 +25,6 @@ class communityChatService {
       ],
     });
 
-    // 필요한 것 :  해당 방의 대화 내역과 사용자 정보
-    // 먼저 해당 방의 대화 정보 가져오기
-    // roomId를 이용해
-    // let lastMessages = [];
-
-    // getData.forEach((chat) => {
-    //   lastMessages.push({
-    //     nickname: chat.User.dataValues.nickname,
-    //     msg: chat.dataValues.message,
-    //     profile: chat.User.dataValues.profileImg,
-    //   });
-    // });
-    // console.log(getData);
     return getData;
   }
 }

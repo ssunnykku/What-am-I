@@ -32,10 +32,6 @@ dotenv.config();
 
 const app = express();
 
-const httpServer = http.createServer(app).listen(3500);
-
-socketConfig(httpServer);
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: '*', credentials: true }));
@@ -60,5 +56,11 @@ app.use(friendRouter);
 app.use(errorMiddleware);
 
 app.listen(process.env.SEVER_PORT, () =>
-  logger.info(`✅ Listening to port 5001`),
+  console.log(`✅ Listening to port 5001`),
 );
+
+const httpServer = http
+  .createServer(app)
+  .listen(process.env.SOCKETIO_SERVER_PORT);
+
+socketConfig(httpServer);
