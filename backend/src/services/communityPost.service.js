@@ -126,16 +126,14 @@ class communityPostService {
   }
 
   static async deleteCommunityPost({ id, userId }) {
-    const _id = await CommunityPost.destroy({
+    const findPost = await CommunityPost.destroy({
       where: { id: id, userId: userId },
     });
-    if (!_id) {
-      const errorMessage = '생성한 글이 없습니다';
+    if (!findPost) {
+      const errorMessage = '해당 글을 찾을 수 없습니다.';
       return errorMessage;
-    } else {
-      const message = '글이 삭제되었습니다.';
-      return message;
     }
+    return findPost;
   }
 }
 
