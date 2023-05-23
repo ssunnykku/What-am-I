@@ -137,6 +137,7 @@ class communityPostController {
           id,
           userId,
         });
+      // console.log(deleteCommunityPost);
       if (deleteCommunityPost.errorMessage) {
         throw new Error(deleteCommunityPost);
       }

@@ -1,4 +1,5 @@
 import { communityService } from '../services/community.service';
+import { deleteImg } from '../middlewares/uploadImageS3';
 
 class communityController {
   // 1. 커뮤니티 만들기
@@ -7,6 +8,7 @@ class communityController {
       const userId = req.currentUserId;
       const { name, introduction } = req.body;
       const image = req.file;
+
       const communityImage = image == undefined ? null : image.location;
       const newCommunity = await communityService.createCommunity(
         name,
@@ -116,6 +118,9 @@ class communityController {
         id,
         userId,
       });
+      const img = deleteCommunity.dataValues.communityImage.split('/')[3];
+
+      deleteImg(img);
       if (deleteCommunity.errorMessage) {
         throw new Error(deleteCommunity, errorMessage);
       }

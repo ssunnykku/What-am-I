@@ -119,17 +119,19 @@ class communityPostService {
     });
     if (!post) {
       const errorMessage = '작성한 글이 없습니다';
-      return { errorMessage };
-    } else {
-      return post;
+      return errorMessage;
     }
+    return post;
   }
 
   static async deleteCommunityPost({ id, userId }) {
-    const findPost = await CommunityPost.destroy({
+    const findPost = await CommunityPost.findOne({
+      where: { id: id },
+    });
+    const deletePost = await CommunityPost.destroy({
       where: { id: id, userId: userId },
     });
-    if (!findPost) {
+    if (!deletePost) {
       const errorMessage = '해당 글을 찾을 수 없습니다.';
       return errorMessage;
     }
