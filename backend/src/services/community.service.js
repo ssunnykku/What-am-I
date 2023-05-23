@@ -212,7 +212,7 @@ class communityService {
     );
     updateCommunity.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
-    return updateCommunity;
+    return { findCommunity, updateCommunity };
   }
 
   static async findCommunity({ communityId, userId }) {
@@ -228,16 +228,16 @@ class communityService {
   }
   // 7. 커뮤니티 삭제
   static async deleteCommunity({ id, userId }) {
+    const findData = await Community.findOne({ where: { id } });
     const id_ = await Community.destroy({
       where: { id: id, userId: userId },
     });
     if (!id_) {
       const errorMessage = '생성한 커뮤니티가 없습니다';
       return errorMessage;
-    } else {
-      const message = '커뮤니티가 삭제되었습니다.';
-      return message;
     }
+    // const message = '커뮤니티가 삭제되었습니다.';
+    return findData;
   }
   // 8. 커뮤니티 검색기능
   static async searchedCommunities({ search }) {

@@ -3,21 +3,30 @@ import { font } from '../assets/styles/common/fonts';
 import {
   CreateBtn,
   SearchBox,
+  WritingProfile,
 } from '../assets/styles/common/commonComponentStyle';
-import ReviewWritingModal from '../components/modal/ReviewWritingModal';
 import { theme } from '../assets/styles/common/palette';
 import { useEffect, useState } from 'react';
 import { getReviewRequest } from '../apis/reviewFetcher';
 import ReviewContentsModal from '../components/modal/ReviewContentsModal';
 import usePaginate from '../hooks/usePaginate/usePaginate';
+import { AIresultType, ReviewType } from '../types/reviewboard/reviewType';
 import {
-  AIresultType,
-  ReviewPostType,
-  ReviewType,
-} from '../types/reviewboard/reviewType';
-import { getPuppiesData, getUserData } from '../apis/mypageFetcher';
+  getFollowingBuddyData,
+  getPuppiesData,
+  getUserData,
+} from '../apis/mypageFetcher';
 import { UserInfoType } from '../types/auth/authType';
 import { useNavigate } from 'react-router-dom';
+import MyDiary from '../components/reviewBoard/MyDiary';
+import YourDiary from '../components/reviewBoard/YourDiary';
+import DiaryPanel from '../components/reviewBoard/DiaryTabPanel';
+import { BuddyType } from '../types/community/communityType';
+
+export const enum DIARYVALUE {
+  MYDIARY = 'Mydiary',
+  YOURDIARY = 'Yourdiary',
+}
 
 const ReviewBoardPage = () => {
   const [pages, setPages] = useState<number>(1);
@@ -25,13 +34,28 @@ const ReviewBoardPage = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentUser, setCurrentUser] = useState<string>('');
   const [userInfo, setUserInfo] = useState<UserInfoType>();
-  const [aiResult, setAiResult] = useState<AIresultType>();
-
   const [search, setSearch] = useState<string>('');
-  const navigate = useNavigate();
-
   const { isFirst, isLast, handleNextBtnClick, handlePrevBtnClick } =
     usePaginate(pages, setPages, totalPages, 1);
+
+  const [value, setValue] = useState<DIARYVALUE>(DIARYVALUE.MYDIARY);
+  const [followingInfo, setFollowingInfo] = useState<BuddyType[]>();
+
+  const PageHandler = () => {
+    switch (value) {
+      case DIARYVALUE.MYDIARY:
+        return <MyDiary />;
+
+      case DIARYVALUE.YOURDIARY:
+        return <YourDiary />;
+    }
+  };
+
+  // 내가 추가한 친구
+  const getFollowingData = async () => {
+    const res = await getFollowingBuddyData(pages);
+    setFollowingInfo(res);
+  };
 
   // 현재 로그인 정보 받기
   const getCurrentUser = async () => {
@@ -45,12 +69,10 @@ const ReviewBoardPage = () => {
     }
   };
 
-  // const getAiTestResult = async () => {
-  //   await getPuppiesData();
-  // };
   useEffect(() => {
     getCurrentUser();
     getPuppiesData();
+    getFollowingData();
   }, []);
 
   // 전체 리뷰 받기
@@ -79,31 +101,51 @@ const ReviewBoardPage = () => {
 
   return (
     <BoardBox>
-      <BoardHeader>
-        사람들과 AI 분석 결과를 공유해보세요.
-        <CreateBtn onClick={() => navigate('/airesultcard')}>글쓰기</CreateBtn>
-      </BoardHeader>
-      <BoardContent>
-        <SlideLeftBtn disabled={isFirst} onClick={handlePrevBtnClick} />
+      <header>
+        <DiaryPanel value={value} setValue={setValue} />
+      </header>
 
-        <CardBox>
-          <div className="card-box">
-            {reviews &&
-              reviews?.map((review) => (
-                <ReviewContentsModal
-                  key={review.id}
-                  review={review}
-                  getReviews={getReviews}
-                  currentUser={currentUser}
-                  userInfo={userInfo}
-                />
-              ))}
-          </div>
-        </CardBox>
+      <BoardContainer>
+        <BoardContent>
+          <ProfileContainer>
+            <ProfileBox>여기</ProfileBox>
+          </ProfileContainer>
+          <CardContainer>
+            <SlideLeftBtn disabled={isFirst} onClick={handlePrevBtnClick} />
+            <CardBox>
+              {PageHandler()}
 
-        <SlideRightBtn disabled={isLast} onClick={handleNextBtnClick} />
-      </BoardContent>
-      <SearchBox style={{ marginTop: '7vh' }} onSubmit={(e) => onSearch(e)}>
+              <div className="card-box">
+                {reviews &&
+                  reviews?.map((review) => (
+                    <ReviewContentsModal
+                      key={review.id}
+                      review={review}
+                      getReviews={getReviews}
+                      currentUser={currentUser}
+                      userInfo={userInfo}
+                    />
+                  ))}
+              </div>
+            </CardBox>
+            <SlideRightBtn disabled={isLast} onClick={handleNextBtnClick} />
+          </CardContainer>
+        </BoardContent>
+        <BuddyBox>
+          <div className="list-header">my buddies 🐶</div>
+          {followingInfo?.map((buddy) => (
+            <div className="list-buddy">
+              <NicknamePlace>
+                <div key={buddy.id} className="profile">
+                  <img src={buddy.FriendList.profileImg} />
+                </div>
+                <div>{buddy.FriendList.nickname}</div>
+              </NicknamePlace>
+            </div>
+          ))}
+        </BuddyBox>
+      </BoardContainer>
+      {/* <SearchBox style={{ marginTop: '7vh' }} onSubmit={(e) => onSearch(e)}>
         <input
           type="text"
           value={search}
@@ -111,7 +153,7 @@ const ReviewBoardPage = () => {
           onChange={onChangeSearch}
         />
         <button type="submit">검색</button>
-      </SearchBox>
+      </SearchBox> */}
     </BoardBox>
   );
 };
@@ -128,29 +170,47 @@ const BoardBox = styled.div`
   align-items: center;
 `;
 
-const BoardHeader = styled.div`
-  font-size: 20px;
-  display: flexbox;
-  justify-content: center;
-  margin-top: 8vh;
-  letter-spacing: 1px;
+const BoardContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 45rem;
 `;
 
-const BoardContent = styled.div`
-  display: flexbox;
+const BoardContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ProfileContainer = styled.div`
+  display: flex;
   justify-content: center;
   align-items: center;
-  height: 30rem;
-  margin-top: 5vh;
+  height: 10rem;
+  width: 50rem;
+`;
+
+const ProfileBox = styled.div`
+  border: solid 1px purple;
+  width: 35rem;
+  height: 95%;
+`;
+
+const CardContainer = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const CardBox = styled.div`
   display: flexbox;
   justify-content: center;
   justify-content: space-evenly;
-  width: 75rem;
-  min-width: 75rem;
-  min-height: 27rem;
+  width: 50rem;
+  min-width: 50rem;
+  min-height: 30rem;
+  border: solid 1px purple;
 
   .card-box {
     display: grid;
@@ -163,28 +223,67 @@ const CardBox = styled.div`
   }
 `;
 
+const BuddyBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: solid 1px lightgray;
+  width: 13rem;
+  height: 90%;
+  font-size: 17px;
+  font-family: ${font.normal};
+  margin-left: 20px;
+  border-radius: 10px;
+
+  .list-header {
+    padding: 15px 0;
+    border-bottom: solid 1px ${theme.backColor};
+  }
+
+  .list-buddy {
+    height: 55px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+  }
+`;
+
+const NicknamePlace = styled(WritingProfile)`
+  font-size: 14px;
+  display: flex;
+
+  .profile {
+    width: 35px;
+    height: 35px;
+    margin-right: 15px;
+  }
+`;
+
 const SlideLeftBtn = styled.button`
   background: 0;
   width: 0;
   height: 0;
-  border-bottom: 1.5rem solid transparent;
-  border-top: 1.5rem solid transparent;
-  border-left: 1.5rem solid transparent;
-  border-right: 1.5rem solid lightgray;
+  border-bottom: 1rem solid transparent;
+  border-top: 1rem solid transparent;
+  border-left: 1rem solid transparent;
+  border-right: 1rem solid lightgray;
 
   :hover {
-    border-bottom: 1.5rem solid transparent;
-    border-top: 1.5rem solid transparent;
-    border-left: 1.5rem solid transparent;
-    border-right: 1.5rem solid ${theme.pointColor};
+    border-bottom: 1rem solid transparent;
+    border-top: 1rem solid transparent;
+    border-left: 1rem solid transparent;
+    border-right: 1rem solid ${theme.pointColor};
     cursor: pointer;
   }
 
   &[disabled] {
-    border-bottom: 1.5rem solid transparent;
-    border-top: 1.5rem solid transparent;
-    border-left: 1.5rem solid transparent;
-    border-right: 1.5rem solid lightgray;
+    border-bottom: 1rem solid transparent;
+    border-top: 1rem solid transparent;
+    border-left: 1rem solid transparent;
+    border-right: 1rem solid lightgray;
     cursor: revert;
     transform: revert;
   }
@@ -194,24 +293,24 @@ const SlideRightBtn = styled.button`
   background: 0;
   width: 0;
   height: 0;
-  border-bottom: 1.5rem solid transparent;
-  border-top: 1.5rem solid transparent;
-  border-left: 1.5rem solid lightgray;
-  border-right: 1.5rem solid transparent;
+  border-bottom: 1rem solid transparent;
+  border-top: 1rem solid transparent;
+  border-left: 1rem solid lightgray;
+  border-right: 1rem solid transparent;
 
   :hover {
-    border-bottom: 1.5rem solid transparent;
-    border-top: 1.5rem solid transparent;
-    border-left: 1.5rem solid ${theme.pointColor};
-    border-right: 1.5rem solid transparent;
+    border-bottom: 1rem solid transparent;
+    border-top: 1rem solid transparent;
+    border-left: 1rem solid ${theme.pointColor};
+    border-right: 1rem solid transparent;
     cursor: pointer;
   }
 
   &[disabled] {
-    border-bottom: 1.5rem solid transparent;
-    border-top: 1.5rem solid transparent;
-    border-left: 1.5rem solid lightgray;
-    border-right: 1.5rem solid transparent;
+    border-bottom: 1rem solid transparent;
+    border-top: 1rem solid transparent;
+    border-left: 1rem solid lightgray;
+    border-right: 1rem solid transparent;
     cursor: revert;
     transform: revert;
   }

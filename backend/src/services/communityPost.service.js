@@ -119,23 +119,23 @@ class communityPostService {
     });
     if (!post) {
       const errorMessage = '작성한 글이 없습니다';
-      return { errorMessage };
-    } else {
-      return post;
+      return errorMessage;
     }
+    return post;
   }
 
   static async deleteCommunityPost({ id, userId }) {
-    const _id = await CommunityPost.destroy({
+    const findPost = await CommunityPost.findOne({
+      where: { id: id },
+    });
+    const deletePost = await CommunityPost.destroy({
       where: { id: id, userId: userId },
     });
-    if (!_id) {
-      const errorMessage = '생성한 글이 없습니다';
+    if (!deletePost) {
+      const errorMessage = '해당 글을 찾을 수 없습니다.';
       return errorMessage;
-    } else {
-      const message = '글이 삭제되었습니다.';
-      return message;
     }
+    return findPost;
   }
 }
 

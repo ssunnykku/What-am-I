@@ -32,7 +32,6 @@ class CommunityPost extends Sequelize.Model {
         sequelize,
         tableName: 'communityPosts',
         timestamps: true,
-        paranoid: true,
         charset: 'utf8mb4',
         collate: 'utf8mb4_general_ci',
       },
@@ -42,7 +41,7 @@ class CommunityPost extends Sequelize.Model {
     db.CommunityPost.belongsTo(db.Community, {
       foreignKey: 'communityId',
       targetKey: 'id',
-      onDelete: 'CASCADE',
+      // onDelete: 'CASCADE',
     }),
       db.CommunityPost.belongsTo(db.User, {
         foreignKey: 'userId',

@@ -19,9 +19,12 @@ interface UserInfoType {
 }
 
 const CommuChat = () => {
-  const [nickname, setNickname] = useState('');
-  const [inputChatMsg, setInputChatMsg] = useState<string>('');
+  const [nickname, setNickname] = useState<string>('');
+  const [userId, setUserId] = useState<string>('');
+  const [chatProfile, setChatProfile] = useState<string>('');
   const [commuChatInfo, setCommuChatInfo] = useState<CommunityType>();
+  const [userInfo, setUserInfo] = useState<UserInfoType>();
+  const [inputChatMsg, setInputChatMsg] = useState<string>('');
 
   // 커뮤니티 아이디 가져오기
   let getParameter = (key: string) => {
@@ -36,12 +39,14 @@ const CommuChat = () => {
   };
   const getUserInfo = async () => {
     const res = await getUserData();
-    setNickname(res);
-    console.log(res);
+    setNickname(res.nickname);
+    setUserId(res.userId);
+    setChatProfile(res.profileImg);
   };
   useEffect(() => {
     getCommuChatInfo();
     getUserInfo();
+    setCurrSocket(socketIOClient('http://localhost:3500'));
   }, []);
 
   // ###### socket.io 부분 ######
@@ -49,20 +54,26 @@ const CommuChat = () => {
   const [currSocket, setCurrSocket] = useState<Socket>();
   const chatUserInfo = {
     roomName: id,
-    userName: nickname,
+    nickname: nickname,
+    userId: userId,
+    profile: chatProfile,
   };
-
-  useEffect(() => {
-    setCurrSocket(socketIOClient('http://localhost:3500'));
-  }, []);
 
   if (currSocket) {
     currSocket.on('connect', () => {
       currSocket.emit('join', chatUserInfo);
     });
-    console.log(chatUserInfo);
-    console.log('커뮤니티 아이디', id);
   }
+
+  // useEffect(() => {
+  //   setCurrSocket(socketIOClient('http://localhost:3500'));
+  // }, []);
+
+  //   if (currSocket) {
+  //     currSocket.on('connect', () => {
+  //       currSocket.emit('join', chatUserInfo);
+  //     });
+  //   }
 
   // socket.on('test', (socket) => {
   //   console.log(socket, 'test 소켓');
@@ -96,14 +107,14 @@ const CommuChat = () => {
           <div className="chat-name">{commuChatInfo?.name}</div>
         </header>
         <ContentsBox>
-          {/* <div>
-            test socket connection
-            <button onClick={handleRequestSocket}>Request</button>
-            <input type="text" onChange={handleChange} />
-          </div> */}
           <CommuChatLog socket={currSocket} />
-          <CommuChatInput nickname={nickname} socket={currSocket} />
         </ContentsBox>
+        <CommuChatInput
+          nickname={nickname}
+          profile={chatProfile}
+          socket={currSocket}
+          userId={userId}
+        />
       </ChatBox>
     </BigBox>
   );
@@ -156,4 +167,10 @@ const ContentsBox = styled.div`
   padding: 5px;
   font-family: ${font.normal};
   border-radius: 5px;
+  height: 78%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;

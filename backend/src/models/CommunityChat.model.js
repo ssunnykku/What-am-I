@@ -14,16 +14,16 @@ class CommunityChat extends Sequelize.Model {
           type: DataTypes.UUID,
           foreignKey: true,
         },
-        communityId: {
+        roomId: {
           type: DataTypes.INTEGER,
           foreignKey: true,
           validate: {
             isInt: true,
           },
         },
-        content: {
+        message: {
           type: DataTypes.STRING,
-          allowNull: false,
+          allowNull: true,
         },
       },
       {
@@ -36,12 +36,16 @@ class CommunityChat extends Sequelize.Model {
     );
   }
   static associate(db) {
-    db.CommunityChat.belongsTo(db.User, {
+    db.CommunityChat.belongsTo(db.UserCommunity, {
       foreignKey: 'userId',
       targetKey: 'userId',
     }),
+      db.CommunityChat.belongsTo(db.User, {
+        foreignKey: 'userId',
+        sourceKey: 'userId',
+      }),
       db.CommunityChat.belongsTo(db.Community, {
-        foreignKey: 'communityId',
+        foreignKey: 'roomId',
         targetKey: 'id',
       });
   }

@@ -10,7 +10,7 @@ class UserCommunity extends Sequelize.Model {
           primaryKey: true,
           type: DataTypes.INTEGER,
         },
-        ownerId: {
+        userId: {
           type: DataTypes.UUID,
           foreignKey: true,
         },
@@ -20,6 +20,10 @@ class UserCommunity extends Sequelize.Model {
           validate: {
             isInt: true,
           },
+        },
+        status: {
+          type: DataTypes.ENUM('waiting', 'joined'),
+          allowNull: false,
         },
       },
       {
@@ -33,13 +37,17 @@ class UserCommunity extends Sequelize.Model {
   }
   static associate(db) {
     db.UserCommunity.belongsTo(db.User, {
-      foreignKey: 'ownerId',
+      foreignKey: 'userId',
       targetKey: 'userId',
     }),
       db.UserCommunity.belongsTo(db.Community, {
         foreignKey: 'communityId',
         targetKey: 'id',
       });
+    // db.UserCommunity.hasMany(db.CommunityChat, {
+    //   foreignKey: 'userId',
+    //   sourceKey: 'userId',
+    // });
   }
 }
 

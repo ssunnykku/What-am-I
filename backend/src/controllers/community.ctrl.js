@@ -1,4 +1,5 @@
 import { communityService } from '../services/community.service';
+import { deleteImg } from '../middlewares/uploadImageS3';
 
 class communityController {
   // 1. 커뮤니티 만들기
@@ -7,7 +8,9 @@ class communityController {
       const userId = req.currentUserId;
       const { name, introduction } = req.body;
       const image = req.file;
-      const communityImage = image == undefined ? null : image.location;
+
+      const communityImage =
+        image == undefined ? null : decodeURI(image.location);
       const newCommunity = await communityService.createCommunity(
         name,
         introduction,
@@ -91,7 +94,11 @@ class communityController {
         communityId,
         userId,
       });
-
+      const lastImg = updateCommunity.findCommunity.dataValues.communityImage;
+      // 새로 이미지 들어오면 기존 이미지는 삭제하기
+      if (updatedImage) {
+        deleteImg(lastImg);
+      }
       if (updateCommunity.errorMessage) {
         throw new Error(updateCommunity, errorMessage);
       }
@@ -109,13 +116,15 @@ class communityController {
   static async deleteCommunity(req, res, next) {
     try {
       const userId = req.currentUserId;
-      // const userId = testId;
       const id = req.params.communityId;
 
       const deleteCommunity = await communityService.deleteCommunity({
         id,
         userId,
       });
+      const img = deleteCommunity.dataValues.communityImage;
+      // aws s3에서 삭제하기
+      deleteImg(img);
       if (deleteCommunity.errorMessage) {
         throw new Error(deleteCommunity, errorMessage);
       }
