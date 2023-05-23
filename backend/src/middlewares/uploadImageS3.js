@@ -35,7 +35,7 @@ const uploadImageS3 = () => {
 const deleteImg = (img) => {
   const params = {
     Bucket: process.env.S3_BUCKET,
-    Key: img,
+    Key: img.split('/')[3],
   };
   s3.deleteObject(params, function (err, data) {
     if (err) console.log(err, err.stack); // an error occurred
