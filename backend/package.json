@@ -12,7 +12,7 @@
   "dependencies": {
     "@sindresorhus/is": "^5.3.0",
     "aws-sdk": "^2.1261.0",
-    "axios": "^1.2.1",
+    "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
