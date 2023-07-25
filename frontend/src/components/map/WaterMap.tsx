@@ -1,5 +1,5 @@
 /* global kakao */
-import SeoulWater from '../../../public/mockdata/SeoulWater_all.json';
+import SeoulWater from '../../assets/mockdata/SeoulWater_all.json';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import MarkerList from './MarkerList';
