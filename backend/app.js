@@ -80,7 +80,7 @@ app.use(cors({ origin: '*', credentials: true }));
 
 sequelize.sync({ force: false });
 
-// app.use(morgan('combined'));
+app.use(morgan('combined'));
 
 app.use(userRouter);
 app.use(communityPostRouter);
