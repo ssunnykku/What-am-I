@@ -8,46 +8,6 @@ import { logger } from './src/config/logger';
 import http from 'http';
 import { socketConfig } from './src/config/socket.js';
 import { client } from './src/config/discord.js';
-// import { REST, Routes } from 'discord.js';
-
-// const commands = [
-//   {
-//     name: 'ping',
-//     description: 'Replies with Pong!',
-//   },
-// ];
-
-// const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
-
-// try {
-//   console.log('Started refreshing application (/) commands.');
-
-//   rest.put(Routes.applicationCommands(process.env.DISCORD_CLIENT_ID), {
-//     body: commands,
-//   });
-
-//   console.log('Successfully reloaded application (/) commands.');
-// } catch (error) {
-//   console.error(error);
-// }
-
-// import { Client, GatewayIntentBits } from 'discord.js';
-// const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-
-// client.on('ready', () => {
-//   console.log(`Logged in as ${client.user.tag}!`);
-// });
-
-// client.on('interactionCreate', async (interaction) => {
-//   console.log(interaction);
-//   if (!interaction.isChatInputCommand()) return;
-
-//   if (interaction.commandName === 'ping') {
-//     await interaction.reply('Pong!');
-//   }
-// });
-
-// client.login(process.env.DISCORD_TOKEN);
 
 //**Router */
 import { communityRouter } from './src/routes/community.route';
@@ -74,7 +34,6 @@ dotenv.config();
 
 const app = express();
 
-app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: '*', credentials: true }));
 
