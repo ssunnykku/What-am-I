@@ -59,16 +59,6 @@ AI 분석을 통해 강아지 종을 알아 봅니다.
 
 ## 기능 소개
 
-<br>
-시연영상(클릭)<br>
-
-[![Watch the video](https://kdt-gitlab.elice.io/ai_track/class05/ai_project/team08/team08-project/uploads/b3b2369cfe9153272141b8441a272a49/%EA%B7%B8%EB%A6%BC1.png)](https://youtu.be/UsKXQdNAMw8)
-
-<br>
-<br>
-
-#
-
 ### 메인 페이지
 
 - 견종 분석을 할 수 있는 페이지로 갈 수 있도록 함
