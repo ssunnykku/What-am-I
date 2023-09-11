@@ -1,6 +1,7 @@
 import { userService } from '../services/user.service.js';
 import { registerValidator } from '../middlewares/userValidator';
 import jwt from 'jsonwebtoken';
+import ApiError from '../utils/ApiError.js';
 
 // redis
 // 토큰 발급 되었다
@@ -41,7 +42,7 @@ class userController {
 
       const user = await userService.findUser({ email, password });
       if (user.errorMessage) {
-        throw new Error(user.errorMessage);
+        throw ApiError.setBadRequest(user.errorMessage);
       }
       return res.status(201).send(user);
     } catch (error) {

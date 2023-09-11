@@ -1,7 +1,10 @@
 import ApiError from '../utils/ApiError';
 import { logger } from '../config/logger.js';
+import axios from 'axios';
 
-export default (err, req, res, next) => {
+const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
+
+export default async (err, req, res, next) => {
   if (err instanceof ApiError) {
     // console.log(
     //   '\x1b[31m',
@@ -31,6 +34,15 @@ export default (err, req, res, next) => {
   //   '-----------------------------------------------------------------------------------------------------------------------------------------',
   // );
   // console.log('\x1b[33m%s\x1b[0m', err);
+
+  const payload = {
+    content: `🔥 Error ${err.status}: ${err.message} on ${req.method} ${req.originalUrl}`,
+  };
+  await axios.post(DISCORD_WEBHOOK_URL, payload, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
   logger.error({
     status: 500,
     message: err.message,
