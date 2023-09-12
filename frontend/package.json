@@ -45,6 +45,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "typescript": "^4.6.4",
     "vite": "^3.2.3",
+    "vite-plugin-html-env": "^1.2.8",
     "vite-tsconfig-paths": "^3.5.2"
   }
 }
