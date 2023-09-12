@@ -33,11 +33,15 @@ const CommuChat = () => {
   const id = getParameter('id');
 
   // 챗 연결 부분
-  const socket = io('http://localhost:3500', {
-    cors: {
-      origin: '*',
-    },
-  });
+  const socket = io(
+    'http://localhost:3500',
+    // ,
+    // {
+    // cors: {
+    //   origin: '*',
+    // },
+    // }
+  );
 
   socket.on('test', (socket) => {
     console.log(socket, 'test 소켓');
