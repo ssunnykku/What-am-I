@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { communityController } from '../controllers/community.ctrl';
+import { communityController } from '../controllers/community.ctrl.js';
 import { loginRequired } from '../middlewares/loginRequired.js';
-import { uploadImageS3 } from '../middlewares/uploadImageS3';
+import { uploadImageS3 } from '../middlewares/uploadImageS3.js';
 
 const communityRouter = Router();
 const upload = uploadImageS3();
