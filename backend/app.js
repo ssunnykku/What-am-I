@@ -1,33 +1,33 @@
 import express from 'express';
-import db from './src/models/index';
+import db from './src/models/index.js';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import sequelize from './src/config/sequelize';
+import sequelize from './src/config/sequelize.js';
 
-import { logger } from './src/config/logger';
+import { logger } from './src/config/logger.js';
 import http from 'http';
 import { socketConfig } from './src/config/socket.js';
 
 //**Router */
-import { communityRouter } from './src/routes/community.route';
-import { communityPostRouter } from './src/routes/communityPost.route';
-import { communityCommentRouter } from './src/routes/communityComment.route';
-import { communityPostLikeRouter } from './src/routes/communityPostLike.route';
-import { pinnedCommunityRouter } from './src/routes/pinnedCommunity.route';
+import { communityRouter } from './src/routes/community.route.js';
+import { communityPostRouter } from './src/routes/communityPost.route.js';
+import { communityCommentRouter } from './src/routes/communityComment.route.js';
+import { communityPostLikeRouter } from './src/routes/communityPostLike.route.js';
+import { pinnedCommunityRouter } from './src/routes/pinnedCommunity.route.js';
 
-import { userRouter } from './src/routes/user.router';
-import { reviewRouter } from './src/routes/review.route';
-import { reviewCommentRouter } from './src/routes/reviewComment.route';
+import { userRouter } from './src/routes/user.router.js';
+import { reviewRouter } from './src/routes/review.route.js';
+import { reviewCommentRouter } from './src/routes/reviewComment.route.js';
 import { reviewLikeRouter } from './src/routes/reviewLike.route.js';
 
-import { myPageRouter } from './src/routes/myPage.route';
-import { communityLikeRouter } from './src/routes/communityLike.route';
+import { myPageRouter } from './src/routes/myPage.route.js';
+import { communityLikeRouter } from './src/routes/communityLike.route.js';
 
-import { friendRouter } from './src/routes/friend.route';
+import { friendRouter } from './src/routes/friend.route.js';
 
 //**middleware */
-import errorMiddleware from './src/middlewares/error';
+import errorMiddleware from './src/middlewares/error.js';
 import axios from 'axios';
 dotenv.config();
 

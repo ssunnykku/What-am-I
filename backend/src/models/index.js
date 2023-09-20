@@ -1,23 +1,23 @@
-import sequelize from '../config/sequelize';
 import Sequelize from 'sequelize';
 
-import { User } from './User.model';
-import { RefreshToken } from './RefreshToken.model';
+import sequelize from '../config/sequelize.js';
+import { User } from './User.model.js';
+import { RefreshToken } from './RefreshToken.model.js';
 import { Review } from './Review.model.js';
 import { ReviewComment } from './ReviewComment.model.js';
 
-import { ReviewLike } from './ReviewLike.model';
-import { Community } from './Community.model';
-import { CommunityPost } from './CommunityPost.model';
-import { CommunityPostLike } from './CommunityPostLike.model';
-import { CommunityComment } from './CommunityComment.model';
-import { CommunityLike } from './CommunityLike.model';
-import { PinnedCommunity } from './PinnedCommunity.model';
-import { CommunityChat } from './communityChat.model';
-import { UserCommunity } from './UserCommunity.model';
-import { UserChat } from './UserChat.model';
+import { ReviewLike } from './ReviewLike.model.js';
+import { Community } from './Community.model.js';
+import { CommunityPost } from './CommunityPost.model.js';
+import { CommunityPostLike } from './CommunityPostLike.model.js';
+import { CommunityComment } from './CommunityComment.model.js';
+import { CommunityLike } from './CommunityLike.model.js';
+import { PinnedCommunity } from './PinnedCommunity.model.js';
+import { CommunityChat } from './communityChat.model.js';
+import { UserCommunity } from './UserCommunity.model.js';
+import { UserChat } from './UserChat.model.js';
 
-import { Friend } from './Friend.model';
+import { Friend } from './Friend.model.js';
 
 const db = {};
 
