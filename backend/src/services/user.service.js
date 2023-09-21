@@ -1,8 +1,7 @@
-import { User } from '../models/User.model';
-import { RefreshToken } from '../models/RefreshToken.model';
+import { User } from '../models/User.model.js';
+import { RefreshToken } from '../models/RefreshToken.model.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { Route53Resolver } from 'aws-sdk';
 
 class userService {
   static async addUser({ nickname, email, password, checkPassword }) {

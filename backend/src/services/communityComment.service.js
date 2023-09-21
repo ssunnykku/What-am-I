@@ -1,7 +1,7 @@
-import { CommunityComment } from '../models/CommunityComment.model';
-import { User } from '../models/User.model';
-import { Friend } from '../models/Friend.model';
-import sequelize from '../config/sequelize';
+import { CommunityComment } from '../models/CommunityComment.model.js';
+import { User } from '../models/User.model.js';
+import { Friend } from '../models/Friend.model.js';
+import sequelize from '../config/sequelize.js';
 
 class communityCommentService {
   //1. 댓글쓰기

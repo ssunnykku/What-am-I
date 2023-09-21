@@ -1,8 +1,8 @@
 import { Review } from '../models/Review.model.js';
-import { ReviewLike } from '../models/ReviewLike.model';
+import { ReviewLike } from '../models/ReviewLike.model.js';
 import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
-import { User } from '../models/User.model';
+import { User } from '../models/User.model.js';
 import { Op } from 'sequelize';
 dotenv.config();
 

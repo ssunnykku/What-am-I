@@ -1,4 +1,4 @@
-import { friendService } from '../services/friend.service';
+import { friendService } from '../services/friend.service.js';
 
 class friendController {
   //1. 친구 추가하기/차단하기

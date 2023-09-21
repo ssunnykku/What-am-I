@@ -1,8 +1,8 @@
-import { CommunityPost } from '../models/CommunityPost.model';
-import ApiError from '../utils/ApiError';
+import { CommunityPost } from '../models/CommunityPost.model.js';
+import ApiError from '../utils/ApiError.js';
 import dotenv from 'dotenv';
-import sequelize from '../config/sequelize';
-import { CommunityPostLike } from '../models/CommunityPostLike.model';
+import sequelize from '../config/sequelize.js';
+import { CommunityPostLike } from '../models/CommunityPostLike.model.js';
 dotenv.config();
 
 class communityPostService {

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { reviewCommentController } from '../controllers/reviewComment.ctrl';
+import { reviewCommentController } from '../controllers/reviewComment.ctrl.js';
 import { loginRequired } from '../middlewares/loginRequired.js';
 
 const reviewCommentRouter = Router();

@@ -1,5 +1,5 @@
-import { PinnedCommunity } from '../models/PinnedCommunity.model';
-import { Community } from '../models/Community.model';
+import { PinnedCommunity } from '../models/PinnedCommunity.model.js';
+import { Community } from '../models/Community.model.js';
 
 class pinnedCommunityService {
   static async pinnedCommunities({ userId, communityId }) {

@@ -1,9 +1,9 @@
-import { Community } from '../models/Community.model';
-import { CommunityPost } from '../models/CommunityPost.model';
-import { CommunityLike } from '../models/CommunityLike.model';
-import ApiError from '../utils/ApiError';
+import { Community } from '../models/Community.model.js';
+import { CommunityPost } from '../models/CommunityPost.model.js';
+import { CommunityLike } from '../models/CommunityLike.model.js';
+import ApiError from '../utils/ApiError.js';
 import dotenv from 'dotenv';
-import { PinnedCommunity } from '../models/PinnedCommunity.model';
+import { PinnedCommunity } from '../models/PinnedCommunity.model.js';
 import { Op } from 'sequelize';
 
 dotenv.config();

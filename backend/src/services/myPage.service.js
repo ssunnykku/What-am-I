@@ -1,6 +1,6 @@
-import { Community } from '../models/Community.model';
-import { CommunityLike } from '../models/CommunityLike.model';
-import { CommunityPost } from '../models/CommunityPost.model';
+import { Community } from '../models/Community.model.js';
+import { CommunityLike } from '../models/CommunityLike.model.js';
+import { CommunityPost } from '../models/CommunityPost.model.js';
 
 class myPageService {
   static async UserToCommunity({ userId, defaultPage }) {

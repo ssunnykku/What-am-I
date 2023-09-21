@@ -1,5 +1,5 @@
 import { userService } from '../services/user.service.js';
-import { registerValidator } from '../middlewares/userValidator';
+import { registerValidator } from '../middlewares/userValidator.js';
 import jwt from 'jsonwebtoken';
 import ApiError from '../utils/ApiError.js';
 

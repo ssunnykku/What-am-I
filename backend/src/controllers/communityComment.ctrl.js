@@ -1,4 +1,4 @@
-import { communityCommentService } from '../services/communityComment.service';
+import { communityCommentService } from '../services/communityComment.service.js';
 
 class communityCommentController {
   //1. 댓글쓰기

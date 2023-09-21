@@ -1,4 +1,4 @@
-import { myPageService } from '../services/myPage.service';
+import { myPageService } from '../services/myPage.service.js';
 
 class myPageController {
   static async getMyCommunities(req, res, next) {

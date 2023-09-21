@@ -1,5 +1,5 @@
-import { communityService } from '../services/community.service';
-import { deleteImg } from '../middlewares/uploadImageS3';
+import { communityService } from '../services/community.service.js';
+import { deleteImg } from '../middlewares/uploadImageS3.js';
 
 class communityController {
   // 1. 커뮤니티 만들기

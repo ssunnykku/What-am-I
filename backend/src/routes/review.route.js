@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { reviewController } from '../controllers/review.ctrl';
+import { reviewController } from '../controllers/review.ctrl.js';
 import { loginRequired } from '../middlewares/loginRequired.js';
-import { uploadImageS3 } from '../middlewares/uploadImageS3';
+import { uploadImageS3 } from '../middlewares/uploadImageS3.js';
 
 const reviewRouter = Router();
 

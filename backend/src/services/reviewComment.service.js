@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize';
-import sequelize from '../config/sequelize';
-import { ReviewComment } from '../models/ReviewComment.model';
+import sequelize from '../config/sequelize.js';
+import { ReviewComment } from '../models/ReviewComment.model.js';
 
 class reviewCommentService {
   static async addReviewComment({ description, reviewId, userId }) {

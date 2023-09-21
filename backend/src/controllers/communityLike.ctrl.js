@@ -1,4 +1,4 @@
-import { communityLikeService } from '../services/communityLike.service';
+import { communityLikeService } from '../services/communityLike.service.js';
 
 class communityLikeController {
   static async addLike(req, res, next) {

@@ -1,8 +1,8 @@
-import { User } from '../models/User.model';
-import { Friend } from '../models/Friend.model';
+import { User } from '../models/User.model.js';
+import { Friend } from '../models/Friend.model.js';
 import dotenv from 'dotenv';
-import ApiError from '../utils/ApiError';
-import sequelize from '../config/sequelize';
+import ApiError from '../utils/ApiError.js';
+import sequelize from '../config/sequelize.js';
 dotenv.config();
 
 class friendService {

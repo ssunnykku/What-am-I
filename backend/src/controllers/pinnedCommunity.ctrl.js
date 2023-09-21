@@ -1,4 +1,4 @@
-import { pinnedCommunityService } from '../services/pinnedCommunity.service';
+import { pinnedCommunityService } from '../services/pinnedCommunity.service.js';
 
 class pinnedCommunityController {
   // pin 설정하기

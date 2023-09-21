@@ -1,4 +1,4 @@
-import ApiError from '../utils/ApiError';
+import ApiError from '../utils/ApiError.js';
 import { logger } from '../config/logger.js';
 import axios from 'axios';
 

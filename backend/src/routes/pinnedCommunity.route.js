@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { pinnedCommunityController } from '../controllers/pinnedCommunity.ctrl';
+import { pinnedCommunityController } from '../controllers/pinnedCommunity.ctrl.js';
 import { loginRequired } from '../middlewares/loginRequired.js';
 
 const pinnedCommunityRouter = Router();

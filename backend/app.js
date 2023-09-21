@@ -1,5 +1,5 @@
 import express from 'express';
-import db from './src/models/index.js';
+import { db } from './src/models/index.js';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import cors from 'cors';

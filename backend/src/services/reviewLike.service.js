@@ -1,5 +1,5 @@
-import { ReviewLike } from '../models/ReviewLike.model';
-import sequelize from '../config/sequelize';
+import { ReviewLike } from '../models/ReviewLike.model.js';
+import sequelize from '../config/sequelize.js';
 
 class reviewLikeService {
   static async addlike({ userId, reviewId }) {

@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { userController } from '../controllers/user.ctrl';
+import { userController } from '../controllers/user.ctrl.js';
 import { loginRequired } from '../middlewares/loginRequired.js';
-import { uploadImageS3 } from '../middlewares/uploadImageS3';
+import { uploadImageS3 } from '../middlewares/uploadImageS3.js';
 
 const userRouter = Router();
 const upload = uploadImageS3();

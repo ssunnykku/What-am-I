@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { communityCommentController } from '../controllers/communityComment.ctrl';
+import { communityCommentController } from '../controllers/communityComment.ctrl.js';
 import { loginRequired } from '../middlewares/loginRequired.js';
 
 const communityCommentRouter = Router();

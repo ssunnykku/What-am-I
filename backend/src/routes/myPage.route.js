@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { myPageController } from '../controllers/myPage.ctrl';
+import { myPageController } from '../controllers/myPage.ctrl.js';
 import { loginRequired } from '../middlewares/loginRequired.js';
 
 const myPageRouter = Router();

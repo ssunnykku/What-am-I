@@ -1,5 +1,5 @@
 import { INTEGER } from 'sequelize';
-import { CommunityLike } from '../models/CommunityLike.model';
+import { CommunityLike } from '../models/CommunityLike.model.js';
 
 class communityLikeService {
   static async addHeart({ userId, communityId }) {

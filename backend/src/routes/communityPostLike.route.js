@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { communityPostLikeController } from '../controllers/communityPostLike.ctrl';
+import { communityPostLikeController } from '../controllers/communityPostLike.ctrl.js';
 
 import { loginRequired } from '../middlewares/loginRequired.js';
 

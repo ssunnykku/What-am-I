@@ -1,5 +1,5 @@
-import { communityPostService } from '../services/communityPost.service';
-import { communityService } from '../services/community.service';
+import { communityPostService } from '../services/communityPost.service.js';
+import { communityService } from '../services/community.service.js';
 
 import { Sequelize } from 'sequelize';
 import Joi from 'joi';

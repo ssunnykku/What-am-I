@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { friendController } from '../controllers/friend.ctrl';
+import { friendController } from '../controllers/friend.ctrl.js';
 import { loginRequired } from '../middlewares/loginRequired.js';
 
 const friendRouter = Router();

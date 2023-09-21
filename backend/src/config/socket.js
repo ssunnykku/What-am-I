@@ -1,10 +1,10 @@
-import io from 'socket.io';
+import { Server } from 'socket.io';
 import { communityChatService } from '../services/communityChat.service.js';
 import { loginRequired } from '../middlewares/loginRequired.js';
 // import { CommunityChat } from '../models/CommunityChat.model.js';
 
 const socketConfig = (httpServer) => {
-  const socketServer = io(httpServer, {
+  const socketServer = new Server(httpServer, {
     cors: {
       origin: '*',
       methods: ['GET', 'POST'],

@@ -1,4 +1,4 @@
-import { reviewService } from '../services/review.service';
+import { reviewService } from '../services/review.service.js';
 
 class reviewController {
   //모든 글들 다 보기
