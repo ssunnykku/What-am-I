@@ -10,12 +10,14 @@ const socketConfig = (httpServer) => {
       methods: ['GET', 'POST'],
     },
   });
+
   // emit : 보내주기, on : 받기
   socketServer.on('connection', (socket) => {
     // onAny : 미들웨어, 어느 이벤트에서든지 console.log를 할 수 있다.
     socket.onAny((event) => {
       console.log(`Socket Event: ${event}`);
     });
+    // 토큰 인증 코드 구현하기
 
     socket.on('join', async ({ roomName: roomId, userId: userId }) => {
       socket.join(roomId);
