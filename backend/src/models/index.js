@@ -13,7 +13,7 @@ import { CommunityPostLike } from './CommunityPostLike.model.js';
 import { CommunityComment } from './CommunityComment.model.js';
 import { CommunityLike } from './CommunityLike.model.js';
 import { PinnedCommunity } from './PinnedCommunity.model.js';
-import { CommunityChat } from './communityChat.model.js';
+import { CommunityChat } from './CommunityChat.model.js';
 import { UserCommunity } from './UserCommunity.model.js';
 import { UserChat } from './UserChat.model.js';
 
