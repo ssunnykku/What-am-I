@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import sequelize from './src/config/sequelize.js';
+import path from 'path';
 
 import { logger } from './src/config/logger.js';
 import http from 'http';
@@ -58,10 +59,6 @@ app.use(pinnedCommunityRouter);
 app.use(friendRouter);
 
 app.use(errorMiddleware);
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
-});
 
 app.listen(process.env.SERVER_PORT, () =>
   console.log(`✅ Listening to port 5001`),
