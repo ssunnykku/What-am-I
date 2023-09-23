@@ -1,18 +1,22 @@
 import multer from 'multer';
 import path from 'path';
-import AWS from 'aws-sdk';
+import { S3 } from '@aws-sdk/client-s3';
+// import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
 import multerS3 from 'multer-s3';
 // import multerS3 from 'multer-s3-transform';
 // import sharp from 'sharp';
-AWS.config.update({
-  accessKeyId: process.env.S3_ACCESS_KEY_ID,
-  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
-  region: 'ap-northeast-2',
-});
 
-const s3 = new AWS.S3();
+import { S3Client } from '@aws-sdk/client-s3';
+import { fromEnv } from '@aws-sdk/credential-provider-env';
+
 dotenv.config();
+const s3 = new S3();
+
+const s3Client = new S3Client({
+  region: 'ap-northeast-2',
+  credentials: fromEnv(),
+});
 
 const uploadImageS3 = () => {
   return multer({
@@ -32,15 +36,21 @@ const uploadImageS3 = () => {
   });
 };
 
-const deleteImg = (img) => {
+const deleteImg = async (img) => {
   const params = {
     Bucket: process.env.S3_BUCKET,
     Key: img.split('/')[3],
   };
-  s3.deleteObject(params, function (err, data) {
-    if (err) console.log(err, err.stack); // an error occurred
-    else console.log(data, '삭제되었습니다'); // successful response
-  });
+
+  try {
+    const data = await s3.deleteObject({});
+  } catch (err) {
+    console.error(err, err.stack);
+  }
+  // s3.deleteObject(params, function (err, data) {
+  //   if (err) console.log(err, err.stack); // an error occurred
+  //   else console.log(data, '삭제되었습니다'); // successful response
+  // });
 };
 
 export { uploadImageS3, deleteImg };

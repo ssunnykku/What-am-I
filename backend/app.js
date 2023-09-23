@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import sequelize from './src/config/sequelize.js';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 import { logger } from './src/config/logger.js';
 import http from 'http';
@@ -33,6 +34,9 @@ import axios from 'axios';
 dotenv.config();
 
 const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
 
