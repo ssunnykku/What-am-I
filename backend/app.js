@@ -33,6 +33,8 @@ dotenv.config();
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: '*', credentials: true }));
@@ -56,6 +58,10 @@ app.use(pinnedCommunityRouter);
 app.use(friendRouter);
 
 app.use(errorMiddleware);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+});
 
 app.listen(process.env.SERVER_PORT, () =>
   console.log(`✅ Listening to port 5001`),
